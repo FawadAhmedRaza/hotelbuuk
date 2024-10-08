@@ -7,7 +7,7 @@ export const paths = {
     root: '/',
     login: "/login",
     signUp: "/signUp",
-    OTPCode: "OTP-code",
+    OTPCode: "verfiy-code",
     forgotPassword: '/forgot-password',
     changePassword: '/change-password',
   },

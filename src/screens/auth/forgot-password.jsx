@@ -5,37 +5,30 @@ import { useForm } from "react-hook-form";
 
 // Components and Others...
 import {
-  AnchorTag,
   Button,
+  Iconify,
   ImgButton,
   Line,
   Pannel,
   Typography,
 } from "@/src/components";
-import {
-  RHFCheckbox,
-  RHFFormProvider,
-  RHFInput,
-} from "@/src/components/hook-form";
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { paths } from "@/src/contants";
+import Link from "next/link";
 
-const LoginScreen = () => {
+const ForgotPasswordScreen = () => {
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
   });
 
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
@@ -63,12 +56,28 @@ const LoginScreen = () => {
         <Typography variant="h3" className="font-bold text-primary md:mb-8">
           Hotelbuuk
         </Typography>
+        <Link
+          className="flex items-center gap-1 cursor-pointer"
+          href={paths.auth.login}
+        >
+          <Iconify
+            iconName="iconamoon:arrow-up-2-bold"
+            className="text-primary -rotate-90 size-5 "
+          />
+          <Typography variant="p" className="font-medium text-sm">
+            Back to login
+          </Typography>
+        </Link>
         <div className="flex flex-col justify-center  items-center lg:items-start lg:justify-start gap-3 mb-5 w-full">
           <Typography variant="h2" className="font-semibold">
-            Login
+            Forgot your password?
           </Typography>
-          <Typography variant="p" className="text-secondary ">
-            Login to access your hotelbuuk account
+          <Typography
+            variant="p"
+            className="text-secondary text-center lg:text-start"
+          >
+            Don’t worry, happens to all of us. Enter your email below to recover
+            your password
           </Typography>
         </div>
         <RHFFormProvider
@@ -82,29 +91,11 @@ const LoginScreen = () => {
             placeholder="john.doe@gmail.com"
             name="email"
           />
-          <RHFInput
-            type="password"
-            label="Password"
-            placeholder="john.doe@gmail.com"
-            name="password"
-          />
-          <div className="flex justify-between items-center">
-            <RHFCheckbox name="terms" label="Remember me" />
-            <AnchorTag href="#" className="font-montserrat font-medium">
-              Forgot Password
-            </AnchorTag>
-          </div>
-          <div className="flex flex-col gap-4 mt-5">
+
+          <div className="flex flex-col gap-8 mt-5">
             <Button type="submit" className="w-full">
-              Create account
+              Submit
             </Button>
-            <Typography
-              variant="p"
-              className=" !text-sm w-full text-center text-black font-medium font-montserrat"
-            >
-              Don’t have an account?{" "}
-              <AnchorTag href={paths.auth.signUp}>Sign up </AnchorTag>
-            </Typography>
 
             <Line className="my-2">Or Login with</Line>
 
@@ -113,7 +104,7 @@ const LoginScreen = () => {
         </RHFFormProvider>
       </div>
       <img
-        src="/assets/images/login.png"
+        src="/assets/images/forgot-password.png"
         alt="img"
         className=" hidden lg:flex lg:w-full h-full"
       />
@@ -121,4 +112,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
