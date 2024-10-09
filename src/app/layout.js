@@ -50,7 +50,7 @@ export default async function RootLayout({ children }) {
   return (
     <SessionProvider session={session}>
       <html lang="en" className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable}`}>
-        <body className="font-poppins">
+        <body className="font-poppins overflow-x-hidden">
           <AuthProvider>
             <Toaster position="top-right" reverseOrder={false} />
             {children}

@@ -69,7 +69,7 @@ export const GuestReviews = () => {
       </div>
       <span className="w-full  flex justify-start">
         <Button onClick={handleLoadReview}>
-          {guestReviewsData?.length < visibleReviewList?.length
+          {guestReviewsData?.length > visibleReviewList?.length
             ? ` Show All ${guestReviewsData?.length - visibleReview} Reviews`
             : "Show less"}
         </Button>

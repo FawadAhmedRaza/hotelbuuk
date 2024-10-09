@@ -10,3 +10,4 @@ export { CustomPopover } from "./popover";
 export { Card } from "./card";
 export { Drawer } from "./drawer";
 export { HeadingBanner } from "./heading-banner";
+export { Accordion } from "./accordion";
