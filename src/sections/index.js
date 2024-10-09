@@ -10,5 +10,8 @@ export { TermsBanner } from "./terms-banner";
 export { ImpressumContent } from "./impressum-content";
 export { QAContent } from "./privacy-policy-content";
 export { ConditionsContent } from "./conditions-content";
+export { MissionStatement } from "./about-us/mission-statement";
+export { Vision } from "./about-us/vision";
+export { Destinations } from "./about-us/destinations";
 
 //---------------------//
