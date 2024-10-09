@@ -12,7 +12,7 @@ import "swiper/swiper-bundle.css";
 import { Navigation } from "swiper/modules";
 import "../app/globals.css";
 // import Swiper from "swiper";
-
+ 
 export const MeetOurPatners = React.memo(() => {
   return (
     <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10">

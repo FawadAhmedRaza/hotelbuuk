@@ -10,14 +10,14 @@ export const MissionStatement = React.memo(() => {
     <Pannel className="grid lg:grid-cols-2 gap-5 md:flex-row w-full items-center sm:gap-3 h-full">
       <div className="relative flex">
         <Image src={bedroom} />
-        <div className="absolute flex justify-end items-center w-full h-full  -ml-12 ">
+        <div className="absolute hidden md:flex justify-end items-center w-full h-full  -ml-12 ">
           <div>
-            <Image src={candles} className="w-auto" />
+            <Image src={candles} className="w-auto " />
           </div>
         </div>
       </div>
       <div className="flex flex-col justify-center gap-5">
-        <Typography variant="h5" className="font-bold">
+        <Typography variant="h4" className="font-bold">
           Mission Statement
         </Typography>
 

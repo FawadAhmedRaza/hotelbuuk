@@ -3,6 +3,7 @@ import {
   Banner,
   Booking,
   BookingSteps,
+  Destinations,
   Footer,
   HeroSection,
   MeetOurPatners,
@@ -12,6 +13,7 @@ import {
 } from "../sections";
 import { Hotels } from "../sections/hotels";
 import { HeadingBanner } from "../components";
+import { HotelLocation, NearByHotels } from "../sections/hotel-details";
 
 const AboutScreen = React.memo(() => {
   return (
@@ -24,6 +26,8 @@ const AboutScreen = React.memo(() => {
       />{" "}
       <MissionStatement />
       <Vision />
+      <HotelLocation />
+      <Destinations />
       <Footer />
     </main>
   );

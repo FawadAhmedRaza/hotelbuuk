@@ -9,7 +9,7 @@ export const Vision = React.memo(() => {
   return (
     <Pannel className="grid lg:grid-cols-2 gap-5 md:flex-row w-full items-center sm:gap-3 h-full">
       <div className="flex flex-col justify-center gap-5">
-        <Typography variant="h5" className="font-bold">
+        <Typography variant="h4" className="font-bold">
           Vision
         </Typography>
 
@@ -20,7 +20,7 @@ export const Vision = React.memo(() => {
       </div>
 
       <div className="relative flex justify-end">
-        <div className="absolute flex justify-start items-center w-full h-full left-20 ">
+        <div className="absolute hidden md:flex justify-start items-center w-full h-full left-20 ">
           <div>
             <Image src={towel} className="w-auto" />
           </div>
