@@ -1,7 +1,8 @@
 import { HotelQNA } from "@/src/_mock/_hotel-qna";
 import { Accordion, Typography } from "@/src/components";
 import React from "react";
-import { HostBio } from ".";
+import { HotelBio } from "./hotel-bio";
+import { HostBio } from "./host-bio";
 
 export const HotelDetail = () => {
   return (
@@ -10,7 +11,7 @@ export const HotelDetail = () => {
         Refresh your mind before your business meetings
       </Typography>
       <Typography variant="h5">Lorem ipsum lorem ipsum</Typography>
-      <div className="flex justify-between items-start gap-10 mt-3 w-full">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-10 mt-3 ">
         <div className=" flex flex-col gap-5 h-full w-full ">
           <div className="flex flex-col gap-3">
             <Typography
@@ -36,6 +37,7 @@ export const HotelDetail = () => {
         </div>
         <HostBio />
       </div>
+      <HotelBio />
     </div>
   );
 };
