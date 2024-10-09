@@ -1,2 +1,8 @@
 export { HotelLocation } from './location'
 export { NearByHotels } from './nearby-hotels'
+export { ThingsKnow } from './things-know'
+export { GuestReviews } from './guest-review'
+export { HotelOverview } from './hotel-overview'
+export { PopularAmenities } from './popular-amenities'
+export { HotelDetail } from './hotel-detail'
+export { HostBio } from './host-bio'

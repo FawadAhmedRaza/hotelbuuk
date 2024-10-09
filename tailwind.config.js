@@ -17,6 +17,7 @@ module.exports = {
         "custom-black": "#1C1B1F",
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
+        "custom-grey": "#51677E"
       },
 
       lineHeight: {

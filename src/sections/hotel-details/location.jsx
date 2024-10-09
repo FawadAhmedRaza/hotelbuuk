@@ -7,7 +7,7 @@ export const HotelLocation = () => {
       <Typography variant="h4" className="font-medium">
         LOCATION & DISTANCE
       </Typography>
-      <img src="/assets/images/map.png" alt="map" className="w-full h-auto" />
+      <img src="/assets/images/map.png" alt="map" className="w-full h-fit" />
     </Pannel>
   );
 };
