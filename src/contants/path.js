@@ -11,7 +11,8 @@ export const paths = {
     forgotPassword: '/forgot-password',
     changePassword: '/change-password',
   },
-  
-
- 
+  about: '/about',
+  terms: '/terms',
+  impressum: '/impressum',
+  privacyPolicy: '/privacy-policy',
 };
