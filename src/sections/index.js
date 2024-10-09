@@ -6,5 +6,9 @@ export { Banner } from "./banner";
 export { Footer } from "./footer";
 export { MeetOurPatners } from "./meet-patners";
 export { LangaugeTranslator } from "./language-translator";
+export { TermsBanner } from "./terms-banner";
+export { ImpressumContent } from "./impressum-content";
+export { QAContent } from "./privacy-policy-content";
+export { ConditionsContent } from "./conditions-content";
 
 //---------------------//

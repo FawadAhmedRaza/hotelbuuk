@@ -6,10 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Iconify, Pannel, Typography } from "../components";
 import { SwiperCards } from "../_mock/_swiper";
 import { BgIcon } from "../components/bg-icon";
+import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/swiper-bundle.css";
 import { Navigation } from "swiper/modules";
 import "../app/globals.css";
+// import Swiper from "swiper";
 
 export const MeetOurPatners = React.memo(() => {
   return (
