@@ -1,5 +1,9 @@
 import "./globals.css";
-import { Poppins, Montserrat } from 'next/font/google'
+import { Poppins, Montserrat } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/src/auth";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "../auth/jwt";
 
 export const metadata = {
   title: "Create Next App",
@@ -7,23 +11,30 @@ export const metadata = {
 };
 
 const poppins = Poppins({
-  subsets: ['latin'],
+  subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-poppins",
 });
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
+  subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-montserrat",
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth();
+  console.log("this is session : ", session?.user);
   return (
-    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
-      <body className="font-poppins">
-        {children}
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+        <body className="font-poppins">
+          <AuthProvider>
+            <Toaster position="top-right" reverseOrder={false} />
+            {children}
+          </AuthProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

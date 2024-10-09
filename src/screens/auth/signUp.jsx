@@ -20,8 +20,15 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { paths } from "@/src/contants";
+import { createUser, login } from "@/src/actions/auth.actions";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const SignUpScreen = () => {
+  const router = useRouter();
+
+  const { register } = useAuthContext();
+
   const SignUpSchema = Yup.object().shape({
     first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().required("Last name is required"),
@@ -63,10 +70,10 @@ const SignUpScreen = () => {
 
   console.log(errors);
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
     try {
+      await register(data) 
       reset();
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +96,10 @@ const SignUpScreen = () => {
           <Typography variant="h2" className="font-semibold">
             Sign up
           </Typography>
-          <Typography variant="p" className="text-secondary  text-center lg:text-start ">
+          <Typography
+            variant="p"
+            className="text-secondary  text-center lg:text-start "
+          >
             Setup your account to access millions of business hotels
           </Typography>
         </div>
@@ -161,7 +171,10 @@ const SignUpScreen = () => {
 
             <Line>Or Sign up with</Line>
 
-            <ImgButton src="/assets/images/google.png" />
+            <ImgButton
+              onClick={() => login("google")}
+              src="/assets/images/google.png"
+            />
           </div>
         </RHFFormProvider>
       </div>

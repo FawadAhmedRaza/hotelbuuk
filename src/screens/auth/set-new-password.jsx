@@ -15,16 +15,15 @@ import {
 } from "@/src/components";
 import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 import { paths } from "@/src/contants";
+import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const SetNewPasswordScreen = () => {
+  const { resetPasswordHandle } = useAuthContext();
   const SetPasswordSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
-      .matches(
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must contain at least one uppercase letter, one number, and one special character"
-      ),
+      .min(8, "Password must be at least 8 characters"),
+      
     confirm_password: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
@@ -43,13 +42,8 @@ const SetNewPasswordScreen = () => {
     formState: { errors },
   } = methods;
 
-  const handleSubmit = (data) => {
-    try {
-      console.log(data);
-      reset();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+  const handleSubmit = async (data) => {
+    await resetPasswordHandle(data?.password);
   };
 
   return (
