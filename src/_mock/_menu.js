@@ -7,7 +7,7 @@ export const MenuLinks = [
   {
     id: 2,
     label: "About Us",
-    path: "#",
+    path: "/about",
   },
   {
     id: 1,

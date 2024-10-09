@@ -39,6 +39,7 @@ module.exports = {
         terms: "url('/assets/images/terms.png')",
         impressum: "url('/assets/images/impressum.png')",
         privacy: "url('/assets/images/privacy.png')",
+        about: "url('/assets/images/about.png')",
       },
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
