@@ -11,15 +11,23 @@ export const BookingSteps = () => {
       <div className="flex flex-col lg:flex-row justify-between gap-5 w-full">
         {BookingStepsData?.map((item) => (
           <Card
-            className=" flex flex-col sm:flex-row lg:flex-col justify-start gap-3 w-full sm:h-full  lg:h-96"
+            className=" flex flex-col sm:flex-row lg:flex-col justify-start  gap-3 w-full sm:h-full  lg:h-96"
             key={item?.id}
           >
-            <img src={item?.img} alt="img" className=" w-44 sm:w-auto" />
-            <span className=" flex flex-col justify-start gap-1 sm:gap-3 ">
-              <Typography variant="h4" className="font-semibold text-center sm:text-start lg:text-center">
+            <div className="flex items-baseline w-64 h-[50%]">
+              <img src={item?.img} alt="img" className="w-full h-full " />
+            </div>
+            <span className=" flex flex-col justify-start gap-1 sm:gap-3 h-[50%]">
+              <Typography
+                variant="h4"
+                className="font-semibold text-center sm:text-start lg:text-center"
+              >
                 {item?.title}
               </Typography>
-              <Typography variant="p" className=" text-center sm:text-start lg:text-center text-secondary">
+              <Typography
+                variant="p"
+                className=" text-center sm:text-start lg:text-center text-secondary lg:mt-5"
+              >
                 {item?.description}
               </Typography>
             </span>
