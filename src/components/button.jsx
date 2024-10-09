@@ -11,6 +11,7 @@ export const Button = ({
 }) => {
   return (
     <button
+    
       className={cn(
         " flex items-center justify-center gap-3 px-8 py-2.5  text-white bg-primary  text-base text-center rounded-xl w-fit text-nowrap cursor-pointer ",
         className, 

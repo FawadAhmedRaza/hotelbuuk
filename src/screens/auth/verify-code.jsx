@@ -15,8 +15,16 @@ import {
 } from "@/src/components";
 import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 import { paths } from "@/src/contants";
+import { CheckForgetOTP, CheckOTP, forgetPassword } from "@/src/actions/auth.actions";
+import { useRouter, useSearchParams } from "next/navigation";
+import { auth } from "@/src/auth";
+import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const VerifyCodeScreen = () => {
+  const router = useRouter();
+  const serachParamas = useSearchParams();
+  const step = serachParamas.get("step");
+  const {otpVerification} = useAuthContext()
   // Define Yup validation schema
   const VerifyCodeSchema = Yup.object().shape({
     code: Yup.string()
@@ -36,13 +44,8 @@ const VerifyCodeScreen = () => {
     formState: { errors },
   } = methods;
 
-  const handleSubmit = (data) => {
-    try {
-      console.log(data);
-      reset();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+  const handleSubmit = async (data) => {
+      await otpVerification(step,data?.code)
   };
 
   return (
@@ -71,7 +74,8 @@ const VerifyCodeScreen = () => {
             variant="p"
             className="text-secondary text-center lg:text-start"
           >
-            Don’t worry, happens to all of us. Enter the code you received to verify your identity.
+            Don’t worry, happens to all of us. Enter the code you received to
+            verify your identity.
           </Typography>
         </div>
         <RHFFormProvider
@@ -87,7 +91,10 @@ const VerifyCodeScreen = () => {
             name="code"
           />
 
-          <Typography variant="p" className="font-montserrat font-medium text-sm">
+          <Typography
+            variant="p"
+            className="font-montserrat font-medium text-sm"
+          >
             Didn’t receive a code? <AnchorTag href="#">Resend</AnchorTag>
           </Typography>
 

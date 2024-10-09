@@ -17,8 +17,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { paths } from "@/src/contants";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const ForgotPasswordScreen = () => {
+  const router = useRouter();
+  const { forgotPasswordHandle } = useAuthContext();
+
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
@@ -39,13 +44,8 @@ const ForgotPasswordScreen = () => {
 
   console.log(errors);
 
-  const handleSubmit = (data) => {
-    try {
-      reset();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = async (data) => {
+    await forgotPasswordHandle(data.email);
   };
 
   return (

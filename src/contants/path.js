@@ -6,8 +6,8 @@ export const paths = {
   auth: {
     root: '/',
     login: "/login",
-    signUp: "/signUp",
-    OTPCode: "verfiy-code",
+    signUp: "/sign-up",
+    OTPCode: "verify-code",
     forgotPassword: '/forgot-password',
     changePassword: '/change-password',
   },
