@@ -11,10 +11,10 @@ export const HeroSection = React.memo(() => {
                 <Typography variant="h1" className="text-white font-medium ">Hotelbuuk is where you will find valuable
                     business insights from hotels.
                 </Typography>
-                <Typography variant="h5" className="text-white tracking-widest font-normal">Hotelbuuk is where you will find valuable
+                <Typography variant="h5" className=" text-base sm:text-lg md:text-xl text-white tracking-widest font-normal">Hotelbuuk is where you will find valuable
                     business insights from hotels.
                 </Typography>
-                <Button endIcon="ph:arrow-right-bold" className="mx-auto mt-6">Book Now</Button>
+                <Button endIcon="ph:arrow-right-bold" className="mx-auto mt-6 z-40">Book Now</Button>
             </div>
         </Pannel>
     )

@@ -1,11 +1,11 @@
 import React from "react";
 import { cn } from "../libs/cn";
 
-export const Pannel = React.memo(({ className, children }) => {
+export const Card = React.memo(({ className, children }) => {
   return (
     <div
       className={cn(
-        " w-full h-full py-10 md:py-16  px-5 sm:px-8 lg:px-14 xl:px-20 ",
+        " flex items-center bg-white shadow-custom-shadow-sm px-6 py-8 rounded-2xl ",
         className
       )}
     >
