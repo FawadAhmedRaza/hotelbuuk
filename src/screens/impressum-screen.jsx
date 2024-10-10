@@ -6,7 +6,7 @@ import { HeadingBanner } from "../components";
 const ImpressumScreen = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar className="bg-primary static" />
+      <NavBar />
       {/* <TermsBanner /> */}
       <HeadingBanner
         heading="Impressum"
