@@ -9,11 +9,15 @@ import {
   CheckOTP,
   createUser,
   forgetPassword,
+  getUserById,
   loginWithCreds,
   resetPasssword,
 } from "@/src/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { auth } from "@/src/auth";
+import { useSession } from "next-auth/react";
+import { generateToken } from "@/src/service/tokenGenerator";
 
 // ----------------------------------------------------------------------
 /**
@@ -70,7 +74,27 @@ const STORAGE_KEY = "accessToken";
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const router = useRouter();
+  const { data: session, status: authStatus } = useSession();
 
+  console.log("State", state.user);
+
+  const fetchData = async () => {
+    try {
+      const user = await getUserById(session?.user?.id);
+      console.log("user profile", user);
+      dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+    } catch (err) {
+      console.log("Error Fetching detail", err);
+    }
+  };
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchData();
+    }
+  }, [session?.user?.id]);
+
+  console.log("authStatus in context", authStatus);
   const initialize = useCallback(async () => {
     try {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
@@ -118,11 +142,11 @@ export function AuthProvider({ children }) {
       const { email, password } = data || {};
 
       const result = await loginWithCreds({ email, password });
-      console.log(result)
+      console.log(result);
       if (result.statusCode == 200) {
         toast.success("Login sucessfully.");
         const { accessToken, user } = result.data || {};
-        console.log(accessToken)
+        console.log(accessToken);
         setSession(accessToken);
         dispatch({
           type: Types.LOGIN,
@@ -174,11 +198,11 @@ export function AuthProvider({ children }) {
           localStorage.removeItem("signupEmail");
           dispatch({
             type: Types.LOGIN,
-            payload:{
+            payload: {
               user: response.data?.user,
-            }
+            },
           });
-          toast.success("User conrim successfully.")
+          toast.success("User conrim successfully.");
           router.push("/");
         } else {
           toast.error(response?.message);
@@ -215,9 +239,8 @@ export function AuthProvider({ children }) {
       if (result.statusCode == 200) {
         toast.success("Reset Password sucessfully.");
         const { accessToken, user } = result.data || {};
-        localStorage.removeItem("forgotEmail")
+        localStorage.removeItem("forgotEmail");
         localStorage.removeItem("forgotOtp");
-
 
         setSession(accessToken);
         dispatch({
@@ -238,18 +261,17 @@ export function AuthProvider({ children }) {
 
   const forgotPasswordHandle = useCallback(async (email) => {
     try {
-      localStorage.setItem("forgotEmail",email)
-      const response =await forgetPassword(email);
-      if (response.statusCode==200) {
+      localStorage.setItem("forgotEmail", email);
+      const response = await forgetPassword(email);
+      if (response.statusCode == 200) {
         router.push("/verify-code?step=forgot");
       } else {
-        toast.error(response?.message)
+        toast.error(response?.message);
       }
     } catch (error) {
       console.log(error);
     }
   }, []);
-
 
   // ----------------------------------------------------------------------
 

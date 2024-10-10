@@ -101,6 +101,18 @@ const getUserByEmail = async (email) => {
     return null;
   }
 };
+export const getUserById = async (id) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const loginWithCreds = async (data) => {
   try {

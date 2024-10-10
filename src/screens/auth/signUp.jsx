@@ -72,7 +72,7 @@ const SignUpScreen = () => {
 
   const handleSubmit = async (data) => {
     try {
-      await register(data) 
+      await register(data);
       reset();
     } catch (error) {
       console.log(error);
@@ -172,7 +172,7 @@ const SignUpScreen = () => {
             <Line>Or Sign up with</Line>
 
             <ImgButton
-              onClick={() => login("google")}
+              onClick={() => signIn("google")}
               src="/assets/images/google.png"
             />
           </div>
