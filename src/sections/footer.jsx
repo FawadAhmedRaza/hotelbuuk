@@ -1,5 +1,5 @@
 import React from "react";
-import { AnchorTag, Pannel, Typography } from "../components";
+import { AnchorTag, Iconify, Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 
 export const Footer = () => {
@@ -7,9 +7,27 @@ export const Footer = () => {
     <div className="flex flex-col w-full h-full">
       <Pannel className=" flex flex-col md:flex-row items-start md:items-center justify-between gap-10 w-full md:h-96 bg-footer bg-cover ">
         <span className="grow">
-          <Typography variant="p" className="text-sm sm:!w-80 text-white text-wrap">
+          <Typography
+            variant="p"
+            className="text-sm sm:!w-80 text-white text-wrap"
+          >
             The printing and typesetting industry. Lorem Ipsum has been
           </Typography>
+          <div className="flex gap-6 mt-10">
+            <div className=" p-2 bg-white rounded-full w-min text-2xl">
+              <Iconify
+                iconName="ri:facebook-fill"
+                className="text-black !text-2xl"
+              />
+            </div>
+
+            <div className=" p-2 bg-white rounded-full w-min text-2xl">
+              <Iconify
+                iconName="pajamas:twitter"
+                className="text-black !text-2xl"
+              />
+            </div>
+          </div>
         </span>
         <div className=" flex flex-col md:flex-row  items-start gap-12 w-full lg:w-[30%] bg-cover grow justify-between">
           <div className="flex flex-col gap-5">
@@ -19,25 +37,25 @@ export const Footer = () => {
             <span className="flex flex-col gap-3">
               <AnchorTag
                 className="text-white font-poppins font-normal text-base"
-                href="#"
+                href="/about"
               >
                 About Us
               </AnchorTag>
               <AnchorTag
                 className="text-white font-poppins font-normal text-base"
-                href="#"
+                href="/impressum"
               >
                 Impressum
               </AnchorTag>
               <AnchorTag
                 className="text-white font-poppins font-normal text-base"
-                href="#"
+                href="/terms"
               >
                 Terms & Conditions
               </AnchorTag>
               <AnchorTag
                 className="text-white font-poppins font-normal text-base"
-                href="#"
+                href="/privacy-policy"
               >
                 Privacy Policy
               </AnchorTag>
