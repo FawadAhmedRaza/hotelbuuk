@@ -1,6 +1,15 @@
 import { Iconify, Pannel, Typography } from "@/src/components";
 import Link from "next/link";
 import React from "react";
+import { Slider } from ".";
+
+const images = [
+  "/assets/images/hotel-det-1.png",
+  "/assets/images/hotel-det-2.png",
+  "/assets/images/hotel-det-3.png",
+  "/assets/images/hotel-det-4.png",
+  "/assets/images/hotel-det-5.png",
+];
 
 export const HotelOverview = () => {
   const socialMedia = [
@@ -12,7 +21,7 @@ export const HotelOverview = () => {
   return (
     <Pannel className="flex flex-col gap-12">
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
-        <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-3 gow">
+        <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-3 grow">
           <Typography variant="h3">Bosphorus Hotel Istanbul</Typography>
           <span className="flex items-center gap-3">
             <Iconify iconName="gg:phone" className="text-black" />
@@ -44,8 +53,11 @@ export const HotelOverview = () => {
           ))}
         </div>
       </div>
+      {/* Image Slider */}
+      <Slider images={images} />
+
       {/* images  */}
-      <div className="flex flex-col lg:flex-row gap-2 w-full">
+      <div className="hidden md:flex flex-col lg:flex-row gap-2 w-full">
         <img
           src="/assets/images/hotel-det-1.png"
           alt="hotel-1"

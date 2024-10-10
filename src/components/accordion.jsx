@@ -20,7 +20,7 @@ export const Accordion = ({ title, children, className }) => {
         className="flex items-center justify-between cursor-pointer px-5 py-3"
         onClick={toggleDrawer}
       >
-        <Typography variant="h6" className="text-primary">{title}</Typography>
+        <Typography variant="h6" className="text-primary font-semibold">{title}</Typography>
 
         <Iconify
           iconName="iconamoon:arrow-down-2-bold"

@@ -5,7 +5,7 @@ import { mockAmenities } from "@/src/_mock/_popolar-amentities";
 
 export const PopularAmenities = React.memo(() => {
   const [showAll, setShowAll] = useState(false);
-  const maxVisible = 12; 
+  const maxVisible = 12;
 
   const handleToggleShow = () => {
     setShowAll(!showAll);
@@ -16,7 +16,7 @@ export const PopularAmenities = React.memo(() => {
       {/* Header */}
       <Typography variant="h3" className="font-medium">
         Most popular Amenities
-      </Typography> 
+      </Typography>
 
       {/* Amenities list */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-start md:justify-center items-start md:items-center w-full lg:w-[800px] gap-5">

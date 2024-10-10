@@ -8,9 +8,9 @@ const hotelData = {
   image: "/assets/images/hotel-bio.png",
   bio: "Booking A Day Use Room Grants You The Use Of Amenities Of The Property",
   amenities: [
-    { id: 1, name: "Indoor pool", icon: "fas fa-swimming-pool" },
-    { id: 2, name: "Fitness center", icon: "fas fa-dumbbell" },
-    { id: 3, name: "Spa and wellness center", icon: "fas fa-spa" },
+    { id: 1, name: "Indoor pool", icon: "mdi:pool" },
+    { id: 2, name: "Fitness center", icon: "maki:fitness-center-15" },
+    { id: 3, name: "Spa and wellness center", icon: "material-symbols:spa" },
     { id: 4, name: "Bar/Lounge", icon: "fas fa-glass-martini-alt" },
     { id: 5, name: "Restaurant", icon: "fas fa-utensils" },
     { id: 6, name: "Free Wi-Fi", icon: "fas fa-wifi" },
@@ -35,7 +35,7 @@ export const HotelBio = () => {
   return (
     <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
       {/* Left Panel - Image and Time */}
-      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-lg p-4">
+      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-xl p-4">
         <div className="flex items-center justify-between w-full">
           <span className="text-lg font-medium flex items-center gap-2">
             <Iconify iconName="noto-v1:alarm-clock" />
@@ -65,12 +65,12 @@ export const HotelBio = () => {
 
           <div className="grid grid-cols-2 gap-4 mt-4">
             {hotelData?.amenities?.map((amenity) => (
-              <span key={amenity.id} className="flex items-center">
+              <div key={amenity.id} className="flex items-center gap-2">
                 <Iconify iconName={amenity?.icon} className="border" />
                 <Typography variant="p" className="">
                   {amenity?.name}
                 </Typography>
-              </span>
+              </div>
             ))}
           </div>
         </div>
