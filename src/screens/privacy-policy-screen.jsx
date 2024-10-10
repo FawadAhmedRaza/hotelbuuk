@@ -6,7 +6,7 @@ import { HeadingBanner } from "../components";
 const PrivacyPolicy = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar className="bg-primary static" />
+      <NavBar />
       <HeadingBanner
         heading="Privacy Policy"
         text="We care about your privacy. Seriously!"

@@ -14,10 +14,8 @@ export const BookingSteps = () => {
             className=" flex flex-col sm:flex-row lg:flex-col justify-start  gap-3 w-full sm:h-full  lg:h-96"
             key={item?.id}
           >
-            <div className="flex items-baseline w-64 h-[50%]">
-              <img src={item?.img} alt="img" className="w-full h-full " />
-            </div>
-            <span className=" flex flex-col justify-start gap-1 sm:gap-3 h-[50%]">
+            <img src={item?.img} alt="img" className=" " />
+            <span className=" flex flex-col justify-start gap-1 sm:gap-3 ">
               <Typography
                 variant="h4"
                 className="font-semibold text-center sm:text-start lg:text-center"

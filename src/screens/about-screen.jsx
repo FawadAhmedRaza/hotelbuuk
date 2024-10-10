@@ -18,12 +18,12 @@ import { HotelLocation, NearByHotels } from "../sections/hotel-details";
 const AboutScreen = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar className="bg-primary static" />
+      <NavBar />
       <HeadingBanner
         heading="About Us"
         text="the printing and typesetting industry. Lorem Ipsum has bee"
         className="bg-about"
-      />{" "}
+      />
       <MissionStatement />
       <Vision />
       <HotelLocation />

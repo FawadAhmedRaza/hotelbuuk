@@ -76,7 +76,7 @@ export const HotelBio = () => {
         </div>
       </div>
       {/* Booking Information */}
-      <div className="w-full lg:w-2/3  py-4 px-6  flex flex-col justify-between border-l-2 border-neutral-400">
+      <div className="w-full lg:w-2/3  py-4 px-6  flex flex-col justify-between lg:border-l-2 border-neutral-400">
         <div className="flex flex-col gap-1">
           <Typography variant="h6" className=" font-semibold">
             ${hotelData.pricePerNight} Per Night
@@ -121,7 +121,7 @@ export const HotelBio = () => {
               >
                 Guests
               </Typography>
-              <span className="flex   items-center gap-3">
+              <span className="flex   items-center gap-3 cursor-pointer">
                 <Typography variant="p" className=" font-medium">
                   1 guest
                 </Typography>
@@ -163,7 +163,7 @@ export const HotelBio = () => {
         </div>
         {/* Reserve Button */}
         <Button className="!w-full">Reserve</Button>
-        <span className="flex justify-center items-center gap-3 w-full mt-2">
+        <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
           <Iconify iconName="mynaui:flag-solid" className="text-black" />
           <Typography variant="p" className=" font-medium">
             Report This Listing

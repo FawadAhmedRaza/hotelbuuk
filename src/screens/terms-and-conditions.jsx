@@ -5,7 +5,7 @@ import { HeadingBanner } from "../components";
 const TermsAndConditions = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar className="bg-primary static" />
+      <NavBar />
       {/* <TermsBanner /> */}
       <HeadingBanner
         heading="Term & Condition"
