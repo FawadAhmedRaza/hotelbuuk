@@ -8,9 +8,9 @@ const hotelData = {
   image: "/assets/images/hotel-bio.png",
   bio: "Booking A Day Use Room Grants You The Use Of Amenities Of The Property",
   amenities: [
-    { id: 1, name: "Indoor pool", icon: "mdi:pool" },
-    { id: 2, name: "Fitness center", icon: "maki:fitness-center-15" },
-    { id: 3, name: "Spa and wellness center", icon: "material-symbols:spa" },
+    { id: 1, name: "Indoor pool", icon: "fas fa-swimming-pool" },
+    { id: 2, name: "Fitness center", icon: "fas fa-dumbbell" },
+    { id: 3, name: "Spa and wellness center", icon: "fas fa-spa" },
     { id: 4, name: "Bar/Lounge", icon: "fas fa-glass-martini-alt" },
     { id: 5, name: "Restaurant", icon: "fas fa-utensils" },
     { id: 6, name: "Free Wi-Fi", icon: "fas fa-wifi" },

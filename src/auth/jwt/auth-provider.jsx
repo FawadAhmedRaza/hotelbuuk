@@ -15,9 +15,7 @@ import {
 } from "@/src/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { auth } from "@/src/auth";
 import { useSession } from "next-auth/react";
-import { generateToken } from "@/src/service/tokenGenerator";
 
 // ----------------------------------------------------------------------
 /**
