@@ -6,10 +6,13 @@ export const paths = {
   auth: {
     root: '/',
     login: "/login",
-    signUp: "/signUp",
-    OTPCode: "OTP-code",
+    signUp: "/sign-up",
+    OTPCode: "verify-code",
     forgotPassword: '/forgot-password',
     changePassword: '/change-password',
   },
- 
+  about: '/about',
+  terms: '/terms',
+  impressum: '/impressum',
+  privacyPolicy: '/privacy-policy',
 };

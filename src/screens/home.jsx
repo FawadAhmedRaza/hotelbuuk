@@ -1,5 +1,14 @@
 import React from "react";
-import { Banner, Booking, HeroSection, NavBar } from "../sections";
+import {
+  Banner,
+  Booking,
+  BookingSteps,
+  Footer,
+  HeroSection,
+  MeetOurPatners,
+  NavBar,
+} from "../sections";
+import { Hotels } from "../sections/hotels";
 
 const HomeScreen = React.memo(() => {
   return (
@@ -7,7 +16,11 @@ const HomeScreen = React.memo(() => {
       <NavBar />
       <HeroSection />
       <Booking />
+      <Hotels />
       <Banner />
+      <BookingSteps />
+      <MeetOurPatners />
+      <Footer />
     </main>
   );
 });

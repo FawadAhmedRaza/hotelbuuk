@@ -20,8 +20,14 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { paths } from "@/src/contants";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/src/auth/jwt/auth-context";
+import { signIn } from "next-auth/react";
 
 const LoginScreen = () => {
+  const router = useRouter();
+  const {login} = useAuthContext()
+
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
@@ -33,6 +39,7 @@ const LoginScreen = () => {
 
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
+
     defaultValues: {
       email: "",
       password: "",
@@ -41,22 +48,17 @@ const LoginScreen = () => {
 
   const {
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = methods;
 
   console.log(errors);
 
-  const handleSubmit = (data) => {
-    try {
-      reset();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = async (data) => {
+      await login(data)    
   };
 
   return (
-    <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-20 xl:gap-28 md:!py-10  !px-5 lg:!px-14 xl:!px-20 w-full h-screen">
+    <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-20 xl:gap-28 md:!py-10  !px-5 lg:!px-14 xl:!px-20 w-full h-screen sm:h-full  lg:h-screen ">
       <div
         className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full`}
       >
@@ -90,13 +92,16 @@ const LoginScreen = () => {
           />
           <div className="flex justify-between items-center">
             <RHFCheckbox name="terms" label="Remember me" />
-            <AnchorTag href="#" className="font-montserrat font-medium">
+            <AnchorTag
+              href={paths.auth.forgotPassword}
+              className="font-montserrat font-medium"
+            >
               Forgot Password
             </AnchorTag>
           </div>
           <div className="flex flex-col gap-4 mt-5">
-            <Button type="submit" className="w-full">
-              Create account
+            <Button disabled={isSubmitting} type="submit" className="w-full">
+              {isSubmitting ? "Submitting..." : "Login"}
             </Button>
             <Typography
               variant="p"
@@ -108,14 +113,14 @@ const LoginScreen = () => {
 
             <Line className="my-2">Or Login with</Line>
 
-            <ImgButton src="/assets/images/google.png" />
+            <ImgButton onClick={()=>signIn("google")} src="/assets/images/google.png" />
           </div>
         </RHFFormProvider>
       </div>
       <img
         src="/assets/images/login.png"
         alt="img"
-        className=" hidden lg:flex lg:w-auto h-full"
+        className=" hidden lg:flex lg:w-full h-full"
       />
     </Pannel>
   );
