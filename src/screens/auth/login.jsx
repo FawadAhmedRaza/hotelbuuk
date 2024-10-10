@@ -22,6 +22,7 @@ import * as Yup from "yup";
 import { paths } from "@/src/contants";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/auth/jwt/auth-context";
+import { signIn } from "next-auth/react";
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -112,7 +113,7 @@ const LoginScreen = () => {
 
             <Line className="my-2">Or Login with</Line>
 
-            <ImgButton src="/assets/images/google.png" />
+            <ImgButton onClick={()=>signIn("google")} src="/assets/images/google.png" />
           </div>
         </RHFFormProvider>
       </div>

@@ -175,7 +175,7 @@ const SignUpScreen = () => {
             <Line>Or Sign up with</Line>
 
             <ImgButton
-              onClick={() => login("google")}
+              onClick={() => signIn("google")}
               src="/assets/images/google.png"
             />
           </div>
