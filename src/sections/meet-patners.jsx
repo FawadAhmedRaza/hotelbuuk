@@ -6,13 +6,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Iconify, Pannel, Typography } from "../components";
 import { SwiperCards } from "../_mock/_swiper";
 import { BgIcon } from "../components/bg-icon";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/swiper-bundle.css";
-import { Navigation } from "swiper/modules";
 import "../app/globals.css";
-// import Swiper from "swiper";
- 
+
 export const MeetOurPatners = React.memo(() => {
   return (
     <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10">
@@ -21,13 +20,16 @@ export const MeetOurPatners = React.memo(() => {
       </Typography>
 
       <div className="w-full relative ">
-        {/* buttons  */}
-        <div className="swiper-button-prev custom-prev">
-          <Iconify iconName="cuida:arrow-left-outline" className="!size-5" />
-        </div>
-        <div className="swiper-button-next custom-next">
-          <Iconify iconName="cuida:arrow-right-outline" className="!size-5" />
-        </div>
+        <BgIcon
+          iconName="cuida:arrow-left-outline"
+          iconClass="!size-6"
+          className="swiper-button-prev custom-prev absolute -left-5 lg:-left-10 -mt-8 bg-primary size-8 z-30 top-1/2"
+        />
+        <BgIcon
+          iconName="cuida:arrow-right-outline"
+          iconClass="!size-6"
+          className=" swiper-button-next custom-next absolute -right-5 lg:-right-10 -mt-8 bg-primary size-8  z-30 top-1/2"
+        />
 
         <Swiper
           spaceBetween={30}

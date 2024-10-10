@@ -11,13 +11,14 @@ const images = [
   "/assets/images/hotel-det-5.png",
 ];
 
+const socialMedia = [
+  { id: 1, icon: "ri:facebook-fill", href: "#" },
+  { id: 2, icon: "prime:twitter", href: "#" },
+  { id: 3, icon: "iconamoon:heart-light", href: "#" },
+  { id: 4, icon: "material-symbols:share", href: "#" },
+];
+
 export const HotelOverview = () => {
-  const socialMedia = [
-    { id: 1, icon: "ri:facebook-fill", href: "#" },
-    { id: 2, icon: "prime:twitter", href: "#" },
-    { id: 3, icon: "iconamoon:heart-light", href: "#" },
-    { id: 4, icon: "material-symbols:share", href: "#" },
-  ];
   return (
     <Pannel className="flex flex-col gap-12">
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">

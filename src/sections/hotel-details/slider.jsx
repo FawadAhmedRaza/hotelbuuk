@@ -18,11 +18,7 @@ export const Slider = ({ images }) => {
         modules={[Pagination]}
         className="mySwiper relative rounded-xl"
       >
-        {/* <div className="absolute  left-4 top-5 z-20">
-          <span className="w-full py-2 px-3 rounded-full bg-gray-100 text-gray-900 text-xs">
-            in-room work desk
-          </span>
-        </div> */}
+
         {images.map((image, index) => (
           <SwiperSlide key={index} className="relative ">
             <div className="absolute bottom-5 right-4">

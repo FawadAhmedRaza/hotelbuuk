@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 /* Custom Navigation Buttons */
-.custom-next,
+/* .custom-next,
 .custom-prev {
   display: none;
   background-color: #852169;
@@ -18,35 +18,12 @@
   z-index: 10;
   cursor: pointer;
   transform: translateY(-50%);
-}
+} */
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 0px;
-}
-.custom-next {
-  right: -20px;
-}
-
-.custom-prev {
-  left: -20px;
-}
-
-@media (min-width: 500px) {
-  .custom-next {
-    right: -20px;
-  }
-  .custom-prev {
-    left: -20px;
-  }
-}
-
-@media (min-width: 768px) {
-  .custom-next {
-    right: -30px;
-  }
-
-  .custom-prev {
-    left: -30px;
-  }
+  opacity: 0;
+  visibility: hidden;
+  display: none;
 }
