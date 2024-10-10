@@ -2,26 +2,36 @@ export const MenuLinks = [
     {
         id: 1,
         label: "Home",
-        path: '/'
+        path: "/",
     },
     {
         id: 2,
         label: "About Us",
-        path: '#'
+        path: "/about",
     },
     {
         id: 1,
         label: "Term & Condition",
-        path: '#'
+        path: "/terms",
     },
     {
         id: 1,
         label: "Impressum",
-        path: '#'
+        path: "/impressum",
     },
     {
         id: 1,
         label: "Privacy Policy",
-        path: '#'
+        path: "/privacy-policy",
     },
-]
+    {
+        id: 1,
+        label: "Sign Up",
+        path: "/sign-up",
+    },
+    {
+        id: 1,
+        label: "Login",
+        path: "/login",
+    },
+];

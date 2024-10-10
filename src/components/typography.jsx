@@ -14,7 +14,7 @@ export const Typography = React.memo(
       h3: 'text-2xl sm:text-3xl md:text-4xl font-medium',
       h4: 'text-xl md:text-2xl font-normal tracking-none',
       h5: 'text-lg md:text-xl font-normal',
-      h6: 'text-lg font-normal',
+      h6: ' text-base md:text-lg font-normal',
       p: 'text-sm md:text-base',
     };
 

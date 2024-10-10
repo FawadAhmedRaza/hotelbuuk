@@ -152,8 +152,11 @@ const SignUpScreen = () => {
             name="terms"
             label={
               <span>
-                I agree to all the <AnchorTag href="#">Terms</AnchorTag> and
-                <AnchorTag href="#"> Privacy Policies</AnchorTag>
+                I agree to all the{" "}
+                <AnchorTag href={paths.terms}>Terms</AnchorTag> and
+                <AnchorTag href={paths.privacyPolicy}>
+                  Privacy Policies
+                </AnchorTag>
               </span>
             }
           />
