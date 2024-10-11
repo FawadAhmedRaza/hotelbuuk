@@ -1,5 +1,5 @@
 import React from "react";
-import { Pannel, Typography } from "../components";
+import { Button, Pannel, Typography } from "../components";
 import { PreviewHotels } from "./preview-hotels";
 
 export const Hotels = React.memo(() => {
@@ -8,8 +8,10 @@ export const Hotels = React.memo(() => {
       <Typography variant="h3" className="font-semibold text-center">
         Stay For Business Mettings
       </Typography>
-      
+
       <PreviewHotels />
+
+      <Button className=" w-full sm:w-fit">Show More</Button>
     </Pannel>
   );
 });

@@ -8,7 +8,7 @@ const TermsAndConditions = React.memo(() => {
       <NavBar />
       {/* <TermsBanner /> */}
       <HeadingBanner
-        heading="Term & Condition"
+        heading="Terms and Conditions"
         text="Last Updated on 7 Oct 2024"
         className="bg-terms"
       />

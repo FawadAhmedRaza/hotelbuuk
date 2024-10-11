@@ -98,7 +98,7 @@ export const PreviewHotels = () => {
                       variant="p"
                       className=" !text-base font-semibold text-white  "
                     >
-                      {item.price}
+                      {item.price} / Per Night
                     </Typography>
                     <Typography
                       variant="p"
@@ -109,8 +109,11 @@ export const PreviewHotels = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1 mt-1 px-2">
-                  <Typography variant="h6" className="font-semibold">
-                    {item.event}
+                  <Typography variant="p" className="font-bold">
+                    {item.eventTopic}
+                  </Typography>
+                  <Typography variant="p" className="font-normal">
+                    {item.location}
                   </Typography>
                   <Typography variant="p" className="font-medium">
                     {item.dateRange}

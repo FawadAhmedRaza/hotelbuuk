@@ -100,7 +100,7 @@ const SignUpScreen = () => {
             variant="p"
             className="text-secondary  text-center lg:text-start "
           >
-            Setup your account to access millions of business hotels
+            Setup your account to access hundreds of business hotels
           </Typography>
         </div>
         <RHFFormProvider
@@ -152,8 +152,8 @@ const SignUpScreen = () => {
             name="terms"
             label={
               <span>
-                I agree to all the{" "}
-                <AnchorTag href={paths.terms}>Terms</AnchorTag> and
+                I agree to the <AnchorTag href={paths.terms}>Terms</AnchorTag>{" "}
+                and{" "}
                 <AnchorTag href={paths.privacyPolicy}>
                   Privacy Policies
                 </AnchorTag>

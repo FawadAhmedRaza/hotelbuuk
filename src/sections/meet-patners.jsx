@@ -75,7 +75,7 @@ export const MeetOurPatners = React.memo(() => {
                     className="absolute bottom-4 right-4"
                   />
                 </span>
-                <Typography variant="h4" className="mt-4 font-medium z-10">
+                <Typography variant="h3" className="mt-4 font-medium z-10 text-center">
                   {card.hotelName}
                 </Typography>
               </SwiperSlide>
