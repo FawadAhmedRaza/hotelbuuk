@@ -6,6 +6,10 @@ import { terms_first_para } from "../contants/terms-content";
 export const ConditionsContent = React.memo(() => {
   return (
     <Pannel className=" capitalize">
+      <Typography variant="h2" className="mb-10 font-semibold">
+        Terms and Conditions
+      </Typography>
+
       <Typography
         variant="p"
         className="!text-[20px] !leading-[40px] !tracking-[5%]"

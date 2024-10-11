@@ -20,7 +20,7 @@ export const Vision = React.memo(() => {
       </div>
 
       <div className="relative flex justify-end">
-        <div className="absolute hidden md:flex justify-start items-center w-full h-full left-20 ">
+        <div className="absolute hidden md:flex justify-start items-center w-full h-full left-8 ">
           <div>
             <Image src={towel} className="w-auto" />
           </div>

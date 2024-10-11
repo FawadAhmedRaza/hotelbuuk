@@ -29,10 +29,10 @@ export const LangaugeTranslator = () => {
   return (
     <div className="relative" popoverRef={popoverRef}>
       <div
-        className={`flex items-center gap-3 cursor-pointer px-4 py-2  rounded-lg ${"hover:bg-black hover:bg-opacity-20"}`}
+        className={`flex items-center gap-2 sm:gap-3 cursor-pointer  px-2 py-1 sm:px-4 sm:py-2  rounded-lg ${"hover:bg-primary "}`}
         onClick={toggleDrawer}
       >
-        <Iconify iconName="et:global" className="size-8" />
+        <Iconify iconName="et:global" className=" size-4 sm:size-8" />
         <Typography variant="p" className="text-sm text-white ">
           {activeLang?.label}
         </Typography>

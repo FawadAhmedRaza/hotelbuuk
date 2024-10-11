@@ -58,7 +58,13 @@ export const HotelOverview = () => {
       <Slider images={images} />
 
       {/* images  */}
-      <div className="hidden md:flex flex-col lg:flex-row gap-2 w-full">
+
+      <div className="relative hidden md:flex flex-col lg:flex-row gap-2 w-full">
+        <span className="absolute right-5 bottom-5 bg-primary  rounded-lg  py-2 px-4">
+          <Typography variant="p" className="text-white">
+            Show all Photos
+          </Typography>
+        </span>
         <img
           src="/assets/images/hotel-det-1.png"
           alt="hotel-1"

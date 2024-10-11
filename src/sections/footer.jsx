@@ -5,32 +5,38 @@ import { BgIcon } from "../components/bg-icon";
 export const Footer = () => {
   return (
     <div className="flex flex-col w-full h-full">
-      <Pannel className=" flex flex-col md:flex-row items-start md:items-center justify-between gap-10 w-full md:h-96 bg-footer bg-cover ">
-        <span className="grow">
-          <Typography
-            variant="p"
-            className="text-sm sm:!w-80 text-white text-wrap"
-          >
-            The printing and typesetting industry. Lorem Ipsum has been
-          </Typography>
-          <div className="flex gap-6 mt-10">
-            <div className=" p-2 bg-white rounded-full w-min text-2xl">
-              <Iconify
-                iconName="ri:facebook-fill"
-                className="text-black !text-2xl"
-              />
-            </div>
+      <Pannel className="flex flex-col lg:flex-row items-start  gap-10 w-full h-auto lg:h-96 bg-footer bg-cover ">
+        {/* Logo */}
 
-            <div className=" p-2 bg-white rounded-full w-min text-2xl">
-              <Iconify
-                iconName="pajamas:twitter"
-                className="text-black !text-2xl"
-              />
-            </div>
+        <div className="flex flex-col lg:flex-row gap-5">
+          <div className="h-full  lg:mt-4  ">
+            <Typography
+              variant="h3"
+              className="!text-3xl md:!text-4xl font-bold text-primary text-start !stroke-white  "
+            >
+              Hotelbuuk
+            </Typography>
           </div>
-        </span>
-        <div className=" flex flex-col md:flex-row  items-start gap-12 w-full lg:w-[30%] bg-cover grow justify-between">
-          <div className="flex flex-col gap-5">
+
+          {/* Content */}
+
+          <div className="flex items-start md:items-center  lg:mt-4">
+            <Typography
+              variant="p"
+              className="text-sm w-full  lg:!w-80 text-white text-wrap text-justify"
+            >
+              The printing and typesetting industry. Lorem Ipsum has been The
+              printing and typesetting industry. Lorem Ipsum has been The
+              printing and typesetting industry. Lorem Ipsum has been The
+              printing and typesetting industry. Lorem Ipsum has been The
+              printing and typesetting industry. Lorem Ipsum has been
+            </Typography>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between lg:items-center w-full h-auto lg:h-full gap-5 flex-1">
+          {/* Legal */}
+          <div className="flex flex-col gap-5 ">
             <Typography variant="h3" className="font-semibold text-white ">
               Legal
             </Typography>
@@ -61,6 +67,23 @@ export const Footer = () => {
               </AnchorTag>
             </span>
           </div>
+
+          <div className="flex items-start gap-6 my-10">
+            <div className=" p-2 bg-white rounded-full w-min h-min text-2xl">
+              <Iconify
+                iconName="ri:facebook-fill"
+                className="text-black !text-2xl"
+              />
+            </div>
+
+            <div className=" p-2 bg-white rounded-full w-min h-min text-2xl">
+              <Iconify
+                iconName="pajamas:twitter"
+                className="text-black !text-2xl"
+              />
+            </div>
+          </div>
+          {/* Contact */}
           <div className="flex flex-col justify-start gap-5 md:h-44">
             <Typography variant="h3" className="font-semibold text-white ">
               Contact

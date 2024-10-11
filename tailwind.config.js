@@ -17,7 +17,7 @@ module.exports = {
         "custom-black": "#1C1B1F",
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
-        "custom-grey": "#51677E"
+        "custom-grey": "#51677E",
       },
 
       lineHeight: {
@@ -37,9 +37,9 @@ module.exports = {
         hero: "url('/assets/images/hero.png')",
         banner: "url('/assets/images/banner.png')",
         footer: "url('/assets/images/footer.png')",
-        terms: "url('/assets/images/terms.png')",
+        terms: "url('/assets/images/terms-and-cond.png')",
         impressum: "url('/assets/images/impressum.png')",
-        privacy: "url('/assets/images/privacy.png')",
+        privacy: "url('/assets/images/privacy-policy.png')",
         about: "url('/assets/images/about.png')",
       },
       fontFamily: {

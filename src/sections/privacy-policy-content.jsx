@@ -5,6 +5,10 @@ import { firstPara, questions_answer } from "../_mock/_privacy-policy";
 export const QAContent = React.memo(() => {
   return (
     <Pannel className="capitalize">
+      <Typography variant="h2" className="mb-10 font-semibold">
+        Privacy Policy
+      </Typography>
+
       <Typography variant="h5" className="!leading-[40px]">
         {firstPara}
       </Typography>
