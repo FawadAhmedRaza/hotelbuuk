@@ -17,6 +17,7 @@ export const RHFInput = React.memo(
     startIcon,
     startIconClass,
     inputClass,
+    customInputClass,
     endIconClass,
     endIcon,
     readOnly = false,
@@ -74,7 +75,7 @@ export const RHFInput = React.memo(
                   value={field.value || ""}
                   autoComplete="off"
                   placeholder={placeholder}
-                  className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300   text-secondarybg-transparent ${
+                  className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300  text-secondarybg-transparent ${customInputClass} ${className} ${
                     disabled ? " pointer-events-none  " : ""
                   }`}
                 />
