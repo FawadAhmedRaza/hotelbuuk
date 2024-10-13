@@ -4,7 +4,7 @@ import { Button, Pannel, Typography } from "../components";
 
 export const HeroSection = React.memo(() => {
   return (
-    <Pannel className=" relative flex justify-center items-center w-full h-screen bg-hero bg-center bg-no-repeat bg-cover -z-10">
+    <Pannel className=" relative flex justify-center items-center w-full h-screen bg-hero bg-center bg-no-repeat bg-cover -z-10 lg:py-40">
       <Image
         src="/assets/images/hero-bg.png"
         alt="bg"
@@ -13,21 +13,23 @@ export const HeroSection = React.memo(() => {
         className="w-full h-screen absolute top-0 left-0 z-0"
       />
 
-      <div className="flex flex-col justify-center  gap-5 md:gap-8 z-20 w-full h-full ">
-        <Typography variant="h1" className="text-white font-medium ">
-          Hotelbuuk is where you will find valuable business insights from
-          hotels.
+      <div className="flex flex-col justify-center lg:justify-start  gap-5  z-20 w-full h-full ">
+        <Typography
+          variant="h1"
+          className="lg:!text-[3.3rem] text-white font-bold  shadow !custom-line capitalize "
+        >
+          <span className="heading-bg"> Book Hotels</span>
+          <br />
+          <span className="text-2xl sm:text-3xl md:text-[2.4rem] font-bold">
+            Providing Knowledge-Driven Comfort for Business Leaders.
+          </span>
         </Typography>
         <Typography
           variant="h5"
-          className=" text-base sm:text-lg md:text-xl text-white tracking-widest font-normal"
+          className=" text-base sm:text-lg md:text-xl text-white tracking-widest font-normal shadow uppercase"
         >
-          Hotelbuuk is where you will find valuable business insights from
-          hotels.
+          Stay. Learn. Lead.{" "}
         </Typography>
-        <Button endIcon="ph:arrow-right-bold" className="mx-auto mt-6 z-40">
-          Book Now
-        </Button>
       </div>
     </Pannel>
   );
