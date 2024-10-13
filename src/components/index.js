@@ -12,3 +12,5 @@ export { Drawer } from "./drawer";
 export { HeadingBanner } from "./heading-banner";
 export { Accordion } from "./accordion";
 export { Avatar } from "./avatar";
+export { Stepper } from "./stepper";
+export { Breadcrumb } from "./bread-crumb";

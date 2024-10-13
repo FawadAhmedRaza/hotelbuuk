@@ -14,6 +14,8 @@ module.exports = {
       colors: {
         primary: "#852169",
         secondary: "rgba(17, 34, 17,0.74)",
+        tertiary: "#fef5fc",
+        quaternary: "#fdeafa",
         "custom-black": "#1C1B1F",
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
