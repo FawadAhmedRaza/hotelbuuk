@@ -17,6 +17,7 @@ export const RHFInput = React.memo(
     startIcon,
     startIconClass,
     inputClass,
+    customInputClass,
     endIconClass,
     endIcon,
     readOnly = false,
@@ -55,9 +56,11 @@ export const RHFInput = React.memo(
                 </Typography>
               )}
               <div
-                className={`flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral   ${inputClass} ${
+                className={cn(
+                  "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral",
+                  inputClass,
                   disabled ? "!bg-gray-100 cursor-not-allowed" : ""
-                }`}
+                )}
               >
                 {startIcon ? (
                   <Iconify
@@ -74,7 +77,7 @@ export const RHFInput = React.memo(
                   value={field.value || ""}
                   autoComplete="off"
                   placeholder={placeholder}
-                  className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300   text-secondarybg-transparent ${
+                  className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300  text-secondary bg-transparent ${customInputClass} ${className} ${
                     disabled ? " pointer-events-none  " : ""
                   }`}
                 />

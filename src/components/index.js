@@ -14,3 +14,4 @@ export { Accordion } from "./accordion";
 export { Avatar } from "./avatar";
 export { Stepper } from "./stepper";
 export { Breadcrumb } from "./bread-crumb";
+export { Input } from "./input";

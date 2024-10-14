@@ -15,5 +15,9 @@ export const paths = {
   terms: '/terms',
   impressum: '/impressum',
   privacyPolicy: '/privacy-policy',
-  getHotelById: (id) => `/hotels/${id}`
+  getHotelById: (id) => `/hotels/${id}`,
+  nomad: {
+    root: "/nomad",
+    create: '/nomad/create'
+  }
 };

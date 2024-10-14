@@ -5,6 +5,8 @@ import React from "react";
 import { Breadcrumb, Button, Pannel, Typography } from "@/src/components";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { NomadList } from "@/src/_mock/nomad-list";
+import Link from "next/link";
+import { paths } from "@/src/contants";
 
 const header = [
   { id: 1, label: "Date" },
@@ -32,7 +34,14 @@ export const NomadListView = React.memo(() => {
 
   return (
     <Pannel className="flex flex-col gap-10">
-      <Breadcrumb title="Your Listing" action={<Button>Create</Button>} />
+      <Breadcrumb
+        title="Your Listing"
+        action={
+          <Link href={paths.nomad.create}>
+            <Button>Create</Button>
+          </Link>
+        }
+      />
       <div className="border border-gray-200 rounded-xl">
         <CustomTable
           items={items}
@@ -41,34 +50,22 @@ export const NomadListView = React.memo(() => {
           renderRow={(row) => (
             <>
               <td className="px-6 py-4">
-                <Typography
-                  variant="p"
-                  className="  !text-nowrap max-w-56"
-                >
+                <Typography variant="p" className="  !text-nowrap max-w-56">
                   {row.date}
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography
-                  variant="p"
-                  className="  !text-nowrap max-w-56"
-                >
+                <Typography variant="p" className="  !text-nowrap max-w-56">
                   {row.availabilty}
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography
-                  variant="p"
-                  className="   !text-nowrap max-w-56"
-                >
+                <Typography variant="p" className="   !text-nowrap max-w-56">
                   {row?.hotel}
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography
-                  variant="p"
-                  className="   !text-nowrap truncate"
-                >
+                <Typography variant="p" className="   !text-nowrap truncate">
                   {row.status}
                 </Typography>
               </td>

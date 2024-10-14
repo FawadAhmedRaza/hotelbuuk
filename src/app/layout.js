@@ -1,5 +1,5 @@
 import { Poppins, Montserrat } from "next/font/google";
-import LocalFont from 'next/font/local'
+import LocalFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/src/auth";
 import { Toaster } from "react-hot-toast";
@@ -23,33 +23,49 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-
-
 const lemonMilk = LocalFont({
   src: [
     {
-      path: '../../public/assets/fonts/LEMONMILK-Regular.otf',
+      path: "../../public/assets/fonts/LEMONMILK-Regular.otf",
       weight: "400",
     },
     {
-      path: '../../public/assets/fonts/LEMONMILK-Medium.otf',
+      path: "../../public/assets/fonts/LEMONMILK-Medium.otf",
       weight: "500",
     },
     {
-      path: '../../public/assets/fonts/LEMONMILK-Bold.otf',
+      path: "../../public/assets/fonts/LEMONMILK-Bold.otf",
       weight: "700",
     },
   ],
-  variable: '--font-lemonMilk'
-})
+  variable: "--font-lemonMilk",
+});
 
+
+const helvatica = LocalFont({
+  src: [
+    {
+      path: "../../public/assets/fonts/Helvetica-regular.ttf",
+      weight: "400",
+    },
+
+    {
+      path: "../../public/assets/fonts/helvetica-bold.otf",
+      weight: "700",
+    },
+  ],
+  variable: "--font-helvetica",
+});
 
 export default async function RootLayout({ children }) {
   const session = await auth();
   console.log("this is session : ", session?.user);
   return (
     <SessionProvider session={session}>
-      <html lang="en" className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable}`}>
+      <html
+        lang="en"
+        className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable}`}
+      >
         <body className="font-poppins overflow-x-hidden">
           <AuthProvider>
             <Toaster position="top-right" reverseOrder={false} />

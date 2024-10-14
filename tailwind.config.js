@@ -29,6 +29,9 @@ module.exports = {
         "min-450": { min: "450px" },
         "2xl-custom": { min: "1500px" },
       },
+      fontSize: {
+        "15fs": "15px"
+      },
       boxShadow: {
         "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",
         "custom-shadow-lg": "0px 4px 23px 0px #00000026",
@@ -38,7 +41,7 @@ module.exports = {
       backgroundImage: {
         hero: "url('/assets/images/hero.png')",
         banner: "url('/assets/images/banner.png')",
-        footer: "url('/assets/images/footer.png')",
+        footer: "url('/assets/images/footer-bg.jpeg')",
         terms: "url('/assets/images/terms-and-cond.png')",
         impressum: "url('/assets/images/impressum.png')",
         privacy: "url('/assets/images/privacy-policy.png')",
@@ -47,7 +50,8 @@ module.exports = {
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
         montserrat: ["var(--font-montserrat)", "sans-serif"],
-        lemonMilk: ["var(-font-lemonMilk)", "sans-serif"],
+        lemonMilk: ["var(--font-lemonMilk)", "sans-serif"],
+        helvetica: ["var(--font-helvetica)", "sans-serif"],
       },
     },
   },

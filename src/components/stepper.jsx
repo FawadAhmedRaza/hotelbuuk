@@ -1,28 +1,29 @@
 import React from "react";
 import { Iconify, Typography } from "../components";
 
-export const Stepper = ({ steps, activeTabStepper, setActiveTabStepper }) => {
+export const Stepper = ({ steps, activeStep, setActiveStep }) => {
   return (
-    <div className="w-full px-8 py-4">
+    <div className="w-full px-4 md:px-8 py-4">
       {/* Stepper container */}
       <div className="relative flex justify-between items-center">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
             <div className="flex flex-col items-center z-20">
               <div
-                className={`w-12 h-12 flex items-center cursor-pointer justify-center rounded-full border-2 relative ${
-                  index <= activeTabStepper
+                className={`size-14 flex items-center cursor-pointer justify-center rounded-full border-2 relative ${
+                  index <= activeStep
                     ? "border-primary bg-primary text-white "
                     : "border-gray-300 bg-white text-gray-500"
                 }`}
-                onClick={() => setActiveTabStepper(index)} 
+                onClick={() => setActiveStep(index)} 
               >
-                <Iconify icon={step.icon} className="w-6 h-6" />
+                <Iconify iconName={step.icon} className={` size-6 ${index <= activeStep ? " text-white " : "text-primary"}`} />
               </div>
 
               <Typography
-                className={`mt-2 !text-sm absolute -bottom-6   ${
-                  index <= activeTabStepper ? "text-pribg-primary" : "text-gray-500"
+              variant="p"
+                className={`  absolute top-16 w-28 md:w-fit md:text-nowrap  text-center ${
+                  index <= activeStep ? "text-primary" : "text-gray-500"
                 }`}
               >
                 {step.label}
@@ -30,10 +31,10 @@ export const Stepper = ({ steps, activeTabStepper, setActiveTabStepper }) => {
             </div>
 
             {/* Line between steps */}
-            {index < TABS.length - 1 && (
+            {index < steps.length - 1 && (
               <div
                 className={`w-full h-1  ${
-                  index < activeTabStepper ? "bg-primary" : "bg-gray-300"
+                  index < activeStep ? "bg-primary" : "bg-gray-300"
                 }`}
               ></div>
             )}
@@ -42,8 +43,8 @@ export const Stepper = ({ steps, activeTabStepper, setActiveTabStepper }) => {
       </div>
 
       {/* Render the active component below the stepper */}
-      <div className="mt-10">
-        {TABS[activeTabStepper]?.component}
+      <div className="mt-20">
+        {steps[activeStep]?.component}
       </div>
     </div>
   );
