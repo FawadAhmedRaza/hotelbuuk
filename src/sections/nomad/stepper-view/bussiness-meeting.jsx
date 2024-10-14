@@ -13,7 +13,7 @@ import { Typography } from "@/src/components";
 
 export const BussinessMeeting = () => {
   return (
-    <div className="flex justify-between items-start gap-10 w-full h-full">
+    <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
       {/* left  */}
       <div className="flex flex-col gap-5 w-full">
         <RHFInput
