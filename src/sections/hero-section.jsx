@@ -24,7 +24,7 @@ export const HeroSection = React.memo(() => {
         </Typography>
         <Typography
           variant="h3"
-          className="  text-white tracking-widest font-normal shadow "
+          className="text-2xl sm:text-3xl md:text-[2.2rem]  text-white tracking-widest font-normal shadow "
         >
           Book hotels that offer analysis of business destinations.
         </Typography>
