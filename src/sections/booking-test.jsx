@@ -6,7 +6,6 @@ import { RHFFormProvider, RHFInput } from "../components/hook-form";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RHFDateInput } from "../components/hook-form/rhf-date-input";
 
 export const BookingTest = React.memo(() => {
   const checkInRef = useRef(null);
