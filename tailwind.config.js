@@ -21,6 +21,8 @@ module.exports = {
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
         "custom-grey": "#51677E",
+        "datepicker-bg": "#FFFFFF",
+        "datepicker-text": "#1F2937",
       },
 
       lineHeight: {
@@ -31,7 +33,7 @@ module.exports = {
         "2xl-custom": { min: "1500px" },
       },
       fontSize: {
-        "15fs": "15px"
+        "15fs": "15px",
       },
       boxShadow: {
         "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",

@@ -13,6 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
+import { getFormattedDate } from "../libs/helper";
 
 export const Booking = React.memo(() => {
   const [date, setDate] = useState({
@@ -22,16 +23,16 @@ export const Booking = React.memo(() => {
 
   const bookingSchema = Yup.object().shape({
     destination: Yup.string().required("Destination is required"),
-    check_in: Yup.string().required("CheckIn is required"),
-    check_out: Yup.string().required("Checkout is required"),
+    // check_in: Yup.string().required("CheckIn is required"),
+    // check_out: Yup.string().required("Checkout is required"),
   });
 
   const methods = useForm({
     resolver: yupResolver(bookingSchema),
     defaultValues: {
       destination: "",
-      check_in: date.startDate || "",
-      check_out: date.endDate || "",
+      // check_in: date.startDate || "",
+      // check_out: date.endDate || "",
     },
   });
 
@@ -44,7 +45,11 @@ export const Booking = React.memo(() => {
 
   const handleSubmit = async (data) => {
     try {
-      console.log(data);
+      console.log({
+        destination: data.destination,
+        check_in: date.startDate,
+        check_out: date.endDate,
+      });
       reset();
     } catch (error) {
       console.log(error);
@@ -53,30 +58,13 @@ export const Booking = React.memo(() => {
 
   console.log(date);
 
-  const getFormattedDate = (inputDate) => {
-    const date = new Date(inputDate || Date.now());
 
-    if (inputDate) {
-      date.setDate(date.getDate() + 1); // Increment the day
-    }
-
-    const options = { weekday: "short", month: "short", day: "2-digit" };
-    return date.toLocaleDateString("en-US", options).replace(",", "");
-  };
-
-  // const convertDateFormat = (input) => {
-  //   const date = new Date(input); // Convert "YYYY-MM-DD" to a Date object
-  //   if (isNaN(date)) return "Invalid Date"; // Handle invalid dates
-
-  //   const options = { weekday: "short", month: "short", day: "2-digit" };
-  //   return date.toLocaleDateString("en-US", options).replace(",", "");
-  // };
 
   return (
     <RHFFormProvider
       methods={methods}
       onSubmit={methods.handleSubmit(handleSubmit)}
-      className=""
+      className="-z-20"
     >
       <div className="relative flex justify-center w-full bottom-36 md:bottom-24 lg:bottom-20">
         <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 items-center w-11/12 lg:w-10/12 h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10 !z-30 bg-white mx-auto ">
@@ -127,20 +115,32 @@ export const Booking = React.memo(() => {
                 {/* CUSTOM CALENDER */}
 
                 <Datepicker
-                  primaryColor={"blue"}
+                  // primaryColor={"blue"}
                   value={date}
                   placeholder={`${getFormattedDate()} - ${getFormattedDate(
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-64 "
+                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-64  "
+                  configs={{
+                    shortcuts: {
+                      today: "Today",
+                      yesterday: "Yesterday",
+                      last7Days: "Last 7 Days",
+                    },
+                    colors: {
+                      primary: "blue", // Sets a light primary color theme
+                      text: "#1F2937", // Darker text color for contrast on light background
+                      background: "#FFFFFF", // Ensures background stays white
+                    },
+                  }}
                 />
               </div>
             </div>
           </div>
           <Button
             type="submit"
-            className="w-full sm:w-fit text-nowrap rounded-full"
+            className="w-full sm:w-fit text-nowrap "
           >
             Book Now
           </Button>

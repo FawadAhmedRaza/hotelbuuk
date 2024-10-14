@@ -9,7 +9,7 @@ import {
   RHFTextArea,
 } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
-import { Typography } from "@/src/components";
+import { Button, Typography } from "@/src/components";
 
 export const BussinessMeeting = () => {
   return (
@@ -49,8 +49,18 @@ export const BussinessMeeting = () => {
             Accommodation Type
           </Typography>
           <div className="flex items-center gap-5 w-full">
-            <RHFRadio name="accommodation_type" value="hotel" label="Hotel" />
-            <RHFRadio name="accommodation_type" value="bnb" label="B&B" />
+            <RHFRadio
+              id="hotel"
+              name="accommodation_type"
+              value="hotel"
+              label="Hotel"
+            />
+            <RHFRadio
+              id="bnb"
+              name="accommodation_type"
+              value="bnb"
+              label="B&B"
+            />
           </div>
         </div>
 
@@ -86,6 +96,7 @@ export const BussinessMeeting = () => {
           label="Street Address"
           placeholder="Enter your Street Address"
         />
+      <Button type="submit">submit</Button>
       </div>
     </div>
   );
