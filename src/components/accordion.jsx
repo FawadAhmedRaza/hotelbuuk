@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
-import { useBoolean } from "../hooks/use=boolean";
+import { useBoolean } from "../hooks";
 import { Typography } from "./typography";
 import { Iconify } from "./iconify";
 
 // Components and Others...
 
-export const Accordion = ({ title, children, className }) => {
+export const Accordion = React.memo(({ title, children, className }) => {
   const { isOpen, toggleDrawer } = useBoolean();
   const accordionRef = useRef(null);
 
@@ -20,7 +20,9 @@ export const Accordion = ({ title, children, className }) => {
         className="flex items-center justify-between cursor-pointer px-5 py-3"
         onClick={toggleDrawer}
       >
-        <Typography variant="h6" className="text-primary font-semibold">{title}</Typography>
+        <Typography variant="h6" className="text-primary font-semibold">
+          {title}
+        </Typography>
 
         <Iconify
           iconName="iconamoon:arrow-down-2-bold"
@@ -42,4 +44,4 @@ export const Accordion = ({ title, children, className }) => {
       </div>
     </div>
   );
-};
+});
