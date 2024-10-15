@@ -101,11 +101,11 @@ export const Booking = React.memo(() => {
             </div>
             <span className=" hidden sm:flex h-16 w-[2px] bg-primary" />
 
-            <div className="flex gap-5">
+            <div className="flex gap-1 sm:gap-3">
               <Iconify iconName="ion:calendar" className="text-primary mt-1" />
 
-              <div className="flex flex-col gap-1 sm:gap-2">
-                <span className="flex gap-8 lg:gap-14 items-center justify-start sm:justify-start w-full">
+              <div className="flex flex-col gap-1 sm:gap-2 w-auto">
+                <span className="flex gap-8 lg:gap-10 items-center justify-start sm:justify-start w-full">
                   {/* <Iconify iconName="ion:calendar" className="text-primary" /> */}
                   <Typography
                     variant="p"
@@ -130,7 +130,7 @@ export const Booking = React.memo(() => {
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-64  "
+                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-full  "
                   configs={{
                     shortcuts: {
                       today: "Today",

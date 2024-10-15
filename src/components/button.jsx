@@ -18,6 +18,7 @@ export const Button = ({
         startIcon && "pl-2",
         endIcon && "pr-2"
       )}
+      
       {...rests}
       type={type}
     >

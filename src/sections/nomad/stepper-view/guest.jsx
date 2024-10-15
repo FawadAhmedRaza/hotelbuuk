@@ -1,9 +1,12 @@
+import React from "react";
+
+// Components and Others...
+import { Button, Typography } from "@/src/components";
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { Accordion, Button, Typography } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
-import { useFormContext } from "react-hook-form";
 
 export const GuestLearn = () => {
   const [isAccordionVisible, setAccordionVisible] = useState(false);
@@ -36,6 +39,7 @@ export const GuestLearn = () => {
       <div className="flex flex-col gap-3 w-full">
         <RHFInput
           name="learning_info.title"
+          name="learning_info.title"
           label="Title"
           placeholder="Title of your Topic"
         />
@@ -47,6 +51,7 @@ export const GuestLearn = () => {
 
         <div className="flex justify-end items-end">
           <Button onClick={handleAdd}>Add</Button>
+          <Button>Add</Button>
         </div>
       </div>
 

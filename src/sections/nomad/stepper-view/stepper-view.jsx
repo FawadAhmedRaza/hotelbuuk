@@ -10,8 +10,13 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 // Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
+import { RHFFormProvider } from "@/src/components/hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Pricing } from "./pricing";
 
 export const StepperView = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -22,9 +27,7 @@ export const StepperView = () => {
       description: Yup.string().required("required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
-      accomodation_type: Yup.string().required(
-        "Accommodation type is required"
-      ),
+      accomodation_type: Yup.string().optional().default("bnb"),
       location: Yup.object().shape({
         country: Yup.string().required("Country is required"),
         city: Yup.string().required("City is required"),
@@ -50,6 +53,7 @@ export const StepperView = () => {
 
   const methods = useForm({
     resolver: yupResolver(NomadSchema),
+    defaultValues: NomadSchema.default(),
   });
 
   const {
@@ -87,6 +91,12 @@ export const StepperView = () => {
       icon: "heroicons:hand-thumb-up",
       value: "availability",
       component: <SetAvailability />,
+    },
+    {
+      label: "Pricing",
+      icon: "carbon:pricing-traditional",
+      value: "pricing",
+      component: <Pricing />,
     },
   ];
 

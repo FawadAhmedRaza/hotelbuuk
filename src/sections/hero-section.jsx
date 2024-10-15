@@ -16,7 +16,7 @@ export const HeroSection = React.memo(() => {
       <div className="flex flex-col justify-center lg:justify-start  gap-5  z-20 w-full h-full ">
         <Typography
           variant="h1"
-          className="lg:!text-[5rem] text-white font-bold  shadow !custom-line uppercase "
+          className="text-2xl lg:!text-[5rem] text-white font-bold  shadow !custom-line uppercase "
         >
           <span className="heading-bg">stay for business </span>
           <br />
@@ -24,7 +24,7 @@ export const HeroSection = React.memo(() => {
         </Typography>
         <Typography
           variant="h3"
-          className="text-2xl sm:text-3xl md:text-[2.2rem]  text-white tracking-widest font-normal shadow "
+          className="text-lg sm:text-3xl md:text-[2.2rem]  text-white tracking-widest font-normal shadow "
         >
           Book hotels that offer analysis of business destinations.
         </Typography>

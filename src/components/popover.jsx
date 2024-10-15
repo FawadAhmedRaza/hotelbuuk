@@ -44,7 +44,7 @@ export const CustomPopover = ({
       {arrow && (
         <Iconify
           iconName="bxs:up-arrow"
-          className={`!w-4 !h-4 justify-end -mb-1 mr-1.5 popover-button text-primary ${arrowClass}`}
+          className={`!w-4 !h-4 justify-end -mb-1  size-5 sm:size-8  popover-button text-primary ${arrowClass}`}
           onClick={(e) => e.stopPropagation()}
         />
       )}
