@@ -7,7 +7,7 @@ import {
   RHFSelect,
   RHFTextArea,
 } from "@/src/components/hook-form";
-import { Button, Typography } from "@/src/components";
+import { Typography } from "@/src/components";
 
 export const BussinessMeeting = () => {
   return (
@@ -16,12 +16,10 @@ export const BussinessMeeting = () => {
       <div className="flex flex-col gap-5 w-full">
         <RHFInput
           name="business_meeting.title"
-          name="business_meeting.title"
           label="Title"
           placeholder="Title of your Listing"
         />
         <RHFTextArea
-          name="business_meeting.description"
           name="business_meeting.description"
           label="Description"
           required={true}

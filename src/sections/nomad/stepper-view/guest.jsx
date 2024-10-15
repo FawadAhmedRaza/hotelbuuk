@@ -1,18 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-
-// Components and Others...
-import { Button, Typography } from "@/src/components";
+import React, { useState, useEffect } from "react";
+import { Accordion, Button, Typography } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
 import { useFormContext } from "react-hook-form";
 
 export const GuestLearn = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [isAccordionVisible, setAccordionVisible] = useState(false);
+  
+  // Get the form context
+  const { watch } = useFormContext();
 
-  const handleSubmit = () => {
-    console.log(title, description);
+  // Watch the learning info values from the form state
+  const learningInfo = watch("learning_info");
+
+  // Check if the form fields (title and description) are filled
+  useEffect(() => {
+    // Automatically show the accordion when both fields are filled
+    if (learningInfo?.title && learningInfo?.description) {
+      setAccordionVisible(true);
+    }
+  }, [learningInfo]);
+
+  const handleAdd = () => {
+    // Set the accordion visible when the button is clicked
+    setAccordionVisible(true);
   };
 
   return (
@@ -20,25 +32,32 @@ export const GuestLearn = () => {
       <Typography variant="h4" className="font-semibold">
         Topics
       </Typography>
+      
       <div className="flex flex-col gap-3 w-full">
         <RHFInput
-          name="title"
+          name="learning_info.title"
           label="Title"
           placeholder="Title of your Topic"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
         />
         <RHFTextArea
-          name="description"
+          name="learning_info.description"
           label="Description"
           placeholder="Description of your Topic"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
         />
+
         <div className="flex justify-end items-end">
-          <Button onClick={handleSubmit}>Add</Button>
+          <Button onClick={handleAdd}>Add</Button>
         </div>
       </div>
+
+      {/* Conditionally render the Accordion only when visible */}
+      {isAccordionVisible && (
+        <div className="w-full">
+          <Accordion title={learningInfo?.title} className="">
+            <Typography variant="p">{learningInfo?.description}</Typography>
+          </Accordion>
+        </div>
+      )}
     </div>
   );
 };
