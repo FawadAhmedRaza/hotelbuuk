@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 // Components and Others...
-import { Button, Iconify, Typography } from "@/src/components";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import { hotelRules } from "@/src/_mock/nomad-list";
+import { Button, Typography } from "@/src/components";
+import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
+import { getFormattedDate } from "@/src/libs/helper";
 import { addDays } from "date-fns";
 import { useState } from "react";
-import { DateRange, DateRangePicker } from "react-date-range";
-import Datepicker from "react-tailwindcss-datepicker";
-import { getFormattedDate } from "@/src/libs/helper";
-import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
-import { hotelRules } from "@/src/_mock/nomad-list";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 export const SetAvailability = () => {
   const [openCalender, setOpenCalender] = useState(false);
@@ -23,8 +21,6 @@ export const SetAvailability = () => {
       key: "selection",
     },
   ]);
-
-  console.log(date);
 
   const toggleCalender = () => {
     setOpenCalender((prev) => !prev);
@@ -44,7 +40,7 @@ export const SetAvailability = () => {
   }, []);
 
   return (
-    <div className=" flex flex-col justify-between items-start gap-10 w-full h-full">
+    <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
       <Typography variant="h4" className="font-semibold">
         Availability
       </Typography>
@@ -59,7 +55,7 @@ export const SetAvailability = () => {
           className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer "
           onClick={toggleCalender}
         >
-          <span className="flex items-center gap-4 text-base">
+          <span className="flex items-start gap-4 text-base">
             From :
             <Typography variant="h6">
               {" "}
@@ -81,7 +77,10 @@ export const SetAvailability = () => {
           } top-14 p-3  bg-gray-200 rounded-lg`}
         >
           <RHFDatePicker
-            onChange={(item) => setDate([item.selection])}
+            onChange={(item) => {
+              console.log("item", item);
+              setDate([item.selection]);
+            }}
             value={date}
             rangeColors={["#852169"]}
           />
@@ -105,9 +104,12 @@ export const SetAvailability = () => {
           What Rules must your Guest observe?
         </Typography>
 
-        {hotelRules.map((rule) => (
-          <RHFCheckbox name={rule.name} label={rule.title} />
+        {hotelRules.map((rule, index) => (
+          <RHFCheckbox key={index} name={rule.name} label={rule.title} />
         ))}
+      </div>
+      <div className="flex justify-end items-end w-full">
+        <Button>Add</Button>
       </div>
     </div>
   );

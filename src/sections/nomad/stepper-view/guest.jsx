@@ -21,9 +21,6 @@ export const GuestLearn = () => {
           label="Description"
           placeholder="Description of your Topic"
         />
-        <div className="flex justify-end items-end">
-          <Button>Add</Button>
-        </div>
       </div>
     </div>
   );
