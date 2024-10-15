@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -7,7 +8,7 @@ import { useFormContext } from "react-hook-form";
 
 export const GuestLearn = () => {
   const [isAccordionVisible, setAccordionVisible] = useState(false);
-  
+
   // Get the form context
   const { watch } = useFormContext();
 
@@ -32,7 +33,7 @@ export const GuestLearn = () => {
       <Typography variant="h4" className="font-semibold">
         Topics
       </Typography>
-      
+
       <div className="flex flex-col gap-3 w-full">
         <RHFInput
           name="learning_info.title"
