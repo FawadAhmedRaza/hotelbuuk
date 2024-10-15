@@ -1,17 +1,16 @@
-"use client";
 import React from "react";
 import { Button, Iconify, Typography } from "../components";
 import { useFormContext } from "react-hook-form";
 
-export const Stepper = ({ steps, activeStep, setActiveStep }) => {
+export const Stepper = ({
+  steps,
+  activeStep,
+  handleNext,
+  handleBack,
+  isLastStep,
+}) => {
   const { watch } = useFormContext();
-  const readStep = watch("business_meeting");
 
-  console.log(readStep ? true : false);
-
-  const handleNext = () => {
-    setActiveStep((prev) => prev + 1);
-  };
   return (
     <div className="w-full px-4 md:px-8 py-4">
       {/* Stepper container */}
@@ -25,7 +24,6 @@ export const Stepper = ({ steps, activeStep, setActiveStep }) => {
                     ? "border-primary bg-primary text-white "
                     : "border-gray-300 bg-white text-gray-500"
                 }`}
-                onClick={() => setActiveStep(index)}
               >
                 <Iconify
                   iconName={step.icon}
@@ -37,7 +35,7 @@ export const Stepper = ({ steps, activeStep, setActiveStep }) => {
 
               <Typography
                 variant="p"
-                className={`  absolute top-16 w-28 md:w-fit md:text-nowrap  text-center ${
+                className={`absolute top-16 w-28 md:w-fit md:text-nowrap text-center ${
                   index <= activeStep ? "text-primary" : "text-gray-500"
                 }`}
               >
@@ -45,10 +43,9 @@ export const Stepper = ({ steps, activeStep, setActiveStep }) => {
               </Typography>
             </div>
 
-            {/* Line between steps */}
             {index < steps.length - 1 && (
               <div
-                className={`w-full h-1  ${
+                className={`w-full h-1 ${
                   index < activeStep ? "bg-primary" : "bg-gray-300"
                 }`}
               ></div>
@@ -57,15 +54,16 @@ export const Stepper = ({ steps, activeStep, setActiveStep }) => {
         ))}
       </div>
 
-      {/* Render the active component below the stepper */}
+      {/* Render the active component */}
       <div className="mt-20">{steps[activeStep]?.component}</div>
 
-      <div className="flex justify-end my-5">
-        {steps.length === activeStep + 1 ? (
-          <div className="flex gap-5">
-            <Button>Preview</Button>
-            <Button type="submit">Submit</Button>
-          </div>
+      {/* Navigation buttons */}
+      <div className="flex justify-end gap-2 my-5">
+        <Button disabled={activeStep === 0} onClick={handleBack}>
+          Back
+        </Button>
+        {isLastStep ? (
+          <Button type="submit">Submit</Button>
         ) : (
           <Button onClick={handleNext}>Next</Button>
         )}

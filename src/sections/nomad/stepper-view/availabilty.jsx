@@ -114,9 +114,6 @@ export const SetAvailability = () => {
           <RHFCheckbox key={index} name={rule.name} label={rule.title} />
         ))}
       </div>
-      <div className="flex justify-end items-end w-full">
-        <Button>Add</Button>
-      </div>
     </div>
   );
 };

@@ -11,7 +11,7 @@ export const BookingSteps = () => {
       <div className="flex flex-col lg:flex-row justify-between gap-5 w-full">
         {BookingStepsData?.map((item) => (
           <Card
-            className=" flex flex-col sm:flex-row lg:flex-col justify-start  gap-3 w-full sm:h-full  lg:h-96"
+            className="flex flex-col sm:flex-row lg:flex-col justify-start  gap-3 w-full sm:h-full  lg:h-96"
             key={item?.id}
           >
             <img src={item?.img} alt="img" className=" " />
