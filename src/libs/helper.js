@@ -16,3 +16,22 @@ export function generateOTP(length = 6) {
 
   return otp;
 }
+
+export const getFormattedDate = (inputDate) => {
+  const date = new Date(inputDate || Date.now());
+
+  if (inputDate) {
+    date.setDate(date.getDate() + 1); // Increment the day
+  }
+
+  const options = { weekday: "short", month: "short", day: "2-digit" };
+  return date.toLocaleDateString("en-US", options).replace(",", "");
+};
+
+export const convertDateFormat = (input) => {
+  const date = new Date(input); // Convert "YYYY-MM-DD" to a Date object
+  if (isNaN(date)) return "Invalid Date"; // Handle invalid dates
+
+  const options = { weekday: "short", month: "short", day: "2-digit" };
+  return date.toLocaleDateString("en-US", options).replace(",", "");
+};
