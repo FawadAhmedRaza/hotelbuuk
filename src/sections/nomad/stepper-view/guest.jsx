@@ -1,11 +1,8 @@
-import React from "react";
-
-// Components and Others...
-import { Button, Typography } from "@/src/components";
 "use client";
+import { Button, Typography } from "@/src/components";
 
 import React, { useState, useEffect } from "react";
-import { Accordion, Button, Typography } from "@/src/components";
+import { Accordion } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
 
 export const GuestLearn = () => {
@@ -38,7 +35,6 @@ export const GuestLearn = () => {
       
       <div className="flex flex-col gap-3 w-full">
         <RHFInput
-          name="learning_info.title"
           name="learning_info.title"
           label="Title"
           placeholder="Title of your Topic"
