@@ -130,7 +130,7 @@ export const Booking = React.memo(() => {
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-full  "
+                  inputClassName="!text-sm md:text-base bg-transparent !appearance-none !text-black outline-none w-full  "
                   configs={{
                     shortcuts: {
                       today: "Today",

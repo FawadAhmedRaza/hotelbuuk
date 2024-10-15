@@ -7,7 +7,7 @@ export const Button = ({
   children,
   startIcon,
   endIcon,
-  
+  type = "button",
   ...rests
 }) => {
   return (
@@ -20,6 +20,7 @@ export const Button = ({
       )}
       
       {...rests}
+      type={type}
     >
       {startIcon && <BgIcon iconName={startIcon} iconClass={` text-black `} />}
       {children}

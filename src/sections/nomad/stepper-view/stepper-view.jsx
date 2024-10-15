@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 
+
+
 // Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
@@ -16,9 +18,9 @@ export const StepperView = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const NomadSchema = Yup.object().shape({
-    business_meeting: Yup.object().shape({
+    business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
-      description: Yup.string().required("Description is required"),
+      description: Yup.string().required("required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().optional().default("bnb"),
@@ -41,6 +43,7 @@ export const StepperView = () => {
       end_date: Yup.date()
         .required("End date is required")
         .min(Yup.ref("start_date"), "End date must be after the start date")
+        .min(Yup.ref("start_date"), "End date must be after the start date")
         .typeError("Invalid date format"),
     }),
   });
@@ -53,18 +56,19 @@ export const StepperView = () => {
   const {
     reset,
     formState: { errors },
+    handleSubmit,
   } = methods;
 
   console.log(errors);
 
-  const handleSubmit = async (data) => {
+  const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log(data);
-      reset();
+      console.log("data", data);
+      // reset();
     } catch (error) {
       console.log(error);
     }
-  };
+  });
 
   const steps = [
     {
@@ -95,10 +99,7 @@ export const StepperView = () => {
 
   return (
     <Pannel>
-      <RHFFormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(handleSubmit)}
-      >
+      <RHFFormProvider methods={methods} onSubmit={onSubmit}>
         <Stepper
           steps={steps}
           activeStep={activeStep}

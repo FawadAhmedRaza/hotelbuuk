@@ -136,12 +136,12 @@ export const RHFSelect = ({
               </div>
             )}
           </div>
-          {errors[name] && (
+          {errors && (
             <Typography
-              variant="p"
-              className="text-xs text-red-400 transition-all duration-500"
+              variant={"p"}
+              className="!text-xs text-red-400 transition-all duration-500"
             >
-              {errors[name]?.message}
+              {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
             </Typography>
           )}
         </div>
