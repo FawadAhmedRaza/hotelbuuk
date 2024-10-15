@@ -29,11 +29,11 @@ export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children }) => {
   }, []);
 
   return (
-    <div className="text-center h-full w-full  ">
+    <div className="text-center h-full w-full !z-50 ">
       <div
         className={` ${
           isDrawerOpen
-            ? " w-screen h-screen fixed bg-black  bg-opacity-50  top-0 left-0 !z-50 "
+            ? " w-screen h-screen fixed bg-black  bg-opacity-50  top-0 left-0  "
             : null
         }`}
       >

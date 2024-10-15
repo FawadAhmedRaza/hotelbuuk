@@ -2,12 +2,12 @@ import React from "react";
 import { DateRange } from "react-date-range";
 import { Controller, useFormContext } from "react-hook-form";
 
-export const RHFDatePicker = ({ onChange, value, rangeColors }) => {
+export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
   const { control } = useFormContext();
 
   return (
     <Controller
-      name="dateRange"
+      name={name}
       control={control}
       render={() => (
         <DateRange

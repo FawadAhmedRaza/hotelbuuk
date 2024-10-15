@@ -6,6 +6,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
+    './node_modules/tailwind-datepicker-react/dist/**/*.js'
   ],
   theme: {
     extend: {

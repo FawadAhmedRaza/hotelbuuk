@@ -28,7 +28,7 @@ export const StepperView = () => {
       location: Yup.object().shape({
         country: Yup.string().required("Country is required"),
         city: Yup.string().required("City is required"),
-        street: Yup.string().required("Street is required"),
+        street_name: Yup.string().required("Street is required"),
       }),
     }),
 
