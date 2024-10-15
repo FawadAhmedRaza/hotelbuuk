@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
 import { useForm } from "react-hook-form";
-
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
@@ -25,9 +23,9 @@ export const StepperView = () => {
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().optional().default("bnb"),
       location: Yup.object().shape({
-        country: Yup.string().required("Country is required"),
-        city: Yup.string().required("City is required"),
-        street_name: Yup.string().required("Street is required"),
+        country: Yup.string().optional("Country is required"),
+        city: Yup.string().optional("City is required"),
+        street_name: Yup.string().optional("Street is required"),
       }),
     }),
 
@@ -38,12 +36,13 @@ export const StepperView = () => {
 
     availibility: Yup.object().shape({
       start_date: Yup.date()
-        .required("Start date is required")
-        .typeError("Invalid date format"),
+        .optional("Start date is required"),
+        // .typeError("Invalid date format")
       end_date: Yup.date()
-        .required("End date is required")
-        .min(Yup.ref("start_date"), "End date must be after the start date")
-        .typeError("Invalid date format"),
+        .optional("End date is required")
+        // .min(Yup.ref("start_date"), "End date must be after the start date")
+        // .min(Yup.ref("start_date"), "End date must be after the start date")
+        // .typeError("Invalid date format"),
     }),
   });
 
@@ -53,20 +52,15 @@ export const StepperView = () => {
   });
 
   const {
-    reset,
-    formState: { errors },
+    trigger,
     handleSubmit,
+    formState: { errors },
   } = methods;
 
-  console.log(errors);
+  console.log("errors", errors);
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      console.log("data", data);
-      // reset();
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("Form submitted: ", data);
   });
 
   const steps = [
@@ -96,6 +90,35 @@ export const StepperView = () => {
     },
   ];
 
+  const handleNext = async () => {
+    let fieldsToValidate = [];
+    if (activeStep === 0) {
+      fieldsToValidate = [
+        "business_meeting.title",
+        "business_meeting.description",
+        "business_meeting.official_name",
+        "business_meeting.business_category",
+        "business_meeting.location.country",
+        "business_meeting.location.city",
+        "business_meeting.location.street_name",
+      ];
+    } else if (activeStep === 1) {
+      fieldsToValidate = ["learning_info.title", "learning_info.description"];
+    } else if (activeStep === 2) {
+      fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
+    }
+
+    const isStepValid = await trigger(fieldsToValidate); // Validate only step-specific fields
+    console.log("Is Step Valid:", isStepValid)
+    if (isStepValid) {
+      setActiveStep((prev) => prev + 1);
+    }
+  };
+
+  const handleBack = () => {
+    setActiveStep((prev) => prev - 1);
+  };
+
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
@@ -103,6 +126,9 @@ export const StepperView = () => {
           steps={steps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          isLastStep={activeStep === steps.length - 1}
         />
       </RHFFormProvider>
     </Pannel>

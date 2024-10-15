@@ -4,6 +4,7 @@ import { Button, Typography } from "@/src/components";
 import React, { useState, useEffect } from "react";
 import { Accordion } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
+import { useFormContext } from "react-hook-form";
 
 export const GuestLearn = () => {
   const [isAccordionVisible, setAccordionVisible] = useState(false);
@@ -47,7 +48,6 @@ export const GuestLearn = () => {
 
         <div className="flex justify-end items-end">
           <Button onClick={handleAdd}>Add</Button>
-          <Button>Add</Button>
         </div>
       </div>
 
