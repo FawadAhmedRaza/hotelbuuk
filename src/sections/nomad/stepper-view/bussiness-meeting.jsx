@@ -8,10 +8,15 @@ import {
   RHFSelect,
   RHFTextArea,
 } from "@/src/components/hook-form";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { Button, Typography } from "@/src/components";
 
 export const BussinessMeeting = () => {
+  const { watch } = useFormContext();
+  const accomoType = watch("business_meeting.accomodation_type");
+
+  console.log(accomoType);
+
   return (
     <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
       {/* left  */}
@@ -65,39 +70,53 @@ export const BussinessMeeting = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 w-full">
-          <Typography variant="h5" className="font-semibold">
-            Location
-          </Typography>
-          <div className="flex items-center gap-5 w-full">
-            <RHFSelect
-              name="business_meeting.location.country"
-              placeholder="Select your Country"
-              label="Country"
-              options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
-              ]}
+        {accomoType === "bnb" ? (
+          <>
+            <div className="flex flex-col gap-3 w-full">
+              <Typography variant="h5" className="font-semibold">
+                Location
+              </Typography>
+              <div className="flex items-center gap-5 w-full">
+                <RHFSelect
+                  name="business_meeting.location.country"
+                  placeholder="Select your Country"
+                  label="Country"
+                  options={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                  ]}
+                />
+                <RHFSelect
+                  name="business_meeting.location.city"
+                  placeholder="Select your City"
+                  label="City"
+                  options={[
+                    { label: "Option 1", value: "option1" },
+                    { label: "Option 2", value: "option2" },
+                    { label: "Option 3", value: "option3" },
+                  ]}
+                />
+              </div>
+            </div>
+            <RHFInput
+              name="business_meeting.location.street_name"
+              label="Street Address"
+              placeholder="Enter your Street Address"
             />
-            <RHFSelect
-              name="business_meeting.location.city"
-              placeholder="Select your City"
-              label="City"
-              options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
-              ]}
-            />
-          </div>
-        </div>
-        <RHFInput
-          name="business_meeting.location.street_name"
-          label="Street Address"
-          placeholder="Enter your Street Address"
-        />
-        <Button type="submit">submit</Button>
+          </>
+        ) : (
+          <RHFSelect
+            name="business_meeting.hotels"
+            placeholder="Select Hotels"
+            label="Hotels"
+            options={[
+              { label: "Option 1", value: "option1" },
+              { label: "Option 2", value: "option2" },
+              { label: "Option 3", value: "option3" },
+            ]}
+          />
+        )}
       </div>
     </div>
   );

@@ -44,7 +44,10 @@ export const NavBar = React.memo(({ className }) => {
               iconName="fluent:person-circle-12-filled"
               className="size-6 sm:size-8"
             />
-            <Typography variant="h6" className="font-medium text-white">
+            <Typography
+              variant="p"
+              className="font-medium text-white text-nowrap"
+            >
               Hi, Fawad
             </Typography>
           </span>

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
 import { RHFFormProvider } from "@/src/components/hook-form";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import * as Yup from "yup";
@@ -20,33 +20,31 @@ export const StepperView = () => {
       description: Yup.string().required("Description is required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
-      accomodation_type: Yup.string().required("Accommodation type is required"),
+      accomodation_type: Yup.string().required(
+        "Accommodation type is required"
+      ),
       location: Yup.object().shape({
         country: Yup.string().required("Country is required"),
         city: Yup.string().required("City is required"),
         street_name: Yup.string().required("Street is required"),
       }),
     }),
-  
+
     learning_info: Yup.object().shape({
       title: Yup.string().required("Learning title is required"),
       description: Yup.string().required("Learning description is required"),
     }),
-  
+
     availibility: Yup.object().shape({
       start_date: Yup.date()
         .required("Start date is required")
         .typeError("Invalid date format"),
       end_date: Yup.date()
         .required("End date is required")
-        .min(
-          Yup.ref('start_date'),
-          "End date must be after the start date"
-        )
+        .min(Yup.ref("start_date"), "End date must be after the start date")
         .typeError("Invalid date format"),
     }),
   });
-  
 
   const methods = useForm({
     resolver: yupResolver(NomadSchema),
