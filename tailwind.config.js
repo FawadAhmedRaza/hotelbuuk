@@ -5,6 +5,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
   theme: {
     extend: {
@@ -14,10 +15,14 @@ module.exports = {
       colors: {
         primary: "#852169",
         secondary: "rgba(17, 34, 17,0.74)",
+        tertiary: "#fef5fc",
+        quaternary: "#fdeafa",
         "custom-black": "#1C1B1F",
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
         "custom-grey": "#51677E",
+        "datepicker-bg": "#FFFFFF",
+        "datepicker-text": "#1F2937",
       },
 
       lineHeight: {
@@ -26,6 +31,9 @@ module.exports = {
       screens: {
         "min-450": { min: "450px" },
         "2xl-custom": { min: "1500px" },
+      },
+      fontSize: {
+        "15fs": "15px",
       },
       boxShadow: {
         "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",

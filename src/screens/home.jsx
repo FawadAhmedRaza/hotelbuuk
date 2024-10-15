@@ -9,7 +9,6 @@ import {
   NavBar,
 } from "../sections";
 import { Hotels } from "../sections/hotels";
-import { BookingTest } from "../sections/booking-test";
 
 const HomeScreen = React.memo(() => {
   return (
@@ -17,7 +16,6 @@ const HomeScreen = React.memo(() => {
       <NavBar />
       <HeroSection />
       <Booking />
-      {/* <BookingTest /> */}
       <Hotels />
       <Banner />
       <BookingSteps />
