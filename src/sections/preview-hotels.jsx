@@ -20,12 +20,12 @@ export const PreviewHotels = () => {
       <BgIcon
         iconName="cuida:arrow-left-outline"
         iconClass="!size-6"
-        className="swiper-button-prev custom-prev absolute -left-1  md:-left-5 lg:-left-10 -mt-8 bg-primary size-8 z-30 top-1/2"
+        className="swiper-button-prev custom-prev absolute -left-6  md:-left-8 lg:-left-12 -mt-8 bg-primary size-8 z-30 top-1/2"
       />
       <BgIcon
         iconName="cuida:arrow-right-outline"
         iconClass="!size-6"
-        className=" swiper-button-next custom-next absolute -right-1  md:-right-5  lg:-right-10 -mt-8 bg-primary size-8  z-30 top-1/2"
+        className=" swiper-button-next custom-next absolute -right-6  md:-right-8  lg:-right-12 -mt-8 bg-primary size-8  z-30 top-1/2"
       />
 
       <Swiper

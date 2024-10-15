@@ -10,16 +10,27 @@ import {
   RHFInput,
 } from "@/src/components/hook-form";
 import { Controller, useForm } from "react-hook-form";
+import { addDays } from "date-fns";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import { getFormattedDate } from "../libs/helper";
 
 export const Booking = React.memo(() => {
-  const [date, setDate] = useState({
-    startDate: null,
-    endDate: null,
-  });
+  const [openCalender, setOpenCalender] = useState(false);
+
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
+
+  const toggleCalender = () => {
+    setOpenCalender((prev) => !prev);
+  };
 
   const bookingSchema = Yup.object().shape({
     destination: Yup.string().required("Destination is required"),
@@ -47,8 +58,8 @@ export const Booking = React.memo(() => {
     try {
       console.log({
         destination: data.destination,
-        check_in: date.startDate,
-        check_out: date.endDate,
+        check_in: date.startDate.toString(),
+        check_out: date.endDate.toString(),
       });
       reset();
     } catch (error) {
@@ -58,17 +69,15 @@ export const Booking = React.memo(() => {
 
   console.log(date);
 
-
-
   return (
     <RHFFormProvider
       methods={methods}
       onSubmit={methods.handleSubmit(handleSubmit)}
-      className="-z-20"
+      className=""
     >
       <div className="relative flex justify-center w-full bottom-36 md:bottom-24 lg:bottom-20">
-        <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 items-center w-11/12 lg:w-10/12 h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10 !z-30 bg-white mx-auto ">
-          <div className=" flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-10 lg:gap-20 xl:gap-28 grow w-full">
+        <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 items-center w-11/12 lg:w-10/12 h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
+          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-10 lg:gap-20 xl:gap-28 grow w-full">
             <div className="flex  gap-1 sm:gap-3">
               <Iconify
                 iconName="carbon:location-filled"
@@ -92,11 +101,11 @@ export const Booking = React.memo(() => {
             </div>
             <span className=" hidden sm:flex h-16 w-[2px] bg-primary" />
 
-            <div className="flex gap-5">
+            <div className="flex gap-1 sm:gap-3">
               <Iconify iconName="ion:calendar" className="text-primary mt-1" />
 
-              <div className="flex flex-col gap-1 sm:gap-2">
-                <span className="flex gap-8 items-center justify-start sm:justify-start w-full">
+              <div className="flex flex-col gap-1 sm:gap-2 w-auto">
+                <span className="flex gap-8 lg:gap-10 items-center justify-start sm:justify-start w-full">
                   {/* <Iconify iconName="ion:calendar" className="text-primary" /> */}
                   <Typography
                     variant="p"
@@ -115,13 +124,13 @@ export const Booking = React.memo(() => {
                 {/* CUSTOM CALENDER */}
 
                 <Datepicker
-                  // primaryColor={"blue"}
+                  primaryColor={"blue"}
                   value={date}
                   placeholder={`${getFormattedDate()} - ${getFormattedDate(
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-64  "
+                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-full  "
                   configs={{
                     shortcuts: {
                       today: "Today",
@@ -138,10 +147,7 @@ export const Booking = React.memo(() => {
               </div>
             </div>
           </div>
-          <Button
-            type="submit"
-            className="w-full sm:w-fit text-nowrap "
-          >
+          <Button type="submit" className="w-full sm:w-fit text-nowrap ">
             Book Now
           </Button>
         </div>

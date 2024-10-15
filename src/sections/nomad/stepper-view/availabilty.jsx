@@ -1,33 +1,40 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 // Components and Others...
-import { Button, Iconify, Typography } from "@/src/components";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import { hotelRules } from "@/src/_mock/nomad-list";
+import { Button, Typography } from "@/src/components";
+import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
+import { getFormattedDate } from "@/src/libs/helper";
 import { addDays } from "date-fns";
 import { useState } from "react";
-import { DateRange, DateRangePicker } from "react-date-range";
-import Datepicker from "react-tailwindcss-datepicker";
-import { getFormattedDate } from "@/src/libs/helper";
-import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
-import { hotelRules } from "@/src/_mock/nomad-list";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 export const SetAvailability = () => {
   const [openCalender, setOpenCalender] = useState(false);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ]);
 
-  console.log(date);
-
   const toggleCalender = () => {
     setOpenCalender((prev) => !prev);
+  };
+
+  const cancelCalender = () => {
+    setOpenCalender((prev) => !prev);
+    setDate(() => [
+      {
+        startDate: new Date(),
+        endDate: addDays(new Date(), 1),
+        key: "selection",
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -44,7 +51,7 @@ export const SetAvailability = () => {
   }, []);
 
   return (
-    <div className=" flex flex-col justify-between items-start gap-10 w-full h-full">
+    <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
       <Typography variant="h4" className="font-semibold">
         Availability
       </Typography>
@@ -56,10 +63,10 @@ export const SetAvailability = () => {
 
       <div className="relative">
         <div
-          className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer "
+          className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
           onClick={toggleCalender}
         >
-          <span className="flex items-center gap-4 text-base">
+          <span className="flex items-start gap-4 text-base">
             From :
             <Typography variant="h6">
               {" "}
@@ -70,31 +77,29 @@ export const SetAvailability = () => {
             <Typography variant="h6">
               {" "}
               {date[0].endDate.toString().slice(0, 10) ||
-                getFormattedDate()}{" "}
+                getFormattedDate(Date())}{" "}
             </Typography>
           </span>
         </div>
+        {openCalender && (
+          <div className={`  mt-5 p-3  bg-gray-200 rounded-lg`}>
+            <RHFDatePicker
+              name="availibility"
+              onChange={(item) => setDate([item.selection])}
+              value={date}
+              rangeColors={["#852169"]}
+            />
 
-        <div
-          className={`absolute ${
-            !openCalender ? "hidden" : "block"
-          } top-14 p-3  bg-gray-200 rounded-lg`}
-        >
-          <RHFDatePicker
-            onChange={(item) => setDate([item.selection])}
-            value={date}
-            rangeColors={["#852169"]}
-          />
-
-          <div className="flex justify-end py-5 gap-5">
-            <Button onClick={toggleCalender} className="py-2 px-5">
-              Cancel
-            </Button>
-            <Button onClick={toggleCalender} className="py-2 px-5">
-              Add
-            </Button>
+            <div className="flex justify-end py-5 gap-5">
+              <Button onClick={cancelCalender} className="py-2 px-5">
+                Cancel
+              </Button>
+              <Button onClick={toggleCalender} className="py-2 px-5">
+                Add
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <Typography variant="h4" className="font-semibold">
@@ -105,9 +110,12 @@ export const SetAvailability = () => {
           What Rules must your Guest observe?
         </Typography>
 
-        {hotelRules.map((rule) => (
-          <RHFCheckbox name={rule.name} label={rule.title} />
+        {hotelRules.map((rule, index) => (
+          <RHFCheckbox key={index} name={rule.name} label={rule.title} />
         ))}
+      </div>
+      <div className="flex justify-end items-end w-full">
+        <Button>Add</Button>
       </div>
     </div>
   );
