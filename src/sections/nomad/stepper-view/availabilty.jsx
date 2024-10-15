@@ -19,7 +19,7 @@ export const SetAvailability = () => {
   const [date, setDate] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ]);
@@ -28,6 +28,17 @@ export const SetAvailability = () => {
 
   const toggleCalender = () => {
     setOpenCalender((prev) => !prev);
+  };
+
+  const cancelCalender = () => {
+    setOpenCalender((prev) => !prev);
+    setDate(() => [
+      {
+        startDate: new Date(),
+        endDate: addDays(new Date(), 1),
+        key: "selection",
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -56,7 +67,7 @@ export const SetAvailability = () => {
 
       <div className="relative">
         <div
-          className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer "
+          className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
           onClick={toggleCalender}
         >
           <span className="flex items-center gap-4 text-base">
@@ -70,31 +81,29 @@ export const SetAvailability = () => {
             <Typography variant="h6">
               {" "}
               {date[0].endDate.toString().slice(0, 10) ||
-                getFormattedDate()}{" "}
+                getFormattedDate(Date())}{" "}
             </Typography>
           </span>
         </div>
+        {openCalender && (
+          <div className={`  mt-5 p-3  bg-gray-200 rounded-lg`}>
+            <RHFDatePicker
+              name="availibility"
+              onChange={(item) => setDate([item.selection])}
+              value={date}
+              rangeColors={["#852169"]}
+            />
 
-        <div
-          className={`absolute ${
-            !openCalender ? "hidden" : "block"
-          } top-14 p-3  bg-gray-200 rounded-lg`}
-        >
-          <RHFDatePicker
-            onChange={(item) => setDate([item.selection])}
-            value={date}
-            rangeColors={["#852169"]}
-          />
-
-          <div className="flex justify-end py-5 gap-5">
-            <Button onClick={toggleCalender} className="py-2 px-5">
-              Cancel
-            </Button>
-            <Button onClick={toggleCalender} className="py-2 px-5">
-              Add
-            </Button>
+            <div className="flex justify-end py-5 gap-5">
+              <Button onClick={cancelCalender} className="py-2 px-5">
+                Cancel
+              </Button>
+              <Button onClick={toggleCalender} className="py-2 px-5">
+                Add
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <Typography variant="h4" className="font-semibold">

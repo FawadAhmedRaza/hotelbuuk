@@ -17,25 +17,26 @@ export const BussinessMeeting = () => {
       {/* left  */}
       <div className="flex flex-col gap-5 w-full">
         <RHFInput
-          name="title"
+          name="business_meeting.title"
           label="Title"
           placeholder="Title of your Listing"
         />
         <RHFTextArea
-          name="description"
+          name="business_meeting.description"
           label="Description"
+          required={true}
           placeholder="Enter Short Description "
         />
         <RHFInput
-          name="offcial_name"
-          label="Offcial Name"
+          name="business_meeting.official_name"
+          label="Official Name"
           placeholder="Official Name"
         />
       </div>
       {/* Right  */}
       <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
         <RHFSelect
-          name="category"
+          name="business_meeting.business_category"
           placeholder="Select Bussiness Category"
           label="Bussiness Category"
           options={[
@@ -51,13 +52,13 @@ export const BussinessMeeting = () => {
           <div className="flex items-center gap-5 w-full">
             <RHFRadio
               id="hotel"
-              name="accommodation_type"
+              name="business_meeting.accomodation_type"
               value="hotel"
               label="Hotel"
             />
             <RHFRadio
               id="bnb"
-              name="accommodation_type"
+              name="business_meeting.accomodation_type"
               value="bnb"
               label="B&B"
             />
@@ -70,7 +71,7 @@ export const BussinessMeeting = () => {
           </Typography>
           <div className="flex items-center gap-5 w-full">
             <RHFSelect
-              name="country"
+              name="business_meeting.location.country"
               placeholder="Select your Country"
               label="Country"
               options={[
@@ -80,7 +81,7 @@ export const BussinessMeeting = () => {
               ]}
             />
             <RHFSelect
-              name="city"
+              name="business_meeting.location.city"
               placeholder="Select your City"
               label="City"
               options={[
@@ -92,11 +93,11 @@ export const BussinessMeeting = () => {
           </div>
         </div>
         <RHFInput
-          name="street_name"
+          name="business_meeting.location.street_name"
           label="Street Address"
           placeholder="Enter your Street Address"
         />
-      <Button type="submit">submit</Button>
+        <Button type="submit">submit</Button>
       </div>
     </div>
   );
