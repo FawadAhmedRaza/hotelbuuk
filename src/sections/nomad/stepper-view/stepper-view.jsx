@@ -10,12 +10,8 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 // Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
-import { RHFFormProvider } from "@/src/components/hook-form";
-import { useForm, useFormContext } from "react-hook-form";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Pricing } from "./pricing";
 
 export const StepperView = () => {
