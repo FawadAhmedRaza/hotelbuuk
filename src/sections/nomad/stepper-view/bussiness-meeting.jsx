@@ -24,18 +24,18 @@ export const BussinessMeeting = () => {
         <RHFInput
           name="business_meeting.title"
           label="Title"
-          placeholder="Title of your Listing"
+          placeholder="Tesla Factory Tour "
         />
         <RHFTextArea
           name="business_meeting.description"
           label="Description"
           required={true}
-          placeholder="Enter Short Description "
+          placeholder="Enter Description "
         />
         <RHFInput
           name="business_meeting.official_name"
           label="Official Name"
-          placeholder="Official Name"
+          placeholder="John Tesla Factory Tour"
         />
       </div>
       {/* Right  */}
