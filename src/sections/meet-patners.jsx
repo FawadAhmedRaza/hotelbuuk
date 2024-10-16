@@ -28,7 +28,7 @@ export const MeetOurPatners = React.memo(() => {
         <BgIcon
           iconName="cuida:arrow-right-outline"
           iconClass="!size-6"
-          className=" swiper-button-next custom-next absolute -right-8 md:-right-8 lg:-right-12 -mt-8 bg-primary size-8  z-30 top-1/2"
+          className=" swiper-button-next custom-next absolute -right-8 md:-right-8 lg:-right-12 -mt-8 bg-primary size-8 z-30 top-1/2"
         />
 
         <Swiper

@@ -1,17 +1,15 @@
 "use client";
 import React, { useState } from "react";
-
-
-
-// Components and Others...
-import { Pannel, Stepper } from "@/src/components";
-import { BussinessMeeting } from "./bussiness-meeting";
-import { RHFFormProvider } from "@/src/components/hook-form";
-import { useForm, useFormContext } from "react-hook-form";
-import { GuestLearn } from "./guest";
-import { SetAvailability } from "./availabilty";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { RHFFormProvider } from "@/src/components/hook-form";
+
+// Components and Others...
+import { Pannel, Stepper, Typography } from "@/src/components";
+import { BussinessMeeting } from "./bussiness-meeting";
+import { GuestLearn } from "./guest";
+import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
 
 export const StepperView = () => {
@@ -23,11 +21,28 @@ export const StepperView = () => {
       description: Yup.string().required("required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
-      accomodation_type: Yup.string().optional().default("bnb"),
+      accomodation_type: Yup.string().default("bnb"),
+      hotels: Yup.string().when("accomodation_type", {
+        is: "hotel",
+        then: (schema) => schema.required("hotel is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
       location: Yup.object().shape({
-        country: Yup.string().required("Country is required"),
-        city: Yup.string().required("City is required"),
-        street_name: Yup.string().required("Street is required"),
+        country: Yup.string().when("accomodation_type", {
+          is: "bnb",
+          then: (schema) => schema.required("country is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
+        city: Yup.string().when("accomodation_type", {
+          is: "bnb",
+          then: (schema) => schema.required("city is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
+        street_name: Yup.string().when("accomodation_type", {
+          is: "bnb",
+          then: (schema) => schema.required("street is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
       }),
     }),
 
@@ -37,37 +52,56 @@ export const StepperView = () => {
     }),
 
     availibility: Yup.object().shape({
-      start_date: Yup.date()
-        .required("Start date is required")
-        .typeError("Invalid date format"),
-      end_date: Yup.date()
-        .required("End date is required")
-        .min(Yup.ref("start_date"), "End date must be after the start date")
-        .min(Yup.ref("start_date"), "End date must be after the start date")
-        .typeError("Invalid date format"),
+      start_date: Yup.string().optional("Start date is required"),
+      // .typeError("Invalid date format")
+      end_date: Yup.string().optional("End date is required"),
+      // .min(Yup.ref("start_date"), "End date must be after the start date")
+      // .min(Yup.ref("start_date"), "End date must be after the start date")
+      // .typeError("Invalid date format"),
     }),
   });
 
   const methods = useForm({
     resolver: yupResolver(NomadSchema),
-    defaultValues: NomadSchema.default(),
+    // defaultValues: NomadSchema.default(),
+    defaultValues: {
+      business_meeting: {
+        title: "",
+        description: "",
+        official_name: "",
+        business_category: "",
+        accomodation_type: "bnb", // Ensure this is available in the form state
+        hotels: "",
+        location: {
+          country: "",
+          city: "",
+          street_name: "",
+        },
+      },
+      learning_info: {
+        title: "",
+        description: "",
+      },
+      availibility: {
+        start_date: "",
+        end_date: "",
+      },
+    },
+    context: {
+      accomodation_type: "bnb", // Ensure context is passed correctly
+    },
   });
 
   const {
-    reset,
-    formState: { errors },
+    trigger,
     handleSubmit,
+    formState: { errors },
   } = methods;
 
-  console.log(errors);
+  console.log("errors", errors);
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      console.log("data", data);
-      // reset();
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("Form submitted: ", data);
   });
 
   const steps = [
@@ -97,13 +131,64 @@ export const StepperView = () => {
     },
   ];
 
+  // NEW HANDLE NEXT
+  const handleNext = async () => {
+    const accomodationType = methods.watch(
+      "business_meeting.accomodation_type"
+    ); // Get the current accommodation type
+    let fieldsToValidate = [];
+
+    if (activeStep === 0) {
+      fieldsToValidate = [
+        "business_meeting.title",
+        "business_meeting.description",
+        "business_meeting.official_name",
+        "business_meeting.business_category",
+        "business_meeting.accomodation_type", // Ensure it’s present
+      ];
+
+      if (accomodationType === "hotel") {
+        fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
+      } else if (accomodationType === "bnb") {
+        fieldsToValidate.push(
+          "business_meeting.location.country",
+          "business_meeting.location.city",
+          "business_meeting.location.street_name"
+        );
+      }
+    } else if (activeStep === 1) {
+      fieldsToValidate = ["learning_info.title", "learning_info.description"];
+    } else if (activeStep === 2) {
+      fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
+    }
+
+    console.log("Form values: ", methods.getValues()); // Check current form values
+
+    const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
+    console.log("Is Step Valid:", isStepValid);
+
+    if (isStepValid) {
+      setActiveStep((prev) => prev + 1); // Move to next step if valid
+    }
+  };
+
+  const handleBack = () => {
+    setActiveStep((prev) => prev - 1);
+  };
+
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
+        <Typography variant="h2" className="text-black text-center">
+          All fields are Mandetory
+        </Typography>
         <Stepper
           steps={steps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          isLastStep={activeStep === steps.length - 1}
         />
       </RHFFormProvider>
     </Pannel>

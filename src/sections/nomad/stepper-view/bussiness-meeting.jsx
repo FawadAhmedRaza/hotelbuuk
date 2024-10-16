@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
 // Components and Others...
 import {
@@ -12,9 +13,16 @@ import { Button, Typography } from "@/src/components";
 
 export const BussinessMeeting = () => {
   const { watch } = useFormContext();
-  const accomoType = watch("business_meeting.accomodation_type");
+  const accomodationType = watch("business_meeting.accomodation_type");
 
-  console.log(accomoType);
+  // State to force re-render on accomodationType change
+  const [type, setType] = useState(accomodationType);
+
+  useEffect(() => {
+    setType(accomodationType); // Update local state when type changes
+  }, [accomodationType]);
+
+  console.log(accomodationType);
 
   return (
     <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
@@ -29,7 +37,7 @@ export const BussinessMeeting = () => {
           name="business_meeting.description"
           label="Description"
           required={true}
-          placeholder="Enter Description "
+          placeholder="Describe your Business Tour "
         />
         <RHFInput
           name="business_meeting.official_name"
@@ -51,9 +59,9 @@ export const BussinessMeeting = () => {
         />
         <div className="flex flex-col gap-3 w-full">
           <Typography variant="h5" className="font-semibold">
-            Accommodation Type
+            Accommodation Type (Where Guests will Sleep)
           </Typography>
-          <div className="flex items-center gap-5 w-full">
+          <div className="flex flex-col  gap-5 w-full">
             <RHFRadio
               id="hotel"
               name="business_meeting.accomodation_type"
@@ -69,7 +77,7 @@ export const BussinessMeeting = () => {
           </div>
         </div>
 
-        {accomoType === "bnb" ? (
+        {type === "bnb" ? (
           <>
             <div className="flex flex-col gap-3 w-full">
               <Typography variant="h5" className="font-semibold">
@@ -101,7 +109,7 @@ export const BussinessMeeting = () => {
             <RHFInput
               name="business_meeting.location.street_name"
               label="Street Address"
-              placeholder="Enter your Street Address"
+              placeholder="Address of your B&B"
             />
           </>
         ) : (

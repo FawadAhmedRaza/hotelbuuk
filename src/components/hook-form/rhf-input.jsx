@@ -123,6 +123,7 @@ import { Iconify } from "../iconify";
 import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
 import { useState } from "react";
+import get from "lodash/get"; // Import lodash's get method
 
 export const RHFInput = React.memo(
   ({
@@ -218,12 +219,22 @@ export const RHFInput = React.memo(
             </div>
 
             {/* Display errors for nested fields */}
-            {errors && (
+            {/* {errors && (
               <Typography
                 variant="p"
                 className="!text-xs text-red-400 transition-all duration-500"
               >
                 {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
+              </Typography>
+            )} */}
+
+            {/* Display errors dynamically using lodash get */}
+            {errors && (
+              <Typography
+                variant="p"
+                className="!text-xs text-red-400 transition-all duration-500"
+              >
+                {get(errors, name)?.message}
               </Typography>
             )}
           </div>

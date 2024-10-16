@@ -89,25 +89,31 @@ export const HotelBio = () => {
           </Typography>
 
           {/* Dates and Guests */}
-          <div className="flex bg-neutral-100 rounded-xl shadow-lg justify-between items-center mt-4 divide-x divide-neutral-400 ">
-            <div className="p-5">
-              <Typography variant="p" className="text-sm font-medium">
+          <div className="grid grid-cols-3 bg-neutral-100 rounded-xl shadow-lg  items-center mt-4 divide-x divide-neutral-400 ">
+            <div className="flex flex-col justify-center  items-center sm:items-start  sm:p-5 lg:px-2">
+              <Typography
+                variant="p"
+                className="!text-xs sm:text-sm font-medium"
+              >
                 Check-In
               </Typography>
-              <Typography variant="p" className="text-sm">
+              <Typography variant="p" className="!text-xs sm:text-sm">
                 {hotelData.checkInDate}
               </Typography>
             </div>
-            <div className="p-5">
-              <Typography variant="p" className="text-sm font-medium">
+            <div className="flex flex-col justify-center  items-center sm:items-start sm:p-5 lg:px-2">
+              <Typography variant="p" className="!text-xs sm:text-sm font-medium">
                 Checkout
               </Typography>
-              <Typography variant="p" className="text-sm">
+              <Typography variant="p" className="!text-xs sm:text-sm">
                 {hotelData.checkOutDate}
               </Typography>
             </div>
-            <div className="flex justify-between  p-5">
-              <Typography variant="p" className="text-sm font-medium">
+            <div className="flex justify-between  p-5 lg:px-2">
+              <Typography
+                variant="p"
+                className="!text-xs sm:text-sm font-medium"
+              >
                 {hotelData.nights} Night
               </Typography>
             </div>

@@ -11,8 +11,12 @@ import { addDays } from "date-fns";
 import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useFormContext } from "react-hook-form";
 
 export const SetAvailability = () => {
+  const { setValue, watch } = useFormContext();
+  console.log(watch("availibility"));
+
   const [openCalender, setOpenCalender] = useState(false);
   const [date, setDate] = useState([
     {
@@ -22,8 +26,15 @@ export const SetAvailability = () => {
     },
   ]);
 
+  console.log(date);
   const toggleCalender = () => {
     setOpenCalender((prev) => !prev);
+  };
+
+  const AddCalender = () => {
+    setOpenCalender((prev) => !prev);
+    setValue("availibility.start_date", date[0].startDate.toString());
+    setValue("availibility.end_date", date[0].endDate.toString());
   };
 
   const cancelCalender = () => {
@@ -63,12 +74,12 @@ export const SetAvailability = () => {
 
       <div className="relative">
         <div
-          className=" flex border border-primary py-2 px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
+          className=" flex border border-primary py-2 px-2 sm:px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
           onClick={toggleCalender}
         >
-          <span className="flex items-start gap-4 text-base">
+          <span className="flex items-start gap-2 sm:gap-4  text-sm sm:text-base text-nowrap">
             From :
-            <Typography variant="h6">
+            <Typography variant="h6" className="text-nowrap">
               {" "}
               {date[0].startDate.toString().slice(0, 10) ||
                 getFormattedDate()}{" "}
@@ -94,7 +105,7 @@ export const SetAvailability = () => {
               <Button onClick={cancelCalender} className="py-2 px-5">
                 Cancel
               </Button>
-              <Button onClick={toggleCalender} className="py-2 px-5">
+              <Button onClick={AddCalender} className="py-2 px-5">
                 Add
               </Button>
             </div>
@@ -113,9 +124,6 @@ export const SetAvailability = () => {
         {hotelRules.map((rule, index) => (
           <RHFCheckbox key={index} name={rule.name} label={rule.title} />
         ))}
-      </div>
-      <div className="flex justify-end items-end w-full">
-        <Button>Add</Button>
       </div>
     </div>
   );

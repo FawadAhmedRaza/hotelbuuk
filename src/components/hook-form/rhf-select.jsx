@@ -6,6 +6,7 @@ import { Typography } from "../typography";
 import { Iconify } from "../iconify";
 import { Input } from "../input";
 import { cn } from "@/src/libs/cn";
+import get from "lodash/get"; // Import lodash's get method
 
 export const RHFSelect = ({
   label,
@@ -136,12 +137,22 @@ export const RHFSelect = ({
               </div>
             )}
           </div>
-          {errors && (
+          {/* {errors && (
             <Typography
               variant={"p"}
               className="!text-xs text-red-400 transition-all duration-500"
             >
               {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
+            </Typography>
+          )} */}
+
+          {/* Display errors dynamically using lodash get */}
+          {errors && (
+            <Typography
+              variant="p"
+              className="!text-xs text-red-400 transition-all duration-500"
+            >
+              {get(errors, name)?.message}
             </Typography>
           )}
         </div>
