@@ -28,17 +28,17 @@ export const StepperView = () => {
         otherwise: (schema) => schema.notRequired(),
       }),
       location: Yup.object().shape({
-        country: Yup.string().when("accomodation_type", {
+        country: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("country is required"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        city: Yup.string().when("accomodation_type", {
+        city: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("city is required"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        street_name: Yup.string().when("accomodation_type", {
+        street_name: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("street is required"),
           otherwise: (schema) => schema.notRequired(),
@@ -52,9 +52,9 @@ export const StepperView = () => {
     }),
 
     availibility: Yup.object().shape({
-      start_date: Yup.string().optional("Start date is required"),
+      start_date: Yup.string().required("Start date is required"),
       // .typeError("Invalid date format")
-      end_date: Yup.string().optional("End date is required"),
+      end_date: Yup.string().required("End date is required"),
       // .min(Yup.ref("start_date"), "End date must be after the start date")
       // .min(Yup.ref("start_date"), "End date must be after the start date")
       // .typeError("Invalid date format"),

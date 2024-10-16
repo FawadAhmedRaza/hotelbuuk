@@ -1,12 +1,24 @@
 "use client";
 import React from "react";
-import { AnchorTag, Drawer, Iconify, Typography } from "../components";
-import { MenuLinks } from "../_mock/_menu";
-import { usePathname } from "next/navigation";
+import { AnchorTag, Button, Drawer, Iconify, Typography } from "../components";
+import { AuthLinks, MenuLinks } from "../_mock/_menu";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuthContext } from "../auth/jwt/auth-context";
+import { auth } from "../auth";
 
 export const Menu = ({ isOpen, setIsOpen, onClick }) => {
+  const router = useRouter();
+  const { authenticated, logout } = useAuthContext();
+
   const pathname = usePathname();
   console.log(pathname);
+  console.log("Is Auth true", authenticated);
+
+  const handleLogout = async () => {
+    await logout();
+    router.refresh();
+  };
+
   return (
     <Drawer isDrawerOpen={isOpen} setIsDrawerOpen={setIsOpen}>
       <div className="flex justify-between items-center">
@@ -42,6 +54,25 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
             </AnchorTag>
           );
         })}
+        {authenticated ? (
+          <Button onClick={handleLogout}>Logout</Button>
+        ) : (
+          AuthLinks?.map((item) => {
+            return (
+              <AnchorTag
+                key={item?.id}
+                href={item?.path}
+                className={` !text-lg  ${
+                  location?.pathname == item?.path
+                    ? "!text-primary underline"
+                    : "!text-black hover:!text-primary"
+                }`}
+              >
+                {item?.label}
+              </AnchorTag>
+            );
+          })
+        )}
       </div>
     </Drawer>
   );

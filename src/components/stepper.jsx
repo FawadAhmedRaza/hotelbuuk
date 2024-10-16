@@ -11,8 +11,6 @@ export const Stepper = ({
 }) => {
   return (
     <div className="w-full px-4 md:px-8 py-4">
-     
-
       {/* Stepper container */}
       <div className="relative flex justify-between items-center">
         {steps.map((step, index) => (

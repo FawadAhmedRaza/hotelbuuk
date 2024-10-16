@@ -10,27 +10,30 @@ export const MenuLinks = [
     path: "/about",
   },
   {
-    id: 1,
+    id: 3,
     label: "Terms and Conditions",
     path: "/terms",
   },
   {
-    id: 1,
+    id: 4,
     label: "Impressum",
     path: "/impressum",
   },
   {
-    id: 1,
+    id: 5,
     label: "Privacy Policy",
     path: "/privacy-policy",
   },
+];
+
+export const AuthLinks = [
   {
-    id: 1,
+    id: 6,
     label: "Sign Up",
     path: "/sign-up",
   },
   {
-    id: 1,
+    id: 7,
     label: "Login",
     path: "/login",
   },
