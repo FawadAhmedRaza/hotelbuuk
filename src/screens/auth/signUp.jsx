@@ -112,13 +112,13 @@ const SignUpScreen = () => {
             <RHFInput
               label="First Name"
               type="text"
-              placeholder="john.doe@gmail.com"
+              placeholder="First Name"
               name="first_name"
             />
             <RHFInput
               type="text"
               label="Last Name"
-              placeholder="john.doe@gmail.com"
+              placeholder="Last Name"
               name="last_name"
             />
           </div>
@@ -132,20 +132,20 @@ const SignUpScreen = () => {
             <RHFInput
               label="Phone Number"
               type="number"
-              placeholder="john.doe@gmail.com"
+              placeholder="Phone Number"
               name="phone_number"
             />
           </div>
           <RHFInput
             type="password"
             label="Password"
-            placeholder="john.doe@gmail.com"
+            placeholder="Password"
             name="password"
           />
           <RHFInput
             type="password"
             label="Confirm Password"
-            placeholder="john.doe@gmail.com"
+            placeholder="Confirm Password"
             name="confirm_password"
           />
           <RHFCheckbox

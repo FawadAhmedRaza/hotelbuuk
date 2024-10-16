@@ -124,7 +124,7 @@ export const Booking = React.memo(() => {
                 {/* CUSTOM CALENDER */}
 
                 <Datepicker
-                  primaryColor={"blue"}
+                  primaryColor="red"
                   value={date}
                   placeholder={`${getFormattedDate()} - ${getFormattedDate(
                     Date()

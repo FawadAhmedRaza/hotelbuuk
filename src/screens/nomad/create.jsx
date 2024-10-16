@@ -1,13 +1,12 @@
 import React from "react";
-import { NavBar } from "@/src/sections";
+import { Layout } from "@/src/sections";
 import { StepperView } from "@/src/sections/nomad";
 
 const NomadCreateScreen = React.memo(() => {
   return (
-    <>
-      <NavBar className="bg-primary static" />
+    <Layout isNavBg={true}>
       <StepperView />
-    </>
+    </Layout>
   );
 });
 
