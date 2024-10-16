@@ -11,6 +11,7 @@ import { BussinessMeeting } from "./bussiness-meeting";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
+import ImageUploader from "./image-uploader";
 
 export const StepperView = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -105,11 +106,17 @@ export const StepperView = () => {
   });
 
   const steps = [
+    // {
+    //   label: "Bussiness Meeting Info",
+    //   icon: "mdi:business-outline",
+    //   value: "bussiness",
+    //   component: <BussinessMeeting />,
+    // },
     {
-      label: "Bussiness Meeting Info",
-      icon: "mdi:business-outline",
-      value: "bussiness",
-      component: <BussinessMeeting />,
+      label: "Upload Images",
+      icon: "ph:images",
+      value: "images",
+      component: <ImageUploader />,
     },
     {
       label: "What Guest will Learn",

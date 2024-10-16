@@ -146,7 +146,7 @@ export const BussinessMeeting = () => {
 
       {/* Image Uploader */}
 
-      <div className="w-full">
+      {/* <div className="w-full">
         <label
           for="uploadFile1"
           className="bg-white text-primary-500 font-semibold text-base rounded  h-52 flex flex-col items-center justify-center cursor-pointer border-2 !border-primary-300 border-dashed mx-auto font-[sans-serif]"
@@ -171,7 +171,7 @@ export const BussinessMeeting = () => {
             PNG, JPG and JPEG are Allowed.
           </p>
         </label>
-      </div>
+      </div> */}
     </div>
   );
 };
