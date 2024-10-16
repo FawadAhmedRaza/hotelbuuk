@@ -33,7 +33,7 @@ export const Stepper = ({
 
               <Typography
                 variant="p"
-                className={`absolute top-10 sm:top-16 w-16 md:w-fit md:text-nowrap text-center !text-xs sm:text-sm ${
+                className={`absolute top-11 sm:top-16 w-16 md:w-fit md:text-nowrap text-center !text-xs sm:text-sm ${
                   index <= activeStep ? "text-primary" : "text-gray-500"
                 }`}
               >
@@ -57,9 +57,9 @@ export const Stepper = ({
 
       {/* Navigation buttons */}
       <div className="flex justify-end gap-2 my-5">
-        <Button disabled={activeStep === 0} onClick={handleBack}>
-          Back
-        </Button>
+          <Button disabled={activeStep === 0} onClick={handleBack}>
+            Back
+          </Button>
         {isLastStep ? (
           <Button type="submit">Submit</Button>
         ) : (

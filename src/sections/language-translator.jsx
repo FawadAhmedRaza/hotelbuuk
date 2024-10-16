@@ -29,6 +29,7 @@ export const LangaugeTranslator = React.memo(() => {
   return (
     <div className="relative">
       <div
+        ref={popoverRef}
         className={`flex items-center gap-2 sm:gap-3 cursor-pointer  px-2 py-1 sm:px-4 sm:py-2  rounded-lg ${"hover:bg-primary "}`}
         onClick={toggleDrawer}
       >

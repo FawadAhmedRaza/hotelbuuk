@@ -39,7 +39,7 @@ export const RHFProfileImgUploader = ({
             className
           )}
         >
-          <div className=" group relative flex justify-center items-center rounded-full border border-custom-grey-100 bg-custom-grey-100 w-44 h-44 shadow-sm mx-auto overflow-hidden">
+          <div className=" group relative flex justify-center items-center rounded-full border border-custom-grey-100 bg-custom-grey-100 w-40 md:w-44 h-40 md:h-44 shadow-sm mx-auto overflow-hidden">
             {field.value || imagePreview ? (
               <img
                 src={
