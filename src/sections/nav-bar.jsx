@@ -7,14 +7,11 @@ import { LangaugeTranslator } from ".";
 import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
 import { cn } from "../libs/cn";
-import { useAuthContext } from "../auth/jwt/auth-context";
 
 export const NavBar = React.memo(({ className }) => {
-  const { user } = useAuthContext();
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-
-  console.log(user);
 
   return (
     <div
@@ -57,7 +54,8 @@ export const NavBar = React.memo(({ className }) => {
               variant="p"
               className=" font-medium !text-xs text-white text-nowrap"
             >
-              Hi, Fawad
+              {user ? user.first_name : ""}
+              {/* Fawad */}
             </Typography>
           </span>
         </div>

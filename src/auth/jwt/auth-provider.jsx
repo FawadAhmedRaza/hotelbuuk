@@ -144,8 +144,13 @@ export function AuthProvider({ children }) {
       if (result.statusCode == 200) {
         toast.success("Login sucessfully.");
         const { accessToken, user } = result.data || {};
-        console.log(accessToken);
-        setSession(accessToken);
+
+        console.log(user);
+        setSession(accessToken, {
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+        });
         dispatch({
           type: Types.LOGIN,
           payload: {
@@ -180,6 +185,7 @@ export function AuthProvider({ children }) {
   // LOGOUT
   const logout = useCallback(async () => {
     setSession(null);
+
     dispatch({
       type: Types.LOGOUT,
     });
