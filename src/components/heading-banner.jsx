@@ -1,5 +1,5 @@
 import React from "react";
-import {  Typography } from "../components";
+import {  Typography } from ".";
 import { cn } from "../libs/cn";
 
 export const HeadingBanner = React.memo(({ heading, text, className }) => {

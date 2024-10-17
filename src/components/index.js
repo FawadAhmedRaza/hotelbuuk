@@ -16,3 +16,4 @@ export { Stepper } from "./stepper";
 export { Breadcrumb } from "./bread-crumb";
 export { Input } from "./input";
 export { CalendarInput } from "./calendar-input";
+export { ImageModal } from "./image-modal";

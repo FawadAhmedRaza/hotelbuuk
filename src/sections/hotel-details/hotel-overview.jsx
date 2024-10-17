@@ -1,7 +1,9 @@
-import { Iconify, Pannel, Typography } from "@/src/components";
+"use client";
+import { Iconify, ImageModal, Pannel, Typography } from "@/src/components";
 import Link from "next/link";
 import React from "react";
 import { Slider } from ".";
+import { useBoolean } from "@/src/hooks";
 
 const images = [
   "/assets/images/hotel-det-1.png",
@@ -19,8 +21,11 @@ const socialMedia = [
 ];
 
 export const HotelOverview = () => {
+  const { isOpen, toggleDrawer } = useBoolean();
+
   return (
     <Pannel className="flex flex-col gap-12">
+      <ImageModal images={images} isOpen={isOpen} onClose={toggleDrawer} />
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
         <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-3 grow">
           <Typography variant="h3">Bosphorus Hotel Istanbul</Typography>
@@ -60,7 +65,10 @@ export const HotelOverview = () => {
       {/* images  */}
 
       <div className="relative hidden md:flex flex-col lg:flex-row gap-2 w-full">
-        <span className="absolute right-5 bottom-5 bg-primary  rounded-lg  py-2 px-4">
+        <span
+          onClick={toggleDrawer}
+          className="absolute right-5 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
+        >
           <Typography variant="p" className="text-white">
             Show all Photos
           </Typography>
