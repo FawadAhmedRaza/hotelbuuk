@@ -6,7 +6,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
-    './node_modules/tailwind-datepicker-react/dist/**/*.js'
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
   theme: {
     extend: {
@@ -41,6 +41,7 @@ module.exports = {
         "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",
         "custom-shadow-lg": "0px 4px 23px 0px #00000026",
         "custom-shadow-sm": "0px 3px 10px 0px #111B2329",
+        "custom-shadow-xs": "0px 1px 4px 0px #111B2329",
         "custom-shadow-md": "0px 0px 16px 0px rgba(0, 0, 0, 0.25)",
       },
       backgroundImage: {

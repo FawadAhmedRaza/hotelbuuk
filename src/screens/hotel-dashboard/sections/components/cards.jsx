@@ -1,5 +1,5 @@
-import DashboardCard from "@/src/components/dashboard-card";
 import React from "react";
+import DashboardCard from "@/src/components/dashboard-card";
 
 const HotelCards = () => {
   return (
