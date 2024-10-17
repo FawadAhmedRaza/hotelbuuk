@@ -1,83 +1,3 @@
-// "use client";
-// import React, { useCallback, useState } from "react";
-// import { Controller, useFormContext } from "react-hook-form";
-// import { Typography } from "../typography";
-// import { cn } from "@/src/libs/cn";
-// import get from "lodash/get"; // Import lodash's get method
-// import { useDropzone } from "react-dropzone";
-// import { Iconify } from "..";
-
-// export const RHFUploader = React.memo(
-//   ({ name, className, iconClasses, onFileUpload }) => {
-//     const {
-//       control,
-//       formState: { errors },
-//     } = useFormContext();
-
-//     const [imageUrls, setImageUrls] = useState([]); // Store image URLs
-
-//     const onDrop = useCallback(
-//       (acceptedFiles) => {
-//         const newImageUrls = []; // Store new URLs temporarily
-
-//         acceptedFiles.forEach((file) => {
-//           const reader = new FileReader();
-
-//           reader.onerror = () => console.log("file reading has failed");
-//           reader.onabort = () => console.log("file reading was aborted");
-
-//           reader.onload = (e) => {
-//             const imageUrl = e.target.result; // Get the image URL
-//             newImageUrls.push(imageUrl); // Add to temporary array
-
-//             // Update state and pass URLs to parent component if needed
-//             setImageUrls((prev) => [...prev, imageUrl]);
-//             if (onFileUpload) onFileUpload([...newImageUrls, ...imageUrls]); // Notify parent
-//           };
-
-//           reader.readAsDataURL(file); // Read the file as Data URL
-//         });
-//       },
-//       [imageUrls, onFileUpload]
-//     ); // Dependencies include `imageUrls` and `onFileUpload`
-
-//     const { getRootProps, getInputProps } = useDropzone({ onDrop });
-//     return (
-//       <Controller
-//         name={name}
-//         control={control}
-//         render={({ field }) => (
-//           <>
-//             <div
-//               {...getRootProps({ className: "dropzone" })}
-//               className={cn(
-//                 `flex flex-col justify-center items-center h-52 bg-gray-100 w-full border-gray-3          00 border-dashed border-1 rounded-xl`,
-//                 className
-//               )}
-//             >
-//               <Iconify
-//                 iconName={"humbleicons:upload"}
-//                 className={`${iconClasses} size-16 text-gray-500`}
-//               />
-//               <input {...field} {...getInputProps()} />
-//               <p>Drag 'n' drop some files here, or click to select files</p>
-//             </div>
-
-//             {/* Display errors dynamically */}
-//             {errors && (
-//               <Typography
-//                 variant="p"
-//                 className="!text-xs text-red-400 transition-all duration-500"
-//               >
-//                 {get(errors, name)?.message}
-//               </Typography>
-//             )}
-//           </>
-//         )}
-//       />
-//     );
-//   }
-// );
 
 // SECOND
 "use client";
@@ -153,7 +73,7 @@ export const RHFUploader = forwardRef(
                   className={`${iconClasses} size-16 text-gray-500`}
                 />
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+                <p className="text-sm text-center">Drag 'n' drop some files here, or click to select files</p>
               </div>
             </div>
             {/* Display errors dynamically */}

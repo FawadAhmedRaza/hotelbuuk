@@ -1,7 +1,8 @@
 "use client";
 import React, { useRef, useState } from "react";
+
+// Components and Others... 
 import {
-  Button,
   CalendarInput,
   CustomPopover,
   Pannel,
@@ -13,16 +14,13 @@ import {
   RHFInput,
   RHFProfileImgUploader,
   RHFSelect,
-  RHFTimePicker,
 } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
 import { addDays } from "date-fns";
 
 export const NomadProfile = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
-  const [isTimeOpen, setIsTimeOpen] = useState(false);
   const datePopoverRef = useRef(null);
-  const popoverRef = useRef(null);
 
   // Handle date state
   const [date, setDate] = useState([
@@ -33,11 +31,7 @@ export const NomadProfile = React.memo(() => {
     },
   ]);
 
-  // Handle time state
-  const [time, setTime] = useState(new Date());
-
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
-  const toggleTimeCalender = () => setIsTimeOpen(!isTimeOpen);
 
   const methods = useForm();
   const onSubmit = () => {};
@@ -52,6 +46,7 @@ export const NomadProfile = React.memo(() => {
         <RHFProfileImgUploader name="profile" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
           {/* Basic Information  */}
+
           <div className="flex flex-col sm:flex-row gap-5 w-full">
             <RHFInput
               name="first_name"
@@ -139,6 +134,7 @@ export const NomadProfile = React.memo(() => {
             </div>
           </div>
           {/* Teaching Tool  */}
+
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <Typography variant="h5" className="font-semibold">
@@ -162,7 +158,9 @@ export const NomadProfile = React.memo(() => {
               <RHFInput name="sample" placeholder="Sample" label="Sample" />
             </div>
           </div>
+
           {/* AVAILABILITY  */}
+
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
               AVAILABILITY
@@ -197,37 +195,19 @@ export const NomadProfile = React.memo(() => {
               </div>
 
               {/* Time Picker */}
-              <div ref={popoverRef} className="relative flex flex-col w-full">
-                <CalendarInput
-                  label="Time"
-                  startDate={time?.toLocaleTimeString()}
-                  endDate={time?.toLocaleTimeString()}
-                  onClick={toggleTimeCalender}
+              <div className="flex flex-col md:flex-row gap-5 w-full">
+                <RHFInput
+                  name="start_time"
+                  placeholder="Start Time"
+                  label="Start Time"
+                  type="time"
                 />
-                <CustomPopover
-                  popoverRef={popoverRef}
-                  isOpen={isTimeOpen}
-                  onClose={toggleTimeCalender}
-                  arrow={false}
-                  className="flex flex-col overflow-hidden mt-4 w-fit"
-                  parentClass="!left-0"
-                >
-                  <RHFTimePicker name="time" value={time} onChange={setTime} />
-                  <div className="flex justify-end pb-5 gap-5 px-5">
-                    <Button
-                      onClick={toggleTimeCalender}
-                      className="!py-1.5 !px-5"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={toggleTimeCalender}
-                      className="!py-1.5 !px-5"
-                    >
-                      Add
-                    </Button>
-                  </div>
-                </CustomPopover>
+                <RHFInput
+                  name="end_time"
+                  placeholder="End Time"
+                  label="End Time"
+                  type="time"
+                />
               </div>
             </div>
           </div>

@@ -51,7 +51,7 @@ export const CalendarInput = React.memo(
               className={`${startIconClass} !w-5 !h-5`}
             />
           )}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center  gap-2.5 sm:gap-4 md:gap-6">
             <span className="flex items-center gap-2">
               <Typography variant="p" className="font-medium">
                 From :

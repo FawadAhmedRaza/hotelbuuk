@@ -41,7 +41,7 @@ const ImageUploader = () => {
       {/* Render the image if an imageSrc exists */}
       <div className="w-full">
         {uploadedImages.length > 0 && (
-          <div className="grid grid-cols-4 gap-5 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
             {uploadedImages.map((image, index) => (
               <div key={index} className="relative group">
                 <img
