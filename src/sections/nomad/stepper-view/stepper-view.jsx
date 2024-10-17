@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,10 +11,39 @@ import { BussinessMeeting } from "./bussiness-meeting";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
+import ImageUploader from "./image-uploader";
 
 export const StepperView = () => {
+  const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
+  // Image File Schema
+  const fileSchema = Yup.object().shape({
+    file: Yup.object().shape({
+      name: Yup.string().required("File name is required"),
+      size: Yup.number()
+        .max(5 * 1024 * 1024, "File size must be less than 5MB") // Limit file size to 5MB
+        .required("File size is required"),
+      type: Yup.string()
+        .matches(
+          /^image\/(jpeg|png|gif)$/,
+          "Only JPEG, PNG, or GIF files are allowed"
+        )
+        .required("File type is required"),
+      lastModified: Yup.number().required(
+        "Last modified timestamp is required"
+      ),
+      path: Yup.string().required("File path is required"), // Required path property
+    }),
+    url: Yup.string()
+      .matches(
+        /^data:image\/(jpeg|png|gif);base64,/,
+        "Must be a valid base64 image URL"
+      )
+      .required("Image URL is required"), // Required URL property
+  });
+
+  // Nomad Form Schema
   const NomadSchema = Yup.object().shape({
     business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
@@ -45,6 +74,10 @@ export const StepperView = () => {
         }),
       }),
     }),
+    images: Yup.array()
+      .of(fileSchema)
+      .min(1, "At least one file is required")
+      .required("Files are required"),
 
     learning_info: Yup.object().shape({
       title: Yup.string().required("Learning title is required"),
@@ -53,12 +86,9 @@ export const StepperView = () => {
 
     availibility: Yup.object().shape({
       start_date: Yup.string().required("Start date is required"),
-      // .typeError("Invalid date format")
       end_date: Yup.string().required("End date is required"),
-      // .min(Yup.ref("start_date"), "End date must be after the start date")
-      // .min(Yup.ref("start_date"), "End date must be after the start date")
-      // .typeError("Invalid date format"),
     }),
+    price: Yup.string().required("Price is required"),
   });
 
   const methods = useForm({
@@ -78,6 +108,7 @@ export const StepperView = () => {
           street_name: "",
         },
       },
+      images: [],
       learning_info: {
         title: "",
         description: "",
@@ -94,6 +125,7 @@ export const StepperView = () => {
 
   const {
     trigger,
+    watch,
     handleSubmit,
     formState: { errors },
   } = methods;
@@ -110,6 +142,12 @@ export const StepperView = () => {
       icon: "mdi:business-outline",
       value: "bussiness",
       component: <BussinessMeeting />,
+    },
+    {
+      label: "Upload Images",
+      icon: "ph:images",
+      value: "images",
+      component: <ImageUploader />,
     },
     {
       label: "What Guest will Learn",
@@ -130,6 +168,17 @@ export const StepperView = () => {
       component: <Pricing />,
     },
   ];
+
+  const accomodationType = watch("business_meeting.accomodation_type");
+
+  useEffect(() => {
+    if (accomodationType === "bnb") {
+      setCurrentSteps(steps);
+    } else {
+      const newSteps = steps.filter((step) => step.value !== "images");
+      setCurrentSteps(newSteps);
+    }
+  }, [accomodationType]);
 
   // NEW HANDLE NEXT
   const handleNext = async () => {
@@ -157,8 +206,10 @@ export const StepperView = () => {
         );
       }
     } else if (activeStep === 1) {
-      fieldsToValidate = ["learning_info.title", "learning_info.description"];
+      fieldsToValidate = ["images"];
     } else if (activeStep === 2) {
+      fieldsToValidate = ["learning_info.title", "learning_info.description"];
+    } else if (activeStep === 3) {
       fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
     }
 
@@ -183,7 +234,7 @@ export const StepperView = () => {
           All fields are Mandetory
         </Typography>
         <Stepper
-          steps={steps}
+          steps={currentSteps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           handleNext={handleNext}

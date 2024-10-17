@@ -10,6 +10,7 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 // Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
+import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 
 export const StepperView = () => {
   const schema = yup.object({
@@ -47,7 +48,7 @@ export const StepperView = () => {
       label: "Images",
       icon: "material-symbols:perm-media-outline",
       value: "media",
-      component: null,
+      component: <ImageUploader />,
     },
   ];
 

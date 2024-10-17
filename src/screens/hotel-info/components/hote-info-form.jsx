@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 
-import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
-import { RHFUploadAvatar } from "@/src/components/hook-form/rhf-uploader";
+import {
+  RHFInput,
+  RHFTextArea,
+  RHFUploadAvatar,
+} from "@/src/components/hook-form";
 import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 
 import { Typography } from "@/src/components";
@@ -42,19 +46,19 @@ const HotelInfoForm = () => {
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 
-      <div className="grid grid-cols-12 gap-4 w-full h-full mt-6">
-        <div className="md:col-span-6 col-span-12 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full h-full mt-6">
+        <div className="flex flex-col gap-5">
           <RHFInput
             name="hotel_name"
             label="Hotel Name"
-            placeHolder="Movenpick hotel"
-            className="mt-6"
+            placeholder="Movenpick hotel"
+            // className="mt-6"
           />
           <RHFTextArea
             name="description"
             label="Hotel Description"
             placeholder="Enter Hotel description"
-            className="mt-6"
+            // className="mt-6"
           />
 
           <div className="flex flex-col gap-3 w-full mt-6">
@@ -91,38 +95,38 @@ const HotelInfoForm = () => {
             ))}
           </div>
         </div>
-        <div className="md:col-span-6 col-span-12 gap-4">
+        <div className="flex flex-col gap-5">
           <RHFInput
             name="contact_email"
             label="Contact E-mail"
-            placeHolder="support@movenpick.com"
-            className="mt-6"
+            placeholder="support@movenpick.com"
+            // className="mt-6"
           />
           <RHFInput
             type="number"
             name="hotel_contact_no"
             label="Contact number"
-            placeHolder="Enter Contact number"
-            className="mt-6"
+            placeholder="Enter Contact number"
+            // className="mt-6"
           />
 
           <RHFInput
             name="country"
             label="Country"
-            placeHolder="Enter Country"
-            className="mt-6"
+            placeholder="Enter Country"
+            // className="mt-6"
           />
           <RHFInput
             name="city"
             label="City"
-            placeHolder="Enter City"
-            className="mt-6"
+            placeholder="Enter City"
+            // className="mt-6"
           />
           <RHFInput
             name="address"
             label="Address"
-            placeHolder="Enter Address"
-            className="mt-6"
+            placeholder="Enter Address"
+            // className="mt-6"
           />
         </div>
       </div>

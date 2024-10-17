@@ -22,6 +22,7 @@ module.exports = {
         "custom-neutral": "#79747E",
         "section-bg": "#F0EFEF",
         "custom-grey": "#51677E",
+        "custom-grey-100": "#D9D9D9",
         "datepicker-bg": "#FFFFFF",
         "datepicker-text": "#1F2937",
       },
