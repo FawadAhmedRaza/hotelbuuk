@@ -13,7 +13,7 @@ export const Button = ({
   return (
     <button
       className={cn(
-        " flex items-center justify-center gap-3 px-8 py-2.5  text-white bg-primary  text-base text-center rounded-full w-fit text-nowrap cursor-pointer ",
+        " flex items-center justify-center gap-3 px-8 py-2.5 text-white bg-primary  text-base text-center rounded-full w-fit text-nowrap cursor-pointer ",
         className,
         startIcon && "pl-2",
         endIcon && "pr-2"
