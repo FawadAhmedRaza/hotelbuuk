@@ -1,4 +1,3 @@
-import React from "react";
 import { AboutScreen } from "@/src/screens";
 
 export const metadata = {

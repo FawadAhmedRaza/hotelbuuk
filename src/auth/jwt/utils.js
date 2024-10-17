@@ -29,23 +29,28 @@ export const tokenExpired = (exp) => {
   clearTimeout(expiredTimer);
 
   expiredTimer = setTimeout(() => {
-    alert('Token expired');
+    alert("Token expired");
 
-    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem("accessToken");
 
-    window.location.href ="/login"
+    window.location.href = "/login";
   }, timeLeft);
 };
 
 // ----------------------------------------------------------------------
 
-export const setSession = (accessToken) => {
+export const setSession = (accessToken, user) => {
+  if (user) {
+    sessionStorage.setItem("user", JSON.stringify(user));
+  }
+
   if (accessToken) {
-    sessionStorage.setItem('accessToken', accessToken);
+    sessionStorage.setItem("accessToken", accessToken);
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
     tokenExpired(exp);
   } else {
-    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("user");
   }
 };

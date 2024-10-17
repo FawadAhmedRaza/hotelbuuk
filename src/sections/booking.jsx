@@ -77,7 +77,7 @@ export const Booking = React.memo(() => {
     >
       <div className="relative flex justify-center w-full bottom-36 md:bottom-24 lg:bottom-20">
         <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 items-center w-11/12 lg:w-10/12 h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
-          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-10 lg:gap-20 xl:gap-28 grow w-full">
+          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-5 lg:gap-20 xl:gap-28 grow w-full">
             <div className="flex  gap-1 sm:gap-3">
               <Iconify
                 iconName="carbon:location-filled"
@@ -88,7 +88,7 @@ export const Booking = React.memo(() => {
                   variant="p"
                   className="font-normal !text-sm !text-start !w-full py-1"
                 >
-                  Destination
+                  Destinations
                 </Typography>
                 <RHFInput
                   type="text"
@@ -105,17 +105,17 @@ export const Booking = React.memo(() => {
               <Iconify iconName="ion:calendar" className="text-primary mt-1" />
 
               <div className="flex flex-col gap-1 sm:gap-2 w-auto">
-                <span className="flex gap-8 lg:gap-10 items-center justify-start sm:justify-start w-full">
+                <span className="flex gap-7  items-center justify-start sm:justify-start w-full">
                   {/* <Iconify iconName="ion:calendar" className="text-primary" /> */}
                   <Typography
                     variant="p"
-                    className="!text-xs text-secondary  py-1  "
+                    className="font-normal !text-sm !text-start text-secondary  py-1  "
                   >
                     Check-in
                   </Typography>
                   <Typography
                     variant="p"
-                    className="!text-xs text-secondary  py-1 "
+                    className="font-normal !text-sm !text-start text-secondary  py-1 "
                   >
                     Checkout
                   </Typography>
@@ -124,25 +124,13 @@ export const Booking = React.memo(() => {
                 {/* CUSTOM CALENDER */}
 
                 <Datepicker
-                  primaryColor={"blue"}
+                  primaryColor="red"
                   value={date}
                   placeholder={`${getFormattedDate()} - ${getFormattedDate(
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent appearance-none !text-black outline-none w-full  "
-                  configs={{
-                    shortcuts: {
-                      today: "Today",
-                      yesterday: "Yesterday",
-                      last7Days: "Last 7 Days",
-                    },
-                    colors: {
-                      primary: "blue", // Sets a light primary color theme
-                      text: "#1F2937", // Darker text color for contrast on light background
-                      background: "#FFFFFF", // Ensures background stays white
-                    },
-                  }}
+                  inputClassName="!text-sm md:text-base bg-transparent !appearance-none !text-black outline-none w-full  "
                 />
               </div>
             </div>

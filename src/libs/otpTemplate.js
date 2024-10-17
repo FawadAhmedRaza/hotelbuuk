@@ -9,7 +9,7 @@ This OTP is valid for [expiry time, e.g., 10 minutes]. Please do not share this 
 
 If you did not request this, please ignore this email, or contact our support team immediately.
 
-Thank you for using [Your Company Name]!
+Thank you for using HotelBukk!
 
 Best regards,`;
 }

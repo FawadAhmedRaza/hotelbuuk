@@ -1,23 +1,22 @@
-
-
 export const paths = {
-  root: '/',
-  notFoeund: '/*',
+  root: "/",
+  notFoeund: "/*",
   auth: {
-    root: '/',
+    root: "/",
     login: "/login",
     signUp: "/sign-up",
     OTPCode: "verify-code",
-    forgotPassword: '/forgot-password',
-    changePassword: '/change-password',
+    forgotPassword: "/forgot-password",
+    changePassword: "/change-password",
   },
-  about: '/about',
-  terms: '/terms',
-  impressum: '/impressum',
-  privacyPolicy: '/privacy-policy',
+  about: "/about",
+  terms: "/terms",
+  impressum: "/impressum",
+  privacyPolicy: "/privacy-policy",
   getHotelById: (id) => `/hotels/${id}`,
   nomad: {
     root: "/nomad",
-    create: '/nomad/create'
-  }
+    create: "/nomad/create",
+  },
+  hotelInfo: "/hotel-info",
 };

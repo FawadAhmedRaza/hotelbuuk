@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // Components and Others..
 import { AnchorTag, Iconify, Typography } from "../components";
@@ -9,7 +9,16 @@ import { Menu } from "./menu";
 import { cn } from "../libs/cn";
 
 export const NavBar = React.memo(({ className }) => {
+  const [user, setUser] = useState({});
+
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
+
+  console.log(user);
 
   return (
     <div
@@ -27,17 +36,21 @@ export const NavBar = React.memo(({ className }) => {
         </Typography>
       </AnchorTag>
 
-      {isOpen && <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />}
+      {isOpen && (
+        <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
+      )}
       <div className="flex gap-2 sm:gap-5">
         {/* language  */}
         <LangaugeTranslator />
         {/* Login  */}
 
-        <div onClick={toggleDrawer} className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20" >
+        <div
+          onClick={toggleDrawer}
+          className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
+        >
           <Iconify
             iconName="material-symbols:menu"
             className="size-5 sm:size-8"
-            
           />
           <span className="flex items-center gap-1">
             <Iconify
@@ -48,7 +61,8 @@ export const NavBar = React.memo(({ className }) => {
               variant="p"
               className=" font-medium !text-xs text-white text-nowrap"
             >
-              Hi, Fawad
+              {user ? user.first_name : ""}
+              {/* Fawad */}
             </Typography>
           </span>
         </div>

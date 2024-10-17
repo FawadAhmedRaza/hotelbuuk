@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Typography } from "../typography";
 import { Iconify } from "../iconify";
-import { Input } from "../input";
 import { cn } from "@/src/libs/cn";
+import get from "lodash/get";
 
 export const RHFSelect = ({
   label,
@@ -43,17 +43,17 @@ export const RHFSelect = ({
     setQuery("");
   };
 
-  // useEffect(() => {
-  //   const outsideClickHandler = (e) => {
-  //     if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
-  //       setOpenDropdown(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", outsideClickHandler);
-  //   return () => {
-  //     document.removeEventListener("mousedown", outsideClickHandler);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const outsideClickHandler = (e) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
+        setOpenDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", outsideClickHandler);
+    return () => {
+      document.removeEventListener("mousedown", outsideClickHandler);
+    };
+  }, []);
 
   return (
     <Controller
@@ -101,7 +101,7 @@ export const RHFSelect = ({
               />
             </div>
             {openDropdown && (
-              <div className="rounded-md absolute bg-white top-14  w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow overflow-hidden">
+              <div className="rounded-md absolute bg-white top-[52px]  w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
                 <div className="p-2">
                   <input
                     className="!border-b border-primary !py-1.5    w-full  text-sm  outline-none px-2 placeholder:text-neutral-300  text-secondary "
@@ -116,13 +116,13 @@ export const RHFSelect = ({
                       <Typography
                         variant="p"
                         key={index}
-                        className={`  !text-sm
+                        className={`!text-sm
                            w-full py-2 px-3 hover:bg-tertiary cursor-pointer ${
                              field.value === option.value
                                ? "!text-primary bg-tertiary"
                                : "!text-custom-black"
                            }`}
-                        onClick={() => handleOptionClick(field, option.value)}
+                        onClick={() => handleOptionClick(field, option.label)}
                       >
                         {option.label}
                       </Typography>
@@ -136,12 +136,22 @@ export const RHFSelect = ({
               </div>
             )}
           </div>
-          {errors && (
+          {/* {errors && (
             <Typography
               variant={"p"}
               className="!text-xs text-red-400 transition-all duration-500"
             >
               {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
+            </Typography>
+          )} */}
+
+          {/* Display errors dynamically using lodash get */}
+          {errors && (
+            <Typography
+              variant="p"
+              className="!text-xs text-red-400 transition-all duration-500"
+            >
+              {get(errors, name)?.message}
             </Typography>
           )}
         </div>
