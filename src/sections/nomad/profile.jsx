@@ -18,7 +18,7 @@ import {
 import { useForm } from "react-hook-form";
 import { addDays } from "date-fns";
 
-export const CompleteProfileView = React.memo(() => {
+export const NomadProfile = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [isTimeOpen, setIsTimeOpen] = useState(false);
   const datePopoverRef = useRef(null);
