@@ -1,7 +1,15 @@
 import { useEffect, useRef } from "react";
 import { Button, Iconify, Typography } from ".";
 
-const Modal = ({ isOpen, onClose, children, className, bgClass, title }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  className,
+  bgClass,
+  title,
+  handleSubmit,
+}) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -38,7 +46,10 @@ const Modal = ({ isOpen, onClose, children, className, bgClass, title }) => {
             onClick={onClose}
             className="flex items-center justify-center w-8 h- hover:bg-gray-200 rounded-full cursor-pointer transition-all duration-300"
           >
-            <Iconify iconName="radix-icons:cross-2" className="!w-6 !h-6 !text-black" />
+            <Iconify
+              iconName="radix-icons:cross-2"
+              className="!w-6 !h-6 !text-black"
+            />
           </span>
         </div>
 
@@ -54,7 +65,11 @@ const Modal = ({ isOpen, onClose, children, className, bgClass, title }) => {
           >
             Cancel
           </Button>
-          <Button className="text-tertiary !px-4 !py-2" type="submit">
+          <Button
+            className="text-tertiary !px-4 !py-2"
+            type="button"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </div>
