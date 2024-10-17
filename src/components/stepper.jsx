@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Iconify, Typography } from "../components";
+import { Button, Iconify, Typography } from ".";
 import { useFormContext } from "react-hook-form";
 
 export const Stepper = ({
