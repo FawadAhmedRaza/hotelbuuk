@@ -106,12 +106,12 @@ export const StepperView = () => {
   });
 
   const steps = [
-    // {
-    //   label: "Bussiness Meeting Info",
-    //   icon: "mdi:business-outline",
-    //   value: "bussiness",
-    //   component: <BussinessMeeting />,
-    // },
+    {
+      label: "Bussiness Meeting Info",
+      icon: "mdi:business-outline",
+      value: "bussiness",
+      component: <BussinessMeeting />,
+    },
     {
       label: "Upload Images",
       icon: "ph:images",

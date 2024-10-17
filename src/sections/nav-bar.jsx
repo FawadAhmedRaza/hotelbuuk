@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // Components and Others..
 import { AnchorTag, Iconify, Typography } from "../components";
@@ -9,9 +9,16 @@ import { Menu } from "./menu";
 import { cn } from "../libs/cn";
 
 export const NavBar = React.memo(({ className }) => {
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [user, setUser] = useState({});
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUser(user);
+  }, []);
+
+  console.log(user);
 
   return (
     <div

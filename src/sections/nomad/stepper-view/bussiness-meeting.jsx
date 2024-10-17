@@ -100,8 +100,8 @@ export const BussinessMeeting = () => {
                 <Typography variant="h5" className="font-semibold">
                   Location
                 </Typography>
-                <div className="flex items-center gap-5 w-full">
-                  <RHFSelect
+                <div className="flex flex-col md:flex-row gap-5  w-full">
+                <RHFSelect
                     name="business_meeting.location.country"
                     placeholder="Select your Country"
                     label="Country"

@@ -1,21 +1,14 @@
 import React from "react";
-import { Footer, ImpressumContent, NavBar, TermsBanner } from "../sections";
-import ConditionsContent from "../sections/conditions-content";
+import { ImpressumContent, Layout } from "../sections";
 import { HeadingBanner } from "../components";
 
 const ImpressumScreen = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar />
-      {/* <TermsBanner /> */}
-      <HeadingBanner
-        heading="Impressum"
-        // text="Last Updated on 7 Oct 2024"
-        className="bg-impressum"
-      />
-      <ImpressumContent />
-
-      <Footer />
+      <Layout>
+        <HeadingBanner heading="Impressum" className="bg-impressum" />
+        <ImpressumContent />
+      </Layout>
     </main>
   );
 });

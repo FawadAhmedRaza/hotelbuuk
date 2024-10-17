@@ -40,8 +40,11 @@ export const tokenExpired = (exp) => {
 // ----------------------------------------------------------------------
 
 export const setSession = (accessToken, user) => {
-  if (accessToken && user) {
+  if (user) {
     sessionStorage.setItem("user", JSON.stringify(user));
+  }
+
+  if (accessToken) {
     sessionStorage.setItem("accessToken", accessToken);
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
