@@ -104,6 +104,8 @@ export const RHFUploader = forwardRef(
 
     const onDrop = useCallback(
       (acceptedFiles) => {
+        console.log("Accepted FIles", acceptedFiles);
+
         const newImageUrls = acceptedFiles.map((file) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -137,22 +139,23 @@ export const RHFUploader = forwardRef(
         name={name}
         control={control}
         render={({ field }) => (
-          <div className="w-full !border-gray-500 border-2 border-dashed  rounded-xl">
-            <div
-              {...getRootProps({ className: "dropzone " })}
-              className={cn(
-                `flex flex-col justify-center items-center h-52 bg-gray-100 w-full  rounded-xl outline-none`,
-                className
-              )}
-            >
-              <Iconify
-                iconName={"humbleicons:upload"}
-                className={`${iconClasses} size-16 text-gray-500`}
-              />
-              <input {...field} {...getInputProps()} />
-              <p>Drag 'n' drop some files here, or click to select files</p>
+          <div className="flex flex-col gap-2 w-full">
+            <div className="w-full !border-gray-500 border-2 border-dashed  rounded-xl">
+              <div
+                {...getRootProps({ className: "dropzone " })}
+                className={cn(
+                  `flex flex-col justify-center items-center h-52 bg-gray-100 w-full  rounded-xl outline-none`,
+                  className
+                )}
+              >
+                <Iconify
+                  iconName={"humbleicons:upload"}
+                  className={`${iconClasses} size-16 text-gray-500`}
+                />
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+              </div>
             </div>
-
             {/* Display errors dynamically */}
             {errors && (
               <Typography

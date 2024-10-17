@@ -2,9 +2,11 @@
 
 import { Iconify } from "@/src/components";
 import { RHFUploader } from "@/src/components/hook-form";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 const ImageUploader = () => {
+  const { getValues, setValue, watch } = useFormContext();
   const uploaderRef = useRef(); // Create ref for RHFUploader
   const [uploadedImages, setUploadedImages] = useState([]);
 
@@ -12,12 +14,27 @@ const ImageUploader = () => {
     console.log("Uploaded Images:", images);
     setUploadedImages(images); // Update state with the new image list
   };
+  console.log(uploadedImages);
+
+  console.log("form context images", watch("images"));
 
   const handleDeleteImage = (index) => {
     if (uploaderRef.current) {
       uploaderRef.current.deleteImage(index); // Call delete from RHFUploader via ref
     }
   };
+  useEffect(() => {
+    const images = getValues("images");
+    setUploadedImages(images);
+  }, []);
+
+  useEffect(() => {
+    // Extract the 'url' properties into a new array
+    // const urls = uploadedImages.map((file) => file.url);
+
+    // Use setValue to store the URLs array in the form state
+    setValue("images", uploadedImages);
+  }, [uploadedImages, setValue]);
 
   return (
     <div className="flex flex-col gap-10">
