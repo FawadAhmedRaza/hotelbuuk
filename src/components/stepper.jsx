@@ -57,14 +57,13 @@ export const Stepper = ({
 
       {/* Navigation buttons */}
       <div className="flex justify-end gap-2 my-5">
+        {activeStep !== 0 && (
           <Button disabled={activeStep === 0} onClick={handleBack}>
             Back
           </Button>
-        {isLastStep ? (
-          <Button type="submit">Submit</Button>
-        ) : (
-          <Button onClick={handleNext}>Next</Button>
         )}
+        {!isLastStep && <Button onClick={handleNext}>Next</Button>}
+        {isLastStep && <Button type="submit">Submit</Button>}
       </div>
     </div>
   );
