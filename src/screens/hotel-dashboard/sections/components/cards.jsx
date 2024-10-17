@@ -2,7 +2,6 @@
 
 
 import DashboardCard from "@/src/components/dashboard-card";
-import React from "react";
 
 const HotelCards = () => {
   return (
