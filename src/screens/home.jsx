@@ -3,24 +3,23 @@ import {
   Banner,
   Booking,
   BookingSteps,
-  Footer,
   HeroSection,
+  Layout,
   MeetOurPatners,
-  NavBar,
 } from "../sections";
 import { Hotels } from "../sections/hotels";
 
 const HomeScreen = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar />
-      <HeroSection />
-      <Booking />
-      <Hotels />
-      <Banner />
-      <BookingSteps />
-      <MeetOurPatners />
-      <Footer />
+      <Layout>
+        <HeroSection />
+        <Booking />
+        <Hotels />
+        <Banner />
+        <BookingSteps />
+        <MeetOurPatners />
+      </Layout>
     </main>
   );
 });

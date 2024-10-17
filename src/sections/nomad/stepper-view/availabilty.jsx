@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useEffect } from "react";
 
 // Components and Others...
@@ -8,10 +9,9 @@ import { Button, Typography } from "@/src/components";
 import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
 import { getFormattedDate } from "@/src/libs/helper";
 import { addDays } from "date-fns";
-import { useState } from "react";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
 import { useFormContext } from "react-hook-form";
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
 
 export const SetAvailability = () => {
   const { setValue, watch } = useFormContext();
@@ -26,7 +26,6 @@ export const SetAvailability = () => {
     },
   ]);
 
-  console.log(date);
   const toggleCalender = () => {
     setOpenCalender((prev) => !prev);
   };
@@ -80,15 +79,12 @@ export const SetAvailability = () => {
           <span className="flex items-start gap-2 sm:gap-4  text-sm sm:text-base text-nowrap">
             From :
             <Typography variant="h6" className="text-nowrap">
-              {" "}
-              {date[0].startDate.toString().slice(0, 10) ||
-                getFormattedDate()}{" "}
+              {date[0].startDate.toString().slice(0, 10) || getFormattedDate()}
             </Typography>
             To :
             <Typography variant="h6">
-              {" "}
               {date[0].endDate.toString().slice(0, 10) ||
-                getFormattedDate(Date())}{" "}
+                getFormattedDate(Date())}
             </Typography>
           </span>
         </div>

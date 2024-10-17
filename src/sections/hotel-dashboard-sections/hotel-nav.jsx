@@ -1,24 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { AnchorTag, Iconify, Typography } from "@/src/components";
+import { useBoolean } from "@/src/hooks";
+import React from "react";
+import { Menu } from "../menu";
+import { LangaugeTranslator } from "..";
+import { cn } from "@/src/libs/cn";
 
 // Components and Others..
-import { AnchorTag, Iconify, Typography } from "../components";
-import { LangaugeTranslator } from ".";
-import { useBoolean } from "../hooks/use-boolean";
-import { Menu } from "./menu";
-import { cn } from "../libs/cn";
 
-export const NavBar = React.memo(({ className }) => {
-  const [user, setUser] = useState({});
+export const HotelNavbar = React.memo(({ className }) => {
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    setUser(user);
-  }, []);
-
-  console.log(user);
 
   return (
     <div
@@ -44,24 +37,17 @@ export const NavBar = React.memo(({ className }) => {
         <LangaugeTranslator />
         {/* Login  */}
 
-        <div
-          onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
-        >
+        <div className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20">
           <Iconify
             iconName="material-symbols:menu"
             className="size-5 sm:size-8"
           />
           <span className="flex items-center gap-1">
-            <Iconify
-              iconName="fluent:person-circle-12-filled"
-              className="size-5 sm:size-8"
-            />
             <Typography
               variant="p"
               className=" font-medium !text-xs text-white text-nowrap"
             >
-              {user ? user.first_name : ""}
+              {user ? user.first_name : "Moven pick hotel"}
               {/* Fawad */}
             </Typography>
           </span>

@@ -1,6 +1,5 @@
 import React from "react";
-import { AnchorTag, Pannel, Typography } from "../components";
-import { BgIcon } from "../components/bg-icon";
+import {  Typography } from "../components";
 import { cn } from "../libs/cn";
 
 export const HeadingBanner = React.memo(({ heading, text, className }) => {
@@ -28,7 +27,3 @@ export const HeadingBanner = React.memo(({ heading, text, className }) => {
     </div>
   );
 });
-
-<Typography varient="h1" className="text-white">
-  Term & Conditions
-</Typography>;

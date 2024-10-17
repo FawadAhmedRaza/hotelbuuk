@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { Iconify } from "./iconify";
+import { cn } from "../libs/cn";
 
 export const CustomPopover = ({
   isOpen,
@@ -37,9 +38,11 @@ export const CustomPopover = ({
   return (
     <div
       ref={popoverRef}
-      className={`absolute top-10 right-1 flex flex-col justify-end items-end transition-opacity duration-300 ease-in-out !z-50 ${parentClass} ${
+      className={cn(
+        "absolute top-10 right-1 flex flex-col justify-end items-end transition-opacity duration-300 ease-in-out !z-50",
+        parentClass,
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-      }`}
+      )}
     >
       {arrow && (
         <Iconify

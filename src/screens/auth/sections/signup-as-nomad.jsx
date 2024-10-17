@@ -80,9 +80,9 @@ const SignUpAsNomad = () => {
   };
 
   return (
-    <div className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-28 md:!py-10 !px-5 w-full h-full">
+    <div className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-28 md:!py-10 w-full h-full">
       <div
-        className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0`}
+        className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-full h-full mt-2 xl:mt-0`}
       >
         <RHFFormProvider
           methods={methods}
