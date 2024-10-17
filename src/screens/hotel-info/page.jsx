@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 
 import { NavBar } from "@/src/sections";
 import { StepperView } from "./components/stepper-view";

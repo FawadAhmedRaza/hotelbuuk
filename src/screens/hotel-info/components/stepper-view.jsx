@@ -38,8 +38,6 @@ export const StepperView = () => {
   } = methods;
   console.log("errors", errors);
 
-  console.log("Hotel Images", watch("images"));
-
   const steps = [
     {
       label: "Hotel Information",

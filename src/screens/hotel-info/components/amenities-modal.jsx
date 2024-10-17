@@ -12,10 +12,9 @@ import {
 
 const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
   const schema = yup.object({
-    amenities: yup.array().optional(), // Add any validation rules you want
+    amenities: yup.array().min(1, "at least 1 item is required"),
   });
 
-  // Retrieve stored data from localStorage
   let mainSettings = {};
   try {
     const storedData = LocalStorageGetItem("amenities");
@@ -25,10 +24,9 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
     console.error("Error parsing stored data", error);
   }
 
-  // Initialize form with existing amenities data
   const methods = useForm({
     resolver: yupResolver(schema),
-    defaultValues: mainSettings, // Use saved data for default values
+    defaultValues: mainSettings,
   });
 
   const { handleSubmit } = methods;
@@ -53,12 +51,15 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create New Amenities">
-      {/* <RHFFormProvider methods={methods} onSubmit={onSubmit}> */}
-      <div className="">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Create New Amenities"
+      handleSubmit={onSubmit}
+    >
+      <RHFFormProvider methods={methods}>
         <RHFAutoComplete name="amenities" label="Enter Amenities" />
-      </div>
-      {/* </RHFFormProvider> */}
+      </RHFFormProvider>
     </Modal>
   );
 };
