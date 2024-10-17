@@ -1,4 +1,6 @@
+"use client"
 import React from "react";
+
 import { Destinations, Layout, MissionStatement, Vision } from "../sections";
 import { HeadingBanner } from "../components";
 import { HotelLocation } from "../sections/hotel-details";

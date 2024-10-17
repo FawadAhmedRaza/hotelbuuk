@@ -149,8 +149,6 @@ export const loginWithCreds = async (data) => {
   }
 };
 
-// FORGET EMAIL
-
 export const forgetPassword = async (email) => {
   try {
     const user = await getUserByEmail(email);
@@ -191,8 +189,8 @@ export const forgetPassword = async (email) => {
   }
 };
 
-// Confirm Email Otp
 
+// signup
 export const CheckOTP = async (email, otp) => {
   try {
     const user = await prisma.user.findFirst({
@@ -229,6 +227,7 @@ export const CheckOTP = async (email, otp) => {
   }
 };
 
+// done
 export const CheckForgetOTP = async (email, otp) => {
   try {
     const user = await prisma.user.findFirst({
@@ -254,6 +253,7 @@ export const CheckForgetOTP = async (email, otp) => {
   }
 };
 
+// done
 export const resetPasssword = async (email, otp, newPassword) => {
   try {
     const user = await prisma.user.findFirst({
