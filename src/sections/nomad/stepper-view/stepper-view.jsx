@@ -17,32 +17,6 @@ export const StepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
-  // Image File Schema
-  const fileSchema = Yup.object().shape({
-    file: Yup.object().shape({
-      name: Yup.string().required("File name is required"),
-      size: Yup.number()
-        .max(5 * 1024 * 1024, "File size must be less than 5MB") // Limit file size to 5MB
-        .required("File size is required"),
-      type: Yup.string()
-        .matches(
-          /^image\/(jpeg|png|gif)$/,
-          "Only JPEG, PNG, or GIF files are allowed"
-        )
-        .required("File type is required"),
-      lastModified: Yup.number().required(
-        "Last modified timestamp is required"
-      ),
-      path: Yup.string().required("File path is required"), // Required path property
-    }),
-    url: Yup.string()
-      .matches(
-        /^data:image\/(jpeg|png|gif);base64,/,
-        "Must be a valid base64 image URL"
-      )
-      .required("Image URL is required"), // Required URL property
-  });
-
   // Nomad Form Schema
   const NomadSchema = Yup.object().shape({
     business_meeting: Yup.object({
@@ -75,7 +49,6 @@ export const StepperView = () => {
       }),
     }),
     images: Yup.array()
-      .of(fileSchema)
       .min(1, "At least one file is required")
       .required("Files are required"),
 
@@ -83,6 +56,9 @@ export const StepperView = () => {
       title: Yup.string().required("Learning title is required"),
       description: Yup.string().required("Learning description is required"),
     }),
+    topics: Yup.array()
+      .min(1, "At least one topic is required")
+      .required("Files are required"),
 
     availibility: Yup.object().shape({
       start_date: Yup.string().required("Start date is required"),
@@ -113,6 +89,7 @@ export const StepperView = () => {
         title: "",
         description: "",
       },
+      topics: [],
       availibility: {
         start_date: "",
         end_date: "",
@@ -182,45 +159,45 @@ export const StepperView = () => {
 
   // NEW HANDLE NEXT
   const handleNext = async () => {
-    const accomodationType = methods.watch(
-      "business_meeting.accomodation_type"
-    ); // Get the current accommodation type
-    let fieldsToValidate = [];
+    // const accomodationType = methods.watch(
+    //   "business_meeting.accomodation_type"
+    // ); // Get the current accommodation type
+    // let fieldsToValidate = [];
 
-    if (activeStep === 0) {
-      fieldsToValidate = [
-        "business_meeting.title",
-        "business_meeting.description",
-        "business_meeting.official_name",
-        "business_meeting.business_category",
-        "business_meeting.accomodation_type", // Ensure it’s present
-      ];
+    // if (activeStep === 0) {
+    //   fieldsToValidate = [
+    //     "business_meeting.title",
+    //     "business_meeting.description",
+    //     "business_meeting.official_name",
+    //     "business_meeting.business_category",
+    //     "business_meeting.accomodation_type", // Ensure it’s present
+    //   ];
 
-      if (accomodationType === "hotel") {
-        fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
-      } else if (accomodationType === "bnb") {
-        fieldsToValidate.push(
-          "business_meeting.location.country",
-          "business_meeting.location.city",
-          "business_meeting.location.street_name"
-        );
-      }
-    } else if (activeStep === 1) {
-      fieldsToValidate = ["images"];
-    } else if (activeStep === 2) {
-      fieldsToValidate = ["learning_info.title", "learning_info.description"];
-    } else if (activeStep === 3) {
-      fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
-    }
+    //   if (accomodationType === "hotel") {
+    //     fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
+    //   } else if (accomodationType === "bnb") {
+    //     fieldsToValidate.push(
+    //       "business_meeting.location.country",
+    //       "business_meeting.location.city",
+    //       "business_meeting.location.street_name"
+    //     );
+    //   }
+    // } else if (activeStep === 1) {
+    //   fieldsToValidate = ["images"];
+    // } else if (activeStep === 2) {
+    //   fieldsToValidate = ["learning_info.title", "learning_info.description"];
+    // } else if (activeStep === 3) {
+    //   fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
+    // }
 
-    console.log("Form values: ", methods.getValues()); // Check current form values
+    // console.log("Form values: ", methods.getValues()); // Check current form values
 
-    const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
-    console.log("Is Step Valid:", isStepValid);
+    // const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
+    // console.log("Is Step Valid:", isStepValid);
 
-    if (isStepValid) {
-      setActiveStep((prev) => prev + 1); // Move to next step if valid
-    }
+    // if (isStepValid) {
+    // }
+    setActiveStep((prev) => prev + 1); // Move to next step if valid
   };
 
   const handleBack = () => {

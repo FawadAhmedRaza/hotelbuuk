@@ -23,11 +23,11 @@ const AmenitiesModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create New Amenities">
-      <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="">
-          <RHFAutoComplete name="amenities" label="Enter Amenities" />
-        </div>
-      </RHFFormProvider>
+      {/* <RHFFormProvider methods={methods} onSubmit={onSubmit}> */}
+      <div className="">
+        <RHFAutoComplete name="amenities" label="Enter Amenities" />
+      </div>
+      {/* </RHFFormProvider> */}
     </Modal>
   );
 };

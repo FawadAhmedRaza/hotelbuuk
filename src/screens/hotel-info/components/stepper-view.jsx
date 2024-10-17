@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
+import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 
@@ -13,29 +13,33 @@ import HotelInfoForm from "./hote-info-form";
 import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 
 export const StepperView = () => {
-  const schema = yup.object({
-    hotel_image: yup.mixed().optional(),
-    hotel_name: yup.string().required("hotel name is required"),
-    description: yup.string().required("description name is required"),
-    contact_email: yup.string().required("contact email is required"),
-    hotel_contact_no: yup.number().required("contact number is required"),
-    address: yup.string().required("address is required"),
-    country: yup.string().required("country is required"),
-    city: yup.string().required("city is required"),
-    stars: yup.mixed().optional().default(4),
-    facilites: yup.object().optional(),
+  const HotelSchema = Yup.object({
+    hotel_image: Yup.mixed().optional(),
+    hotel_name: Yup.string().required("hotel name is required"),
+    description: Yup.string().required("description name is required"),
+    contact_email: Yup.string().required("contact email is required"),
+    hotel_contact_no: Yup.number().required("contact number is required"),
+    address: Yup.string().required("address is required"),
+    country: Yup.string().required("country is required"),
+    city: Yup.string().required("city is required"),
+    stars: Yup.mixed().optional().default(4),
+    facilites: Yup.object().optional(),
+    images: Yup.array(),
   });
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const methods = useForm({ resolver: yupResolver(schema) });
+  const methods = useForm({ resolver: yupResolver(HotelSchema) });
 
   const {
     handleSubmit,
     formState: { errors },
     trigger,
+    watch,
   } = methods;
   console.log("errors", errors);
+
+  console.log("Hotel Images", watch("images"));
 
   const steps = [
     {
@@ -65,6 +69,9 @@ export const StepperView = () => {
         "city",
       ];
     }
+    if (activeStep === 1) {
+      fieldsToValidate = ["images"];
+    }
     const isStepValid = await trigger(fieldsToValidate); // trigger validation
     if (isStepValid) {
       setActiveStep((prev) => prev + 1);
@@ -84,8 +91,8 @@ export const StepperView = () => {
   });
 
   return (
-    <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-      <Pannel>
+    <Pannel>
+      <RHFFormProvider methods={methods} onSubmit={onSubmit}>
         <Stepper
           steps={steps}
           activeStep={activeStep}
@@ -94,7 +101,7 @@ export const StepperView = () => {
           handleBack={handleBack}
           isLastStep={activeStep === steps.length - 1}
         />
-      </Pannel>
-    </RHFFormProvider>
+      </RHFFormProvider>
+    </Pannel>
   );
 };

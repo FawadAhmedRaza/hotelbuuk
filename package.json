@@ -36,7 +36,6 @@
     "react-datepicker": "^7.4.0",
     "react-dom": "^18",
     "react-dropzone": "^14.2.9",
-    "react-dropzone": "^14.2.9",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-lazy-load-image-component": "^1.6.2",
@@ -44,6 +43,7 @@
     "react-time-picker": "^7.0.0",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.3",
+    "uuid": "^10.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
