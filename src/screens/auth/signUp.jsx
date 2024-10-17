@@ -39,7 +39,7 @@ const SignUpScreen = () => {
             Setup your account to access hundreds of business hotels
           </Typography>
         </div>
-        <div>
+        <div className="w-full">
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} TABS={tabs} />
         </div>
       </div>

@@ -1,21 +1,15 @@
 import React from "react";
 import { Button, Card } from ".";
 
-const Tabs = ({ TABS, activeTab, setActiveTab, clearErrors }) => {
+const Tabs = ({ TABS, activeTab, setActiveTab }) => {
   return (
-    <div className="!w-full">
-      <Card className="!p-1 w-full">
-        <div className="relative right-0">
-          <ul
-            className="relative flex flex-wrap bg-custom-grey-2 list-none rounded-lg"
-            data-tabs="tabs"
-            role="tablist"
-          >
+    <div className=" flex flex-col gap-5 md:gap-0 w-full">
+      <Card className=" p-2 w-full bg-tertiary shadow-md rounded-lg">
+        <div className="relative flex items-center flex-wrap gap-2 w-full">
             {TABS?.map((tab) => (
-              <li key={tab?.label} className="p-1 flex-auto text-center">
                 <div
-                  className={`z-30 flex items-center p-1 justify-center w-full px-0 py-2 mb-0 transition-all ease-in-out rounded-lg cursor-pointer !text-primary ${
-                    activeTab === tab.value ? "bg-custom-white border" : ""
+                  className={`z-30 flex items-center p-1 justify-center grow px-0 py-2 mb-0 transition-all ease-in-out rounded-lg cursor-pointer !text-primary  ${
+                    activeTab === tab.value ? "bg-white border " : "hover:bg-white"
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -25,17 +19,15 @@ const Tabs = ({ TABS, activeTab, setActiveTab, clearErrors }) => {
                   aria-controls={tab?.value}
                   aria-selected={activeTab === tab?.value}
                 >
-                  <Button className="!bg-transparent !py-0 text-sm !text-primary">
+                  <Button className="!bg-transparent !py-0 text-sm !text-primary font-medium ">
                     {tab?.label}
                   </Button>
                 </div>
-              </li>
             ))}
-          </ul>
         </div>
       </Card>
 
-      <div className="">
+      <div className="w-full">
         {TABS?.find((tab) => tab?.value === activeTab)?.component ?? (
           <p>No content available for this tab.</p>
         )}

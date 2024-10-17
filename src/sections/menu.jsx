@@ -5,6 +5,7 @@ import { AuthLinks, MenuLinks } from "../_mock/_menu";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthContext } from "../auth/jwt/auth-context";
 import { auth } from "../auth";
+import { BgIcon } from "../components/bg-icon";
 
 export const Menu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
@@ -29,15 +30,11 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
           Hotelbuuk
         </Typography>
 
-        <Iconify
-          iconName="radix-icons:cross-1"
-          className="size-8 text-primary cursor-pointer"
-          onClick={onClick}
-        />
+        <BgIcon iconName="charm:cross" onClick={onClick} className="group hover:bg-primary" iconClass="text-primary group-hover:text-white size-6 block min-450:hidden"/>
       </div>
       <div
         className="flex flex-col h-96 justify-center sm:justify-start items-center   sm:items-start
-       gap-5 mt-10 "
+       gap-5 mt-10"
       >
         {MenuLinks?.map((item) => {
           return (
