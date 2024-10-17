@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 
 import { HotelNavbar } from "@/src/sections/hotel-dashboard-sections/hotel-nav";
