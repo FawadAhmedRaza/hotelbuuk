@@ -111,7 +111,7 @@ export const GuestLearn = () => {
             value={topicInfo.description}
             onChange={(e) => handleChange(e)}
             placeholder="Description of your Topic"
-            rows={4}
+            rows={6}
             className="w-full border bg-white text-sm py-2 px-4  rounded-md outline-none border-custom-neutral placeholder:text-neutral-300  text-secondary  resize-none"
           />
         </div>
