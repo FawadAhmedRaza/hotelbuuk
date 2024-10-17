@@ -88,7 +88,7 @@ export const Booking = React.memo(() => {
                   variant="p"
                   className="font-normal !text-sm !text-start !w-full py-1"
                 >
-                  Destination
+                  Destinations
                 </Typography>
                 <RHFInput
                   type="text"
