@@ -18,7 +18,7 @@ let initialFacilities = [
 
 const HotelInfoForm = () => {
   const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
-  const [refetch,setRefetch] = useState(false)
+  const [refetch, setRefetch] = useState(false);
   console.log(facilitiesArray, "facilitiesArray");
 
   const { watch, setValue, handleSubmit } = useFormContext();
@@ -90,7 +90,7 @@ const HotelInfoForm = () => {
             </div>
 
             {facilitiesArray?.map((facility, index) => (
-              <div key={index} className="flex items-center gap-2">
+              <div key={index} className="flex items-center gap-2 bg-red-300">
                 <input
                   type="checkbox"
                   checked={!!selectedFacilities[facility.value]}
@@ -146,7 +146,11 @@ const HotelInfoForm = () => {
       </div>
 
       {openModal.onTrue && (
-        <AmenitiesModal setRefetch={setRefetch} isOpen={openModal.value} onClose={openModal.onFalse} />
+        <AmenitiesModal
+          setRefetch={setRefetch}
+          isOpen={openModal.value}
+          onClose={openModal.onFalse}
+        />
       )}
     </div>
   );
