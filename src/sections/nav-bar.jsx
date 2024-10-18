@@ -18,7 +18,7 @@ export const NavBar = React.memo(({ className }) => {
     setUser(user);
   }, []);
 
-  console.log(user);
+  console.log("user",user);
 
   return (
     <div
@@ -61,7 +61,7 @@ export const NavBar = React.memo(({ className }) => {
               variant="p"
               className=" font-medium !text-xs text-white text-nowrap"
             >
-              {user ? user.first_name : ""}
+              {user ? user?.first_name : ""}
               {/* Fawad */}
             </Typography>
           </span>

@@ -3,18 +3,9 @@ import React, { useState } from "react";
 
 // Components and Others...
 import { Pannel, Typography } from "@/src/components";
-import Tabs from "@/src/components/tabs";
-import SignUpAsNomad from "./sections/signup-as-nomad";
 import SignUpAsHotel from "./sections/signup-as-hotel";
 
 const SignUpScreen = () => {
-  const [activeTab, setActiveTab] = useState("nomad");
-
-  const tabs = [
-    { label: "Signup as Nomad", value: "nomad", component: <SignUpAsNomad /> },
-    { label: "Signup as Hotel", value: "hotel", component: <SignUpAsHotel /> },
-  ];
-
   return (
     <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-28 md:!py-10  !px-5 lg:!px-14 xl:!px-20 w-full h-full">
       <img
@@ -40,7 +31,7 @@ const SignUpScreen = () => {
           </Typography>
         </div>
         <div className="w-full">
-          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} TABS={tabs} />
+          <SignUpAsHotel />
         </div>
       </div>
     </Pannel>

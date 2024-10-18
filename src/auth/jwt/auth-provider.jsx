@@ -16,6 +16,8 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { enqueueSnackbar, SnackbarProvider } from "notistack";
 
 // ----------------------------------------------------------------------
 /**
@@ -71,10 +73,9 @@ const STORAGE_KEY = "accessToken";
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
-
-  console.log("State", state.user);
 
   const fetchData = async () => {
     try {
@@ -92,7 +93,6 @@ export function AuthProvider({ children }) {
     }
   }, [session?.user?.id]);
 
-  console.log("authStatus in context", authStatus);
   const initialize = useCallback(async () => {
     try {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
@@ -134,13 +134,11 @@ export function AuthProvider({ children }) {
     initialize();
   }, [initialize]);
 
-  // LOGIN
   const login = useCallback(async (data) => {
     try {
       const { email, password } = data || {};
 
       const result = await loginWithCreds({ email, password });
-      console.log(result);
       if (result.statusCode == 200) {
         toast.success("Login sucessfully.");
         const { accessToken, user } = result.data || {};
@@ -167,22 +165,53 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // REGISTER
   const register = useCallback(async (data) => {
     try {
-      const response = await createUser(data);
-      if (response.statusCode == 200) {
-        localStorage.setItem("signupEmail", data.email);
+      const response = await axiosInstance.post(endpoints.AUTH.signup, data);
+
+      if (response.status === 201) {
+        localStorage.setItem("signupEmail", data?.email);
         router.push("/verify-code?step=signup");
       } else {
-        toast.error(response.message);
+        toast.error(response?.data?.message);
       }
     } catch (err) {
+      enqueueSnackbar(err?.message, { variant: "error" });
       console.log("errror in register ", err);
     }
   }, []);
 
-  // LOGOUT
+  const setupUserType = useCallback(async (user_type) => {
+    try {
+      console.log("state", state, user_type);
+      let data = { id: state.user.id, user_type };
+
+      const response = await axiosInstance.post(
+        endpoints.AUTH.setup_user_type,
+        data
+      );
+      console.log("response", response);
+
+      const { accessToken, user } = await response.data;
+
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+    } catch (error) {
+      enqueueSnackbar(error?.message, { variant: "error" });
+      console.log(error);
+    }
+  });
+
   const logout = useCallback(async () => {
     setSession(null);
 
@@ -192,37 +221,46 @@ export function AuthProvider({ children }) {
   }, []);
 
   const otpVerification = useCallback(async (step, code) => {
-    try {
-      if (step == "signup") {
+    if (step === "signup") {
+      try {
         const email = localStorage.getItem("signupEmail");
-        const response = await CheckOTP(email, code);
-
-        if (response.statusCode == 200) {
-          setSession(response.accessToken);
+        let data = { email, otp: code };
+        const response = await axiosInstance.post(
+          endpoints.AUTH.verify_user_OTP,
+          data
+        );
+        if (response.status === 201) {
+          setSession(response?.data?.data?.accessToken);
           localStorage.removeItem("signupEmail");
           dispatch({
             type: Types.LOGIN,
             payload: {
-              user: response.data?.user,
+              user: response.data?.data?.user,
             },
           });
-          toast.success("User conrim successfully.");
-          router.push("/");
-        } else {
-          toast.error(response?.message);
+          enqueueSnackbar("User verified successfully", { variant: "success" });
+          router.push("/setup-user-profile");
         }
-      } else {
-        const email = localStorage.getItem("forgotEmail");
-        const response = await CheckForgetOTP(email, code);
-        localStorage.setItem("forgotOtp", code);
-        if (response.statusCode == 200) {
-          router.push("/set-new-password");
-        } else {
-          toast.error(response.message);
-        }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
       }
-    } catch (error) {
-      console.error("Otp Verification Error:", error);
+    } else {
+      try {
+        const email = localStorage.getItem("forgotEmail");
+        let data = { email, otp: code };
+        const response = await axiosInstance.post(
+          endpoints.AUTH.forget_password.verify_forget_password_otp,
+          data
+        );
+        localStorage.setItem("forgotOtp", code);
+        if (response.status == 200) {
+          router.push("/set-new-password");
+        }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
     }
   }, []);
 
@@ -232,17 +270,22 @@ export function AuthProvider({ children }) {
       const otp = localStorage.getItem("forgotOtp");
 
       if (!email || !otp) {
-        toast.error(
-          "Opps, Unable to Reset password! We think you miss some steps"
+        enqueueSnackbar(
+          "Opps, Unable to Reset password! We think you miss some steps",
+          { variant: "warning" }
         );
         router.push("/login");
       }
 
-      const result = await resetPasssword(email, otp, newPassword);
+      let data = { email, otp, newPassword };
+      const response = await axiosInstance.post(
+        endpoints.AUTH.forget_password.reset_password,
+        data
+      );
 
-      if (result.statusCode == 200) {
-        toast.success("Reset Password sucessfully.");
-        const { accessToken, user } = result.data || {};
+      if (response.status == 201) {
+        enqueueSnackbar("Reset Password sucessfully", { variant: "success" });
+        const { accessToken, user } = response.data?.data || {};
         localStorage.removeItem("forgotEmail");
         localStorage.removeItem("forgotOtp");
 
@@ -254,11 +297,10 @@ export function AuthProvider({ children }) {
           },
         });
 
-        router.push("/");
-      } else {
-        toast.error(result?.message);
+        router.push("/login");
       }
     } catch (err) {
+      enqueueSnackbar(err?.message, { variant: "error" });
       console.log("Reset Error", err?.message);
     }
   }, []);
@@ -266,14 +308,22 @@ export function AuthProvider({ children }) {
   const forgotPasswordHandle = useCallback(async (email) => {
     try {
       localStorage.setItem("forgotEmail", email);
-      const response = await forgetPassword(email);
-      if (response.statusCode == 200) {
+      let data = { email };
+      const response = await axiosInstance.post(
+        endpoints.AUTH.forget_password.request_otp,
+        data
+      );
+      if (response.status === 200) {
+        const message =
+          response?.data?.message || "Password reset email sent successfully";
+        enqueueSnackbar(message, { variant: "success" });
         router.push("/verify-code?step=forgot");
-      } else {
-        toast.error(response?.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log("forget password error", error);
+      const errorMessage =
+        error?.message || "Failed to send password reset email";
+      enqueueSnackbar(errorMessage, { variant: "error" });
     }
   }, []);
 
@@ -297,14 +347,22 @@ export function AuthProvider({ children }) {
       resetPasswordHandle,
       forgotPasswordHandle,
       register,
+      setupUserType,
       logout,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, state.user, status, setupUserType]
   );
 
   return (
     <AuthContext.Provider value={memoizedValue}>
-      {children}
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+      >
+        {children}
+      </SnackbarProvider>
     </AuthContext.Provider>
   );
 }

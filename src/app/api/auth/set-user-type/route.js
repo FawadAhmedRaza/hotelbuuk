@@ -1,17 +1,13 @@
 import { NextResponse } from "next/server";
-
 import { prisma } from "@/src/db";
-
-import { saltAndHashPassword } from "@/src/libs/helper";
 import { generateToken } from "@/src/service/tokenGenerator";
 
 export async function POST(req) {
   try {
     const data = await req.json();
+    const { user_type, id } = data;
 
-    const { otp, email, newPassword } = data;
-
-    if (!otp || !email || !newPassword) {
+    if (!user_type || !id) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 404 }
@@ -20,39 +16,43 @@ export async function POST(req) {
 
     const user = await prisma.user.findFirst({
       where: {
-        forget_password_OTP: otp,
-        email,
+        id: id,
       },
     });
 
     if (!user) {
-      return NextResponse.json({ message: "Invalid Otp." }, { status: 404 });
+      return NextResponse.json({ message: "Invalid user" }, { status: 404 });
     }
 
-    const hashedPassword = saltAndHashPassword(newPassword);
-
+    // Update user with the correct enum value
     const updatedUser = await prisma.user.update({
       where: {
-        email: user.email,
+        id: id,
       },
       data: {
-        password: hashedPassword,
-        forget_password_OTP: "",
+        user_type: user_type, // Pass enum value directly
+        is_user_profile_completed: true,
       },
     });
 
     const accessToken = await generateToken(updatedUser);
+
     return NextResponse.json(
       {
-        data: { accessToken, user: updatedUser },
-        message: "Password reset successfully.",
+        accessToken,
+        user: updatedUser,
+        message: "User profile completed",
       },
       { status: 201 }
     );
   } catch (error) {
-    return {
-      message: "Internal Server Error",
-      statusCode: 500,
-    };
+    console.log(error);
+
+    return NextResponse.json(
+      {
+        message: "Internal Server Error",
+      },
+      { status: 500 }
+    );
   }
 }

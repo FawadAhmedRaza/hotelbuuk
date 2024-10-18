@@ -20,7 +20,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { paths } from "@/src/contants";
-import { createUser, login } from "@/src/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/src/auth/jwt/auth-context";
 

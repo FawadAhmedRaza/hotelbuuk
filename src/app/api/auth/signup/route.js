@@ -9,10 +9,9 @@ export async function POST(req) {
   try {
     const data = await req?.json();
 
-    const { hotel_name, email, password, terms } = data;
-    console.log("daa",data);
+    const { email, password, terms } = data;
 
-    if (!hotel_name || !email || !password) {
+    if (!email || !password) {
       return NextResponse.json(
         { message: "all fields are required." },
         { status: 400 }
@@ -22,7 +21,6 @@ export async function POST(req) {
     const existingUser = await prisma.user.findUnique({
       where: {
         email: email,
-        user_type: "HOTEL",
       },
     });
 
@@ -41,19 +39,17 @@ export async function POST(req) {
 
     const newUser = await prisma.user.create({
       data: {
-        hotel_name,
         email,
         password: hashedPassword,
         terms,
         confirmation_OTP: OTP,
-        user_type: "HOTEL", // include user type
       },
     });
 
     await sendMail(
       "Test OTP",
       newUser.email,
-      otpTemplate(newUser.hotel_name, OTP)
+      otpTemplate(newUser.email, OTP)
     );
 
     return NextResponse.json(

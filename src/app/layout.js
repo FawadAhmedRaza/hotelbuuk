@@ -3,8 +3,8 @@ import LocalFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/src/auth";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "../auth/jwt";
 import "./globals.css";
+import { AuthProvider } from "../providers/auth/context";
 
 export const metadata = {
   title: "Hotel Buuk",
@@ -41,7 +41,6 @@ const lemonMilk = LocalFont({
   variable: "--font-lemonMilk",
 });
 
-
 const helvatica = LocalFont({
   src: [
     {
@@ -59,7 +58,6 @@ const helvatica = LocalFont({
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  console.log("this is session : ", session?.user);
   return (
     <SessionProvider session={session}>
       <html
