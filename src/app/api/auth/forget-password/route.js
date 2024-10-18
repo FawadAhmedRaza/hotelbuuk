@@ -5,9 +5,10 @@ import { generateOTP } from "@/src/libs/helper";
 import { otpTemplate } from "@/src/libs/otpTemplate";
 import { sendMail } from "@/src/service/mailService";
 
-export default async function POST(req) {
+export async function POST(req) {
   try {
     const data = await req.json();
+    console.log("data", data);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -20,7 +21,7 @@ export default async function POST(req) {
         {
           message: "user not exists",
         },
-        { status: 400 }
+        { status: 404 }
       );
     }
 
@@ -28,7 +29,7 @@ export default async function POST(req) {
 
     await prisma.user.update({
       where: {
-        email,
+        email: data?.email,
       },
       data: {
         forget_password_OTP: OTP,
@@ -38,7 +39,7 @@ export default async function POST(req) {
     await sendMail(
       "Forget Password OTP",
       user.email,
-      otpTemplate(user.first_name, OTP)
+      otpTemplate(user?.first_name || user?.hotel_name, OTP)
     );
 
     return NextResponse.json(
@@ -48,6 +49,7 @@ export default async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

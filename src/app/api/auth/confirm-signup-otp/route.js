@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
 
-export default async function POST(req) {
+export async function POST(req) {
   try {
     const data = await req.json();
 

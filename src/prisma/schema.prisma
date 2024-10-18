@@ -24,20 +24,21 @@ enum UserType {
 }
 
 model User {
-  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
-  first_name          String
-  last_name           String
-  hotel_name          String
-  user_type           UserType?
-  email               String     @unique
-  password            String?
-  googleId            String?
-  phone_number        String?
-  terms               Boolean?
-  confirmation_OTP    String?
-  forget_password_OTP String?
-  is_verified_user    Boolean?
-  auth_method         AuthMethod @default(EMAIL)
+  id                        String     @id @default(auto()) @map("_id") @db.ObjectId
+  first_name                String?
+  last_name                 String?
+  hotel_name                String?
+  user_type                 UserType?
+  email                     String     @unique
+  password                  String
+  googleId                  String?
+  phone_number              String?
+  terms                     Boolean?
+  confirmation_OTP          String?
+  forget_password_OTP       String?
+  is_verified_user          Boolean?
+  is_user_profile_completed Boolean?
+  auth_method               AuthMethod @default(EMAIL)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

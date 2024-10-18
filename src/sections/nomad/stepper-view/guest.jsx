@@ -51,7 +51,7 @@ export const GuestLearn = () => {
   return (
     <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
       <Typography variant="h4" className="font-semibold">
-        Topics
+        What will guests learn from you? Add 3 only
       </Typography>
 
       <div className="flex flex-col gap-3 w-full">
@@ -82,7 +82,7 @@ export const GuestLearn = () => {
               type="text"
               value={topicInfo.title}
               onChange={(e) => handleChange(e)}
-              placeholder="Title of your Topic"
+              placeholder="Finding the best Chinese Suppliers"
               className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
             />
           </div>
@@ -110,7 +110,7 @@ export const GuestLearn = () => {
             name="description"
             value={topicInfo.description}
             onChange={(e) => handleChange(e)}
-            placeholder="Description of your Topic"
+            placeholder="Description "
             rows={6}
             className="w-full border bg-white text-sm py-2 px-4  rounded-md outline-none border-custom-neutral placeholder:text-neutral-300  text-secondary  resize-none"
           />

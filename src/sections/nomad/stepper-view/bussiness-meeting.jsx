@@ -17,7 +17,7 @@ import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
 
 export const BussinessMeeting = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const accomodationType = watch("business_meeting.accomodation_type");
 
   // State to force re-render on accomodationType change
@@ -26,8 +26,6 @@ export const BussinessMeeting = () => {
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
-
-  console.log(accomodationType);
 
   return (
     <div className="flex flex-col gap-10">
@@ -78,18 +76,30 @@ export const BussinessMeeting = () => {
               Accommodation Type (Where Guests will Sleep)
             </Typography>
             <div className="flex flex-col  gap-5 w-full">
-              <RHFRadio
-                id="hotel"
-                name="business_meeting.accomodation_type"
-                value="hotel"
-                label="Hotel"
-              />
-              <RHFRadio
-                id="bnb"
-                name="business_meeting.accomodation_type"
-                value="bnb"
-                label="B&B"
-              />
+              <div className="flex flex-col gap-1">
+                <RHFRadio
+                  id="hotel"
+                  name="business_meeting.accomodation_type"
+                  value="hotel"
+                  label="Hotel"
+                />
+                <Typography variant="p" className="!text-xs">
+                  (You partnered with local hotels to take their guests on
+                  Business Tours){" "}
+                </Typography>
+              </div>
+              <div className="flex flex-col gap-1">
+                <RHFRadio
+                  id="bnb"
+                  name="business_meeting.accomodation_type"
+                  value="bnb"
+                  label="B&B"
+                />
+                <Typography variant="p" className="!text-xs">
+                  (Business Guests stay in your B&B. You also take them on
+                  Business Tours)
+                </Typography>
+              </div>
             </div>
           </div>
 
@@ -141,7 +151,7 @@ export const BussinessMeeting = () => {
             // />
 
             <RHFImageSelect
-              name="business_meeting.hotels"
+              name="business_meeting.hotel"
               placeholder="Select Hotels"
               label="Hotels"
               options={hotels}

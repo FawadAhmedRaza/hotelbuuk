@@ -1,9 +1,11 @@
-import { prisma } from "@/src/db";
-import { saltAndHashPassword } from "@/src/libs/helper";
-import { generateToken } from "@/src/service/tokenGenerator";
 import { NextResponse } from "next/server";
 
-export default async function POST(req) {
+import { prisma } from "@/src/db";
+
+import { saltAndHashPassword } from "@/src/libs/helper";
+import { generateToken } from "@/src/service/tokenGenerator";
+
+export async function POST(req) {
   try {
     const data = await req.json();
 

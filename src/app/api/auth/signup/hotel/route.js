@@ -10,6 +10,7 @@ export async function POST(req) {
     const data = await req?.json();
 
     const { hotel_name, email, password, terms } = data;
+    console.log("daa",data);
 
     if (!hotel_name || !email || !password) {
       return NextResponse.json(

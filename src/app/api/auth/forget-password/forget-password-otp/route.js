@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/src/db";
 
-export default async function POST(req) {
+export async function POST(req) {
   try {
     const data = await req.json();
 
@@ -23,7 +23,7 @@ export default async function POST(req) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: "Invalid Otp." }, { status: 404 });
+      return NextResponse.json({ message: "Invalid Otp" }, { status: 404 });
     }
 
     return NextResponse.json(
@@ -33,6 +33,7 @@ export default async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

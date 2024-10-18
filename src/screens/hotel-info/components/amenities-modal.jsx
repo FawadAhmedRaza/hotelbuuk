@@ -57,9 +57,9 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
       title="Create New Amenities"
       handleSubmit={onSubmit}
     >
-      <RHFFormProvider methods={methods}>
-        <RHFAutoComplete name="amenities" label="Enter Amenities" />
-      </RHFFormProvider>
+      {/* <RHFFormProvider methods={methods}> */}
+      <RHFAutoComplete name="amenities" label="Enter Amenities" />
+      {/* </RHFFormProvider> */}
     </Modal>
   );
 };

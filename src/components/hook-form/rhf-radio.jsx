@@ -4,7 +4,15 @@ import { useFormContext, Controller } from "react-hook-form";
 import { Typography } from "../typography";
 
 export const RHFRadio = React.memo(
-  ({ id, label, name, value, disabled = false, className = "" }) => {
+  ({
+    id,
+    label,
+    name,
+    value,
+    disabled = false,
+    className = "",
+    placeholder,
+  }) => {
     const { control } = useFormContext();
 
     return (
@@ -26,6 +34,7 @@ export const RHFRadio = React.memo(
                   type="radio"
                   id={id}
                   value={value}
+                  placeholder={placeholder}
                   disabled={disabled}
                   checked={field.value === value} // Ensure correct selection
                   onChange={() => field.onChange(value)} // Pass the correct value on change

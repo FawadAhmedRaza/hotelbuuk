@@ -25,11 +25,12 @@ export const StepperView = () => {
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
-      hotels: Yup.string().when("accomodation_type", {
+      hotel: Yup.string().when("accomodation_type", {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
+
       location: Yup.object().shape({
         country: Yup.string().when("$accomodation_type", {
           is: "bnb",
@@ -49,7 +50,7 @@ export const StepperView = () => {
       }),
     }),
     images: Yup.array()
-      .min(1, "At least one file is required")
+      .min(10, "At least ten images are required")
       .required("Files are required"),
 
     learning_info: Yup.object().shape({
@@ -77,7 +78,7 @@ export const StepperView = () => {
         official_name: "",
         business_category: "",
         accomodation_type: "bnb", // Ensure this is available in the form state
-        hotels: "",
+        hotel: "",
         location: {
           country: "",
           city: "",
@@ -174,7 +175,7 @@ export const StepperView = () => {
     //   ];
 
     //   if (accomodationType === "hotel") {
-    //     fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
+    //     fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
     //   } else if (accomodationType === "bnb") {
     //     fieldsToValidate.push(
     //       "business_meeting.location.country",
@@ -207,9 +208,6 @@ export const StepperView = () => {
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-        <Typography variant="h2" className="text-black text-center">
-          All fields are Mandetory
-        </Typography>
         <Stepper
           steps={currentSteps}
           activeStep={activeStep}
