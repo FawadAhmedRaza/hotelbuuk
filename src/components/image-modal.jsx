@@ -21,7 +21,7 @@ export const ImageModal = ({ images, isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
       <div className="relative w-full h-full">
         {/* Close Button */}
         <button

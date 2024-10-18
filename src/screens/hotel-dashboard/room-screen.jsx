@@ -1,12 +1,11 @@
 import React from "react";
 import { Layout } from "@/src/sections";
-import { StepperView } from "@/src/sections/nomad";
-
+import { RoomStepperView } from "@/src/sections/hotel-dashboard-sections/room";
 
 const RoomCreateScreen = React.memo(() => {
   return (
     <Layout isNavBg={true}>
-      <StepperView />
+      <RoomStepperView />
     </Layout>
   );
 });

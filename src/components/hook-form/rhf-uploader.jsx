@@ -1,4 +1,3 @@
-
 // SECOND
 "use client";
 import React, {
@@ -14,7 +13,7 @@ import { useDropzone } from "react-dropzone";
 import { Iconify, Typography } from "..";
 
 export const RHFUploader = forwardRef(
-  ({ name, className, iconClasses, onFileUpload }, ref) => {
+  ({ name, className, iconClasses, onFileUpload, icon }, ref) => {
     const {
       control,
       formState: { errors },
@@ -59,32 +58,33 @@ export const RHFUploader = forwardRef(
         name={name}
         control={control}
         render={({ field }) => (
-          <div className="flex flex-col gap-2 w-full">
-            <div className="w-full !border-gray-500 border-2 border-dashed  rounded-xl">
-              <div
-                {...getRootProps({ className: "dropzone " })}
-                className={cn(
-                  `flex flex-col justify-center items-center h-52 bg-gray-100 w-full  rounded-xl outline-none`,
-                  className
-                )}
-              >
-                <Iconify
-                  iconName={"humbleicons:upload"}
-                  className={`${iconClasses} size-16 text-gray-500`}
-                />
-                <input {...getInputProps()} />
-                <p className="text-sm text-center">Drag 'n' drop some files here, or click to select files</p>
-              </div>
-            </div>
+          <div className="relative flex flex-col gap-2 w-full cursor-pointer ">
             {/* Display errors dynamically */}
             {errors && (
               <Typography
                 variant="p"
-                className="!text-xs text-red-400 transition-all duration-500"
+                className="absolute !text-xs -top-10 text-red-400 transition-all duration-500"
               >
                 {get(errors, name)?.message}
               </Typography>
             )}
+            {/* Image Input */}
+            <div className="w-full !border-gray-500 border-2 border-dashed  rounded-xl">
+              <div
+                {...getRootProps({ className: "dropzone " })}
+                className={cn(
+                  `flex flex-col justify-center items-center h-20 sm:h-28 md:h-36 lg:h-40 bg-gray-100 w-full  rounded-xl outline-none`,
+                  className
+                )}
+              >
+                <Iconify
+                  iconName={icon}
+                  className={`${iconClasses} size-16 text-gray-500`}
+                />
+                <input {...getInputProps()} />
+                {/* <p className="text-sm text-center">Drag 'n' drop some files here, or click to select files</p> */}
+              </div>
+            </div>
           </div>
         )}
       />

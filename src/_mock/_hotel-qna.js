@@ -84,21 +84,21 @@ export const HotelQNA = [
 
 export const hotels = [
   {
-    id: 1,
+    id: "1",
     hotel_name: "The Grand Palace",
     address: "123 Main St, Springfield, USA", // Added address
     image: "/assets/images/bedroom.png",
     value: "grand_palace",
   },
   {
-    id: 2,
+    id: "2",
     hotel_name: "Ocean Breeze Resort",
     address: "456 Ocean Ave, Miami, USA", // Added address
     image: "/assets/images/bedroom-2.png",
     value: "ocean_breeze_resort",
   },
   {
-    id: 3,
+    id: "3",
     hotel_name: "Mountain View Lodge",
     address: "789 Mountain Rd, Denver, USA", // Added address
     image: "/assets/images/hotel-1.png",
