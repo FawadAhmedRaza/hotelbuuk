@@ -20,7 +20,6 @@ export const RoomStepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
-  // Nomad Form Schema
   const NomadSchema = Yup.object().shape({
     business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
@@ -104,7 +103,6 @@ export const RoomStepperView = () => {
   });
 
   const {
-    trigger,
     watch,
     handleSubmit,
     formState: { errors },

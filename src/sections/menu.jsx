@@ -21,22 +21,19 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
       <div className="flex justify-between items-center">
         <Typography
           variant="h3"
-          className=" !text-3xl md:!text-4xl font-bold text-primary text-start  "
+          className=" !text-3xl md:!text-4xl font-bold text-primary text-start"
         >
           Hotelbuuk
         </Typography>
 
         <BgIcon
-          iconName="charm:cross"
+          iconName="bitcoin-icons:cross-filled"
           onClick={onClick}
-          className="group hover:bg-primary"
-          iconClass="text-primary group-hover:text-white size-6 block min-450:hidden"
+          className="hover:bg-primary !text-black"
+          iconClass="!text-white size-10"
         />
       </div>
-      <div
-        className="flex flex-col h-96 justify-center sm:justify-start items-center   sm:items-start
-       gap-5 mt-10"
-      >
+      <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
         {MenuLinks?.map((item) => {
           return (
             <AnchorTag

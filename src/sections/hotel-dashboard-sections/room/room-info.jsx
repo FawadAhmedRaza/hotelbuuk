@@ -120,7 +120,7 @@ export const RoomInfo = () => {
           </div>
 
           <div className="flex flex-col gap-3 w-full mt-6">
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row justify-start items-center gap-4">
               <Typography variant="h6" className="font-medium">
                 Add Room Type
               </Typography>
@@ -129,7 +129,7 @@ export const RoomInfo = () => {
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                <Iconify iconName="tabler:plus" />
+                <Iconify iconName="tabler:plus" className="!text-black mt-[2px]" />
               </Typography>
             </div>
 
