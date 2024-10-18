@@ -4,36 +4,44 @@ import DashboardCard from "@/src/components/dashboard-card";
 const HotelCards = () => {
   return (
     // grid grid-cols-12 gap-6
-    <div className="grid grid-cols-1  sm:grid-cols-2  xl:grid-cols-4 gap-6">
-      <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+      <div className="">
         <DashboardCard
           IconName="mdi:shop-complete"
-          title={"Total Booking "}
+          title={" Booking "}
           value={"40"}
           btnTitle={"View Details"}
-          
         />
       </div>
-      <div>
-        <DashboardCard
-          IconName="ic:outline-card-membership"
-          title={"Registered Nomad  "}
-          value={"33"}
-          btnTitle={"View Details"}
-        />
-      </div>
-      <div>
+      <div className="">
         <DashboardCard
           IconName="mingcute:invite-line"
-          title={"Invite Nomad"}
+          title={" Listing"}
           value={"41"}
           btnTitle={"Invite Nomad"}
         />
       </div>
-      <div>
+      <div className="">
+        <DashboardCard
+          IconName="ic:outline-card-membership"
+          title={"Nomad"}
+          value={"33"}
+          btnTitle={"View Details"}
+        />
+      </div>
+
+      <div className="">
+        <DashboardCard
+          IconName="mingcute:invite-line"
+          title={" Revenue"}
+          value={"41"}
+          btnTitle={"Invite Nomad"}
+        />
+      </div>
+      <div className="">
         <DashboardCard
           IconName="material-symbols:meeting-room"
-          title={"Create Room "}
+          title={" Income "}
           value={"25"}
           btnTitle={"Create Room "}
         />
@@ -41,7 +49,7 @@ const HotelCards = () => {
 
       {/* <Card className="md:col-span-3 col-span-12">
         <Typography variant="h4" className="">
-          Total Bookings
+           Bookings
         </Typography>
       </Card> */}
     </div>
