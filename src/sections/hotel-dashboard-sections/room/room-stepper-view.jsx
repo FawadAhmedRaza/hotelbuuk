@@ -4,16 +4,19 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
+import { Pannel, Stepper, Typography } from "@/src/components";
+import { RoomInfo } from "./room-info";
+import ImageUploader from "../../nomad/stepper-view/image-uploader";
 
 // Components and Others...
-import { Pannel, Stepper, Typography } from "@/src/components";
-import { BussinessMeeting } from "./bussiness-meeting";
-import { GuestLearn } from "./guest";
-import { SetAvailability } from "./availabilty";
-import { Pricing } from "./pricing";
-import ImageUploader from "./image-uploader";
+// import { Pannel, Stepper, Typography } from "@/src/components";
+// import { BussinessMeeting } from "./bussiness-meeting";
+// import { GuestLearn } from "./guest";
+// import { SetAvailability } from "./availabilty";
+// import { Pricing } from "./pricing";
+// import ImageUploader from "./image-uploader";
 
-export const StepperView = () => {
+export const RoomStepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -25,12 +28,11 @@ export const StepperView = () => {
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
-      hotel: Yup.string().when("accomodation_type", {
+      hotels: Yup.string().when("accomodation_type", {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
-
       location: Yup.object().shape({
         country: Yup.string().when("$accomodation_type", {
           is: "bnb",
@@ -50,7 +52,7 @@ export const StepperView = () => {
       }),
     }),
     images: Yup.array()
-      .min(10, "At least ten images are required")
+      .min(1, "At least one file is required")
       .required("Files are required"),
 
     learning_info: Yup.object().shape({
@@ -78,7 +80,7 @@ export const StepperView = () => {
         official_name: "",
         business_category: "",
         accomodation_type: "bnb", // Ensure this is available in the form state
-        hotel: "",
+        hotels: "",
         location: {
           country: "",
           city: "",
@@ -116,34 +118,16 @@ export const StepperView = () => {
 
   const steps = [
     {
-      label: "Bussiness Meeting Info",
-      icon: "mdi:business-outline",
+      label: "Room Info",
+      icon: "solar:home-outline",
       value: "bussiness",
-      component: <BussinessMeeting />,
+      component: <RoomInfo />,
     },
     {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
       component: <ImageUploader />,
-    },
-    {
-      label: "What Guest will Learn",
-      icon: "octicon:person-16",
-      value: "guest",
-      component: <GuestLearn />,
-    },
-    {
-      label: "Set Availability",
-      icon: "heroicons:hand-thumb-up",
-      value: "availability",
-      component: <SetAvailability />,
-    },
-    {
-      label: "Pricing",
-      icon: "carbon:pricing-traditional",
-      value: "pricing",
-      component: <Pricing />,
     },
   ];
 
@@ -175,7 +159,7 @@ export const StepperView = () => {
     //   ];
 
     //   if (accomodationType === "hotel") {
-    //     fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
+    //     fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
     //   } else if (accomodationType === "bnb") {
     //     fieldsToValidate.push(
     //       "business_meeting.location.country",

@@ -1,15 +1,23 @@
+"use client";
+import React, { useEffect, useState } from "react";
+
+// Components and Others...
 import {
+  RHFCheckbox,
+  RHFImageSelect,
   RHFInput,
+  RHFRadio,
+  RHFSelect,
   RHFTextArea,
-  RHFUploadAvatar,
 } from "@/src/components/hook-form";
-import React, { useState, useEffect } from "react";
-import AmenitiesModal from "./amenities-modal";
-import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
-import { Typography } from "@/src/components";
-import { useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
+import { Button, Iconify, Typography } from "@/src/components";
+
+import { room_facilities, roomTypes } from "@/src/_mock/_room";
 import { useModal } from "@/src/hooks/use-modal";
 import { LocalStorageGetItem } from "@/src/utils/localstorage";
+import AmenitiesModal from "@/src/screens/hotel-info/components/amenities-modal";
+import { RoomTypeModal } from ".";
 
 const initialFacilities = [
   { title: "Free WI-FI", value: "freeWI-FI" },
@@ -18,8 +26,7 @@ const initialFacilities = [
   { title: "Gym", value: "gym" },
   { title: "Restaurant", value: "restaurant" },
 ];
-
-const HotelInfoForm = () => {
+export const RoomInfo = () => {
   const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
   const [refetch, setRefetch] = useState(false);
 
@@ -57,38 +64,72 @@ const HotelInfoForm = () => {
   };
 
   return (
-    <div className="gap-y-4">
-      <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFUploadAvatar name="hotel_image" />
-        <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-5 w-full h-full mt-6">
-        <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
+        {/* left  */}
+        <div className="flex flex-col gap-5 w-full">
           <RHFInput
-            name="hotel_name"
-            label="Hotel Name"
-            placeholder="Movenpick hotel"
-            // className="mt-6"
+            name="room_name"
+            label="Room Name"
+            placeholder="Room Name "
           />
           <RHFTextArea
             name="description"
-            label="Hotel Description"
-            placeholder="Enter Hotel description"
-            // className="mt-6"
+            label="Description"
+            required={true}
+            placeholder="Describe your Business Tour "
           />
+          <RHFInput
+            name="maximum_occupancy"
+            label="Maximum Occupancy"
+            placeholder="Maximum Occupancy"
+          />
+          <div className="flex flex-col gap-5 ">
+            <Typography variant="h4" className="font-semibold">
+              Room Facilities
+            </Typography>
+            <div className="grid grid-cols-1  md:grid-cols-3 gap-3 py-5 lg:py-0">
+              {room_facilities.map((amenity, index) => (
+                <RHFCheckbox
+                  key={index}
+                  name={amenity.name}
+                  label={amenity.label}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Right  */}
+        <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
+          <RHFSelect
+            name="room_type"
+            placeholder="Select Room Type"
+            label="Room Type"
+            options={roomTypes}
+          />
+
+          <div className="flex flex-col gap-5 w-full">
+            <RHFInput
+              name="price"
+              label="Pricing"
+              type="number"
+              placeholder="price "
+              startIcon="marketeq:money-euro"
+              startIconClass="size-8"
+            />
+          </div>
 
           <div className="flex flex-col gap-3 w-full mt-6">
             <div className="flex flex-row gap-4">
               <Typography variant="h6" className="font-medium">
-                Hotel Facilities
+                Add Room Type
               </Typography>
               <Typography
                 variant="h6"
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                Create
+                <Iconify iconName="tabler:plus" />
               </Typography>
             </div>
 
@@ -114,44 +155,10 @@ const HotelInfoForm = () => {
             </div>
           </div>
         </div>
-
-        <div className="flex flex-col gap-5">
-          <RHFInput
-            name="contact_email"
-            label="Contact E-mail"
-            placeholder="support@movenpick.com"
-            // className="mt-6"
-          />
-          <RHFInput
-            type="number"
-            name="hotel_contact_no"
-            label="Contact number"
-            placeholder="Enter Contact number"
-            // className="mt-6"
-          />
-          <RHFInput
-            name="country"
-            label="Country"
-            placeholder="Enter Country"
-            // className="mt-6"
-          />
-          <RHFInput
-            name="city"
-            label="City"
-            placeholder="Enter City"
-            // className="mt-6"
-          />
-          <RHFInput
-            name="address"
-            label="Address"
-            placeholder="Enter Address"
-            // className="mt-6"
-          />
-        </div>
       </div>
 
       {openModal.onTrue && (
-        <AmenitiesModal
+        <RoomTypeModal
           setRefetch={setRefetch}
           isOpen={openModal.value}
           onClose={openModal.onFalse}
@@ -160,5 +167,3 @@ const HotelInfoForm = () => {
     </div>
   );
 };
-
-export default HotelInfoForm;

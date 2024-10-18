@@ -1,16 +1,12 @@
 import React from "react";
 import * as yup from "yup";
-import Modal from "@/src/components/modal";
-import { RHFFormProvider } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
-import RHFAutoComplete from "@/src/components/hook-form/rhf-auto-complete";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  LocalStorageGetItem,
-  LocalStorageSetItem,
-} from "@/src/utils/localstorage";
+import Modal from "@/src/components/modal";
+import RHFAutoComplete from "@/src/components/hook-form/rhf-auto-complete";
+import { LocalStorageGetItem } from "@/src/utils/localstorage";
 
-const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
+export const RoomTypeModal = ({ isOpen, onClose, setRefetch }) => {
   const schema = yup.object({
     amenities: yup.array().min(1, "at least 1 item is required"),
   });
@@ -63,5 +59,3 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
     </Modal>
   );
 };
-
-export default AmenitiesModal;
