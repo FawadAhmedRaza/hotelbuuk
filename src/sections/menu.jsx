@@ -27,10 +27,10 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
         </Typography>
 
         <BgIcon
-          iconName="bitcoin-icons:cross-filled"
+          iconName="charm:cross"
           onClick={onClick}
-          className="hover:bg-primary !text-black"
-          iconClass="!text-white size-10"
+          className="bg-primary !text-white"
+          iconClass="!text-white size-8"
         />
       </div>
       <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
