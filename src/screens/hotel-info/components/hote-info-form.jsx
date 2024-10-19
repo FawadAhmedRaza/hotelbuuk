@@ -1,5 +1,6 @@
 import {
   RHFInput,
+  RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
@@ -10,6 +11,7 @@ import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import { LocalStorageGetItem } from "@/src/utils/localstorage";
+import { getCities, getCountries } from "@/src/libs/helper";
 
 const initialFacilities = [
   { title: "Free WI-FI", value: "freeWI-FI" },
@@ -20,11 +22,18 @@ const initialFacilities = [
 ];
 
 const HotelInfoForm = () => {
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
   const [refetch, setRefetch] = useState(false);
 
   const { watch, setValue, handleSubmit } = useFormContext();
   const selectedFacilities = watch("facilities", {});
+
+  const country = watch("country");
+  const city = watch("city");
+
+  console.log(country, city);
 
   const openModal = useModal();
 
@@ -55,6 +64,23 @@ const HotelInfoForm = () => {
       [key]: checked,
     });
   };
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+    fetchCities();
+  }, [country]);
 
   return (
     <div className="gap-y-4">
@@ -129,17 +155,17 @@ const HotelInfoForm = () => {
             placeholder="Enter Contact number"
             // className="mt-6"
           />
-          <RHFInput
+          <RHFSelect
             name="country"
+            placeholder="Select your Country"
             label="Country"
-            placeholder="Enter Country"
-            // className="mt-6"
+            options={countries}
           />
-          <RHFInput
+          <RHFSelect
             name="city"
+            placeholder="Select your City"
             label="City"
-            placeholder="Enter City"
-            // className="mt-6"
+            options={cities}
           />
           <RHFInput
             name="address"

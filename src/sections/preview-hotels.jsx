@@ -17,6 +17,7 @@ import "../app/globals.css";
 export const PreviewHotels = () => {
   return (
     <div className="w-full relative ">
+      
       <BgIcon
         iconName="cuida:arrow-left-outline"
         iconClass="!size-6"
