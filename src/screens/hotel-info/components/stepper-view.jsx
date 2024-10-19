@@ -16,7 +16,7 @@ export const StepperView = () => {
   const HotelSchema = Yup.object({
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
-    description: Yup.string().required("description name is required"),
+    description: Yup.string().optional(),
     contact_email: Yup.string().required("contact email is required"),
     hotel_contact_no: Yup.number().required("contact number is required"),
     address: Yup.string().required("address is required"),
@@ -58,13 +58,13 @@ export const StepperView = () => {
     let fieldsToValidate = [];
     if (activeStep === 0) {
       fieldsToValidate = [
-        "hotel_name",
-        "description",
-        "contact_email",
-        "hotel_contact_no",
-        "address",
-        "country",
-        "city",
+        // "hotel_name",
+        // "description",
+        // "contact_email",
+        // "hotel_contact_no",
+        // "address",
+        // "country",
+        // "city",
       ];
     }
     if (activeStep === 1) {

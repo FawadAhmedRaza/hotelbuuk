@@ -10,6 +10,7 @@ const Modal = ({
   bgClass,
   title,
   handleSubmit,
+  isLoading,
 }) => {
   const modalRef = useRef(null);
 
@@ -70,6 +71,7 @@ const Modal = ({
             className="text-tertiary !px-4 !py-2"
             type="button"
             onClick={handleSubmit}
+            loading={isLoading}
           >
             Submit
           </Button>

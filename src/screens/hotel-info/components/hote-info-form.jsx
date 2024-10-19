@@ -9,45 +9,44 @@ import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
-import { LocalStorageGetItem } from "@/src/utils/localstorage";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 const initialFacilities = [
-  { title: "Free WI-FI", value: "freeWI-FI" },
-  { title: "Parking", value: "parking" },
-  { title: "Pool", value: "pool" },
-  { title: "Gym", value: "gym" },
-  { title: "Restaurant", value: "restaurant" },
+  { name: "Free WI-FI" },
+  { name: "Parking" },
+  { name: "Pool" },
+  { name: "Gym" },
+  { name: "Restaurant" },
 ];
 
 const HotelInfoForm = () => {
-  const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
-  const [refetch, setRefetch] = useState(false);
+  const { user } = useAuthContext();
 
-  const { watch, setValue, handleSubmit } = useFormContext();
+  const [facilitiesArray, setFacilitiesArray] = useState();
+  const [refetch, setRefetch] = useState(false);
+  const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities", {});
 
   const openModal = useModal();
 
-  // On component mount, fetch stored amenities and update facilities
-  useEffect(() => {
-    const storedAmenities = LocalStorageGetItem("amenities");
-    if (storedAmenities) {
-      const parsedAmenities = JSON.parse(storedAmenities)?.amenities || [];
-      const newFacilities = parsedAmenities.map((item) => ({
-        title: item.name, // Assuming name field from amenities
-        value: item.name.toLowerCase().replace(/\s+/g, ""), // Generate a key for facility
-      }));
-
-      // Avoid duplicating facilities
-      setFacilitiesArray((prevArray) => {
-        const existingFacilities = new Set(prevArray.map((f) => f.value)); // Create a set for fast lookup
-        const filteredNewFacilities = newFacilities.filter(
-          (facility) => !existingFacilities.has(facility.value) // Add only unique facilities
-        );
-        return [...prevArray, ...filteredNewFacilities];
-      });
+  const fetchFacilites = async () => {
+    try {
+      const request = await axiosInstance.get(
+        endpoints.hotel.facilites.get_all(user?.id)
+      );
+      const fetchedFacilities = request?.data?.facilites || [];
+      setFacilitiesArray(fetchedFacilities);
+    } catch (error) {
+      console.log(error);
     }
-  }, [refetch]);
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchFacilites();
+    }
+  }, [user]);
 
   const handleCheckboxChange = (key, checked) => {
     setValue("facilities", {
@@ -69,13 +68,11 @@ const HotelInfoForm = () => {
             name="hotel_name"
             label="Hotel Name"
             placeholder="Movenpick hotel"
-            // className="mt-6"
           />
           <RHFTextArea
             name="description"
             label="Hotel Description"
             placeholder="Enter Hotel description"
-            // className="mt-6"
           />
 
           <div className="flex flex-col gap-3 w-full mt-6">
@@ -92,25 +89,32 @@ const HotelInfoForm = () => {
               </Typography>
             </div>
 
-            <div className="  grid grid-cols-2 gap-4">
-              {facilitiesArray?.map((facility, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={!!selectedFacilities[facility.value]}
-                    onChange={(e) =>
-                      handleCheckboxChange(facility.value, e.target.checked)
-                    }
-                    className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
-                  />
-                  <label
-                    className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                    htmlFor={facility.title}
-                  >
-                    {facility?.title}
-                  </label>
-                </div>
-              ))}
+            <div className="grid grid-cols-2 gap-4">
+              {facilitiesArray?.length > 0
+                ? (facilitiesArray || initialFacilities)?.map(
+                    (facility, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={!!selectedFacilities[facility.name]}
+                          onChange={(e) =>
+                            handleCheckboxChange(
+                              facility.name,
+                              e.target.checked
+                            )
+                          }
+                          className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                        />
+                        <label
+                          className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
+                          htmlFor={facility.name}
+                        >
+                          {facility?.name}
+                        </label>
+                      </div>
+                    )
+                  )
+                : null}
             </div>
           </div>
         </div>
@@ -120,32 +124,23 @@ const HotelInfoForm = () => {
             name="contact_email"
             label="Contact E-mail"
             placeholder="support@movenpick.com"
-            // className="mt-6"
           />
           <RHFInput
             type="number"
             name="hotel_contact_no"
             label="Contact number"
             placeholder="Enter Contact number"
-            // className="mt-6"
           />
           <RHFInput
             name="country"
             label="Country"
             placeholder="Enter Country"
-            // className="mt-6"
           />
-          <RHFInput
-            name="city"
-            label="City"
-            placeholder="Enter City"
-            // className="mt-6"
-          />
+          <RHFInput name="city" label="City" placeholder="Enter City" />
           <RHFInput
             name="address"
             label="Address"
             placeholder="Enter Address"
-            // className="mt-6"
           />
         </div>
       </div>
