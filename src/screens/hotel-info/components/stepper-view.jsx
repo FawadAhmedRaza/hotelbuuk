@@ -14,6 +14,7 @@ import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 
 export const StepperView = () => {
   const HotelSchema = Yup.object({
+    
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
     description: Yup.string().required("description name is required"),
