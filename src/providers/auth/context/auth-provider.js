@@ -11,6 +11,7 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { getUserById } from "@/src/actions/auth.actions";
+import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 /**
@@ -194,7 +195,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     setSession(null);
-
+    router.push(paths.auth.login);
     dispatch({
       type: Types.LOGOUT,
     });
