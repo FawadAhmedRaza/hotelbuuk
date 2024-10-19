@@ -25,7 +25,11 @@ export const GuestLearn = () => {
   console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
+    const currentTopics = getValues("topics") || []; // Get existing topics (fallback to empty array)
+
     setTopics((prev) => [...prev, topicInfo]);
+
+    setValue("topics", [...currentTopics, topicInfo], { shouldValidate: true });
 
     setTopicInfo({ title: "", description: "" });
 
@@ -33,9 +37,12 @@ export const GuestLearn = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
+  
     const newTopics = topics.filter((topic) => topic.id !== id);
 
+    const currentTopics = getValues("topics") || []; // Get current topics
+    const updatedTopics = currentTopics.filter((_, index) => index !== id); // Remove the topic
+    setValue("topics", updatedTopics, { shouldValidate: true }); // Update the fo
     setTopics(newTopics);
   };
 
