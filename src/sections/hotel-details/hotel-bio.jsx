@@ -193,12 +193,12 @@ export const HotelBio = () => {
         </div>
         {/* Reserve Button */}
         <Button className="!w-full">Reserve</Button>
-        <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
+        {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
           <Iconify iconName="mynaui:flag-solid" className="text-black" />
           <Typography variant="p" className=" font-medium">
             Report This Listing
           </Typography>
-        </span>
+        </span> */}
       </div>
     </div>
   );
