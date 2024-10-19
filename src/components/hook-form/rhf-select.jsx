@@ -122,7 +122,7 @@ export const RHFSelect = ({
                                ? "!text-primary bg-tertiary"
                                : "!text-custom-black"
                            }`}
-                        onClick={() => handleOptionClick(field, option.value)}
+                        onClick={() => handleOptionClick(field, option.label)}
                       >
                         {option.label}
                       </Typography>

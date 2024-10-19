@@ -1,0 +1,17 @@
+export const businessCategories = [
+  { id: 1, label: "Technology", value: "technology" },
+  { id: 2, label: "Finance", value: "finance" },
+  { id: 3, label: "Healthcare", value: "healthcare" },
+  { id: 4, label: "Education", value: "education" },
+  { id: 5, label: "Retail", value: "retail" },
+  { id: 6, label: "Manufacturing", value: "manufacturing" },
+  { id: 7, label: "Real Estate", value: "real_estate" },
+  { id: 8, label: "Food & Beverage", value: "food_beverage" },
+  { id: 9, label: "Transportation", value: "transportation" },
+  { id: 10, label: "Entertainment", value: "entertainment" },
+  { id: 11, label: "Consulting", value: "consulting" },
+  { id: 12, label: "Hospitality", value: "hospitality" },
+  { id: 13, label: "Marketing & Advertising", value: "marketing_advertising" },
+  { id: 14, label: "Non-Profit", value: "non_profit" },
+  { id: 15, label: "Legal Services", value: "legal_services" },
+];

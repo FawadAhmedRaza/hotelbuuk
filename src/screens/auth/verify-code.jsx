@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Link from "next/link";
 
-// Components and Others...
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
+
 import {
   AnchorTag,
   Button,
@@ -13,19 +17,15 @@ import {
   Typography,
   Pannel,
 } from "@/src/components";
-import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 import { paths } from "@/src/contants";
-import { CheckForgetOTP, CheckOTP, forgetPassword } from "@/src/actions/auth.actions";
-import { useRouter, useSearchParams } from "next/navigation";
-import { auth } from "@/src/auth";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const VerifyCodeScreen = () => {
-  const router = useRouter();
   const serachParamas = useSearchParams();
+
   const step = serachParamas.get("step");
-  const {otpVerification} = useAuthContext()
-  // Define Yup validation schema
+
+  const { otpVerification } = useAuthContext();
+
   const VerifyCodeSchema = Yup.object().shape({
     code: Yup.string()
       .required("Code is required")
@@ -41,11 +41,11 @@ const VerifyCodeScreen = () => {
 
   const {
     reset,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
 
   const handleSubmit = async (data) => {
-      await otpVerification(step,data?.code)
+    await otpVerification(step, data.code);
   };
 
   return (
@@ -74,7 +74,7 @@ const VerifyCodeScreen = () => {
             variant="p"
             className="text-secondary text-center lg:text-start"
           >
-            Don’t worry, happens to all of us. Enter the code you received to
+            Don't worry, happens to all of us. Enter the code you received to
             verify your identity.
           </Typography>
         </div>
@@ -83,7 +83,6 @@ const VerifyCodeScreen = () => {
           onSubmit={methods.handleSubmit(handleSubmit)}
           className="flex flex-col gap-5"
         >
-          {/* Input for the code with validation */}
           <RHFInput
             label="Enter Code"
             type="text"
@@ -95,11 +94,11 @@ const VerifyCodeScreen = () => {
             variant="p"
             className="font-montserrat font-medium text-sm"
           >
-            Didn’t receive a code? <AnchorTag href="#">Resend</AnchorTag>
+            Didn't receive a code? <AnchorTag href="#">Resend</AnchorTag>
           </Typography>
 
           <div className="flex flex-col gap-8 mt-5">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" loading={isSubmitting}>
               Submit
             </Button>
           </div>

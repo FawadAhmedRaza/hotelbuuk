@@ -1,5 +1,3 @@
-
-
 "use client";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -22,6 +20,7 @@ export const RHFInput = React.memo(
     customInputClass,
     endIconClass,
     endIcon,
+    onChange,
     readOnly = false,
     type = "text",
   }) => {
@@ -79,6 +78,10 @@ export const RHFInput = React.memo(
                 value={field.value || ""}
                 readOnly={readOnly}
                 autoComplete="off"
+                onChange={(e) => {
+                  field.onChange(e); // Call react-hook-form's onChange
+                  onChange?.(e); // Optionally call the custom onChange if provided
+                }}
                 placeholder={placeholder}
                 className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent ${customInputClass} ${className} ${
                   disabled ? "pointer-events-none" : ""
@@ -101,7 +104,6 @@ export const RHFInput = React.memo(
                 <Iconify iconName={endIcon} className={endIconClass} />
               )}
             </div>
-
 
             {/* Display errors dynamically using lodash get */}
             {errors && (

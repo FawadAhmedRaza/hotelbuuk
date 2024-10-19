@@ -2,8 +2,14 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-// Components and Others...
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import Link from "next/link";
+
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
+
 import {
   Button,
   Iconify,
@@ -12,16 +18,9 @@ import {
   Pannel,
   Typography,
 } from "@/src/components";
-import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { paths } from "@/src/contants";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const ForgotPasswordScreen = () => {
-  const router = useRouter();
   const { forgotPasswordHandle } = useAuthContext();
 
   const SignUpSchema = Yup.object().shape({
@@ -38,14 +37,11 @@ const ForgotPasswordScreen = () => {
   });
 
   const {
-    reset,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
 
-  console.log(errors);
-
   const handleSubmit = async (data) => {
-    await forgotPasswordHandle(data.email);
+    await forgotPasswordHandle(data?.email);
   };
 
   return (
@@ -93,7 +89,7 @@ const ForgotPasswordScreen = () => {
           />
 
           <div className="flex flex-col gap-8 mt-5">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" loading={isSubmitting}>
               Submit
             </Button>
 

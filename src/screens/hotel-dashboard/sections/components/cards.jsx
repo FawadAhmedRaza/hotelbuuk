@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+
 import DashboardCard from "@/src/components/dashboard-card";
 
 const HotelCards = () => {

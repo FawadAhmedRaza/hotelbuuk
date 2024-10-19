@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 // Components and Others...
 import {
   RHFCheckbox,
+  RHFImageSelect,
   RHFInput,
   RHFRadio,
   RHFSelect,
@@ -12,9 +13,11 @@ import {
 import { useForm, useFormContext } from "react-hook-form";
 import { Button, Typography } from "@/src/components";
 import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
+import { businessCategories } from "@/src/_mock/_business_categories";
+import { hotels } from "@/src/_mock/_hotel-qna";
 
 export const BussinessMeeting = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const accomodationType = watch("business_meeting.accomodation_type");
 
   // State to force re-render on accomodationType change
@@ -23,8 +26,6 @@ export const BussinessMeeting = () => {
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
-
-  console.log(accomodationType);
 
   return (
     <div className="flex flex-col gap-10">
@@ -68,29 +69,37 @@ export const BussinessMeeting = () => {
             name="business_meeting.business_category"
             placeholder="Select Bussiness Category"
             label="Bussiness Category"
-            options={[
-              { label: "Option 1", value: "option1" },
-              { label: "Option 2", value: "option2" },
-              { label: "Option 3", value: "option3" },
-            ]}
+            options={businessCategories}
           />
           <div className="flex flex-col gap-3 w-full">
             <Typography variant="h5" className="font-semibold">
               Accommodation Type (Where Guests will Sleep)
             </Typography>
             <div className="flex flex-col  gap-5 w-full">
-              <RHFRadio
-                id="hotel"
-                name="business_meeting.accomodation_type"
-                value="hotel"
-                label="Hotel"
-              />
-              <RHFRadio
-                id="bnb"
-                name="business_meeting.accomodation_type"
-                value="bnb"
-                label="B&B"
-              />
+              <div className="flex flex-col gap-1">
+                <RHFRadio
+                  id="hotel"
+                  name="business_meeting.accomodation_type"
+                  value="hotel"
+                  label="Hotel"
+                />
+                <Typography variant="p" className="!text-xs">
+                  (You partnered with local hotels to take their guests on
+                  Business Tours){" "}
+                </Typography>
+              </div>
+              <div className="flex flex-col gap-1">
+                <RHFRadio
+                  id="bnb"
+                  name="business_meeting.accomodation_type"
+                  value="bnb"
+                  label="B&B"
+                />
+                <Typography variant="p" className="!text-xs">
+                  (Business Guests stay in your B&B. You also take them on
+                  Business Tours)
+                </Typography>
+              </div>
             </div>
           </div>
 
@@ -101,7 +110,7 @@ export const BussinessMeeting = () => {
                   Location
                 </Typography>
                 <div className="flex flex-col md:flex-row gap-5  w-full">
-                <RHFSelect
+                  <RHFSelect
                     name="business_meeting.location.country"
                     placeholder="Select your Country"
                     label="Country"
@@ -130,15 +139,22 @@ export const BussinessMeeting = () => {
               />
             </>
           ) : (
-            <RHFSelect
-              name="business_meeting.hotels"
+            // <RHFSelect
+            //   name="business_meeting.hotels"
+            //   placeholder="Select Hotels"
+            //   label="Hotels"
+            //   options={[
+            //     { label: "Option 1", value: "option1" },
+            //     { label: "Option 2", value: "option2" },
+            //     { label: "Option 3", value: "option3" },
+            //   ]}
+            // />
+
+            <RHFImageSelect
+              name="business_meeting.hotel"
               placeholder="Select Hotels"
               label="Hotels"
-              options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
-              ]}
+              options={hotels}
             />
           )}
         </div>
