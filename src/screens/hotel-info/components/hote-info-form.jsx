@@ -1,5 +1,6 @@
 import {
   RHFInput,
+  RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
@@ -10,6 +11,7 @@ import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
+import { getCities, getCountries } from "@/src/libs/helper";
 
 const initialFacilities = [
   { name: "Free WI-FI" },
@@ -20,6 +22,8 @@ const initialFacilities = [
 ];
 
 const HotelInfoForm = () => {
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const { hotelFacilities: facilitiesArray } = useSelector(
     (state) => state.hotelFacilities
   );
@@ -28,6 +32,11 @@ const HotelInfoForm = () => {
   const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities") || []; // Default to an empty array
   console.log("selected", facilitiesArray);
+
+  const country = watch("country");
+  const city = watch("city");
+
+  console.log(country, city);
 
   const openModal = useModal();
 
@@ -41,6 +50,46 @@ const HotelInfoForm = () => {
           ) // Remove if unchecked
     );
   };
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+  }, [refetch]);
+
+  const handleCheckboxChange = (key, checked) => {
+    setValue("facilities", {
+      ...selectedFacilities,
+      [key]: checked,
+    });
+  };
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+    fetchCities();
+  }, [country]);
 
   return (
     <div className="gap-y-4">
@@ -115,12 +164,18 @@ const HotelInfoForm = () => {
             label="Contact number"
             placeholder="Enter Contact number"
           />
-          <RHFInput
+          <RHFSelect
             name="country"
+            placeholder="Select your Country"
             label="Country"
-            placeholder="Enter Country"
+            options={countries}
           />
-          <RHFInput name="city" label="City" placeholder="Enter City" />
+          <RHFSelect
+            name="city"
+            placeholder="Select your City"
+            label="City"
+            options={cities}
+          />
           <RHFInput
             name="address"
             label="Address"

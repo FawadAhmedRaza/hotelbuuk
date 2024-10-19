@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 
 export const StepperView = () => {
   const HotelSchema = Yup.object({
+    
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
     description: Yup.string().optional(),
