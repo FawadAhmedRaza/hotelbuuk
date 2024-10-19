@@ -67,13 +67,6 @@ const HotelInfoForm = () => {
     }
   }, [refetch]);
 
-  const handleCheckboxChange = (key, checked) => {
-    setValue("facilities", {
-      ...selectedFacilities,
-      [key]: checked,
-    });
-  };
-
   useEffect(() => {
     async function fetchCountries() {
       const allCountries = await getCountries();
