@@ -1,3 +1,148 @@
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import { useForm } from "react-hook-form";
+// import * as Yup from "yup";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import { RHFFormProvider } from "@/src/components/hook-form";
+// import { Pannel, Stepper, Typography } from "@/src/components";
+// import { RoomInfo } from "./room-info";
+// import ImageUploader from "../../nomad/stepper-view/image-uploader";
+
+// export const RoomStepperView = () => {
+//   const [currentSteps, setCurrentSteps] = useState([]);
+//   const [activeStep, setActiveStep] = useState(0);
+
+//   const checkBoxSchema = (amenities) => {
+//     return Yup.object().shape(
+//       amenities.reduce((schema, amenity) => {
+//         schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+
+//         return schema;
+//       }, {})
+//     );
+//   };
+
+//   const RoomSchema = Yup.object().shape({
+//     room_info: Yup.object().shape({
+//       room_name: Yup.string().required("Room name is required"),
+//       description: Yup.string().required("Description is required"),
+//       maximum_occupancy: Yup.number().required("Maximum occupancy is required"),
+//       room_type: Yup.string().required("Room type is required"),
+//       price: Yup.number()
+//         .required("Pricing is required")
+//         .positive("Pricing must be a positive number"),
+//       room_facilities: Yup.lazy((value) =>
+//         checkBoxSchema(Object.keys(value || {}))
+//       ),
+//     }),
+//     images: Yup.array()
+//       .min(10, "At least ten images are required")
+//       .required("Files are required"),
+//   });
+
+//   const methods = useForm({
+//     resolver: yupResolver(RoomSchema),
+//     // defaultValues: NomadSchema.default(),
+//     defaultValues: {
+//       room_info: {
+//         room_name: "",
+//         description: "",
+//         maximum_occupancy: "",
+//         room_type: "",
+//         price: "",
+//         room_facilities: {},
+//       },
+//       images: [],
+//     },
+//   });
+
+//   const {
+//     watch,
+//     handleSubmit,
+//     formState: { errors },
+//   } = methods;
+
+//   console.log("errors", errors);
+
+//   const onSubmit = handleSubmit(async (data) => {
+//     console.log("Form submitted: ", data);
+//   });
+
+//   const steps = [
+//     {
+//       label: "Room Info",
+//       icon: "solar:home-outline",
+//       value: "bussiness",
+//       component: <RoomInfo />,
+//     },
+//     {
+//       label: "Upload Images",
+//       icon: "ph:images",
+//       value: "images",
+//       component: <ImageUploader />,
+//     },
+//   ];
+
+//   // NEW HANDLE NEXT
+//   const handleNext = async () => {
+//     // Get the current accommodation type
+//     const accommodationType = methods.watch("room_info.room_type");
+//     let fieldsToValidate = [];
+//     if (activeStep === 0) {
+//       // Step 1: Validate room info fields
+//       fieldsToValidate = [
+//         "room_info.room_name",
+//         "room_info.description",
+//         "room_info.maximum_occupancy",
+//         "room_info.room_type",
+//         "room_info.price",
+//       ];
+//       // If there are room facilities, validate those as well
+//       const roomFacilities = methods.getValues("room_info.room_facilities");
+//       if (roomFacilities && Object.keys(roomFacilities).length > 0) {
+//         fieldsToValidate.push(
+//           ...Object.keys(roomFacilities).map(
+//             (facility) => `room_info.room_facilities.${facility}`
+//           )
+//         );
+//       }
+//     } else if (activeStep === 1) {
+//       // Step 2: Validate images
+//       fieldsToValidate = ["images"];
+//     }
+//     // Log current form values
+//     console.log("Form values: ", methods.getValues());
+//     // Validate step-specific fields
+//     const isStepValid = await methods.trigger(fieldsToValidate);
+//     console.log("Is Step Valid:", isStepValid);
+//     // Move to the next step if valid
+//     if (isStepValid) {
+//       setActiveStep((prev) => prev + 1);
+//     }
+//   };
+
+//   const handleBack = () => {
+//     setActiveStep((prev) => prev - 1);
+//   };
+
+//   return (
+//     <Pannel>
+//       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
+//         <Stepper
+//           steps={currentSteps}
+//           activeStep={activeStep}
+//           setActiveStep={setActiveStep}
+//           handleNext={handleNext}
+//           handleBack={handleBack}
+//           isLastStep={activeStep === steps.length - 1}
+//         />
+//       </RHFFormProvider>
+//     </Pannel>
+//   );
+// };
+
+// SECOND******************************************************
+
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,85 +165,45 @@ export const RoomStepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
-  const NomadSchema = Yup.object().shape({
-    business_meeting: Yup.object({
-      title: Yup.string().required("Title is required"),
-      description: Yup.string().required("required"),
-      official_name: Yup.string().required("Official name is required"),
-      business_category: Yup.string().required("Business category is required"),
-      accomodation_type: Yup.string().default("bnb"),
-      hotels: Yup.string().when("accomodation_type", {
-        is: "hotel",
-        then: (schema) => schema.required("hotel is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      location: Yup.object().shape({
-        country: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("country is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        city: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("city is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        street_name: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("street is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-      }),
+  const checkBoxSchema = (amenities) => {
+    return Yup.object().shape(
+      amenities.reduce((schema, amenity) => {
+        schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+
+        return schema;
+      }, {})
+    );
+  };
+
+  const RoomSchema = Yup.object().shape({
+    room_info: Yup.object().shape({
+      room_name: Yup.string().required("Room name is required"),
+      description: Yup.string().required("Description is required"),
+      maximum_occupancy: Yup.string().required("Maximum occupancy is required"),
+      room_type: Yup.string().required("Room type is required"),
+      price: Yup.string().required("Pricing is required"),
+      room_facilities: Yup.lazy((value) =>
+        checkBoxSchema(Object.keys(value || {}))
+      ),
     }),
     images: Yup.array()
-      .min(1, "At least one file is required")
+      .min(10, "At least ten images are required")
       .required("Files are required"),
-
-    learning_info: Yup.object().shape({
-      title: Yup.string().required("Learning title is required"),
-      description: Yup.string().required("Learning description is required"),
-    }),
-    topics: Yup.array()
-      .min(1, "At least one topic is required")
-      .required("Files are required"),
-
-    availibility: Yup.object().shape({
-      start_date: Yup.string().required("Start date is required"),
-      end_date: Yup.string().required("End date is required"),
-    }),
-    price: Yup.string().required("Price is required"),
   });
 
   const methods = useForm({
-    resolver: yupResolver(NomadSchema),
+    resolver: yupResolver(RoomSchema),
     // defaultValues: NomadSchema.default(),
     defaultValues: {
-      business_meeting: {
-        title: "",
+      room_info: {
+        room_name: "",
         description: "",
-        official_name: "",
-        business_category: "",
-        accomodation_type: "bnb", // Ensure this is available in the form state
-        hotels: "",
-        location: {
-          country: "",
-          city: "",
-          street_name: "",
-        },
+        maximum_occupancy: "",
+        room_type: "",
+        price: "",
+        room_facilities: {},
       },
       images: [],
-      learning_info: {
-        title: "",
-        description: "",
-      },
-      topics: [],
-      availibility: {
-        start_date: "",
-        end_date: "",
-      },
-    },
-    context: {
-      accomodation_type: "bnb", // Ensure context is passed correctly
     },
   });
 
@@ -129,58 +234,46 @@ export const RoomStepperView = () => {
     },
   ];
 
-  const accomodationType = watch("business_meeting.accomodation_type");
-
   useEffect(() => {
-    if (accomodationType === "bnb") {
-      setCurrentSteps(steps);
-    } else {
-      const newSteps = steps.filter((step) => step.value !== "images");
-      setCurrentSteps(newSteps);
-    }
-  }, [accomodationType]);
+    setCurrentSteps(steps);
+  }, []);
 
   // NEW HANDLE NEXT
   const handleNext = async () => {
-    // const accomodationType = methods.watch(
-    //   "business_meeting.accomodation_type"
-    // ); // Get the current accommodation type
-    // let fieldsToValidate = [];
-
-    // if (activeStep === 0) {
-    //   fieldsToValidate = [
-    //     "business_meeting.title",
-    //     "business_meeting.description",
-    //     "business_meeting.official_name",
-    //     "business_meeting.business_category",
-    //     "business_meeting.accomodation_type", // Ensure it’s present
-    //   ];
-
-    //   if (accomodationType === "hotel") {
-    //     fieldsToValidate.push("business_meeting.hotels"); // Validate hotels field only if type is hotel
-    //   } else if (accomodationType === "bnb") {
-    //     fieldsToValidate.push(
-    //       "business_meeting.location.country",
-    //       "business_meeting.location.city",
-    //       "business_meeting.location.street_name"
-    //     );
-    //   }
-    // } else if (activeStep === 1) {
-    //   fieldsToValidate = ["images"];
-    // } else if (activeStep === 2) {
-    //   fieldsToValidate = ["learning_info.title", "learning_info.description"];
-    // } else if (activeStep === 3) {
-    //   fieldsToValidate = ["availibility.start_date", "availibility.end_date"];
-    // }
-
-    // console.log("Form values: ", methods.getValues()); // Check current form values
-
-    // const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
-    // console.log("Is Step Valid:", isStepValid);
-
-    // if (isStepValid) {
-    // }
-    setActiveStep((prev) => prev + 1); // Move to next step if valid
+    // Get the current accommodation type
+    const accommodationType = methods.watch("room_info.room_type");
+    let fieldsToValidate = [];
+    if (activeStep === 0) {
+      // Step 1: Validate room info fields
+      fieldsToValidate = [
+        "room_info.room_name",
+        "room_info.description",
+        "room_info.maximum_occupancy",
+        "room_info.room_type",
+        "room_info.price",
+      ];
+      // If there are room facilities, validate those as well
+      const roomFacilities = methods.getValues("room_info.room_facilities");
+      if (roomFacilities && Object.keys(roomFacilities).length > 0) {
+        fieldsToValidate.push(
+          ...Object.keys(roomFacilities).map(
+            (facility) => `room_info.room_facilities.${facility}`
+          )
+        );
+      }
+    } else if (activeStep === 1) {
+      // Step 2: Validate images
+      fieldsToValidate = ["images"];
+    }
+    // Log current form values
+    console.log("Form values: ", methods.getValues());
+    // Validate step-specific fields
+    const isStepValid = await methods.trigger(fieldsToValidate);
+    console.log("Is Step Valid:", isStepValid);
+    // Move to the next step if valid
+    if (isStepValid) {
+      setActiveStep((prev) => prev + 1);
+    }
   };
 
   const handleBack = () => {

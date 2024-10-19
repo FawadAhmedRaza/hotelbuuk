@@ -23,6 +23,8 @@ export const BussinessMeeting = () => {
   // State to force re-render on accomodationType change
   const [type, setType] = useState(accomodationType);
 
+  console.log(watch("business_meeting.amenities"));
+
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
@@ -56,7 +58,7 @@ export const BussinessMeeting = () => {
               {bnb_amenities.map((amenity, index) => (
                 <RHFCheckbox
                   key={index}
-                  name={amenity.name}
+                  name={`business_meeting.amenities.${amenity.name}`}
                   label={amenity.label}
                 />
               ))}

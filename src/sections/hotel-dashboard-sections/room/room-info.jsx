@@ -69,18 +69,18 @@ export const RoomInfo = () => {
         {/* left  */}
         <div className="flex flex-col gap-5 w-full">
           <RHFInput
-            name="room_name"
+            name="room_info.room_name"
             label="Room Name"
             placeholder="Room Name "
           />
           <RHFTextArea
-            name="description"
+            name="room_info.description"
             label="Description"
             required={true}
             placeholder="Describe your Business Tour "
           />
           <RHFInput
-            name="maximum_occupancy"
+            name="room_info.maximum_occupancy"
             label="Maximum Occupancy"
             placeholder="Maximum Occupancy"
           />
@@ -92,7 +92,7 @@ export const RoomInfo = () => {
               {room_facilities.map((amenity, index) => (
                 <RHFCheckbox
                   key={index}
-                  name={amenity.name}
+                  name={`room_info.room_facilities.${amenity.name}`}
                   label={amenity.label}
                 />
               ))}
@@ -102,7 +102,7 @@ export const RoomInfo = () => {
         {/* Right  */}
         <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
           <RHFSelect
-            name="room_type"
+            name="room_info.room_type"
             placeholder="Select Room Type"
             label="Room Type"
             options={roomTypes}
@@ -110,7 +110,7 @@ export const RoomInfo = () => {
 
           <div className="flex flex-col gap-5 w-full">
             <RHFInput
-              name="price"
+              name="room_info.price"
               label="Pricing"
               type="number"
               placeholder="price "
@@ -129,7 +129,10 @@ export const RoomInfo = () => {
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                <Iconify iconName="tabler:plus" className="!text-black mt-[2px]" />
+                <Iconify
+                  iconName="tabler:plus"
+                  className="!text-black mt-[2px]"
+                />
               </Typography>
             </div>
 
