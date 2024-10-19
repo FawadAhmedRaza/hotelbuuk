@@ -49,6 +49,7 @@ export async function POST(req) {
 
     return NextResponse.json({ accessToken: token, user }, { status: 200 });
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
