@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   isLoading: false,
-  HotelFacilities: [],
+  hotelFacilities: [],
   error: null,
   create: {
     isLoading: false,
@@ -42,7 +42,7 @@ export const hotelFacilities = createSlice({
       state.create.isLoading = true;
     });
     builder.addCase(createHotelFacilities.fulfilled, (state, action) => {
-      state.HotelFacilities = action.payload;
+      state.hotelFacilities = action.payload;
       state.create.isLoading = false;
     });
     builder.addCase(createHotelFacilities.rejected, (state, action) => {
@@ -56,7 +56,7 @@ export const hotelFacilities = createSlice({
     });
     builder.addCase(getAllHotelFacilities.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.HotelFacilities = action.payload;
+      state.hotelFacilities = action.payload;
     });
     builder.addCase(getAllHotelFacilities.rejected, (state, action) => {
       state.isLoading = false;
@@ -81,7 +81,7 @@ export const hotelFacilities = createSlice({
       state.deleteById.isLoading = true;
     });
     builder.addCase(deleteHotelFacilities.fulfilled, (state, action) => {
-      state.HotelFacilities = action.payload;
+      state.hotelFacilities = action.payload;
       state.deleteById.isLoading = false;
     });
     builder.addCase(deleteHotelFacilities.rejected, (state, action) => {
@@ -94,7 +94,7 @@ export const hotelFacilities = createSlice({
       state.updateById.isLoading = true;
     });
     builder.addCase(updateHotelFacilities.fulfilled, (state, action) => {
-      state.HotelFacilities = action.payload;
+      state.hotelFacilities = action.payload;
       state.updateById.isLoading = false;
     });
     builder.addCase(updateHotelFacilities.rejected, (state, action) => {

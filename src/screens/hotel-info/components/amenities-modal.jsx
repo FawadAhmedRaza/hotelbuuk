@@ -7,9 +7,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { createHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
 const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
   const { user } = useAuthContext();
+
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.hotelFacilities.create);
 
   const schema = yup.object({
     facilities: yup.array().min(1, "at least 1 item is required"),
@@ -34,11 +40,8 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
         user_id: user?.id,
       };
 
-      const request = await axiosInstance.post(
-        endpoints.hotel.facilites.create,
-        updatedData
-      );
-      
+      await dispatch(createHotelFacilities(updatedData)).unwrap();
+
       onClose();
     } catch (error) {
       console.log(error);
@@ -51,7 +54,7 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
       onClose={onClose}
       title="Create New Facilities"
       handleSubmit={onSubmit}
-      isLoading={isSubmitting}
+      isLoading={isLoading}
     >
       <RHFFormProvider methods={methods}>
         <RHFAutoComplete name="facilities" label="Enter facilities" />
