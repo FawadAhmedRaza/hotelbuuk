@@ -12,6 +12,7 @@ module.exports = {
 	  extend: {
 		fontSize: {
 		  "42fs": "42px",
+		  "15fs": "15px", // Consolidated fontSize definitions
 		},
 		colors: {
 		  primary: "#852169",
@@ -26,16 +27,12 @@ module.exports = {
 		  "datepicker-bg": "#FFFFFF",
 		  "datepicker-text": "#1F2937",
 		},
-  
 		lineHeight: {
 		  "50ld": "50px",
 		},
 		screens: {
 		  "min-450": { min: "450px" },
 		  "2xl-custom": { min: "1500px" },
-		},
-		fontSize: {
-		  "15fs": "15px",
 		},
 		boxShadow: {
 		  "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",
@@ -63,3 +60,4 @@ module.exports = {
 	},
 	plugins: [],
   };
+  

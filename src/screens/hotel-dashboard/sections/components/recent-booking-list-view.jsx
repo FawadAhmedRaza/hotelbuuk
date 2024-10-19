@@ -48,7 +48,6 @@ export const RecentBookingListView = React.memo(() => {
     <div className="flex flex-col gap-10 mt-5">
       <div>
         <CustomTable
-          className=" rounded-none"
           items={items}
           TABLE_HEADER={header}
           enableSelection={false}
