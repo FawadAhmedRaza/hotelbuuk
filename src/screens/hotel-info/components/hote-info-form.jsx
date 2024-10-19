@@ -11,6 +11,7 @@ import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useSelector } from "react-redux";
 
 const initialFacilities = [
   { name: "Free WI-FI" },
@@ -21,32 +22,15 @@ const initialFacilities = [
 ];
 
 const HotelInfoForm = () => {
-  const { user } = useAuthContext();
+  const { hotelFacilities: facilitiesArray } = useSelector(
+    (state) => state.hotelFacilities
+  );
 
-  const [facilitiesArray, setFacilitiesArray] = useState();
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities", {});
 
   const openModal = useModal();
-
-  const fetchFacilites = async () => {
-    try {
-      const request = await axiosInstance.get(
-        endpoints.hotel.facilites.get_all(user?.id)
-      );
-      const fetchedFacilities = request?.data?.facilites || [];
-      setFacilitiesArray(fetchedFacilities);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchFacilites();
-    }
-  }, [user]);
 
   const handleCheckboxChange = (key, checked) => {
     setValue("facilities", {

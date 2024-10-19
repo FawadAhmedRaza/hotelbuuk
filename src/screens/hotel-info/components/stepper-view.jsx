@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -11,6 +11,9 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 import { Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
 import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch } from "react-redux";
+import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
 export const StepperView = () => {
   const HotelSchema = Yup.object({
@@ -29,6 +32,10 @@ export const StepperView = () => {
 
   const [activeStep, setActiveStep] = useState(0);
 
+  const { user } = useAuthContext();
+
+  const dispatch = useDispatch();
+
   const methods = useForm({ resolver: yupResolver(HotelSchema) });
 
   const {
@@ -38,6 +45,20 @@ export const StepperView = () => {
     watch,
   } = methods;
   console.log("errors", errors);
+
+  const fetchHotelFacilities = async () => {
+    try {
+      await dispatch(getAllHotelFacilities(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchHotelFacilities();
+    }
+  }, [user?.id]);
 
   const steps = [
     {
