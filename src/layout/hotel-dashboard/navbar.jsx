@@ -22,14 +22,14 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-20 ",
+        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-10 ",
         className
       )}
     >
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold text-white text-start  "
+          className=" !text-xl sm:!text-3xl md:!text-3xl font-bold text-white text-start  "
         >
           Hotelbuuk Dashboard
         </Typography>

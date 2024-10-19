@@ -5,6 +5,7 @@ import { auth } from "@/src/auth";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { AuthProvider } from "../providers/auth/context";
+import ReduxProvider from "../providers/redux/redux-provider";
 
 export const metadata = {
   title: "Hotel Buuk",
@@ -59,18 +60,20 @@ const helvatica = LocalFont({
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
-    <SessionProvider session={session}>
-      <html
-        lang="en"
-        className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable}`}
-      >
-        <body className="font-poppins overflow-x-hidden">
-          <AuthProvider>
-            <Toaster position="top-right" reverseOrder={false} />
-            {children}
-          </AuthProvider>
-        </body>
-      </html>
-    </SessionProvider>
+    <ReduxProvider>
+      <SessionProvider session={session}>
+        <html
+          lang="en"
+          className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable}`}
+        >
+          <body className="font-poppins overflow-x-hidden">
+            <AuthProvider>
+              <Toaster position="top-right" reverseOrder={false} />
+              {children}
+            </AuthProvider>
+          </body>
+        </html>
+      </SessionProvider>
+    </ReduxProvider>
   );
 }
