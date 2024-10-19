@@ -123,6 +123,17 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const setUser = (updatedUser, accessToken) => {
+    dispatch({
+      type: Types.INITIAL,
+      payload: {
+        user: {
+          ...updatedUser,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -165,7 +176,9 @@ export function AuthProvider({ children }) {
 
   const setupUserType = useCallback(async (user_type) => {
     try {
-      let data = { id: state.user.id, user_type };
+      const userDetails = JSON.parse(sessionStorage.getItem("user"));
+      let data = { id: userDetails?.id, user_type };
+      console.log("data", state);
 
       const response = await axiosInstance.post(
         endpoints.AUTH.setup_user_type,
@@ -186,12 +199,15 @@ export function AuthProvider({ children }) {
       });
 
       enqueueSnackbar("Success", { variant: "success" });
-      router.push("/");
+      router.push(
+        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/hotel-dashboard"
+      );
     } catch (error) {
+      console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
       console.log(error);
     }
-  });
+  }, []);
 
   const logout = useCallback(async () => {
     setSession(null);
@@ -330,8 +346,9 @@ export function AuthProvider({ children }) {
       register,
       setupUserType,
       logout,
+      setUser,
     }),
-    [login, logout, register, state.user, status, setupUserType]
+    [login, logout, register, state.user, status, setupUserType, setUser]
   );
 
   return (

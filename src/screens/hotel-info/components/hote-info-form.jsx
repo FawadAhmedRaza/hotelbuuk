@@ -9,8 +9,6 @@ import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useSelector } from "react-redux";
 
 const initialFacilities = [
@@ -28,15 +26,20 @@ const HotelInfoForm = () => {
 
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
-  const selectedFacilities = watch("facilities", {});
+  const selectedFacilities = watch("facilities") || []; // Default to an empty array
+  console.log("selected", facilitiesArray);
 
   const openModal = useModal();
 
-  const handleCheckboxChange = (key, checked) => {
-    setValue("facilities", {
-      ...selectedFacilities,
-      [key]: checked,
-    });
+  const handleCheckboxChange = (facility, checked) => {
+    setValue(
+      "facilities",
+      checked
+        ? [...selectedFacilities, facility] // Add facility object if checked
+        : selectedFacilities.filter(
+            (selected) => selected.name !== facility.name
+          ) // Remove if unchecked
+    );
   };
 
   return (
@@ -75,29 +78,26 @@ const HotelInfoForm = () => {
 
             <div className="grid grid-cols-2 gap-4">
               {facilitiesArray?.length > 0
-                ? (facilitiesArray || initialFacilities)?.map(
-                    (facility, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={!!selectedFacilities[facility.name]}
-                          onChange={(e) =>
-                            handleCheckboxChange(
-                              facility.name,
-                              e.target.checked
-                            )
-                          }
-                          className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
-                        />
-                        <label
-                          className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                          htmlFor={facility.name}
-                        >
-                          {facility?.name}
-                        </label>
-                      </div>
-                    )
-                  )
+                ? facilitiesArray.map((facility, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedFacilities.some(
+                          (selected) => selected.name === facility.name
+                        )} // Check if the facility is selected
+                        onChange={(e) =>
+                          handleCheckboxChange(facility, e.target.checked)
+                        }
+                        className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                      />
+                      <label
+                        className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
+                        htmlFor={facility.name}
+                      >
+                        {facility.name}
+                      </label>
+                    </div>
+                  ))
                 : null}
             </div>
           </div>

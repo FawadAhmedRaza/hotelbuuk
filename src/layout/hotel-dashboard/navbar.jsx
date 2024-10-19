@@ -8,16 +8,11 @@ import { AnchorTag, Iconify, Typography } from "@/src/components";
 import { HotelDashboardMenu } from "./menu-links";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 export const HotelDashboardNavBar = React.memo(({ className }) => {
-  const [user, setUser] = useState({});
-
+  const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    setUser(user);
-  }, []);
 
   return (
     <div
@@ -55,17 +50,16 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
             className="size-5 sm:size-8"
           />
           <span className="flex items-center gap-1">
+            <Typography
+              variant="p"
+              className="font-medium !text-xs text-white text-nowrap"
+            >
+              Hi, {user ? user?.hotel_name : ""} !{/* Fawad */}
+            </Typography>
             <Iconify
               iconName="fluent:person-circle-12-filled"
               className="size-5 sm:size-8"
             />
-            <Typography
-              variant="p"
-              className=" font-medium !text-xs text-white text-nowrap"
-            >
-              {user ? user?.first_name : ""}
-              {/* Fawad */}
-            </Typography>
           </span>
         </div>
       </div>

@@ -20,7 +20,7 @@ export const getAllHotelFacilities = createAsyncThunk(
     const request = await axiosInstance.get(
       endpoints.hotel.facilites.get_all(id)
     );
-    return request?.data?.facilites;
+    return request?.data?.facilities;
   }
 );
 

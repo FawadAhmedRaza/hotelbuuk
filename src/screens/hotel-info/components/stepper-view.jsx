@@ -2,18 +2,22 @@
 import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
+import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
+import { createHotelInfo } from "@/src/redux/hotel-info/thunk";
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 
-// Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
 import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useDispatch } from "react-redux";
-import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
+import { enqueueSnackbar } from "notistack";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { useRouter } from "next/navigation";
 
 export const StepperView = () => {
   const HotelSchema = Yup.object({
@@ -26,13 +30,15 @@ export const StepperView = () => {
     country: Yup.string().required("country is required"),
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
-    facilites: Yup.object().optional(),
+    facilites: Yup.array().optional(),
     images: Yup.array(),
   });
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
+
+  const router = useRouter();
 
   const dispatch = useDispatch();
 
@@ -40,11 +46,9 @@ export const StepperView = () => {
 
   const {
     handleSubmit,
-    formState: { errors },
     trigger,
-    watch,
+    formState: { isSubmitting },
   } = methods;
-  console.log("errors", errors);
 
   const fetchHotelFacilities = async () => {
     try {
@@ -79,13 +83,13 @@ export const StepperView = () => {
     let fieldsToValidate = [];
     if (activeStep === 0) {
       fieldsToValidate = [
-        // "hotel_name",
-        // "description",
-        // "contact_email",
-        // "hotel_contact_no",
-        // "address",
-        // "country",
-        // "city",
+        "hotel_name",
+        "description",
+        "contact_email",
+        "hotel_contact_no",
+        "address",
+        "country",
+        "city",
       ];
     }
     if (activeStep === 1) {
@@ -103,7 +107,21 @@ export const StepperView = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log("data", data);
+      const finalData = {
+        ...data,
+        user_id: user?.id,
+      };
+
+      const response = await axiosInstance.post(
+        endpoints.hotel.create,
+        finalData
+      );
+      if (response?.status === 201) {
+        let { accessToken, user } = response?.data || {};
+        await setUser(user, accessToken);
+        enqueueSnackbar("Hotel info created", { variant: "success" });
+        router.push("/hotel-dashboard");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -119,6 +137,7 @@ export const StepperView = () => {
           handleNext={handleNext}
           handleBack={handleBack}
           isLastStep={activeStep === steps.length - 1}
+          loading={isSubmitting}
         />
       </RHFFormProvider>
     </Pannel>
