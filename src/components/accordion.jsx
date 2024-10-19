@@ -26,11 +26,13 @@ export const Accordion = React.memo(
           </Typography>
 
           <div className="flex gap-5">
-            <Iconify
-              iconName="system-uicons:cross"
-              className="size-6 text-primary font-bold"
-              onClick={() => deleteTopic(id)}
-            />
+            {deleteTopic && (
+              <Iconify
+                iconName="system-uicons:cross"
+                className="size-6 text-primary font-bold"
+                onClick={() => deleteTopic(id)}
+              />
+            )}
 
             <Iconify
               iconName="iconamoon:arrow-down-2-bold"

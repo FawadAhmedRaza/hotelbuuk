@@ -15,19 +15,41 @@ import { Button, Typography } from "@/src/components";
 import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
+import { getCities, getCountries } from "@/src/libs/helper";
 
 export const BussinessMeeting = () => {
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const { watch, setValue } = useFormContext();
   const accomodationType = watch("business_meeting.accomodation_type");
+  const country = watch("business_meeting.location.country");
+  const city = watch("business_meeting.location.city");
 
   // State to force re-render on accomodationType change
   const [type, setType] = useState(accomodationType);
 
-  console.log(watch("business_meeting.amenities"));
+  console.log(watch("business_meeting.location.country"));
 
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("business_meeting.location.city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+    fetchCities();
+  }, [country]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -116,21 +138,13 @@ export const BussinessMeeting = () => {
                     name="business_meeting.location.country"
                     placeholder="Select your Country"
                     label="Country"
-                    options={[
-                      { label: "Option 1", value: "option1" },
-                      { label: "Option 2", value: "option2" },
-                      { label: "Option 3", value: "option3" },
-                    ]}
+                    options={countries}
                   />
                   <RHFSelect
                     name="business_meeting.location.city"
                     placeholder="Select your City"
                     label="City"
-                    options={[
-                      { label: "Option 1", value: "option1" },
-                      { label: "Option 2", value: "option2" },
-                      { label: "Option 3", value: "option3" },
-                    ]}
+                    options={cities}
                   />
                 </div>
               </div>

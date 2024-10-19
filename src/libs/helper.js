@@ -1,3 +1,4 @@
+import axios from "axios";
 import bcrypt from "bcryptjs";
 export function saltAndHashPassword(password) {
   const saltRounds = 10; // Adjust the cost factor according to your security requirements
@@ -34,4 +35,38 @@ export const convertDateFormat = (input) => {
 
   const options = { weekday: "short", month: "short", day: "2-digit" };
   return date.toLocaleDateString("en-US", options).replace(",", "");
+};
+
+// return countries
+
+export const getCountries = async () => {
+  const res = await axios.get("https://countriesnow.space/api/v0.1/countries");
+
+  const allCounteries = await res.data.data.map((item) => ({
+    label: item.country,
+    value: item.country,
+  }));
+
+  return allCounteries;
+};
+
+export const getCities = async (country) => {
+  try {
+    const res = await axios.post(
+      "https://countriesnow.space/api/v0.1/countries/cities",
+      {
+        country: country,
+      }
+    );
+
+    const allCities = res.data.data.map((city) => ({
+      label: city,
+      value: city,
+    }));
+
+    return allCities;
+  } catch (error) {
+    console.error("Error fetching cities:", error);
+    return [];
+  }
 };

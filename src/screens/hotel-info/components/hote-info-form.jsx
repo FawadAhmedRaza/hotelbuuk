@@ -1,5 +1,6 @@
 import {
   RHFInput,
+  RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
@@ -9,9 +10,7 @@ import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useSelector } from "react-redux";
+import { LocalStorageGetItem } from "@/src/utils/localstorage";
 
 const initialFacilities = [
   { name: "Free WI-FI" },
@@ -22,13 +21,15 @@ const initialFacilities = [
 ];
 
 const HotelInfoForm = () => {
-  const { hotelFacilities: facilitiesArray } = useSelector(
-    (state) => state.hotelFacilities
-  );
-
+  const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities", {});
+
+  const country = watch("country");
+  const city = watch("city");
+
+  console.log(country, city);
 
   const openModal = useModal();
 
@@ -38,6 +39,23 @@ const HotelInfoForm = () => {
       [key]: checked,
     });
   };
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+    fetchCities();
+  }, [country]);
 
   return (
     <div className="gap-y-4">
@@ -115,12 +133,19 @@ const HotelInfoForm = () => {
             label="Contact number"
             placeholder="Enter Contact number"
           />
-          <RHFInput
+          <RHFSelect
             name="country"
+            placeholder="Select your Country"
             label="Country"
             placeholder="Enter Country"
+            // className="mt-6"
           />
-          <RHFInput name="city" label="City" placeholder="Enter City" />
+          <RHFInput
+            name="city"
+            label="City"
+            placeholder="Enter City"
+            // className="mt-6"
+          />
           <RHFInput
             name="address"
             label="Address"
