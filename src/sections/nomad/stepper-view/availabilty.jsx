@@ -10,8 +10,8 @@ import { RHFCheckbox, RHFDatePicker } from "@/src/components/hook-form";
 import { getFormattedDate } from "@/src/libs/helper";
 import { addDays } from "date-fns";
 import { useFormContext } from "react-hook-form";
-import "react-date-range/dist/styles.css"; 
-import "react-date-range/dist/theme/default.css"; 
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 export const SetAvailability = () => {
   const { setValue, watch } = useFormContext();
@@ -118,7 +118,11 @@ export const SetAvailability = () => {
         </Typography>
 
         {hotelRules.map((rule, index) => (
-          <RHFCheckbox key={index} name={rule.name} label={rule.title} />
+          <RHFCheckbox
+            key={index}
+            name={`availibility.rules.${rule.name}`}
+            label={rule.title}
+          />
         ))}
       </div>
     </div>
