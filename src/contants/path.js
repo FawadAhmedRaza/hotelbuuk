@@ -6,6 +6,7 @@ export const paths = {
     login: "/login",
     signUp: "/sign-up",
     OTPCode: "verify-code",
+    set_user_type: "/setup-user-profile",
     forgotPassword: "/forgot-password",
     changePassword: "/change-password",
   },
