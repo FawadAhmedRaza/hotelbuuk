@@ -4,6 +4,7 @@ import React from "react";
 import { Button, Iconify, Typography } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
 import { price_includes } from "@/src/_mock/_popolar-amentities";
+import { useFormContext } from "react-hook-form";
 
 export const Pricing = () => {
   return (

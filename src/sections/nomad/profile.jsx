@@ -1,13 +1,19 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import * as Yup from "yup";
 
-// Components and Others... 
+// Components and Others...
 import {
+  Button,
   CalendarInput,
   CustomPopover,
   Pannel,
   Typography,
 } from "@/src/components";
+
+import { useForm } from "react-hook-form";
+import { addDays } from "date-fns";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   RHFDatePicker,
   RHFFormProvider,
@@ -15,8 +21,6 @@ import {
   RHFProfileImgUploader,
   RHFSelect,
 } from "@/src/components/hook-form";
-import { useForm } from "react-hook-form";
-import { addDays } from "date-fns";
 
 export const NomadProfile = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -31,16 +35,88 @@ export const NomadProfile = React.memo(() => {
     },
   ]);
 
+  const nomadProfileSchema = Yup.object().shape({
+    profile: Yup.mixed().required("Profile is required"),
+    first_name: Yup.string().required("First name is required"),
+    last_name: Yup.string().required("Last name is required"),
+    phone_number: Yup.string().required("Phone number is required"),
+    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"), // Example regex for a 10-digit phone number
+    email: Yup.string()
+      .required("Email is required")
+      .email("Invalid email format"),
+    experience: Yup.string().required("Experience is required"),
+    electronics: Yup.string().required("Electronics field is required"),
+    manufacturing: Yup.string().required("Manufacturing field is required"),
+    fundraising: Yup.string().required("Fundraising field is required"),
+    retails: Yup.string().required("Retails field is required"),
+    projector: Yup.string().required("Projector field is required"),
+    video: Yup.string().required("Video field is required"),
+    sample: Yup.string().required("Sample field is required"),
+
+    availability: Yup.object().shape({
+      date: Yup.object().shape({
+        start_date: Yup.string().required("Start date is required"),
+        end_date: Yup.string().required("End date is required"),
+      }),
+      time: Yup.object().shape({
+        start_time: Yup.string().required("Start time is required"),
+        end_time: Yup.string().required("End time is required"),
+      }),
+    }),
+  });
+
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
-  const methods = useForm();
-  const onSubmit = () => {};
+  const methods = useForm({
+    resolver: yupResolver(nomadProfileSchema),
+    defaultValues: {
+      profile: "",
+      first_name: "",
+      last_name: "",
+      phone_number: "",
+      email: "",
+      experience: "",
+      electronics: "",
+      manufacturing: "",
+      fundraising: "",
+      retails: "",
+      projector: "",
+      video: "",
+      availability: {
+        date: {
+          start_date: "",
+          end_date: "",
+        },
+        time: {
+          start_time: "",
+          end_time: "",
+        },
+      },
+    },
+  });
+
+  const {
+    trigger,
+    setValue,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  useEffect(() => {
+    setValue("availability.date.start_date", date[0].startDate.toString());
+    setValue("availability.date.end_date", date[0].endDate.toString());
+  }, [date]);
+
+  const onSubmit = handleSubmit(async (data) => {
+    console.log("Form submitted: ", data);
+  });
 
   return (
     <Pannel>
       <RHFFormProvider
         methods={methods}
-        handleSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className="flex flex-col gap-10 justify-center items-center w-full"
       >
         <RHFProfileImgUploader name="profile" />
@@ -61,7 +137,7 @@ export const NomadProfile = React.memo(() => {
           </div>
           <div className="flex flex-col sm:flex-row gap-5 w-full">
             <RHFInput
-              name="Phone Number"
+              name="phone_number"
               type="number"
               placeholder="Enter your Phone Number"
               label="Phone Number"
@@ -197,13 +273,13 @@ export const NomadProfile = React.memo(() => {
               {/* Time Picker */}
               <div className="flex flex-col md:flex-row gap-5 w-full">
                 <RHFInput
-                  name="start_time"
+                  name="availability.time.start_time"
                   placeholder="Start Time"
                   label="Start Time"
                   type="time"
                 />
                 <RHFInput
-                  name="end_time"
+                  name="availability.time.end_time"
                   placeholder="End Time"
                   label="End Time"
                   type="time"
@@ -211,6 +287,9 @@ export const NomadProfile = React.memo(() => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex justify-end w-full">
+          <Button type="submit">Submit</Button>
         </div>
       </RHFFormProvider>
     </Pannel>

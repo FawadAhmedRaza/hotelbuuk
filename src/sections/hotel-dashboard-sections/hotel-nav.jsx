@@ -16,7 +16,7 @@ export const HotelNavbar = React.memo(({ className }) => {
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-20 ",
+        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 bg-red-100 z-20 px-2 sm:px-8 lg:px-14 xl:px-20 ",
         className
       )}
     >

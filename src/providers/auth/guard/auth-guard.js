@@ -18,9 +18,7 @@ const loginPaths = {
 export function AuthGuard({ children }) {
   const { loading } = useAuthContext();
 
-  return (
-    <>{loading ? <LoadingScreen /> : <Container>{children}</Container>}</>
-  );
+  return <>{loading ? <LoadingScreen /> : <Container>{children}</Container>}</>;
 }
 
 AuthGuard.propTypes = {
@@ -32,7 +30,7 @@ AuthGuard.propTypes = {
 function Container({ children }) {
   const router = useRouter();
 
-  const { authenticated, loading } = useAuthContext();
+  const { authenticated, loading, user } = useAuthContext();
 
   const [checked, setChecked] = useState(false);
 
@@ -41,6 +39,7 @@ function Container({ children }) {
       const loginPath = loginPaths.login;
       const href = `${loginPath}`;
       router.replace(href);
+      setChecked(false);
     } else {
       setChecked(true);
     }
@@ -48,10 +47,14 @@ function Container({ children }) {
 
   useEffect(() => {
     check();
-  }, [loading, authenticated, check]);
+  }, [loading, authenticated, check, user]);
 
   if (!checked) {
     return null;
+  }
+
+  if (!user?.is_user_type_completed) {
+    return router.push(paths.auth.set_user_type);
   }
 
   return <>{children}</>;

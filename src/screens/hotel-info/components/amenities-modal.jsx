@@ -1,52 +1,50 @@
 import React from "react";
 import * as yup from "yup";
 import Modal from "@/src/components/modal";
-import { RHFFormProvider } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
 import RHFAutoComplete from "@/src/components/hook-form/rhf-auto-complete";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  LocalStorageGetItem,
-  LocalStorageSetItem,
-} from "@/src/utils/localstorage";
+import { RHFFormProvider } from "@/src/components/hook-form";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { createHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
 const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
-  const schema = yup.object({
-    amenities: yup.array().min(1, "at least 1 item is required"),
-  });
+  const { user } = useAuthContext();
 
-  let mainSettings = {};
-  try {
-    const storedData = LocalStorageGetItem("amenities");
-    mainSettings = storedData ? JSON.parse(storedData) : {};
-    setRefetch(isOpen);
-  } catch (error) {
-    console.error("Error parsing stored data", error);
-  }
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.hotelFacilities.create);
+
+  const schema = yup.object({
+    facilities: yup.array().min(1, "at least 1 item is required"),
+  });
 
   const methods = useForm({
     resolver: yupResolver(schema),
-    defaultValues: mainSettings,
+    // defaultValues: initialFacilities,
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const storedData = LocalStorageGetItem("amenities");
-      let existingData = storedData ? JSON.parse(storedData) : {};
+      const updatedArr = [...initialFacilities, ...data.facilities];
 
-      const updatedData = {
-        ...existingData,
-        amenities: [
-          ...(existingData.amenities || []),
-          ...(data.amenities || []),
-        ],
+      let updatedData = {
+        facilites: updatedArr,
+        user_id: user?.id,
       };
 
-      LocalStorageSetItem("amenities", JSON.stringify(updatedData));
-    } finally {
+      await dispatch(createHotelFacilities(updatedData)).unwrap();
+
       onClose();
+    } catch (error) {
+      console.log(error);
     }
   });
 
@@ -54,14 +52,23 @@ const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Create New Amenities"
+      title="Create New Facilities"
       handleSubmit={onSubmit}
+      isLoading={isLoading}
     >
-      {/* <RHFFormProvider methods={methods}> */}
-      <RHFAutoComplete name="amenities" label="Enter Amenities" />
-      {/* </RHFFormProvider> */}
+      <RHFFormProvider methods={methods}>
+        <RHFAutoComplete name="facilities" label="Enter facilities" />
+      </RHFFormProvider>
     </Modal>
   );
 };
 
 export default AmenitiesModal;
+
+const initialFacilities = [
+  { name: "Free WI-FI", value: "freeWI-FI" },
+  { name: "Parking", value: "parking" },
+  { name: "Pool", value: "pool" },
+  { name: "Gym", value: "gym" },
+  { name: "Restaurant", value: "restaurant" },
+];

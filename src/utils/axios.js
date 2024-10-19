@@ -38,4 +38,11 @@ export const endpoints = {
       reset_password: "/auth/reset-password",
     },
   },
+  hotel: {
+    create:"/hotel/hotel-info",
+    facilites: {
+      create: "/hotel-facilities",
+      get_all: (id) => `/hotel-facilities?userId=${id}`,
+    },
+  },
 };

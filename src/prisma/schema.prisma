@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -38,8 +32,53 @@ model User {
   forget_password_OTP       String?
   is_verified_user          Boolean?
   is_user_profile_completed Boolean?
+  is_user_type_completed    Boolean?
   auth_method               AuthMethod @default(EMAIL)
+
+  facilities facilities[]
+  hotels     hotel_info[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model facilities {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotelFacilites hotel_facilities[]
+}
+
+model hotel_info {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_name       String
+  hotel_contact_no Int
+  contact_email    String
+  description      String?
+  country          String
+  city             String
+  address          String
+  stars            Int
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotelFacilites hotel_facilities[]
+}
+
+model hotel_facilities {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_id    String @db.ObjectId
+  facility_id String @db.ObjectId
+
+  facility facilities @relation(fields: [facility_id], references: [id])
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }

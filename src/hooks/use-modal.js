@@ -9,7 +9,6 @@ export function useModal(defaultValue) {
     setValue(true);
   }, []);
   
-  console.log("triggred",value)
   const onFalse = useCallback(() => {
     setValue(false);
   }, []);
