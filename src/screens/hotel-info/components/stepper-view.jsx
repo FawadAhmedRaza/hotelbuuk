@@ -34,6 +34,8 @@ export const StepperView = () => {
 
   const { user } = useAuthContext();
 
+  console.log(user, "user");
+
   const dispatch = useDispatch();
 
   const methods = useForm({ resolver: yupResolver(HotelSchema) });
