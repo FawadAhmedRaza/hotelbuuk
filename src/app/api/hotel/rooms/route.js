@@ -59,3 +59,34 @@ export async function POST(req) {
     );
   }
 }
+
+export async function GET(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const hotel_id = searchParams.get("hotel_id");
+
+    if (!hotel_id) {
+      return NextResponse.json(
+        { message: "hotel ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const hotelRooms = await prisma.hotel_rooms.findMany({
+      where: {
+        hotel_id,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "success", hotelRooms },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
