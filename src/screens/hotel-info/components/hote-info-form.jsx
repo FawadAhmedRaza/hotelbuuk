@@ -65,22 +65,6 @@ const HotelInfoForm = () => {
       const allCities = await getCities(country);
       setCities(allCities);
     }
-  }, [refetch]);
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
     fetchCities();
   }, [country]);
 
@@ -163,9 +147,10 @@ const HotelInfoForm = () => {
             label="Country"
             options={countries}
           />
-          <RHFInput
+          <RHFSelect
             name="city"
             label="City"
+            placeholder="Select your City"
             options={cities}
           />
           <RHFInput

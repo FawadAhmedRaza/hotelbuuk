@@ -39,10 +39,27 @@ export const endpoints = {
     },
   },
   hotel: {
-    create:"/hotel/hotel-info",
+    root: "/hotel",
+    create: "/hotel/hotel-info",
     facilites: {
-      create: "/hotel-facilities",
-      get_all: (id) => `/hotel-facilities?userId=${id}`,
+      create: "/hotel/hotel-facilities",
+      get_all: (id) => `/hotel/hotel-facilities?userId=${id}`,
     },
+    getHotel: (id) => `/hotel/hotel-info/${id}`,
+    updateHotel: (id) => `/hotel/hotel-info/${id}`,
+    roomTypes: {
+      create: "/hotel/room-types",
+      get_all: (id) => `/hotel/room-types?userId=${id}`,
+    },
+    rooms: {
+      create: "/hotel/rooms",
+      get_all_rooms: (id) => `/hotel/rooms?hotel_id=${id}`,
+    },
+  },
+  nomad: {
+    root: "/nomad",
+    create: "/nomad/nomad-profile",
+    getProfile: (id) => `/nomad/nomad-profile/${id}`,
+    updateProfile: (id) => `/nomad/nomad-profile/${id}`,
   },
 };

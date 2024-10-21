@@ -19,5 +19,17 @@ export const paths = {
     root: "/nomad",
     create: "/nomad/create",
   },
-  hotelInfo: "/hotel-info",
+  nomadDashboard: {
+    root: "/nomad-dashboard",
+    hotels: "/nomad-dashboard/hotels-list",
+  },
+  hotelDashboard: {
+    root: "/hotel-dashboard",
+    nomads: "/hotel-dashboard/nomads-list",
+    rooms: "/hotel-dashboard/rooms",
+  },
+  hotelInfo: {
+    root: "/hotel-info",
+    edit: (id) => `/hotel-info/${id}`,
+  },
 };

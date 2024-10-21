@@ -36,7 +36,9 @@ model User {
   auth_method               AuthMethod @default(EMAIL)
 
   facilities facilities[]
+  room_types room_types[]
   hotels     hotel_info[]
+  nomad      nomad[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,9 +49,6 @@ model facilities {
   name    String
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   hotelFacilites hotel_facilities[]
 }
@@ -72,6 +71,7 @@ model hotel_info {
   updatedAt DateTime @updatedAt
 
   hotelFacilites hotel_facilities[]
+  hotel_rooms    hotel_rooms[]
 }
 
 model hotel_facilities {
@@ -81,4 +81,72 @@ model hotel_facilities {
 
   facility facilities @relation(fields: [facility_id], references: [id])
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+}
+
+model room_types {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+}
+
+model nomad {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img   String?
+  first_name    String?
+  last_name     String?
+  phone_number  Int
+  email         String
+  experience    String
+  electronics   String
+  manufacturing String
+  fundraising   String
+  retails       String
+  projector     String
+  video         String
+  sample        String
+  end_date      String
+  start_date    String
+  start_time    String
+  end_time      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+}
+
+model hotel_rooms {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  room_name          String
+  description        String
+  maximum_occupancy  String
+  room_type          String
+  price              String
+  // checkboxes
+  air_conditioning   Boolean
+  heating            Boolean
+  king_bed           Boolean
+  private_balcony    Boolean
+  mini_fridge        Boolean
+  flat_screen_tv     Boolean
+  room_service       Boolean
+  coffee_machine     Boolean
+  desk_workspace     Boolean
+  private_bathroom   Boolean
+  smart_lighting     Boolean
+  soundproof_windows Boolean
+  wardrobe           Boolean
+  blackout_curtains  Boolean
+  luxury_toiletries  Boolean
+  high_thread_sheets Boolean
+
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

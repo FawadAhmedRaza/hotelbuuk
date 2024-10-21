@@ -19,9 +19,8 @@ import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
 
-export const StepperView = () => {
+export const StepperView = ({ defaultValues, isEdit }) => {
   const HotelSchema = Yup.object({
-    
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
     description: Yup.string().optional(),
@@ -45,7 +44,12 @@ export const StepperView = () => {
 
   const dispatch = useDispatch();
 
-  const methods = useForm({ resolver: yupResolver(HotelSchema) });
+  console.log("default values", defaultValues);
+
+  const methods = useForm({
+    resolver: yupResolver(HotelSchema),
+    defaultValues: isEdit && defaultValues,
+  });
 
   const {
     handleSubmit,

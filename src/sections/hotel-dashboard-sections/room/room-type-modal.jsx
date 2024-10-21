@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 
 import { useForm } from "react-hook-form";
@@ -7,45 +7,35 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Modal from "@/src/components/modal";
 import RHFAutoComplete from "@/src/components/hook-form/rhf-auto-complete";
-import { LocalStorageGetItem } from "@/src/utils/localstorage";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch } from "react-redux";
+import { RHFFormProvider } from "@/src/components/hook-form";
+import { createRoomTypes } from "@/src/redux/hotel-rooms/thunk";
 
 export const RoomTypeModal = ({ isOpen, onClose, setRefetch }) => {
   const schema = yup.object({
-    amenities: yup.array().min(1, "at least 1 item is required"),
+    room_types: yup.array().min(1, "at least 1 item is required"),
   });
 
-  let mainSettings = {};
-  try {
-    const storedData = LocalStorageGetItem("amenities");
-    mainSettings = storedData ? JSON.parse(storedData) : {};
-    setRefetch(isOpen);
-  } catch (error) {
-    console.error("Error parsing stored data", error);
-  }
+  const { user } = useAuthContext();
+  const dispatch = useDispatch();
 
   const methods = useForm({
     resolver: yupResolver(schema),
-    defaultValues: mainSettings,
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const storedData = LocalStorageGetItem("amenities");
-      let existingData = storedData ? JSON.parse(storedData) : {};
-
-      const updatedData = {
-        ...existingData,
-        amenities: [
-          ...(existingData.amenities || []),
-          ...(data.amenities || []),
-        ],
-      };
-
-      LocalStorageSetItem("amenities", JSON.stringify(updatedData));
-    } finally {
-      onClose();
+      data.user_id = user?.id;
+      console.log("data", data);
+      await dispatch(createRoomTypes(data)).unwrap();
+    } catch (error) {
+      console.log(error);
     }
   });
 
@@ -53,12 +43,13 @@ export const RoomTypeModal = ({ isOpen, onClose, setRefetch }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Create New Amenities"
+      title="Create new room types"
       handleSubmit={onSubmit}
+      isLoading={isSubmitting}
     >
-      {/* <RHFFormProvider methods={methods}> */}
-      <RHFAutoComplete name="amenities" label="Enter Amenities" />
-      {/* </RHFFormProvider> */}
+      <RHFFormProvider methods={methods}>
+        <RHFAutoComplete name="room_types" label="Enter room types" />
+      </RHFFormProvider>
     </Modal>
   );
 };

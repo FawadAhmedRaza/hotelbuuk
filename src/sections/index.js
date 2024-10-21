@@ -7,6 +7,8 @@ export { Footer } from "./footer";
 export { MeetOurPatners } from "./meet-patners";
 export { LangaugeTranslator } from "./language-translator";
 export { PreviewHotels } from "./preview-hotels";
+export { BusinessFacts } from "./business-facts";
+
 
 //---------------------//
 export { TermsBanner } from "./terms-banner";
