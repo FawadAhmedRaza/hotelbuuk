@@ -32,21 +32,81 @@ model User {
   forget_password_OTP       String?
   is_verified_user          Boolean?
   is_user_profile_completed Boolean?
+  is_user_type_completed    Boolean?
   auth_method               AuthMethod @default(EMAIL)
 
-  hotel_facilities hotel_facilities[]
+  facilities facilities[]
+  hotels     hotel_info[]
+  nomad      nomad[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model hotel_facilities {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+model facilities {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hotelFacilites hotel_facilities[]
+}
+
+model hotel_info {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_name       String
+  hotel_contact_no Int
+  contact_email    String
+  description      String?
+  country          String
+  city             String
+  address          String
+  stars            Int
 
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  hotelFacilites hotel_facilities[]
+}
+
+model hotel_facilities {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_id    String @db.ObjectId
+  facility_id String @db.ObjectId
+
+  facility facilities @relation(fields: [facility_id], references: [id])
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+}
+
+model nomad {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img   String?
+  first_name    String?
+  last_name     String?
+  phone_number  Int
+  email         String
+  experience    String
+  electronics   String
+  manufacturing String
+  fundraising   String
+  retails       String
+  projector     String
+  video         String
+  sample        String
+  end_date      String
+  start_date    String
+  start_time    String
+  end_time      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
 }

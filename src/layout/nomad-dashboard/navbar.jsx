@@ -3,16 +3,17 @@
 import React, { useEffect, useState } from "react";
 
 import { useBoolean } from "@/src/hooks";
-
-import { AnchorTag, Iconify, Typography } from "@/src/components";
-import { HotelDashboardMenu } from "./menu-links";
-import { LangaugeTranslator } from "@/src/sections";
-import { cn } from "@/src/libs/cn";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-export const HotelDashboardNavBar = React.memo(({ className }) => {
+import { NomadDashboardMenu } from "./menu-link";
+import { AnchorTag, Iconify, Typography } from "@/src/components";
+import { LangaugeTranslator } from "@/src/sections";
+import { cn } from "@/src/libs/cn";
+
+export const NomadDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+  console.log("user",user);
 
   return (
     <div
@@ -31,7 +32,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
       </AnchorTag>
 
       {isOpen && (
-        <HotelDashboardMenu
+        <NomadDashboardMenu
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           onClick={toggleDrawer}
@@ -54,7 +55,8 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
               variant="p"
               className="font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? user?.hotel_name : ""} !{/* Fawad */}
+              Hi, {user ? `${user?.first_name}"${""}${user?.last_name}` : ""} !
+              {/* Fawad */}
             </Typography>
             <Iconify
               iconName="fluent:person-circle-12-filled"

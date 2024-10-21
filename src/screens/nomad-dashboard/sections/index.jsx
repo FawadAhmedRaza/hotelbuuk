@@ -12,7 +12,7 @@ import { CheckInChart } from "./components/chart/check-In";
 import { CheckOutChart } from "./components/chart/check-out";
 import ProfileAlert from "./components/profile-alert";
 
-const HotelDashboardSections = () => {
+const NomadDashboardSections = () => {
   const { user } = useAuthContext();
 
   const [showAlert, setShowAlert] = useState(true);
@@ -42,4 +42,4 @@ const HotelDashboardSections = () => {
   );
 };
 
-export default HotelDashboardSections;
+export default NomadDashboardSections;

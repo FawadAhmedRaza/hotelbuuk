@@ -10,7 +10,8 @@ import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 import { Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
-import { LocalStorageGetItem } from "@/src/utils/localstorage";
+import { useSelector } from "react-redux";
+import { getCities, getCountries } from "@/src/libs/helper";
 
 const initialFacilities = [
   { name: "Free WI-FI" },
@@ -21,10 +22,16 @@ const initialFacilities = [
 ];
 
 const HotelInfoForm = () => {
-  const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const { hotelFacilities: facilitiesArray } = useSelector(
+    (state) => state.hotelFacilities
+  );
+
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
-  const selectedFacilities = watch("facilities", {});
+  const selectedFacilities = watch("facilities") || []; // Default to an empty array
+  console.log("selected", facilitiesArray);
 
   const country = watch("country");
   const city = watch("city");
@@ -33,12 +40,32 @@ const HotelInfoForm = () => {
 
   const openModal = useModal();
 
-  const handleCheckboxChange = (key, checked) => {
-    setValue("facilities", {
-      ...selectedFacilities,
-      [key]: checked,
-    });
+  const handleCheckboxChange = (facility, checked) => {
+    setValue(
+      "facilities",
+      checked
+        ? [...selectedFacilities, facility] // Add facility object if checked
+        : selectedFacilities.filter(
+            (selected) => selected.name !== facility.name
+          ) // Remove if unchecked
+    );
   };
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    }
+    fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    setValue("city", "");
+    async function fetchCities() {
+      const allCities = await getCities(country);
+      setCities(allCities);
+    }
+  }, [refetch]);
 
   useEffect(() => {
     async function fetchCountries() {
@@ -93,29 +120,26 @@ const HotelInfoForm = () => {
 
             <div className="grid grid-cols-2 gap-4">
               {facilitiesArray?.length > 0
-                ? (facilitiesArray || initialFacilities)?.map(
-                    (facility, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={!!selectedFacilities[facility.name]}
-                          onChange={(e) =>
-                            handleCheckboxChange(
-                              facility.name,
-                              e.target.checked
-                            )
-                          }
-                          className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
-                        />
-                        <label
-                          className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                          htmlFor={facility.name}
-                        >
-                          {facility?.name}
-                        </label>
-                      </div>
-                    )
-                  )
+                ? facilitiesArray.map((facility, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={selectedFacilities.some(
+                          (selected) => selected.name === facility.name
+                        )} // Check if the facility is selected
+                        onChange={(e) =>
+                          handleCheckboxChange(facility, e.target.checked)
+                        }
+                        className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                      />
+                      <label
+                        className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
+                        htmlFor={facility.name}
+                      >
+                        {facility.name}
+                      </label>
+                    </div>
+                  ))
                 : null}
             </div>
           </div>
@@ -137,14 +161,12 @@ const HotelInfoForm = () => {
             name="country"
             placeholder="Select your Country"
             label="Country"
-            placeholder="Enter Country"
-            // className="mt-6"
+            options={countries}
           />
           <RHFInput
             name="city"
             label="City"
-            placeholder="Enter City"
-            // className="mt-6"
+            options={cities}
           />
           <RHFInput
             name="address"

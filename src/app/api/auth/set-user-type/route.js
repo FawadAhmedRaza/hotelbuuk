@@ -24,14 +24,13 @@ export async function POST(req) {
       return NextResponse.json({ message: "Invalid user" }, { status: 404 });
     }
 
-    // Update user with the correct enum value
     const updatedUser = await prisma.user.update({
       where: {
         id: id,
       },
       data: {
-        user_type: user_type, // Pass enum value directly
-        is_user_profile_completed: true,
+        user_type: user_type,
+        is_user_type_completed: true,
       },
     });
 

@@ -39,9 +39,13 @@ export const endpoints = {
     },
   },
   hotel: {
+    create: "/hotel/hotel-info",
     facilites: {
       create: "/hotel-facilities",
       get_all: (id) => `/hotel-facilities?userId=${id}`,
     },
+  },
+  nomad: {
+    create: "/nomad/nomad-profile",
   },
 };

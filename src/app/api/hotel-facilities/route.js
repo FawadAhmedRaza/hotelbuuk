@@ -14,7 +14,7 @@ export async function POST(req) {
       );
     }
 
-    const prevFacilites = await prisma.hotel_facilities.findMany({
+    const prevFacilites = await prisma.facilities.findMany({
       where: {
         user_id: user_id,
       },
@@ -30,12 +30,12 @@ export async function POST(req) {
       }));
 
     if (newFacilities?.length > 0) {
-      await prisma.hotel_facilities.createMany({
+      await prisma.facilities.createMany({
         data: newFacilities,
       });
     }
 
-    const updatedFacilites = await prisma.hotel_facilities?.findMany({
+    const updatedFacilites = await prisma.facilities?.findMany({
       where: {
         user_id: user_id,
       },
@@ -54,23 +54,30 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req, { params }) {
+export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const user_id = searchParams.get("userId");
 
-    const facilites = await prisma.hotel_facilities?.findMany({
+    if (!user_id) {
+      return NextResponse.json(
+        { message: "User ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const facilities = await prisma.facilities.findMany({
       where: {
         user_id: user_id,
       },
     });
 
     return NextResponse.json(
-      { message: "Success", facilites },
+      { message: "Success", facilities },
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error inserting facilities:", error);
+    console.error("Error fetching facilities:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

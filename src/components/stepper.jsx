@@ -8,6 +8,7 @@ export const Stepper = ({
   handleNext,
   handleBack,
   isLastStep,
+  loading
 }) => {
   return (
     <div className="w-full px-4 md:px-8 py-4">
@@ -63,7 +64,11 @@ export const Stepper = ({
           </Button>
         )}
         {!isLastStep && <Button onClick={handleNext}>Next</Button>}
-        {isLastStep && <Button type="submit">Submit</Button>}
+        {isLastStep && (
+          <Button type="submit" loading={loading}>
+            Submit
+          </Button>
+        )}
       </div>
     </div>
   );

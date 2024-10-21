@@ -43,13 +43,11 @@ function Container({ children, isLoading, setIsLoading }) {
     if (user?.user_type === "HOTEL") {
       setChecked(true);
       setIsLoading(false);
-      console.log("if triggered")
     } else {
       setChecked(false);
       const homepage = "/";
       const href = `${homepage}`;
       router.replace(href);
-      console.log("else triggered")
     }
   }, [user, router]);
 
