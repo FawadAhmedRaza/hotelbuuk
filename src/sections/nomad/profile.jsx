@@ -22,18 +22,15 @@ import {
   RHFSelect,
 } from "@/src/components/hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { createNomadProfile } from "@/src/redux/nomad-profile/thunk";
 import { enqueueSnackbar } from "notistack";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
 
-export const NomadProfile = React.memo(() => {
-  const dispatch = useDispatch();
+export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
   const router = useRouter();
-
-  const { isLoading } = useSelector((state) => state.nomadProfile.create);
+  console.log("ise Edit",isEdit)
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
@@ -49,30 +46,30 @@ export const NomadProfile = React.memo(() => {
 
   const nomadProfileSchema = Yup.object().shape({
     profile: Yup.mixed().required("Profile is required"),
-    first_name: Yup.string().required("First name is required"),
-    last_name: Yup.string().required("Last name is required"),
-    phone_number: Yup.string().required("Phone number is required"),
+    first_name: Yup.string().optional("First name is required"),
+    last_name: Yup.string().optional("Last name is required"),
+    phone_number: Yup.string().optional("Phone number is required"),
     // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"), // Example regex for a 10-digit phone number
     email: Yup.string()
-      .required("Email is required")
+      .optional("Email is required")
       .email("Invalid email format"),
-    experience: Yup.string().required("Experience is required"),
-    electronics: Yup.string().required("Electronics field is required"),
-    manufacturing: Yup.string().required("Manufacturing field is required"),
-    fundraising: Yup.string().required("Fundraising field is required"),
-    retails: Yup.string().required("Retails field is required"),
-    projector: Yup.string().required("Projector field is required"),
-    video: Yup.string().required("Video field is required"),
-    sample: Yup.string().required("Sample field is required"),
+    experience: Yup.string().optional("Experience is required"),
+    electronics: Yup.string().optional("Electronics field is required"),
+    manufacturing: Yup.string().optional("Manufacturing field is required"),
+    fundraising: Yup.string().optional("Fundraising field is required"),
+    retails: Yup.string().optional("Retails field is required"),
+    projector: Yup.string().optional("Projector field is required"),
+    video: Yup.string().optional("Video field is required"),
+    sample: Yup.string().optional("Sample field is required"),
 
     availability: Yup.object().shape({
       date: Yup.object().shape({
-        start_date: Yup.string().required("Start date is required"),
-        end_date: Yup.string().required("End date is required"),
+        start_date: Yup.string().optional("Start date is required"),
+        end_date: Yup.string().optional("End date is required"),
       }),
       time: Yup.object().shape({
-        start_time: Yup.string().required("Start time is required"),
-        end_time: Yup.string().required("End time is required"),
+        start_time: Yup.string().optional("Start time is required"),
+        end_time: Yup.string().optional("End time is required"),
       }),
     }),
   });
@@ -81,37 +78,17 @@ export const NomadProfile = React.memo(() => {
 
   const methods = useForm({
     resolver: yupResolver(nomadProfileSchema),
-    defaultValues: {
-      profile: "",
-      first_name: "",
-      last_name: "",
-      phone_number: "",
-      email: "",
-      experience: "",
-      electronics: "",
-      manufacturing: "",
-      fundraising: "",
-      retails: "",
-      projector: "",
-      video: "",
-      availability: {
-        date: {
-          start_date: "",
-          end_date: "",
-        },
-        time: {
-          start_time: "",
-          end_time: "",
-        },
-      },
-    },
+    defaultValues: isEdit && defaultValues,
   });
 
   const {
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    watch,
+    formState: { isSubmitting, errors },
   } = methods;
+
+  console.log("errors", errors);
 
   useEffect(() => {
     setValue("availability.date.start_date", date[0].startDate.toString());
@@ -119,23 +96,52 @@ export const NomadProfile = React.memo(() => {
   }, [date]);
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      let updatedData = {
-        ...data,
-        user_id: user?.id,
-      };
-      const response = await axiosInstance.post(
-        endpoints.nomad.create,
-        updatedData
-      );
-      if (response?.status === 201) {
-        setUser(response?.data?.user, response?.data?.accessToken);
-        enqueueSnackbar("success", { variant: "success" });
-        router.push("/nomad-dashboard");
+    if (!defaultValues) {
+      // create handling
+      try {
+        console.log("create triggrred");
+        let updatedData = {
+          ...data,
+          user_id: user?.id,
+        };
+        const formData = new FormData();
+
+        for (const key in updatedData) {
+          if (updatedData[key] !== null && updatedData[key] !== undefined) {
+            formData.append(key, updatedData[key]);
+          }
+        }
+
+        const response = await axiosInstance.post(
+          endpoints.nomad.create,
+          formData
+        );
+        if (response?.status === 201) {
+          // setUser(response?.data?.user, response?.data?.accessToken);
+          enqueueSnackbar("success", { variant: "success" });
+          // router.push("/nomad-dashboard");
+        }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+    // update handling
+    else {
+      try {
+        console.log("truggred");
+        // const response = await axiosInstance.put(
+        //   endpoints.nomad.updateProfile(defaultValues?.id),
+        //   data
+        // );
+        // if (response?.status === 201) {
+        //   setUser(response?.data?.user, response?.data?.accessToken);
+        //   enqueueSnackbar("updated successfully", { variant: "success" });
+        // }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
     }
   });
 

@@ -18,8 +18,46 @@ import Link from "next/link";
 
 export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
-  const { authenticated, logout } = useAuthContext();
+  const { authenticated, logout, user } = useAuthContext();
   const pathname = usePathname();
+
+  const MenuLinks = [
+    {
+      id: 1,
+      label: "Home",
+      path: "/",
+    },
+    {
+      id: 2,
+      label: "Notifications",
+      path: "",
+    },
+    {
+      id: 3,
+      label: "Bookings",
+      path: "",
+    },
+    {
+      id: 6,
+      label: "Hotels",
+      path: "",
+    },
+    {
+      id: 7,
+      label: "Messages",
+      path: "",
+    },
+    {
+      id: 8,
+      label: "Settings",
+      path: "",
+      children: [
+        { id: 4, title: "Profile", path: `/nomad/profile/${user?.id}` },
+        { id: 5, title: "Terms", path: "" },
+        { id: 5, title: "Privacy", path: "" },
+      ],
+    },
+  ];
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
   const dropdownRef = useRef(null);
@@ -94,7 +132,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                       : "0px",
                 }}
               >
-                <div className="mt-3 space-y-2 w-full ">
+                <div className="mt-3 space-y-2 w-full">
                   {item.children.map((child) => (
                     <Link
                       key={child.id}
@@ -135,41 +173,3 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     </Drawer>
   );
 };
-
-export const MenuLinks = [
-  {
-    id: 1,
-    label: "Home",
-    path: "/",
-  },
-  {
-    id: 2,
-    label: "Notifications",
-    path: "",
-  },
-  {
-    id: 3,
-    label: "Bookings",
-    path: "",
-  },
-  {
-    id: 6,
-    label: "Hotels",
-    path: "",
-  },
-  {
-    id: 7,
-    label: "Messages",
-    path: "",
-  },
-  {
-    id: 8,
-    label: "Settings",
-    path: "",
-    children: [
-      { id: 4, title: "Profile", path: "" },
-      { id: 5, title: "Terms", path: "" },
-      { id: 5, title: "Privacy", path: "" },
-    ],
-  },
-];

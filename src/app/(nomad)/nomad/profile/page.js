@@ -1,8 +1,8 @@
-import { NomadProfileScreen } from '../../../../screens/nomad'
+"use client";
+import { NomadProfileScreen } from "../../../../screens/nomad";
 
 const Page = () => {
-  return <NomadProfileScreen />
+  return <NomadProfileScreen isEdit={false} />;
+};
 
-}
-
-export default Page
+export default Page;

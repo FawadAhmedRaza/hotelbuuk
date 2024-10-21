@@ -16,7 +16,6 @@ import { Button, Iconify, Typography } from "@/src/components";
 import { room_facilities, roomTypes } from "@/src/_mock/_room";
 import { useModal } from "@/src/hooks/use-modal";
 import { LocalStorageGetItem } from "@/src/utils/localstorage";
-import AmenitiesModal from "@/src/screens/hotel-info/components/amenities-modal";
 import { RoomTypeModal } from ".";
 
 const initialFacilities = [
@@ -34,27 +33,6 @@ export const RoomInfo = () => {
   const selectedFacilities = watch("facilities", {});
 
   const openModal = useModal();
-
-  // On component mount, fetch stored amenities and update facilities
-  useEffect(() => {
-    const storedAmenities = LocalStorageGetItem("amenities");
-    if (storedAmenities) {
-      const parsedAmenities = JSON.parse(storedAmenities)?.amenities || [];
-      const newFacilities = parsedAmenities.map((item) => ({
-        title: item.name, // Assuming name field from amenities
-        value: item.name.toLowerCase().replace(/\s+/g, ""), // Generate a key for facility
-      }));
-
-      // Avoid duplicating facilities
-      setFacilitiesArray((prevArray) => {
-        const existingFacilities = new Set(prevArray.map((f) => f.value)); // Create a set for fast lookup
-        const filteredNewFacilities = newFacilities.filter(
-          (facility) => !existingFacilities.has(facility.value) // Add only unique facilities
-        );
-        return [...prevArray, ...filteredNewFacilities];
-      });
-    }
-  }, [refetch]);
 
   const handleCheckboxChange = (key, checked) => {
     setValue("facilities", {
@@ -117,45 +95,6 @@ export const RoomInfo = () => {
               startIcon="marketeq:money-euro"
               startIconClass="size-8"
             />
-          </div>
-
-          <div className="flex flex-col gap-3 w-full mt-6">
-            <div className="flex flex-row justify-start items-center gap-4">
-              <Typography variant="h6" className="font-medium">
-                Add Room Type
-              </Typography>
-              <Typography
-                variant="h6"
-                className="font-medium text-primary hover:cursor-pointer"
-                onClick={() => openModal.onTrue()} // Open modal on click
-              >
-                <Iconify
-                  iconName="tabler:plus"
-                  className="!text-black mt-[2px]"
-                />
-              </Typography>
-            </div>
-
-            <div className="  grid grid-cols-2 gap-4">
-              {facilitiesArray?.map((facility, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={!!selectedFacilities[facility.value]}
-                    onChange={(e) =>
-                      handleCheckboxChange(facility.value, e.target.checked)
-                    }
-                    className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
-                  />
-                  <label
-                    className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                    htmlFor={facility.title}
-                  >
-                    {facility?.title}
-                  </label>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

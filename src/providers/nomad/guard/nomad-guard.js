@@ -43,9 +43,7 @@ function Container({ children, isLoading, setIsLoading }) {
       setChecked(true);
     } else {
       setChecked(false);
-      const homepage = "/";
-      const href = `${homepage}`;
-      router.replace(href);
+      router.back();
     }
     setIsLoading(false);
   }, [user, router, setIsLoading]);
