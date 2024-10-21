@@ -71,6 +71,7 @@ model hotel_info {
   updatedAt DateTime @updatedAt
 
   hotelFacilites hotel_facilities[]
+  hotel_rooms    hotel_rooms[]
 }
 
 model hotel_facilities {
@@ -81,7 +82,6 @@ model hotel_facilities {
   facility facilities @relation(fields: [facility_id], references: [id])
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }
-
 
 model room_types {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
@@ -116,4 +116,37 @@ model nomad {
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String? @db.ObjectId
+}
+
+model hotel_rooms {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  room_name          String
+  description        String
+  maximum_occupancy  String
+  room_type          String
+  price              String
+  // checkboxes
+  air_conditioning   Boolean
+  heating            Boolean
+  king_bed           Boolean
+  private_balcony    Boolean
+  mini_fridge        Boolean
+  flat_screen_tv     Boolean
+  room_service       Boolean
+  coffee_machine     Boolean
+  desk_workspace     Boolean
+  private_bathroom   Boolean
+  smart_lighting     Boolean
+  soundproof_windows Boolean
+  wardrobe           Boolean
+  blackout_curtains  Boolean
+  luxury_toiletries  Boolean
+  high_thread_sheets Boolean
+
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

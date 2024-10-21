@@ -7,10 +7,19 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 import { Pannel, Stepper, Typography } from "@/src/components";
 import { RoomInfo } from "./room-info";
 import ImageUploader from "../../nomad/stepper-view/image-uploader";
+import { useDispatch } from "react-redux";
+import { createRoom, getAllRoomTypes } from "@/src/redux/hotel-rooms/thunk";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { getHotelId } from "@/src/actions/auth.actions";
+import { enqueueSnackbar } from "notistack";
 
 export const RoomStepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
+  const dispatch = useDispatch();
+  const { user } = useAuthContext();
+
+  const [hotelId, setHotelId] = useState("");
 
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
@@ -45,13 +54,44 @@ export const RoomStepperView = () => {
   const {
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = methods;
 
   console.log("errors", errors);
 
+  const fetchRoomTypes = async () => {
+    try {
+      await dispatch(getAllRoomTypes(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchHotelId = async () => {
+    try {
+      const request = await getHotelId(user?.id);
+      console.log("reques", request?.id);
+      setHotelId(request?.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoomTypes();
+    fetchHotelId();
+  }, []);
+
   const onSubmit = handleSubmit(async (data) => {
+    data.hotel_id = hotelId;
     console.log("Form submitted: ", data);
+    try {
+      await dispatch(createRoom(data)).unwrap();
+      enqueueSnackbar("Room created", { variant: "success" });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
   });
 
   const steps = [
@@ -106,6 +146,7 @@ export const RoomStepperView = () => {
           handleNext={handleNext}
           handleBack={handleBack}
           isLastStep={activeStep === steps.length - 1}
+          loading={isSubmitting}
         />
       </RHFFormProvider>
     </Pannel>
