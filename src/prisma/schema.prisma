@@ -82,6 +82,7 @@ model hotel_facilities {
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }
 
+
 model room_types {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
