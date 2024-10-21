@@ -37,6 +37,7 @@ model User {
 
   facilities facilities[]
   hotels     hotel_info[]
+  nomad      nomad[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,4 +82,31 @@ model hotel_facilities {
 
   facility facilities @relation(fields: [facility_id], references: [id])
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+}
+
+model nomad {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img   String?
+  first_name    String?
+  last_name     String?
+  phone_number  Int
+  email         String
+  experience    String
+  electronics   String
+  manufacturing String
+  fundraising   String
+  retails       String
+  projector     String
+  video         String
+  sample        String
+  end_date      String
+  start_date    String
+  start_time    String
+  end_time      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
 }

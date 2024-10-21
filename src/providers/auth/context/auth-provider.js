@@ -35,12 +35,14 @@ const initialState = {
 
 const reducer = (state, action) => {
   if (action.type === Types.INITIAL) {
+    console.log("user action", action.payload);
     return {
       loading: false,
       user: action.payload.user,
     };
   }
   if (action.type === Types.LOGIN) {
+    console.log("action payload", action.payload);
     return {
       ...state,
       user: action.payload.user,
@@ -94,8 +96,8 @@ export function AuthProvider({ children }) {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
         const user = jwtDecode(accessToken);
-
-        dispatch({
+        console.log("triggred", user);
+        await dispatch({
           type: Types.INITIAL,
           payload: {
             user: {
@@ -104,7 +106,9 @@ export function AuthProvider({ children }) {
             },
           },
         });
+        console.log("state initialize", state);
       } else {
+        console.log("else conditon triggred");
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -129,12 +133,14 @@ export function AuthProvider({ children }) {
       payload: {
         user: {
           ...updatedUser,
+          accessToken,
         },
       },
     });
   };
 
   useEffect(() => {
+    console.log("state useeffect", state);
     initialize();
   }, [initialize]);
 
@@ -178,7 +184,7 @@ export function AuthProvider({ children }) {
     try {
       const userDetails = JSON.parse(sessionStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
-      console.log("data", state);
+      console.log("data", data);
 
       const response = await axiosInstance.post(
         endpoints.AUTH.setup_user_type,
@@ -200,7 +206,7 @@ export function AuthProvider({ children }) {
 
       enqueueSnackbar("Success", { variant: "success" });
       router.push(
-        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/hotel-dashboard"
+        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
       );
     } catch (error) {
       console.log(error);
@@ -230,6 +236,10 @@ export function AuthProvider({ children }) {
         if (response.status === 201) {
           setSession(response?.data?.data?.accessToken);
           localStorage.removeItem("signupEmail");
+          sessionStorage.setItem(
+            "user",
+            JSON.stringify(response?.data?.data?.user)
+          );
           dispatch({
             type: Types.LOGIN,
             payload: {

@@ -356,10 +356,7 @@ export const StepperView = () => {
     trigger,
     watch,
     handleSubmit,
-    formState: { errors },
   } = methods;
-
-  console.log("errors", errors);
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("Form submitted: ", data);
@@ -401,7 +398,6 @@ export const StepperView = () => {
   const accomodationType = watch("business_meeting.accomodation_type");
 
   useEffect(() => {
-    // Conditionally set steps based on accommodation type
     if (accomodationType === "bnb") {
       setCurrentSteps(steps);
     } else {
@@ -443,10 +439,7 @@ export const StepperView = () => {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
-    console.log("Form values: ", methods.getValues()); // Check current form values
-
     const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
-    console.log("Is Step Valid:", isStepValid);
 
     if (isStepValid) {
       setActiveStep((prev) => prev + 1); // Move to next step if valid
