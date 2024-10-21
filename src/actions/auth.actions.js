@@ -20,6 +20,15 @@ export const logout = async () => {
   revalidatePath("/");
 };
 
+export const getHotelId = async (userId) => {
+  const hotel = await prisma.hotel_info.findFirst({
+    where: {
+      user_id: userId,
+    },
+  });
+  return hotel;
+};
+
 // Create User
 export async function createUser(data) {
   const { first_name, last_name, email, password, phone_number, terms } = data;
@@ -33,7 +42,7 @@ export async function createUser(data) {
     !phone_number ||
     !terms
   ) {
-    return {message:"All fields are required.",statusCode:400};
+    return { message: "All fields are required.", statusCode: 400 };
   }
 
   try {
@@ -189,7 +198,6 @@ export const forgetPassword = async (email) => {
     };
   }
 };
-
 
 // signup
 export const CheckOTP = async (email, otp) => {

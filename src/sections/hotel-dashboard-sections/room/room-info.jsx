@@ -13,10 +13,10 @@ import {
 import { useForm, useFormContext } from "react-hook-form";
 import { Button, Iconify, Typography } from "@/src/components";
 
-import { room_facilities, roomTypes } from "@/src/_mock/_room";
+import { room_facilities } from "@/src/_mock/_room";
 import { useModal } from "@/src/hooks/use-modal";
-import { LocalStorageGetItem } from "@/src/utils/localstorage";
 import { RoomTypeModal } from ".";
+import { useSelector } from "react-redux";
 
 const initialFacilities = [
   { title: "Free WI-FI", value: "freeWI-FI" },
@@ -26,20 +26,9 @@ const initialFacilities = [
   { title: "Restaurant", value: "restaurant" },
 ];
 export const RoomInfo = () => {
-  const [facilitiesArray, setFacilitiesArray] = useState(initialFacilities);
-  const [refetch, setRefetch] = useState(false);
-
-  const { watch, setValue, handleSubmit } = useFormContext();
-  const selectedFacilities = watch("facilities", {});
+  const { roomTypes } = useSelector((state) => state.rooms);
 
   const openModal = useModal();
-
-  const handleCheckboxChange = (key, checked) => {
-    setValue("facilities", {
-      ...selectedFacilities,
-      [key]: checked,
-    });
-  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -79,12 +68,25 @@ export const RoomInfo = () => {
         </div>
         {/* Right  */}
         <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
-          <RHFSelect
-            name="room_info.room_type"
-            placeholder="Select Room Type"
-            label="Room Type"
-            options={roomTypes}
-          />
+          <div className="w-full flex gap-2 justify-center items-center">
+            <RHFSelect
+              name="room_info.room_type"
+              placeholder="Select Room Type"
+              label="Room Type"
+              options={roomTypes?.map((item) => {
+                return {
+                  label: item?.name,
+                  value: item?.name,
+                };
+              })}
+            />
+
+            <Iconify
+              onClick={openModal.onTrue}
+              iconName="ic:round-plus"
+              className="!text-black size-8 cursor-pointer"
+            />
+          </div>
 
           <div className="flex flex-col gap-5 w-full">
             <RHFInput
@@ -100,11 +102,7 @@ export const RoomInfo = () => {
       </div>
 
       {openModal.onTrue && (
-        <RoomTypeModal
-          setRefetch={setRefetch}
-          isOpen={openModal.value}
-          onClose={openModal.onFalse}
-        />
+        <RoomTypeModal isOpen={openModal.value} onClose={openModal.onFalse} />
       )}
     </div>
   );

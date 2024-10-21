@@ -349,12 +349,17 @@ export const MenuLinks = (UserId) => [
     ],
   },
   {
-    id: 7,
+    id: 8,
+    label: "Rooms",
+    path: paths.hotelDashboard.rooms,
+  },
+  {
+    id: 9,
     label: "Messages",
     path: "",
   },
   {
-    id: 8,
+    id: 10,
     label: "Settings",
     path: "",
     children: [
