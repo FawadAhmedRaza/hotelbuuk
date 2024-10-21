@@ -163,9 +163,10 @@ const HotelInfoForm = () => {
             label="Country"
             options={countries}
           />
-          <RHFInput
+          <RHFSelect
             name="city"
             label="City"
+            placeholder="Select your City"
             options={cities}
           />
           <RHFInput

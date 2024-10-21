@@ -8,3 +8,11 @@ export const createNomadProfile = createAsyncThunk(
     return request?.data;
   }
 );
+
+export const getNomadsProfile = createAsyncThunk(
+  "getNomadsProfile",
+  async () => {
+    const request = await axiosInstance.get(endpoints.nomad.root);
+    return request?.data;
+  }
+);

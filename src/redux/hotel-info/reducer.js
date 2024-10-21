@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { createHotelInfo } from "./thunk";
+import { createHotelInfo, getHotelInfo } from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -47,6 +47,22 @@ export const hotelInfo = createSlice({
     builder.addCase(createHotelInfo.rejected, (state, action) => {
       state.create.error = action.error;
       state.create.isLoading = false;
+    });
+
+    // get
+    builder.addCase(getHotelInfo.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getHotelInfo.fulfilled, (state, action) => {
+      console.log("paylod", action.payload);
+      state.hotels = action.payload.hotelList;
+      // state.create.accessToken = action.payload.accessToken;
+      // state.create.user = action.payload.user;
+      // state.create.isLoading = false;
+    });
+    builder.addCase(getHotelInfo.rejected, (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
     });
   },
 });

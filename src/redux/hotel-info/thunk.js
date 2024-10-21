@@ -8,3 +8,8 @@ export const createHotelInfo = createAsyncThunk(
     return response?.data;
   }
 );
+
+export const getHotelInfo = createAsyncThunk("getHotelInfo", async () => {
+  const response = await axiosInstance.get(endpoints.hotel.root);
+  return response?.data;
+});

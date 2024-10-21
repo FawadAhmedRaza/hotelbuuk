@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { createNomadProfile } from "./thunk";
+import { createNomadProfile, getNomadsProfile } from "./thunk";
 
 const initialState = {
   isLoading: false,
-  hotels: [],
+  nomads: [],
   error: null,
   create: {
     isLoading: false,
@@ -39,14 +39,30 @@ export const nomadProfile = createSlice({
     });
     builder.addCase(createNomadProfile.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
-    //   state.hotels = action.payload;
-    //   state.create.accessToken = action.payload.accessToken;
-    //   state.create.user = action.payload.user;
+      //   state.hotels = action.payload;
+      //   state.create.accessToken = action.payload.accessToken;
+      //   state.create.user = action.payload.user;
       state.create.isLoading = false;
     });
     builder.addCase(createNomadProfile.rejected, (state, action) => {
       state.create.error = action.error;
       state.create.isLoading = false;
+    });
+
+    // Get
+    builder.addCase(getNomadsProfile.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getNomadsProfile.fulfilled, (state, action) => {
+      console.log("paylod", action.payload);
+      state.nomads = action.payload.nomads;
+      // state.create.accessToken = action.payload.accessToken;
+      //   state.create.user = action.payload.user;
+      // state.create.isLoading = false;
+    });
+    builder.addCase(getNomadsProfile.rejected, (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
     });
   },
 });

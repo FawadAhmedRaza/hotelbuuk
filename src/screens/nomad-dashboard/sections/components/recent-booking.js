@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { RecentBookingListView } from "./recent-booking-list-view";
 import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
+import { useSelector } from "react-redux";
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);

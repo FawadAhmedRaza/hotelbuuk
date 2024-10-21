@@ -39,6 +39,7 @@ export const endpoints = {
     },
   },
   hotel: {
+    root: "/hotel",
     create: "/hotel/hotel-info",
     facilites: {
       create: "/hotel-facilities",
@@ -46,6 +47,7 @@ export const endpoints = {
     },
   },
   nomad: {
+    root: "/nomad",
     create: "/nomad/nomad-profile",
   },
 };

@@ -15,6 +15,7 @@ import {
 import { BgIcon } from "@/src/components/bg-icon";
 import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
+import { paths } from "@/src/contants";
 // import Iconify from "@/components/iconify";
 
 export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
@@ -157,6 +158,9 @@ export const MenuLinks = [
     id: 6,
     label: "Nomads",
     path: "",
+    children: [
+      { id: 1, title: "Nomads List", path: paths.hotelDashboard.nomads },
+    ],
   },
   {
     id: 7,

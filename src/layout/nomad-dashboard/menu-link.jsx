@@ -15,6 +15,7 @@ import {
 import { BgIcon } from "@/src/components/bg-icon";
 import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
+import { paths } from "@/src/contants";
 
 export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
@@ -156,6 +157,9 @@ export const MenuLinks = [
     id: 6,
     label: "Hotels",
     path: "",
+    children: [
+      { id: 1, title: "Hotels List", path: paths.nomadDashboard.hotels },
+    ],
   },
   {
     id: 7,

@@ -225,7 +225,7 @@ export const NomadProfile = React.memo(() => {
               <RHFSelect
                 name="retails"
                 label="Retails"
-                placeholder="  Retails "
+                placeholder="Retails"
                 options={[
                   { label: "Option 1", value: "option1" },
                   { label: "Option 2", value: "option2" },
