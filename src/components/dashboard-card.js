@@ -21,7 +21,7 @@ const DashboardCard = ({ title, value, IconName, btnTitle }) => {
                 variant="p"
                 className="!text-[12px]  leading-none !font-medium"
               >
-                {title === "Nomad" ? "Registered" : "Total"}
+                {title === "Hotel" ? "Registered" : "Total"}
               </p>
             </div>
             <Typography variant="h4" className="!text-black   !font-semibold">

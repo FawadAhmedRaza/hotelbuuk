@@ -21,8 +21,20 @@ import {
   RHFProfileImgUploader,
   RHFSelect,
 } from "@/src/components/hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { createNomadProfile } from "@/src/redux/nomad-profile/thunk";
+import { enqueueSnackbar } from "notistack";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { useRouter } from "next/navigation";
 
 export const NomadProfile = React.memo(() => {
+  const dispatch = useDispatch();
+  const { user, setUser } = useAuthContext();
+  const router = useRouter();
+
+  const { isLoading } = useSelector((state) => state.nomadProfile.create);
+
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
 
@@ -96,11 +108,9 @@ export const NomadProfile = React.memo(() => {
   });
 
   const {
-    trigger,
     setValue,
-    watch,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
 
   useEffect(() => {
@@ -109,7 +119,24 @@ export const NomadProfile = React.memo(() => {
   }, [date]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("Form submitted: ", data);
+    try {
+      let updatedData = {
+        ...data,
+        user_id: user?.id,
+      };
+      const response = await axiosInstance.post(
+        endpoints.nomad.create,
+        updatedData
+      );
+      if (response?.status === 201) {
+        setUser(response?.data?.user, response?.data?.accessToken);
+        enqueueSnackbar("success", { variant: "success" });
+        router.push("/nomad-dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
   });
 
   return (
@@ -121,8 +148,6 @@ export const NomadProfile = React.memo(() => {
       >
         <RHFProfileImgUploader name="profile" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
-          {/* Basic Information  */}
-
           <div className="flex flex-col sm:flex-row gap-5 w-full">
             <RHFInput
               name="first_name"
@@ -289,7 +314,9 @@ export const NomadProfile = React.memo(() => {
           </div>
         </div>
         <div className="flex justify-end w-full">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" loading={isSubmitting}>
+            Submit
+          </Button>
         </div>
       </RHFFormProvider>
     </Pannel>
