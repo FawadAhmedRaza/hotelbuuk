@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+.google-cloud.json
+
 # next.js
 /.next/
 /out/

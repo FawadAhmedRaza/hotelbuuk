@@ -27,5 +27,8 @@ export const paths = {
     root: "/hotel-dashboard",
     nomads: "/hotel-dashboard/nomads-list",
   },
-  hotelInfo: "/hotel-info",
+  hotelInfo: {
+    root: "/hotel-info",
+    edit: (id) => `/hotel-info/${id}`,
+  },
 };

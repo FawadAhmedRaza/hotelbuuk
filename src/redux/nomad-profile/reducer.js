@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { createNomadProfile, getNomadsProfile } from "./thunk";
+import {
+  createNomadProfile,
+  getNomadProfileById,
+  getNomadsProfile,
+  updateNomadProfile,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -15,7 +20,7 @@ const initialState = {
   getById: {
     isLoading: false,
     error: null,
-    HotelFacilities: {},
+    nomad: {},
   },
   deleteById: {
     isLoading: false,
@@ -63,6 +68,31 @@ export const nomadProfile = createSlice({
     builder.addCase(getNomadsProfile.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
+    });
+
+    // get by Id
+    builder.addCase(getNomadProfileById.pending, (state, action) => {
+      state.getById.isLoading = true;
+    });
+    builder.addCase(getNomadProfileById.fulfilled, (state, action) => {
+      state.getById.nomad = action.payload.nomad;
+      state.getById.isLoading = false;
+    });
+    builder.addCase(getNomadProfileById.rejected, (state, action) => {
+      state.getById.error = action.error;
+      state.getById.isLoading = false;
+    });
+
+    // update
+    builder.addCase(updateNomadProfile.pending, (state, action) => {
+      state.updateById.isLoading = true;
+    });
+    builder.addCase(updateNomadProfile.fulfilled, (state, action) => {
+      state.updateById.isLoading = false;
+    });
+    builder.addCase(updateNomadProfile.rejected, (state, action) => {
+      state.updateById.error = action.error;
+      state.updateById.isLoading = false;
     });
   },
 });

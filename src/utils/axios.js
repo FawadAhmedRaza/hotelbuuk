@@ -45,9 +45,13 @@ export const endpoints = {
       create: "/hotel-facilities",
       get_all: (id) => `/hotel-facilities?userId=${id}`,
     },
+    getHotel: (id) => `/hotel/hotel-info/${id}`,
+    updateHotel: (id) => `/hotel/hotel-info/${id}`,
   },
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
+    getProfile: (id) => `/nomad/nomad-profile/${id}`,
+    updateProfile: (id) => `/nomad/nomad-profile/${id}`,
   },
 };

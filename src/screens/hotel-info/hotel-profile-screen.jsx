@@ -1,25 +1,23 @@
 "use client";
-import React, { useEffect, useState } from "react";
-
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-
-import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
-import { createHotelInfo } from "@/src/redux/hotel-info/thunk";
-
 import * as Yup from "yup";
+import { Breadcrumb, Pannel } from "@/src/components";
+import Tabs from "@/src/components/tabs";
+import React, { useEffect, useState } from "react";
+import HotelProfile from "./components/hotel-profile";
+import HotelImages from "./components/hote-images";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
+import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
-import { Pannel, Stepper } from "@/src/components";
-import HotelInfoForm from "./hote-info-form";
-import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
-import { enqueueSnackbar } from "notistack";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { useRouter } from "next/navigation";
+const HotelProfileScreen = ({ defaultValues, isEdit }) => {
+  const [activeTabs, setActiveTabs] = useState("hotel-info");
 
-export const StepperView = ({ defaultValues, isEdit }) => {
+  console.log("profile screen", defaultValues);
+
   const HotelSchema = Yup.object({
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
@@ -34,11 +32,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
     images: Yup.array(),
   });
 
-  const [activeStep, setActiveStep] = useState(0);
-
   const { user, setUser } = useAuthContext();
-
-  const router = useRouter();
 
   console.log(user, "user");
 
@@ -54,6 +48,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
   const {
     handleSubmit,
     trigger,
+
     formState: { isSubmitting },
   } = methods;
 
@@ -70,47 +65,6 @@ export const StepperView = ({ defaultValues, isEdit }) => {
       fetchHotelFacilities();
     }
   }, [user?.id]);
-
-  const steps = [
-    {
-      label: "Hotel Information",
-      icon: "ri:information-line",
-      value: "hotelInfo",
-      component: <HotelInfoForm />,
-    },
-    {
-      label: "Images",
-      icon: "material-symbols:perm-media-outline",
-      value: "media",
-      component: <ImageUploader />,
-    },
-  ];
-
-  const handleNext = async () => {
-    let fieldsToValidate = [];
-    if (activeStep === 0) {
-      fieldsToValidate = [
-        "hotel_name",
-        "description",
-        "contact_email",
-        "hotel_contact_no",
-        "address",
-        "country",
-        "city",
-      ];
-    }
-    if (activeStep === 1) {
-      fieldsToValidate = ["images"];
-    }
-    const isStepValid = await trigger(fieldsToValidate); // trigger validation
-    if (isStepValid) {
-      setActiveStep((prev) => prev + 1);
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep((prev) => prev - 1);
-  };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -134,19 +88,32 @@ export const StepperView = ({ defaultValues, isEdit }) => {
     }
   });
 
+  const TABS = [
+    {
+      label: "Hotel Info",
+      value: "hotel-info",
+      component: <HotelProfile />,
+    },
+    {
+      label: "Hotel Images",
+      value: "hotel-images",
+      component: <HotelImages />,
+    },
+  ];
+
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-        <Stepper
-          steps={steps}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          handleNext={handleNext}
-          handleBack={handleBack}
-          isLastStep={activeStep === steps.length - 1}
-          loading={isSubmitting}
-        />
+        <div className="w-full">
+          <Tabs
+            TABS={TABS}
+            activeTab={activeTabs}
+            setActiveTab={setActiveTabs}
+          />
+        </div>
       </RHFFormProvider>
     </Pannel>
   );
 };
+
+export default HotelProfileScreen;

@@ -16,3 +16,22 @@ export const getNomadsProfile = createAsyncThunk(
     return request?.data;
   }
 );
+
+export const getNomadProfileById = createAsyncThunk(
+  "getNomadProfileById",
+  async (id) => {
+    const request = await axiosInstance.get(endpoints.nomad.getProfile(id));
+    return request?.data;
+  }
+);
+
+export const updateNomadProfile = createAsyncThunk(
+  "updateNomadProfile",
+  async ({ id, data }) => {
+    const request = await axiosInstance.post(
+      endpoints.nomad.updateProfile(id),
+      data
+    );
+    return request?.data;
+  }
+);

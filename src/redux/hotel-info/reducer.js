@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { createHotelInfo, getHotelInfo } from "./thunk";
+import {
+  createHotelInfo,
+  getHotelById,
+  getHotelInfo,
+  updateHotelProfile,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -15,7 +20,8 @@ const initialState = {
   getById: {
     isLoading: false,
     error: null,
-    HotelFacilities: {},
+    // HotelFacilities: {},
+    hotel: {},
   },
   deleteById: {
     isLoading: false,
@@ -56,13 +62,23 @@ export const hotelInfo = createSlice({
     builder.addCase(getHotelInfo.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.hotels = action.payload.hotelList;
-      // state.create.accessToken = action.payload.accessToken;
-      // state.create.user = action.payload.user;
-      // state.create.isLoading = false;
     });
     builder.addCase(getHotelInfo.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
+    });
+
+    // get Hotel by Id
+    builder.addCase(getHotelById.pending, (state, action) => {
+      state.getById.isLoading = true;
+    });
+    builder.addCase(getHotelById.fulfilled, (state, action) => {
+      state.getById.hotel = action.payload.hotelInfo;
+      state.getById.isLoading = false
+    });
+    builder.addCase(getHotelById.rejected, (state, action) => {
+      state.getById.error = action.error;
+      state.getById.isLoading = false;
     });
   },
 });
