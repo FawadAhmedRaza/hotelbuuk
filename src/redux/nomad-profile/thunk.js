@@ -9,6 +9,14 @@ export const createNomadProfile = createAsyncThunk(
   }
 );
 
+export const getNomadsProfile = createAsyncThunk(
+  "getNomadsProfile",
+  async () => {
+    const request = await axiosInstance.get(endpoints.nomad.root);
+    return request?.data;
+  }
+);
+
 export const getNomadProfileById = createAsyncThunk(
   "getNomadProfileById",
   async (id) => {

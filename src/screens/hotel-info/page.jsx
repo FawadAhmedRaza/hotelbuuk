@@ -3,10 +3,10 @@ import React from "react";
 
 import { StepperView } from "./components/stepper-view";
 
-const HotelInformation = () => {
+const HotelInformation = ({ defaultValues, isEdit }) => {
   return (
     <React.Fragment>
-      <StepperView />
+      <StepperView defaultValues={defaultValues} isEdit={isEdit} />
     </React.Fragment>
   );
 };

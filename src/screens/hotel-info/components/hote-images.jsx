@@ -5,7 +5,7 @@ import { RHFUploader } from "@/src/components/hook-form";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-const ImageUploader = () => {
+const HotelImages = () => {
   const [imageBox, setImageBox] = useState(
     Array.from({ length: 10 }, (value, index) => index)
   );
@@ -55,7 +55,7 @@ const ImageUploader = () => {
   };
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 my-10">
       {/* Image Uploader */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 w-full !border-gray-500 !border-1">
         <RHFUploader
@@ -109,4 +109,4 @@ const ImageUploader = () => {
   );
 };
 
-export default ImageUploader;
+export default HotelImages;

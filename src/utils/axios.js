@@ -39,11 +39,14 @@ export const endpoints = {
     },
   },
   hotel: {
+    root: "/hotel",
     create: "/hotel/hotel-info",
     facilites: {
       create: "/hotel/hotel-facilities",
       get_all: (id) => `/hotel/hotel-facilities?userId=${id}`,
     },
+    getHotel: (id) => `/hotel/hotel-info/${id}`,
+    updateHotel: (id) => `/hotel/hotel-info/${id}`,
     roomTypes: {
       create: "/hotel/room-types",
       get_all: (id) => `/hotel/room-types?userId=${id}`,
@@ -53,6 +56,7 @@ export const endpoints = {
     }
   },
   nomad: {
+    root: "/nomad",
     create: "/nomad/nomad-profile",
     getProfile: (id) => `/nomad/nomad-profile/${id}`,
     updateProfile: (id) => `/nomad/nomad-profile/${id}`,

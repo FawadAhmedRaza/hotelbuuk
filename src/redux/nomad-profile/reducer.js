@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createNomadProfile,
   getNomadProfileById,
+  getNomadsProfile,
   updateNomadProfile,
 } from "./thunk";
 
 const initialState = {
   isLoading: false,
-  hotels: [],
+  nomads: [],
   error: null,
   create: {
     isLoading: false,
@@ -53,7 +54,23 @@ export const nomadProfile = createSlice({
       state.create.isLoading = false;
     });
 
-    // get
+    // Get
+    builder.addCase(getNomadsProfile.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getNomadsProfile.fulfilled, (state, action) => {
+      console.log("paylod", action.payload);
+      state.nomads = action.payload.nomads;
+      // state.create.accessToken = action.payload.accessToken;
+      //   state.create.user = action.payload.user;
+      // state.create.isLoading = false;
+    });
+    builder.addCase(getNomadsProfile.rejected, (state, action) => {
+      state.error = action.error;
+      state.isLoading = false;
+    });
+
+    // get by Id
     builder.addCase(getNomadProfileById.pending, (state, action) => {
       state.getById.isLoading = true;
     });

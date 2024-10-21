@@ -5,16 +5,27 @@ import { PreviewHotels } from "./preview-hotels";
 export const Hotels = React.memo(() => {
   return (
     <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg !-mt-10 ">
-      <Typography
-        variant="h3"
-        className="font-semibold text-center mt-24 md:mt-16 lg:mt-10"
-      >
-        Stay For Business Meetings
-      </Typography>
+      <div>
+        <Typography
+          variant="h1"
+          className="font-semibold text-center mt-24 md:mt-5 lg:mt-10 !text-black"
+        >
+          Stay For Business Meetings
+        </Typography>
+        <Typography variant="h4" className="font-semibold text-center mt-2">
+          Find Business Hotels with Local Market Insights.{" "}
+        </Typography>
+      </div>
 
       <PreviewHotels />
 
-      <Button className=" w-full sm:w-fit">Show More</Button>
+      <div className="flex flex-col justify-center items-center gap-5">
+        <Typography variant="h4" className="font-semibold text-center mt-2">
+          Find More Business Hotels
+        </Typography>
+
+        <Button className=" w-full sm:w-fit">Show More</Button>
+      </div>
     </Pannel>
   );
 });

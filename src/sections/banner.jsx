@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Pannel, Typography } from "../components";
+import { AnchorTag, Button, Pannel, Typography } from "../components";
+import { paths } from "../contants";
 
 export const Banner = React.memo(() => {
   return (
@@ -10,13 +11,18 @@ export const Banner = React.memo(() => {
             variant="h3"
             className="font-semibold text-white md:!leading-50ld text-center sm:text-start"
           >
-            Are you taking your business <br /> or opening a new branch abroad?
+            Are you taking your business abroad <br /> or opening a new branch ?
           </Typography>
-          <Typography variant="h6" className="text-white text-center sm:text-start">
+          <Typography
+            variant="h6"
+            className="text-white text-center sm:text-start"
+          >
             Find hotels with in-house consultants to walk you through.
           </Typography>
         </div>
-        <Button>Book Now</Button>
+        <AnchorTag href={paths.auth.signUp}>
+          <Button>Signup Now</Button>
+        </AnchorTag>
       </Pannel>
     </div>
   );

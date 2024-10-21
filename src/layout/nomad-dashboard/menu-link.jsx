@@ -15,6 +15,7 @@ import {
 import { BgIcon } from "@/src/components/bg-icon";
 import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
+import { paths } from "@/src/contants";
 
 export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
@@ -173,3 +174,44 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     </Drawer>
   );
 };
+
+export const MenuLinks = [
+  {
+    id: 1,
+    label: "Home",
+    path: "/",
+  },
+  {
+    id: 2,
+    label: "Notifications",
+    path: "",
+  },
+  {
+    id: 3,
+    label: "Bookings",
+    path: "",
+  },
+  {
+    id: 6,
+    label: "Hotels",
+    path: "",
+    children: [
+      { id: 1, title: "Hotels List", path: paths.nomadDashboard.hotels },
+    ],
+  },
+  {
+    id: 7,
+    label: "Messages",
+    path: "",
+  },
+  {
+    id: 8,
+    label: "Settings",
+    path: "",
+    children: [
+      { id: 4, title: "Profile", path: "" },
+      { id: 5, title: "Terms", path: "" },
+      { id: 5, title: "Privacy", path: "" },
+    ],
+  },
+];
