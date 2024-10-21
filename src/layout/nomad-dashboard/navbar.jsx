@@ -25,7 +25,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-3xl font-bold text-white text-start  "
+          className=" !text-xl sm:!text-3xl text-nowrap md:!text-[27px] font-bold text-white text-start  "
         >
           Hotelbuuk Dashboard
         </Typography>

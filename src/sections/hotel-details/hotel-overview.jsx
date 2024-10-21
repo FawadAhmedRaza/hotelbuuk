@@ -64,7 +64,7 @@ export const HotelOverview = () => {
 
       {/* images  */}
 
-      <div className="relative hidden md:flex flex-col lg:flex-row gap-2  w-full h-[75vh]">
+      <div className="relative hidden sm:flex flex-row gap-2  w-full  h-[55vh]  xl:h-[75vh]">
         <span
           onClick={toggleDrawer}
           className="absolute right-5 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"

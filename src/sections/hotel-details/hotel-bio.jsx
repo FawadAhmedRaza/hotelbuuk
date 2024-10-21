@@ -51,7 +51,7 @@ export const HotelBio = () => {
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
         {/* Hotel Bio */}
-        <Typography variant="h5" className="font-semibold text-primary ">
+        <Typography variant="h4" className="font-semibold text-primary ">
           Hotel Bio
         </Typography>
         <Typography variant="p" className="!text-sm text-secondary mt-2">
@@ -75,7 +75,7 @@ export const HotelBio = () => {
             ))}
           </div>
         </div> */}
-        <div className="grid grid-cols-2 gap-10 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-5">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
               Teaching Tool
@@ -143,7 +143,7 @@ export const HotelBio = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 w-full mt-2">
+          <div className="flex flex-col gap-5 w-full pt-5">
             <div className=" flex gap-2  justify-between border-b w-full pb-2 border-neutral-500 ">
               <Typography
                 variant="p"
