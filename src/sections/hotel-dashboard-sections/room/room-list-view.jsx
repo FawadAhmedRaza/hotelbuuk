@@ -18,6 +18,7 @@ import { getHotelById, getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { StarRating } from "@/src/components/star-rating";
 import { getAllRooms, getRooms } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Room Name" },
@@ -29,6 +30,7 @@ const header = [
 const RoomsListView = React.memo(() => {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -36,8 +38,6 @@ const RoomsListView = React.memo(() => {
   const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
 
   const { hotel } = useSelector((state) => state.hotelInfo.getById);
-  console.log("hotel Id ", hotel.id);
-  console.log("rooms ", rooms);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(rooms?.length / rowsPerPage);
@@ -79,7 +79,14 @@ const RoomsListView = React.memo(() => {
 
   return (
     <Pannel className="flex flex-col gap-10">
-      <Breadcrumb title="Rooms List" />
+      <Breadcrumb
+        title="Rooms List"
+        action={
+          <Button onClick={() => router.push("/create-room")}>
+            Create New room
+          </Button>
+        }
+      />
       <div className="border border-gray-200 rounded-xl">
         <CustomTable
           items={items}

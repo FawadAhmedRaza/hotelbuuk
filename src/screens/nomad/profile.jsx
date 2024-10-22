@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { NomadProfile } from "../../sections/nomad";
 import NomadProfileSkeleton from "@/src/components/Skeleton/nomad-profile-skeleton";
