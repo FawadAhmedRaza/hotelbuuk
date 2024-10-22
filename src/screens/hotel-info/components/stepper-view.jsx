@@ -40,11 +40,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
 
   const router = useRouter();
 
-  console.log(user, "user");
-
   const dispatch = useDispatch();
-
-  console.log("default values", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(HotelSchema),

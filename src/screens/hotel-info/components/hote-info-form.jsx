@@ -13,13 +13,6 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 
-const initialFacilities = [
-  { name: "Free WI-FI" },
-  { name: "Parking" },
-  { name: "Pool" },
-  { name: "Gym" },
-  { name: "Restaurant" },
-];
 
 const HotelInfoForm = () => {
   const [countries, setCountries] = useState([]);
@@ -36,11 +29,10 @@ const HotelInfoForm = () => {
   const country = watch("country");
   const city = watch("city");
 
-  console.log(country, city);
-
   const openModal = useModal();
 
   const handleCheckboxChange = (facility, checked) => {
+    console.log("fcility ",facility);
     setValue(
       "facilities",
       checked

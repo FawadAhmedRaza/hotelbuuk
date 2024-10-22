@@ -3,11 +3,24 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
   try {
-    const hotelInfo = await prisma.hotel_info.findFirst({
+    const hotel = await prisma.hotel_info.findFirst({
       where: {
         user_id: params?.id,
       },
+      include: {
+        hotelFacilites: {
+          include: {
+            facility: true,
+          },
+        },
+      },
     });
+
+    const hotelInfo = {
+      ...hotel,
+      facilites: hotel?.hotelFacilites?.map((x) => x?.facility),
+    };
+    delete hotel?.hotelFacilites;
 
     return NextResponse.json(
       { message: "success", hotelInfo },

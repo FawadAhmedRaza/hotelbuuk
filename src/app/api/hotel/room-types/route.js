@@ -25,8 +25,14 @@ export async function POST(req) {
       data: types,
     });
 
+    let allTypes = await prisma.room_types.findMany({
+      where:{
+        user_id:user_id,
+      }
+    })
+
     return NextResponse.json(
-      { message: "success", types: createdTypes },
+      { message: "success", types: allTypes },
       { status: 201 }
     );
   } catch (error) {

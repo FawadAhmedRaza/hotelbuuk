@@ -31,7 +31,7 @@ const HotelProfile = () => {
 
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
-  // const selectedFacilities = watch("facilities") || []; // Default to an empty array
+  const selectedFacilities = watch("facilities") || [];
   console.log("selected", facilitiesArray);
 
   const country = watch("country");
@@ -125,7 +125,7 @@ const HotelProfile = () => {
                     <div key={index} className="flex items-center gap-2">
                       <input
                         type="checkbox"
-                        checked={selectedFacilities.some(
+                        checked={selectedFacilities?.some(
                           (selected) => selected.name === facility.name
                         )} // Check if the facility is selected
                         onChange={(e) =>
