@@ -14,13 +14,9 @@ const ImageUploader = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleFileUpload = (images) => {
-    console.log("Uploaded Images:", images);
-    // Keep only the file property
     const formattedImages = images.map((img) => ({ file: img.file }));
-    setUploadedImages(formattedImages); // Update state with the new image list
+    setUploadedImages(formattedImages);
   };
-
-  console.log("form context images", watch("images"));
 
   const handleDeleteImage = (index) => {
     if (uploaderRef.current) {
@@ -45,7 +41,6 @@ const ImageUploader = () => {
   const handleNameChange = (index, value) => {
     console.log("Name change ", value);
 
-    // Update the name of the specific image, keeping only the file property
     setUploadedImages((prev) =>
       prev.map((img, i) =>
         i === index ? { file: img.file, name: value } : img

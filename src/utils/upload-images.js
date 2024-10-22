@@ -7,6 +7,7 @@ const storage = new Storage({
 });
 
 export const uploadFileToGoogleCloud = async (file) => {
+  console.log("File ",file)
   try {
     const buffer = await file.arrayBuffer();
     const fileName = `${uuidv4()}-${file.name}`; // Create a unique filename

@@ -80,7 +80,7 @@ model hotel_info {
 model hotel_images {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   img  String
-  name String
+  name String?
 
   hotel_id String     @db.ObjectId
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])

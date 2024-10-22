@@ -13,6 +13,7 @@ export async function GET(req, { params }) {
             facility: true,
           },
         },
+        hotelImages: true,
       },
     });
 
@@ -20,10 +21,19 @@ export async function GET(req, { params }) {
       ...hotel,
       facilites: hotel?.hotelFacilites?.map((x) => x?.facility),
     };
+    const finalWithImages = {
+      ...hotelInfo,
+      hotelImages: hotelInfo?.hotelImages?.map((item) => {
+        return {
+          img: item?.img,
+          name: item?.name,
+        };
+      }),
+    };
     delete hotel?.hotelFacilites;
 
     return NextResponse.json(
-      { message: "success", hotelInfo },
+      { message: "success", hotelInfo: finalWithImages },
       { status: 200 }
     );
   } catch (error) {
@@ -34,4 +44,3 @@ export async function GET(req, { params }) {
     );
   }
 }
-
