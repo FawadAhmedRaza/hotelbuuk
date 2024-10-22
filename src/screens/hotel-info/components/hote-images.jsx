@@ -9,9 +9,12 @@ const HotelImages = () => {
   const [imageBox, setImageBox] = useState(
     Array.from({ length: 10 }, (value, index) => index)
   );
+
   const { getValues, setValue, watch } = useFormContext();
-  const uploaderRef = useRef(); // Create ref for RHFUploader
-  const [uploadedImages, setUploadedImages] = useState([]);
+  let fieldImages = watch("images") || [];
+
+  const uploaderRef = useRef();
+  const [uploadedImages, setUploadedImages] = useState(fieldImages);
 
   const handleFileUpload = (images) => {
     console.log("Uploaded Images:", images);
@@ -70,7 +73,7 @@ const HotelImages = () => {
             <div key={index} className="relative group">
               <div className="flex justify-center items-center">
                 <img
-                  src={image.url}
+                  src={image?.url || image?.img}
                   alt={`Uploaded Image ${index}`}
                   className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                 />
@@ -86,7 +89,7 @@ const HotelImages = () => {
                 name={`image_name_${index}`} // Use a unique name for each image
                 placeholder="Image Name"
                 className="h-8 border-none outline-none w-full"
-                value={image.name || ""} // Bind input value to corresponding image name
+                value={image?.name || ""} // Bind input value to corresponding image name
                 onChange={(e) => handleNameChange(index, e.target.value)} // Update image name
               />
             </div>
