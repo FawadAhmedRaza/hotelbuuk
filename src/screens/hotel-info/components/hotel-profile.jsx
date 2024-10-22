@@ -14,14 +14,6 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 
-const initialFacilities = [
-  { name: "Free WI-FI" },
-  { name: "Parking" },
-  { name: "Pool" },
-  { name: "Gym" },
-  { name: "Restaurant" },
-];
-
 const HotelProfile = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -36,8 +28,6 @@ const HotelProfile = () => {
 
   const country = watch("country");
   const city = watch("city");
-
-  console.log(country, city);
 
   const openModal = useModal();
 

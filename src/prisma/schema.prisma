@@ -25,6 +25,7 @@ model User {
   user_type                 UserType?
   email                     String     @unique
   password                  String
+  profile_img               String?
   googleId                  String?
   phone_number              String?
   terms                     Boolean?

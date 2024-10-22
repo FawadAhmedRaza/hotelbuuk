@@ -1,16 +1,28 @@
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
+import { convertFormData } from "@/src/utils/convert-form-data";
+import {
+  generateSignedUrl,
+  uploadFileToGoogleCloud,
+} from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
   try {
     const { id } = params;
 
-    const nomad = await prisma.nomad.findFirst({
+    const nomadData = await prisma.nomad.findFirst({
       where: {
         userId: id,
       },
     });
+
+    let profileImgUrl = await generateSignedUrl(nomadData?.profile_img);
+
+    let nomad = {
+      ...nomadData,
+      profile: profileImgUrl,
+    };
 
     return NextResponse.json({ message: "success", nomad }, { status: 200 });
   } catch (error) {
@@ -24,14 +36,15 @@ export async function GET(req, { params }) {
 
 export async function PUT(req, { params }) {
   try {
-    const data = await req?.json();
+    const body = await req?.formData();
+    const data = convertFormData(body);
 
     const {
       first_name,
       last_name,
       phone_number,
       electronics,
-      //   profile,
+      profile,
       email,
       fundraising,
       manufacturing,
@@ -51,6 +64,12 @@ export async function PUT(req, { params }) {
       );
     }
 
+    // update file
+    let profileImage;
+    if (typeof profile === "object") {
+      profileImage = await uploadFileToGoogleCloud(profile);
+    }
+
     await prisma.nomad.update({
       where: {
         id: params?.id,
@@ -60,6 +79,7 @@ export async function PUT(req, { params }) {
         last_name,
         email,
         phone_number: Number(phone_number),
+        profile_img: profileImage,
         experience,
         electronics,
         manufacturing,
@@ -76,16 +96,34 @@ export async function PUT(req, { params }) {
       },
     });
 
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        first_name,
+        last_name,
+        profile_img: profileImage,
+        phone_number: String(phone_number),
+      },
+    });
+
     const user = await prisma.user.findFirst({
       where: {
         id: userId,
       },
     });
 
+    const userImage = await generateSignedUrl(profileImage);
+    let updatedUser = {
+      ...user,
+      profile_img: userImage,
+    };
+
     const accessToken = await generateToken(user);
 
     return NextResponse.json(
-      { message: "Success", accessToken, user },
+      { message: "Success", accessToken, user: updatedUser },
       { status: 201 }
     );
   } catch (error) {

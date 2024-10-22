@@ -30,7 +30,7 @@ export default function UploadAvatar({
 
       return () => URL.revokeObjectURL(objectUrl);
     } else {
-      setPreview(null);
+      setPreview(file);
     }
   }, [file]);
 

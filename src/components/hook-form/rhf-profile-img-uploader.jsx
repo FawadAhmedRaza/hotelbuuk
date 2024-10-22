@@ -6,6 +6,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
 import { BgIcon } from "../bg-icon";
+import { string } from "prop-types";
 
 export const RHFProfileImgUploader = ({
   name,
@@ -45,9 +46,9 @@ export const RHFProfileImgUploader = ({
               {field.value || imagePreview ? (
                 <img
                   src={
-                    field.value
+                    typeof field?.value !== "string"
                       ? URL?.createObjectURL(field.value)
-                      : imagePreview
+                      : field?.value
                   }
                   alt="Uploaded"
                   className={cn("object-contain h-full w-full", imageClass)}
@@ -68,7 +69,6 @@ export const RHFProfileImgUploader = ({
                 </label>
               )}
 
-              {/* Overlay for changing image */}
               {field.value || defaultImg ? (
                 <div className="absolute inset-0 hidden group-hover:flex justify-center items-center bg-black bg-opacity-50 transition-all duration-500  ">
                   <label>
