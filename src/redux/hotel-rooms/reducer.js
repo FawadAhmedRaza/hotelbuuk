@@ -4,6 +4,9 @@ import {
   createRoomTypes,
   getRooms,
   getAllRoomTypes,
+  getRoomById,
+  updateRoom,
+  deleteRoom,
 } from "./thunk";
 
 const initialState = {
@@ -23,14 +26,17 @@ const initialState = {
     isLoading: false,
     error: null,
     HotelFacilities: {},
+    room: {},
   },
   deleteById: {
     isLoading: false,
     error: null,
+    room: {},
   },
   updateById: {
     isLoading: false,
     error: null,
+    room: {},
   },
   createRoom: {
     isLoading: false,
@@ -82,6 +88,48 @@ export const hotelRooms = createSlice({
     builder.addCase(getRooms.rejected, (state, action) => {
       state.getAllRooms.isLoading = false;
       state.getAllRooms.error = action.error;
+    });
+
+    // get room by id
+    builder.addCase(getRoomById.pending, (state, action) => {
+      state.getById.isLoading = true;
+    });
+    builder.addCase(getRoomById.fulfilled, (state, action) => {
+      console.log("Get Room: ", action.payload); // Verify payload
+      state.getById.room = action.payload; // Store rooms correctly
+      state.getById.isLoading = false;
+    });
+    builder.addCase(getRoomById.rejected, (state, action) => {
+      state.getById.isLoading = false;
+      state.getById.error = action.error;
+    });
+
+    // update room
+    builder.addCase(updateRoom.pending, (state, action) => {
+      state.updateById.isLoading = true;
+    });
+    builder.addCase(updateRoom.fulfilled, (state, action) => {
+      console.log("Updated room: ", action.payload);
+      state.updateById.room = action.payload;
+      state.updateById.isLoading = false;
+    });
+    builder.addCase(updateRoom.rejected, (state, action) => {
+      state.updateById.isLoading = false;
+      state.updateById.error = action.error;
+    });
+
+    // delete room
+    builder.addCase(deleteRoom.pending, (state, action) => {
+      state.deleteById.isLoading = true;
+    });
+    builder.addCase(deleteRoom.fulfilled, (state, action) => {
+      console.log("deleted room", action.payload);
+      state.deleteById.room = action.payload;
+      state.deleteById.isLoading = false;
+    });
+    builder.addCase(deleteRoom.rejected, (state, action) => {
+      state.deleteById.isLoading = false;
+      state.deleteById.error = action.error;
     });
 
     // create room

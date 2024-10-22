@@ -7,14 +7,17 @@ import { useFormContext } from "react-hook-form";
 
 const ImageUploader = () => {
   const [imageBox, setImageBox] = useState(
-    Array.from({ length: 10 }, (value, index) => index)
+    Array.from({ length: 10 }, (_, index) => index)
   );
   const { getValues, setValue, watch } = useFormContext();
   const uploaderRef = useRef(); // Create ref for RHFUploader
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleFileUpload = (images) => {
-    setUploadedImages(images); // Update state with the new image list
+    console.log("Uploaded Images:", images);
+    // Keep only the file property
+    const formattedImages = images.map((img) => ({ file: img.file }));
+    setUploadedImages(formattedImages); // Update state with the new image list
   };
 
   console.log("form context images", watch("images"));
@@ -40,12 +43,17 @@ const ImageUploader = () => {
   }, [uploadedImages, setValue]);
 
   const handleNameChange = (index, value) => {
+    console.log("Name change ", value);
+
+    // Update the name of the specific image, keeping only the file property
     setUploadedImages((prev) =>
-      prev.map((img, i) => (i === index ? { ...img, name: value } : img))
+      prev.map((img, i) =>
+        i === index ? { file: img.file, name: value } : img
+      )
     );
 
     const updatedImages = uploadedImages.map((img, i) =>
-      i === index ? { ...img, name: value } : img
+      i === index ? { file: img.file, name: value } : img
     );
     setValue("images", updatedImages);
   };
@@ -59,14 +67,14 @@ const ImageUploader = () => {
           name="images"
           icon="mdi-light:plus"
           iconClasses="!size-20"
-          onFileUpload={handleFileUpload}
+          onFileUpload={handleFileUpload} // Handle file uploads
         />
         {uploadedImages?.length > 0 &&
           uploadedImages.map((image, index) => (
             <div key={index} className="relative group">
               <div className="flex justify-center items-center">
                 <img
-                  src={image.url}
+                  src={URL.createObjectURL(image.file)} // Generate URL from file object for display
                   alt={`Uploaded Image ${index}`}
                   className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                 />

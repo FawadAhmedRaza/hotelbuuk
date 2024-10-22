@@ -54,6 +54,9 @@ export const endpoints = {
     rooms: {
       create: "/hotel/rooms",
       get_all_rooms: (id) => `/hotel/rooms?hotel_id=${id}`,
+      get_by_id: (id) => `/hotel/rooms/${id}`,
+      update_room: (id) => `/hotel/rooms/${id}`,
+      delete_room: (id) => `/hotel/rooms/${id}`,
     },
   },
   nomad: {

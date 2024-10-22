@@ -80,6 +80,8 @@ export const hotelInfo = createSlice({
       state.getById.error = action.error;
       state.getById.isLoading = false;
     });
+
+    
   },
 });
 

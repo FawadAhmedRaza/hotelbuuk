@@ -36,6 +36,7 @@ export const RHFCheckbox = React.memo(
                 id={id}
                 defaultChecked={defaultChecked}
                 disabled={disabled}
+                value={field?.value || false}
                 checked={field.value || false}
                 onChange={(e) => field.onChange(e.target.checked)}
                 className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"

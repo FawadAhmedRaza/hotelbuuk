@@ -12,8 +12,11 @@ import { createRoom, getAllRoomTypes } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { getHotelId } from "@/src/actions/auth.actions";
 import { enqueueSnackbar } from "notistack";
+import { useRouter } from "next/navigation";
+import { paths } from "@/src/contants";
 
 export const RoomStepperView = () => {
+  const router = useRouter();
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -88,6 +91,7 @@ export const RoomStepperView = () => {
     try {
       await dispatch(createRoom(data)).unwrap();
       enqueueSnackbar("Room created", { variant: "success" });
+      router.push(paths.hotelDashboard.rooms);
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
