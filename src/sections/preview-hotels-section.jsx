@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Pannel, Typography } from "../components";
 import { PreviewHotels } from "./preview-hotels";
 
-export const Hotels = React.memo(() => {
+export const PreviewHotelsSection = React.memo(() => {
   return (
     <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg !-mt-10 ">
       <Typography

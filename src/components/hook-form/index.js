@@ -8,3 +8,4 @@ export { RHFRadio } from "./rhf-radio";
 export { RHFProfileImgUploader } from "./rhf-profile-img-uploader";
 export { RHFUploader } from "./rhf-uploader";
 export { RHFUploadAvatar } from "./rhf-avatar-uploader";
+export { RHFCalendarInput } from "./rhf-calendar-input";

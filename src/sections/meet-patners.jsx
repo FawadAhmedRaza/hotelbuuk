@@ -3,7 +3,7 @@ import React from "react";
 
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Iconify, Pannel, Typography } from "../components";
+import { Pannel, Typography } from "../components";
 import { SwiperCards } from "../_mock/_swiper";
 import { BgIcon } from "../components/bg-icon";
 import { Navigation } from "swiper/modules";

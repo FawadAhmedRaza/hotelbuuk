@@ -6,8 +6,8 @@ import {
   HeroSection,
   Layout,
   MeetOurPatners,
+  PreviewHotelsSection,
 } from "../sections";
-import { Hotels } from "../sections/hotels";
 
 const HomeScreen = React.memo(() => {
   return (
@@ -15,7 +15,7 @@ const HomeScreen = React.memo(() => {
       <Layout>
         <HeroSection />
         <Booking />
-        <Hotels />
+        <PreviewHotelsSection />
         <Banner />
         <BookingSteps />
         <MeetOurPatners />

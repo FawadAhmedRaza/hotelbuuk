@@ -11,7 +11,7 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 600);
+      setIsMobile(window.innerWidth < 720);
     };
 
     handleResize();
@@ -31,8 +31,8 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
           months={2}
           ranges={value}
           direction={isMobile ? "vertical" : "horizontal"}
-          className="w-fit"
           rangeColors={rangeColors}
+          className="w-fit"
         />
       )}
     />

@@ -39,7 +39,7 @@ export const CustomPopover = ({
     <div
       ref={popoverRef}
       className={cn(
-        "absolute top-10 right-1 flex flex-col justify-end items-end transition-opacity duration-300 ease-in-out !z-50",
+        "absolute top-10 right-1 flex flex-col  transition-opacity duration-300 ease-in-out !z-50",
         parentClass,
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       )}

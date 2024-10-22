@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 
 // Components and Others... 
 import {
-  CalendarInput,
   CustomPopover,
   Pannel,
   Typography,
@@ -171,12 +170,12 @@ export const NomadProfile = React.memo(() => {
                 ref={datePopoverRef}
                 className="relative flex flex-col w-full"
               >
-                <CalendarInput
+                {/* <CalendarInput
                   label="Date"
                   startDate={date[0].startDate.toString().slice(0, 10)}
                   endDate={date[0].endDate.toString().slice(0, 10)}
                   onClick={toggleDateCalender}
-                />
+                /> */}
                 <CustomPopover
                   popoverRef={datePopoverRef}
                   isOpen={isDateOpen}
