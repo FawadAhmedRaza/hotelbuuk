@@ -69,7 +69,7 @@ const NomadsListSection = React.memo(() => {
 
   return (
     <Pannel className="flex flex-col gap-10">
-      <Breadcrumb title="Hotels List" />
+      <Breadcrumb title="Nomads List" />
       <div className="border border-gray-200 rounded-xl">
         <CustomTable
           items={items}

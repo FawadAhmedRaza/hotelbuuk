@@ -16,8 +16,15 @@ import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelById, getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { StarRating } from "@/src/components/star-rating";
-import { getAllRooms, getRooms } from "@/src/redux/hotel-rooms/thunk";
+import {
+  deleteRoom,
+  getAllRooms,
+  getRooms,
+} from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useRouter } from "next/navigation";
+import { useBoolean } from "@/src/hooks";
+import DeleteModal from "@/src/components/delete-modal";
 
 const header = [
   { id: 1, label: "Room Name" },
@@ -25,17 +32,24 @@ const header = [
   { id: 3, label: "Maximum Occupancy" },
   { id: 4, label: "Room Type" },
   { id: 5, label: "Price" },
+  { id: 6, label: "" },
 ];
 const RoomsListView = React.memo(() => {
+  const [roomId, setRoomId] = useState("");
+  const [roomName, setRoomName] = useState("");
   const { user } = useAuthContext();
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
+  const { rooms } = useSelector((state) => state.rooms.getAllRooms);
 
   const { hotel } = useSelector((state) => state.hotelInfo.getById);
+  const { isLoading } = useSelector((state) => state.rooms.deleteById);
+
   console.log("hotel Id ", hotel.id);
   console.log("rooms ", rooms);
 
@@ -51,6 +65,30 @@ const RoomsListView = React.memo(() => {
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
+  };
+
+  //Edit room
+  const handleRoomEdit = (id) => {
+    console.log(id);
+    router.push(paths.createRooms.edit(id));
+  };
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteRoom(roomId)).unwrap(); // Dispatch delete action
+
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting room:", error); // Handle error properly
+    } finally {
+      setIsOpen(false); // Close the modal
+    }
+  };
+
+  const openDeleteModal = (id, name) => {
+    setIsOpen(!isOpen);
+    setRoomId(id);
+    setRoomName(name);
   };
 
   useEffect(() => {
@@ -79,7 +117,14 @@ const RoomsListView = React.memo(() => {
 
   return (
     <Pannel className="flex flex-col gap-10">
-      <Breadcrumb title="Rooms List" />
+      <Breadcrumb
+        title="Rooms List"
+        action={
+          <AnchorTag href={paths.createRooms.root}>
+            <Button>Create Room</Button>
+          </AnchorTag>
+        }
+      />
       <div className="border border-gray-200 rounded-xl">
         <CustomTable
           items={items}
@@ -112,6 +157,21 @@ const RoomsListView = React.memo(() => {
                   {row.price}
                 </Typography>
               </td>
+              <td className=" px-6 py-4">
+                <div className="flex gap-5">
+                  <Iconify
+                    onClick={() => handleRoomEdit(row.id)}
+                    iconName="lucide:edit"
+                    className="text-gray-500 cursor-pointer"
+                  />
+
+                  <Iconify
+                    onClick={() => openDeleteModal(row.id, row.room_name)}
+                    iconName="fluent-mdl2:delete"
+                    className="text-red-500 cursor-pointer"
+                  />
+                </div>
+              </td>
             </>
           )}
         />
@@ -123,6 +183,20 @@ const RoomsListView = React.memo(() => {
           setRowsPerPage={setRowsPerPage}
         />
       </div>
+
+      {isOpen && (
+        <DeleteModal
+          isLoading={isLoading}
+          title="Delete Room"
+          isOpen={isOpen}
+          onClose={toggleDrawer}
+          handleDelete={handleDelete}
+        >
+          <Typography variant="p">
+            Are you sure you want to delete {roomName}?
+          </Typography>
+        </DeleteModal>
+      )}
     </Pannel>
   );
 });
