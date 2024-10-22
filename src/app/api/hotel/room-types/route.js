@@ -33,6 +33,7 @@ export async function POST(req) {
 
     return NextResponse.json(
       { message: "success", types: allTypes },
+      { message: "success", types: allTypes },
       { status: 201 }
     );
   } catch (error) {
@@ -62,10 +63,7 @@ export async function GET(req) {
       },
     });
 
-    return NextResponse.json(
-      { message: "Success", types },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Success", types }, { status: 200 });
   } catch (error) {
     console.error("Error fetching room types:", error);
     return NextResponse.json(

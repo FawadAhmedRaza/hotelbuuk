@@ -41,7 +41,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     {
       id: 6,
       label: "Hotels",
-      path: "",
+      path: "/nomad-dashboard/hotels-list",
     },
     {
       id: 7,

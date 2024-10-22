@@ -11,6 +11,7 @@ const Page = () => {
   const dispatch = useDispatch();
 
   const { isLoading, hotel } = useSelector((state) => state.hotelInfo.getById);
+  console.log("single hotel", hotel);
 
   const fetchHotelProfileById = async () => {
     try {

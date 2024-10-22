@@ -15,7 +15,7 @@ export const ThingsKnow = () => {
       {/* Main content */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-5 w-full">
         {/* House Rules */}
-        <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 h-full">
+        <div className="flex flex-col justify-center items-start sm:justify-start sm:items-start gap-2 h-full">
           <div className="flex flex-col jus gap-2 grow">
             <Typography variant="h5" className="font-semibold">
               House Rules
@@ -30,7 +30,7 @@ export const ThingsKnow = () => {
         </div>
 
         {/* Safety & Property */}
-        <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 h-full">
+        <div className="flex flex-col justify-center items-start sm:justify-start sm:items-start gap-2 h-full">
           <div className="flex flex-col jus gap-2 grow">
             <Typography variant="h5" className="font-semibold">
               Safety & Property
@@ -45,8 +45,8 @@ export const ThingsKnow = () => {
         </div>
 
         {/* Cancellation Policy */}
-        <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 h-full">
-          <div className="flex flex-col justify-center items-center sm:justify-start sm:items-start   gap-2 grow">
+        <div className="flex flex-col justify-center items-start sm:justify-start sm:items-start gap-2 h-full">
+          <div className="flex flex-col justify-center items-start sm:justify-start sm:items-start   gap-2 grow">
             <Typography variant="h5" className="font-semibold">
               Cancellation Policy
             </Typography>

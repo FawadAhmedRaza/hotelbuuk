@@ -51,9 +51,10 @@ export const endpoints = {
       create: "/hotel/room-types",
       get_all: (id) => `/hotel/room-types?userId=${id}`,
     },
-    rooms:{
-      create:"/hotel/rooms"
-    }
+    rooms: {
+      create: "/hotel/rooms",
+      get_all_rooms: (id) => `/hotel/rooms?hotel_id=${id}`,
+    },
   },
   nomad: {
     root: "/nomad",

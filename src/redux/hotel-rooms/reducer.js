@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createRoom, createRoomTypes, getAllRoomTypes } from "./thunk";
+import {
+  createRoom,
+  createRoomTypes,
+  getRooms,
+  getAllRoomTypes,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -8,6 +13,11 @@ const initialState = {
   create: {
     isLoading: false,
     error: null,
+  },
+  getAllRooms: {
+    isLoading: false,
+    error: null,
+    rooms: [],
   },
   getById: {
     isLoading: false,
@@ -58,6 +68,20 @@ export const hotelRooms = createSlice({
     builder.addCase(getAllRoomTypes.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error;
+    });
+
+    // get all rooms
+    builder.addCase(getRooms.pending, (state, action) => {
+      state.getAllRooms.isLoading = true;
+    });
+    builder.addCase(getRooms.fulfilled, (state, action) => {
+      console.log("Fetched Rooms: ", action.payload); // Verify payload
+      state.getAllRooms.rooms = action.payload; // Store rooms correctly
+      state.getAllRooms.isLoading = false;
+    });
+    builder.addCase(getRooms.rejected, (state, action) => {
+      state.getAllRooms.isLoading = false;
+      state.getAllRooms.error = action.error;
     });
 
     // create room

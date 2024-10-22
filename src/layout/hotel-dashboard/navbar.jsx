@@ -14,6 +14,8 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
+  console.log("hotel user", user);
+
   return (
     <div
       className={cn(

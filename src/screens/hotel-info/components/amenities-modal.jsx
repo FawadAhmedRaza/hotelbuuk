@@ -10,7 +10,7 @@ import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useDispatch, useSelector } from "react-redux";
 import { createHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
-const AmenitiesModal = ({ isOpen, onClose, setRefetch }) => {
+const AmenitiesModal = ({ isOpen, onClose }) => {
   const { user } = useAuthContext();
 
   const dispatch = useDispatch();

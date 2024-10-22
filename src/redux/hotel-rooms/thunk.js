@@ -9,6 +9,7 @@ export const createRoomTypes = createAsyncThunk(
       endpoints.hotel.roomTypes.create,
       data
     );
+    console.log("room thunk", request.data);
     return request?.data?.types;
   }
 );
@@ -22,6 +23,14 @@ export const getAllRoomTypes = createAsyncThunk(
     return request?.data?.types;
   }
 );
+
+export const getRooms = createAsyncThunk("getRooms", async (id) => {
+  const request = await axiosInstance.get(
+    endpoints.hotel.rooms.get_all_rooms(id)
+  );
+  console.log(request.data);
+  return request?.data?.hotelRooms;
+});
 
 export const createRoom = createAsyncThunk("createRoom", async (data) => {
   const request = await axiosInstance.post(endpoints.hotel.rooms.create, data);
