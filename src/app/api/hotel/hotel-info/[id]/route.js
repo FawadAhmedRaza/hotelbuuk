@@ -1,4 +1,5 @@
 import { prisma } from "@/src/db";
+import { generateSignedUrl } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
@@ -17,15 +18,19 @@ export async function GET(req, { params }) {
       },
     });
 
+    const hotelImage = await generateSignedUrl(hotel?.hotel_image);
     const hotelInfo = {
       ...hotel,
+      hotel_image: hotelImage,
       facilites: hotel?.hotelFacilites?.map((x) => x?.facility),
     };
     const finalWithImages = {
       ...hotelInfo,
-      hotelImages: hotelInfo?.hotelImages?.map((item) => {
+      hotelImages: hotelInfo?.hotelImages?.map(async (item) => {
+        let image = await generateSignedUrl(item?.img);
+
         return {
-          img: item?.img,
+          img: image,
           name: item?.name,
         };
       }),
