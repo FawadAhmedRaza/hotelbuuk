@@ -18,6 +18,7 @@ import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
+import HotelInfoSkeleton from "@/src/components/Skeleton/hotel-info-skeleton";
 
 export const StepperView = ({ defaultValues, isEdit }) => {
   const HotelSchema = Yup.object({
@@ -142,6 +143,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
           isLastStep={activeStep === steps.length - 1}
           loading={isSubmitting}
         />
+        <HotelInfoSkeleton/>
       </RHFFormProvider>
     </Pannel>
   );

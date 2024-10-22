@@ -106,8 +106,8 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
               onClick={() => handleDropdownToggle(item.label)}
               className={`flex justify-between items-center  hover:bg-[#fef5fc]  rounded-md  !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                 isActive(item?.path)
-                  ? "bg-custom-grey shadow-custom-shadow"
-                  : "hover:bg-custom-grey-2"
+                  ? "bg-[#feccf4] shadow-custom-shadow"
+                  : "hover:bg-[#feccf4]"
               }`}
             >
               <span className="text-lg">{item?.label}</span>
@@ -138,10 +138,14 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                     <Link
                       key={child.id}
                       href={child.path}
-                      className={`flex justify-between items-center  hover:bg-[#fef5fc] rounded-md   !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
+                      className={`flex justify-between items-center  ${
                         isActive(child?.path)
-                          ? "bg-custom-grey-2 shadow-custom-shadow"
-                          : "hover:bg-custom-grey-2"
+                          ? "bg-[#feccf4] hover:bg-[#feccf4] "
+                          : "hover:bg-[#fef5fc]"
+                      } rounded-md   !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
+                        isActive(child?.path)
+                          ? "bg-[#feccf4] shadow-custom-shadow"
+                          : "hover:bg-[#feccf4]"
                       }`}
                     >
                       <span className="text-lg pl-4">{child.title}</span>
