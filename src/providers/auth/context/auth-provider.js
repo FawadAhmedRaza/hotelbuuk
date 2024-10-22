@@ -73,22 +73,22 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
 
-  const fetchData = async () => {
-    try {
-      const user = await getUserById(session?.user?.id);
-      console.log("user profile", user);
-      dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
-    } catch (err) {
-      console.log("Error Fetching detail", err);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const user = await getUserById(session?.user?.id);
+  //     console.log("user profile", user);
+  //     dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+  //   } catch (err) {
+  //     console.log("Error Fetching detail", err);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (session?.user?.id) {
-      fetchData();
-    }
-    console.log("session", session);
-  }, [session?.user?.id]);
+  // useEffect(() => {
+  //   if (session?.user?.id) {
+  //     fetchData();
+  //   }
+  //   console.log("session", session);
+  // }, [session?.user?.id]);
 
   const initialize = useCallback(async () => {
     try {

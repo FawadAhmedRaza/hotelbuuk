@@ -24,6 +24,13 @@ export async function POST(req) {
       where: {
         email: email,
       },
+      include: {
+        hotels: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     if (!user) {

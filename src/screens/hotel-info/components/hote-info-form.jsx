@@ -1,5 +1,6 @@
 import {
   RHFInput,
+  RHFProfileImgUploader,
   RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
@@ -24,7 +25,6 @@ const HotelInfoForm = () => {
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities") || []; // Default to an empty array
-  console.log("selected", facilitiesArray);
 
   const country = watch("country");
   const city = watch("city");
@@ -63,7 +63,7 @@ const HotelInfoForm = () => {
   return (
     <div className="gap-y-4">
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFUploadAvatar name="hotel_image" />
+        <RHFProfileImgUploader name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 

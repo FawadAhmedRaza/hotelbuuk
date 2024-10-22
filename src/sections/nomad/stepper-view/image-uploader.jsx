@@ -14,11 +14,9 @@ const ImageUploader = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleFileUpload = (images) => {
-    console.log("Uploaded Images:", images);
     setUploadedImages(images); // Update state with the new image list
   };
 
-  console.log(uploadedImages);
   console.log("form context images", watch("images"));
 
   const handleDeleteImage = (index) => {
@@ -42,16 +40,14 @@ const ImageUploader = () => {
   }, [uploadedImages, setValue]);
 
   const handleNameChange = (index, value) => {
-    // Update the name of the specific image
     setUploadedImages((prev) =>
       prev.map((img, i) => (i === index ? { ...img, name: value } : img))
     );
 
-    // Also update the form context with the new image name
     const updatedImages = uploadedImages.map((img, i) =>
       i === index ? { ...img, name: value } : img
     );
-    setValue("images", updatedImages); // Update form context with the new images
+    setValue("images", updatedImages);
   };
 
   return (
@@ -65,7 +61,7 @@ const ImageUploader = () => {
           iconClasses="!size-20"
           onFileUpload={handleFileUpload}
         />
-        {uploadedImages.length > 0 &&
+        {uploadedImages?.length > 0 &&
           uploadedImages.map((image, index) => (
             <div key={index} className="relative group">
               <div className="flex justify-center items-center">

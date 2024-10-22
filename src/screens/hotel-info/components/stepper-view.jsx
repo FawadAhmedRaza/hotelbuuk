@@ -116,15 +116,30 @@ export const StepperView = ({ defaultValues, isEdit }) => {
         user_id: user?.id,
       };
 
+      const formData = new FormData();
+
+      for (const key in finalData) {
+        if (finalData[key] !== null && finalData[key] !== undefined) {
+          if (
+            typeof finalData[key] === "object" &&
+            !(finalData[key] instanceof File)
+          ) {
+            formData.append(key, JSON.stringify(finalData[key]));
+          } else {
+            formData.append(key, finalData[key]);
+          }
+        }
+      }
+
       const response = await axiosInstance.post(
         endpoints.hotel.create,
-        finalData
+        formData
       );
       if (response?.status === 201) {
-        let { accessToken, user } = response?.data || {};
-        await setUser(user, accessToken);
+        // let { accessToken, user } = response?.data || {};
+        // await setUser(user, accessToken);
         enqueueSnackbar("Hotel info created", { variant: "success" });
-        router.push("/hotel-dashboard");
+        // router.push("/hotel-dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -143,7 +158,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
           isLastStep={activeStep === steps.length - 1}
           loading={isSubmitting}
         />
-        <HotelInfoSkeleton/>
+        {/* <HotelInfoSkeleton /> */}
       </RHFFormProvider>
     </Pannel>
   );

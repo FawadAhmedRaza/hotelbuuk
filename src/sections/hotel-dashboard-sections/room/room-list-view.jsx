@@ -19,6 +19,7 @@ import { StarRating } from "@/src/components/star-rating";
 import { getAllRooms, getRooms } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
+import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 
 const header = [
   { id: 1, label: "Room Name" },
@@ -29,6 +30,7 @@ const header = [
 ];
 const RoomsListView = React.memo(() => {
   const { user } = useAuthContext();
+  console.log("sdfsdfsdds", user);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -36,8 +38,6 @@ const RoomsListView = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
-
-  const { hotel } = useSelector((state) => state.hotelInfo.getById);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(rooms?.length / rowsPerPage);
@@ -54,83 +54,76 @@ const RoomsListView = React.memo(() => {
   };
 
   useEffect(() => {
-    const fetchHotel = async () => {
+    const fetchRooms = async () => {
       try {
-        await dispatch(getHotelById(user.id)).unwrap();
+        await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
       } catch (error) {
-        console.log("Error fetching hotel:", error);
+        console.log("Error fetching rooms:", error);
       }
     };
-    fetchHotel();
-  }, [dispatch, user.id]);
-
-  useEffect(() => {
-    if (hotel?.id) {
-      const fetchRooms = async () => {
-        try {
-          await dispatch(getRooms(hotel.id)).unwrap();
-        } catch (error) {
-          console.log("Error fetching rooms:", error);
-        }
-      };
-      fetchRooms();
-    }
-  }, [dispatch, hotel.id]);
+    fetchRooms();
+  }, []);
 
   return (
-    <Pannel className="flex flex-col gap-10">
-      <Breadcrumb
-        title="Rooms List"
-        action={
-          <Button onClick={() => router.push("/create-room")}>
-            Create New room
-          </Button>
-        }
-      />
-      <div className="border border-gray-200 rounded-xl">
-        <CustomTable
-          items={items}
-          TABLE_HEADER={header}
-          enableSelection={false}
-          renderRow={(row) => (
-            <>
-              <td className=" px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_name}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.description}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.maximum_occupancy}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_type}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.price}
-                </Typography>
-              </td>
-            </>
-          )}
-        />
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          setRowsPerPage={setRowsPerPage}
-        />
-      </div>
-    </Pannel>
+    <>
+      {!isLoading ? (
+        <Pannel className="flex flex-col gap-10">
+          <Breadcrumb
+            title="Rooms List"
+            action={
+              <Button onClick={() => router.push("/create-room")}>
+                Create New room
+              </Button>
+            }
+          />
+          <div className="border border-gray-200 rounded-xl">
+            <CustomTable
+              items={items}
+              TABLE_HEADER={header}
+              enableSelection={false}
+              renderRow={(row) => (
+                <>
+                  <td className=" px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.room_name}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.description}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.maximum_occupancy}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.room_type}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.price}
+                    </Typography>
+                  </td>
+                </>
+              )}
+            />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+            />
+          </div>
+        </Pannel>
+      ) : (
+        <RoomListSkeleton />
+      )}
+    </>
   );
 });
 

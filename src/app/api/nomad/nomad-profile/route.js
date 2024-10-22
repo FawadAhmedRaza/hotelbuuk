@@ -83,7 +83,7 @@ export async function POST(req) {
     });
 
     const accessToken = await generateToken(user);
-    console.log("user", user);
+    
     let userProfileImage = await generateSignedUrl(user?.profile_img);
     let userWithProfileImage = {
       ...user,
