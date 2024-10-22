@@ -111,7 +111,7 @@ export const CustomTable = React.memo(
                   colSpan={(enableSelection ? 1 : 0) + TABLE_HEADER?.length}
                   className="text-center !my-5"
                 >
-                  <div className="py-2 bg-gray-200 w-full ">
+                  <div className="py-2 bg-gray-200 font-medium w-full ">
                     No Entries Found
                   </div>
                 </td>
