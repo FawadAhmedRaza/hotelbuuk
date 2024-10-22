@@ -1,4 +1,3 @@
-// SECOND
 "use client";
 import React, {
   forwardRef,
@@ -19,40 +18,34 @@ export const RHFUploader = forwardRef(
       formState: { errors },
     } = useFormContext();
 
-    const [imageUrls, setImageUrls] = useState([]); // Store image URLs
+    const [imageFiles, setImageFiles] = useState([]); // Store image files
 
     const onDrop = useCallback(
       (acceptedFiles) => {
-        console.log("Accepted FIles", acceptedFiles);
+        console.log("Accepted Files", acceptedFiles);
 
-        const newImageUrls = acceptedFiles.map((file) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-
-          return new Promise((resolve) => {
-            reader.onload = (e) => resolve({ url: e.target.result, file });
-          });
+        const newFiles = acceptedFiles.map((file) => {
+          return { file }; // Store only the file object
         });
 
-        Promise.all(newImageUrls).then((images) => {
-          const updatedUrls = [...imageUrls, ...images];
-          setImageUrls(updatedUrls);
-          if (onFileUpload) onFileUpload(updatedUrls); // Notify parent
-        });
+        // Update the state with new files and notify parent
+        setImageFiles((prev) => [...prev, ...newFiles]);
+        if (onFileUpload) onFileUpload(newFiles); // Notify parent
       },
-      [imageUrls, onFileUpload]
+      [onFileUpload]
     );
 
     // Expose deleteImage function to parent using ref
     useImperativeHandle(ref, () => ({
       deleteImage(index) {
-        const updatedUrls = imageUrls.filter((_, i) => i !== index);
-        setImageUrls(updatedUrls);
-        if (onFileUpload) onFileUpload(updatedUrls); // Notify parent
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageFiles(updatedFiles);
+        if (onFileUpload) onFileUpload(updatedFiles); // Notify parent
       },
     }));
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
     return (
       <Controller
         name={name}
@@ -69,11 +62,11 @@ export const RHFUploader = forwardRef(
               </Typography>
             )}
             {/* Image Input */}
-            <div className="w-full !border-gray-500 border-2 border-dashed  rounded-xl">
+            <div className="w-full !border-gray-500 border-2 border-dashed rounded-xl">
               <div
                 {...getRootProps({ className: "dropzone " })}
                 className={cn(
-                  `flex flex-col justify-center items-center h-20 sm:h-28 md:h-36 lg:h-40 bg-gray-100 w-full  rounded-xl outline-none`,
+                  `flex flex-col justify-center items-center h-20 sm:h-28 md:h-36 lg:h-40 bg-gray-100 w-full rounded-xl outline-none`,
                   className
                 )}
               >
@@ -82,7 +75,6 @@ export const RHFUploader = forwardRef(
                   className={`${iconClasses} size-16 text-gray-500`}
                 />
                 <input {...getInputProps()} />
-                {/* <p className="text-sm text-center">Drag 'n' drop some files here, or click to select files</p> */}
               </div>
             </div>
           </div>
