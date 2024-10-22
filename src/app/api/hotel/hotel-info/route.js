@@ -1,13 +1,21 @@
+import { NextResponse } from "next/server";
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
-import { NextResponse } from "next/server";
+import { convertFormData } from "@/src/utils/convert-form-data";
+import {
+  generateSignedUrl,
+  uploadFileToGoogleCloud,
+} from "@/src/utils/upload-images";
 
 export async function POST(req) {
   try {
-    const data = await req.json();
+    const body = await req.formData();
+    const data = convertFormData(body);
+    const files = body.getAll("images");
 
     const {
       hotel_name,
+      hotel_image,
       contact_email,
       stars,
       city,
@@ -25,6 +33,7 @@ export async function POST(req) {
       );
     }
 
+    const hotelImage = await uploadFileToGoogleCloud(hotel_image);
     const createHotelInfo = await prisma.hotel_info.create({
       data: {
         hotel_name,
@@ -35,6 +44,7 @@ export async function POST(req) {
         stars,
         hotel_contact_no,
         description,
+        hotel_image: hotelImage,
         user_id,
       },
     });
@@ -53,6 +63,25 @@ export async function POST(req) {
       });
     }
 
+    let imagesWithUrl = [];
+    if (files.length > 0) {
+      for (let fileKey in files) {
+        let imageUrl = await uploadFileToGoogleCloud(files[fileKey]);
+
+        imagesWithUrl?.push({
+          name: data?.imagesNames[fileKey],
+          img: imageUrl,
+          hotel_id: createHotelInfo?.id,
+        });
+      }
+    }
+
+    await prisma.hotel_images.createMany({
+      data: imagesWithUrl,
+    });
+
+    console.log("imageswithurl", imagesWithUrl);
+
     // update user profile
     await prisma.user.update({
       where: {
@@ -61,6 +90,7 @@ export async function POST(req) {
       data: {
         is_user_profile_completed: true,
         hotel_name: hotel_name,
+        profile_img: hotelImage,
         phone_number: hotel_contact_no?.toString(),
       },
     });
@@ -71,10 +101,16 @@ export async function POST(req) {
       },
     });
 
+    let userProfileImage = await generateSignedUrl(user?.profile_img);
+    let userWithProfileImage = {
+      ...user,
+      profile_img: userProfileImage,
+    };
+
     const accessToken = await generateToken(user);
 
     return NextResponse.json(
-      { message: "Success", accessToken, user },
+      { message: "Success", accessToken, user: userWithProfileImage },
       { status: 201 }
     );
   } catch (error) {

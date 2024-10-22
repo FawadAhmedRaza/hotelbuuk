@@ -25,7 +25,7 @@ export default function UploadAvatar({
 
   useEffect(() => {
     if (file) {
-      const objectUrl = URL.createObjectURL(file);
+      const objectUrl = typeof file === "string" ? file : URL.createObjectURL(file);
       setPreview(objectUrl);
 
       return () => URL.revokeObjectURL(objectUrl);

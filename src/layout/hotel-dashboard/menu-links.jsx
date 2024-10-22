@@ -73,8 +73,8 @@
 //               onClick={() => handleDropdownToggle(item.label)}
 //               className={`flex justify-between items-center  hover:bg-[#fef5fc]  rounded-md  !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
 //                 isActive(item?.path)
-//                   ? "bg-custom-grey shadow-custom-shadow"
-//                   : "hover:bg-custom-grey-2"
+//                   ? "bg-[#feccf4] shadow-custom-shadow"
+//                   : "hover:bg-[#feccf4]-2"
 //               }`}
 //             >
 //               <span className="text-lg">{item?.label}</span>
@@ -107,8 +107,8 @@
 //                       href={child.path}
 //                       className={`flex justify-between items-center  hover:bg-[#fef5fc] rounded-md   !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
 //                         isActive(child?.path)
-//                           ? "bg-custom-grey-2 shadow-custom-shadow"
-//                           : "hover:bg-custom-grey-2"
+//                           ? "bg-[#feccf4]-2 shadow-custom-shadow"
+//                           : "hover:bg-[#feccf4]-2"
 //                       }`}
 //                     >
 //                       <span className="text-lg pl-4">{child.title}</span>
@@ -252,10 +252,14 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
             <Link
               href={item?.path || "#"}
               onClick={() => handleDropdownToggle(item.label)}
-              className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
+              className={`flex justify-between items-center ${
                 isActive(item?.path)
-                  ? "bg-custom-grey shadow-custom-shadow"
-                  : "hover:bg-custom-grey-2"
+                  ? "bg-[#feccf4] hover:bg-[#feccf4] "
+                  : "hover:bg-[#fef5fc]"
+              } rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
+                isActive(item?.path)
+                  ? "bg-[#feccf4] shadow-custom-shadow"
+                  : "hover:bg-[#feccf4]-2"
               }`}
             >
               <span className="text-lg">{item?.label}</span>
@@ -288,8 +292,8 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                       href={child.path}
                       className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                         isActive(child?.path)
-                          ? "bg-custom-grey-2 shadow-custom-shadow"
-                          : "hover:bg-custom-grey-2"
+                          ? "bg-[#feccf4]-2 shadow-custom-shadow"
+                          : "hover:bg-[#feccf4]-2"
                       }`}
                     >
                       <span className="text-lg pl-4">{child.title}</span>

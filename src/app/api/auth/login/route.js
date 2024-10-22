@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
+import { generateSignedUrl } from "@/src/utils/upload-images";
 
 export async function POST(req) {
   try {
@@ -22,6 +23,13 @@ export async function POST(req) {
     const user = await prisma.user.findUnique({
       where: {
         email: email,
+      },
+      include: {
+        hotels: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
@@ -46,8 +54,16 @@ export async function POST(req) {
     }
 
     const token = await generateToken(user);
+    let userProfileImage = await generateSignedUrl(user?.profile_img);
+    let userWithProfileImage = {
+      ...user,
+      profile_img: userProfileImage,
+    };
 
-    return NextResponse.json({ accessToken: token, user }, { status: 200 });
+    return NextResponse.json(
+      { accessToken: token, user: userWithProfileImage },
+      { status: 200 }
+    );
   } catch (err) {
     console.log(err);
     return NextResponse.json(

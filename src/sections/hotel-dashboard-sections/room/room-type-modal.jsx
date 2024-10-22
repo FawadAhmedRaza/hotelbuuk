@@ -27,6 +27,7 @@ export const RoomTypeModal = ({ isOpen, onClose, setRefetch }) => {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    reset
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
@@ -34,6 +35,8 @@ export const RoomTypeModal = ({ isOpen, onClose, setRefetch }) => {
       data.user_id = user?.id;
       console.log("data", data);
       await dispatch(createRoomTypes(data)).unwrap();
+      reset();
+      onClose();
     } catch (error) {
       console.log(error);
     }

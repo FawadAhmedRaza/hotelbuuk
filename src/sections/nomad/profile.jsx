@@ -30,7 +30,7 @@ import { useRouter } from "next/navigation";
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
   const router = useRouter();
-  console.log("ise Edit",isEdit)
+  console.log("ise Edit", isEdit);
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
@@ -46,30 +46,30 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const nomadProfileSchema = Yup.object().shape({
     profile: Yup.mixed().required("Profile is required"),
-    first_name: Yup.string().optional("First name is required"),
+    first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().optional("Last name is required"),
-    phone_number: Yup.string().optional("Phone number is required"),
+    phone_number: Yup.string().required("Phone number is required"),
     // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"), // Example regex for a 10-digit phone number
     email: Yup.string()
-      .optional("Email is required")
+      .required("Email is required")
       .email("Invalid email format"),
-    experience: Yup.string().optional("Experience is required"),
-    electronics: Yup.string().optional("Electronics field is required"),
-    manufacturing: Yup.string().optional("Manufacturing field is required"),
-    fundraising: Yup.string().optional("Fundraising field is required"),
-    retails: Yup.string().optional("Retails field is required"),
-    projector: Yup.string().optional("Projector field is required"),
-    video: Yup.string().optional("Video field is required"),
-    sample: Yup.string().optional("Sample field is required"),
+    experience: Yup.string().required("Experience is required"),
+    electronics: Yup.string().required("Electronics field is required"),
+    manufacturing: Yup.string().required("Manufacturing field is required"),
+    fundraising: Yup.string().required("Fundraising field is required"),
+    retails: Yup.string().required("Retails field is required"),
+    projector: Yup.string().required("Projector field is required"),
+    video: Yup.string().required("Video field is required"),
+    sample: Yup.string().required("Sample field is required"),
 
     availability: Yup.object().shape({
       date: Yup.object().shape({
-        start_date: Yup.string().optional("Start date is required"),
-        end_date: Yup.string().optional("End date is required"),
+        start_date: Yup.string().required("Start date is required"),
+        end_date: Yup.string().required("End date is required"),
       }),
       time: Yup.object().shape({
-        start_time: Yup.string().optional("Start time is required"),
-        end_time: Yup.string().optional("End time is required"),
+        start_time: Yup.string().required("Start time is required"),
+        end_time: Yup.string().required("End time is required"),
       }),
     }),
   });
@@ -99,7 +99,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     if (!defaultValues) {
       // create handling
       try {
-        console.log("create triggrred");
+        console.log("create triggered");
         let updatedData = {
           ...data,
           user_id: user?.id,
@@ -108,7 +108,16 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
         for (const key in updatedData) {
           if (updatedData[key] !== null && updatedData[key] !== undefined) {
-            formData.append(key, updatedData[key]);
+            if (
+              typeof updatedData[key] === "object" &&
+              !(updatedData[key] instanceof File)
+            ) {
+              // If the value is an object and not a File, stringify it
+              formData.append(key, JSON.stringify(updatedData[key]));
+            } else {
+              // Otherwise, append the value as it is
+              formData.append(key, updatedData[key]);
+            }
           }
         }
 
@@ -117,9 +126,9 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
           formData
         );
         if (response?.status === 201) {
-          // setUser(response?.data?.user, response?.data?.accessToken);
-          enqueueSnackbar("success", { variant: "success" });
-          // router.push("/nomad-dashboard");
+          enqueueSnackbar("Success", { variant: "success" });
+          setUser(response?.data?.user, response?.data?.accessToken);
+          router.push("/nomad-dashboard");
         }
       } catch (error) {
         console.log(error);
@@ -130,14 +139,28 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     else {
       try {
         console.log("truggred");
-        // const response = await axiosInstance.put(
-        //   endpoints.nomad.updateProfile(defaultValues?.id),
-        //   data
-        // );
-        // if (response?.status === 201) {
-        //   setUser(response?.data?.user, response?.data?.accessToken);
-        //   enqueueSnackbar("updated successfully", { variant: "success" });
-        // }
+
+        const formData = new FormData();
+
+        for (const key in data) {
+          if (data[key] !== null && data[key] !== undefined) {
+            if (typeof data[key] === "object" && !(data[key] instanceof File)) {
+              formData.append(key, JSON.stringify(data[key]));
+            } else {
+              formData.append(key, data[key]);
+            }
+          }
+        }
+
+        const response = await axiosInstance.put(
+          endpoints.nomad.updateProfile(defaultValues?.id),
+          formData
+        );
+        if (response?.status === 201) {
+          setUser(response?.data?.user, response?.data?.accessToken);
+          enqueueSnackbar("updated successfully", { variant: "success" });
+          router.push("/nomad-dashboard");
+        }
       } catch (error) {
         console.log(error);
         enqueueSnackbar(error?.message, { variant: "error" });

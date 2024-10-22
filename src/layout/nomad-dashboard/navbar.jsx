@@ -6,14 +6,14 @@ import { useBoolean } from "@/src/hooks";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 import { NomadDashboardMenu } from "./menu-link";
-import { AnchorTag, Iconify, Typography } from "@/src/components";
+import { AnchorTag, Avatar, Iconify, Typography } from "@/src/components";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
 
 export const NomadDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-  console.log("user",user);
+  console.log("user", user);
 
   return (
     <div
@@ -55,13 +55,9 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
               variant="p"
               className="font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? `${user?.first_name}"${""}${user?.last_name}` : ""} !
-              {/* Fawad */}
+              Hi, {user ? user?.first_name : ""}
             </Typography>
-            <Iconify
-              iconName="fluent:person-circle-12-filled"
-              className="size-5 sm:size-8"
-            />
+            <Avatar src={user?.profile_img} className="size-8" />
           </span>
         </div>
       </div>
