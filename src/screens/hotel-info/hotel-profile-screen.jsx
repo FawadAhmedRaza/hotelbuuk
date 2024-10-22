@@ -1,6 +1,6 @@
 "use client";
 import * as Yup from "yup";
-import { Breadcrumb, Pannel } from "@/src/components";
+import { Breadcrumb, Button, Pannel } from "@/src/components";
 import Tabs from "@/src/components/tabs";
 import React, { useEffect, useState } from "react";
 import HotelProfile from "./components/hotel-profile";
@@ -110,6 +110,10 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             activeTab={activeTabs}
             setActiveTab={setActiveTabs}
           />
+        </div>
+
+        <div className="flex justify-end my-5">
+          <Button>Submit</Button>
         </div>
       </RHFFormProvider>
     </Pannel>

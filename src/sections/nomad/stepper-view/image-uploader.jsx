@@ -14,7 +14,10 @@ const ImageUploader = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleFileUpload = (images) => {
-    const formattedImages = images.map((img) => ({ file: img.file }));
+    const formattedImages = images.map((img) => ({
+      file: img.file,
+      url: img.url,
+    }));
     setUploadedImages(formattedImages);
   };
 

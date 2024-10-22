@@ -24,17 +24,22 @@ export async function GET(req, { params }) {
       hotel_image: hotelImage,
       facilites: hotel?.hotelFacilites?.map((x) => x?.facility),
     };
-    const finalWithImages = {
-      ...hotelInfo,
-      hotelImages: hotelInfo?.hotelImages?.map(async (item) => {
-        let image = await generateSignedUrl(item?.img);
 
+    const images = await Promise.all(
+      hotelInfo?.hotelImages?.map(async (item) => {
+        let image = await generateSignedUrl(item?.img);
         return {
-          img: image,
+          url: image,
           name: item?.name,
         };
-      }),
+      })
+    );
+
+    const finalWithImages = {
+      ...hotelInfo,
+      images,
     };
+
     delete hotel?.hotelFacilites;
 
     return NextResponse.json(
