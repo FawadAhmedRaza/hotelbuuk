@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
@@ -13,8 +13,17 @@ export const RHFStarsRating = React.memo(
       setValue,
     } = useFormContext();
 
+    const watchedStars = useWatch({
+      control,
+      name,
+    });
+
     const [rating, setRating] = useState(0); // State for clicked rating
     const [hoverRating, setHoverRating] = useState(0); // State for hover rating
+
+    useEffect(() => {
+      setRating(watchedStars || 0);
+    }, [watchedStars]);
 
     const handleMouseEnter = (value) => {
       if (!disabled) {

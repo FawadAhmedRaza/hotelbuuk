@@ -23,8 +23,7 @@ import {
 } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
-import { useBoolean } from "@/src/hooks";
-import DeleteModal from "@/src/components/delete-modal";
+import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 
 const header = [
   { id: 1, label: "Room Name" },
@@ -40,18 +39,11 @@ const RoomsListView = React.memo(() => {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { rooms } = useSelector((state) => state.rooms.getAllRooms);
-
-  const { hotel } = useSelector((state) => state.hotelInfo.getById);
-  const { isLoading } = useSelector((state) => state.rooms.deleteById);
-
-  console.log("hotel Id ", hotel.id);
-  console.log("rooms ", rooms);
+  const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(rooms?.length / rowsPerPage);
@@ -92,112 +84,105 @@ const RoomsListView = React.memo(() => {
   };
 
   useEffect(() => {
-    const fetchHotel = async () => {
+    const fetchRooms = async () => {
       try {
-        await dispatch(getHotelById(user.id)).unwrap();
+        await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
       } catch (error) {
-        console.log("Error fetching hotel:", error);
+        console.log("Error fetching rooms:", error);
       }
     };
-    fetchHotel();
-  }, [dispatch, user.id]);
-
-  useEffect(() => {
-    if (hotel?.id) {
-      const fetchRooms = async () => {
-        try {
-          await dispatch(getRooms(hotel.id)).unwrap();
-        } catch (error) {
-          console.log("Error fetching rooms:", error);
-        }
-      };
-      fetchRooms();
-    }
-  }, [dispatch, hotel.id]);
+    fetchRooms();
+  }, []);
 
   return (
-    <Pannel className="flex flex-col gap-10">
-      <Breadcrumb
-        title="Rooms List"
-        action={
-          <AnchorTag href={paths.createRooms.root}>
-            <Button>Create Room</Button>
-          </AnchorTag>
-        }
-      />
-      <div className="border border-gray-200 rounded-xl">
-        <CustomTable
-          items={items}
-          TABLE_HEADER={header}
-          enableSelection={false}
-          renderRow={(row) => (
-            <>
-              <td className=" px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_name}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.description}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.maximum_occupancy}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_type}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.price}
-                </Typography>
-              </td>
-              <td className=" px-6 py-4">
-                <div className="flex gap-5">
-                  <Iconify
-                    onClick={() => handleRoomEdit(row.id)}
-                    iconName="lucide:edit"
-                    className="text-gray-500 cursor-pointer"
-                  />
+    <>
+      {!isLoading ? (
+        <Pannel className="flex flex-col gap-10">
+          <Breadcrumb
+            title="Rooms List"
+            action={
+              <AnchorTag href={paths.createRooms.root}>
+                <Button>Create Room</Button>
+              </AnchorTag>
+            }
+          />
+          <div className="border border-gray-200 rounded-xl">
+            <CustomTable
+              items={items}
+              TABLE_HEADER={header}
+              enableSelection={false}
+              renderRow={(row) => (
+                <>
+                  <td className=" px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.room_name}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.description}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.maximum_occupancy}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.room_type}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {row.price}
+                    </Typography>
+                  </td>
+                  <td className=" px-6 py-4">
+                    <div className="flex gap-5">
+                      <Iconify
+                        onClick={() => handleRoomEdit(row.id)}
+                        iconName="lucide:edit"
+                        className="text-gray-500 cursor-pointer"
+                      />
 
-                  <Iconify
-                    onClick={() => openDeleteModal(row.id, row.room_name)}
-                    iconName="fluent-mdl2:delete"
-                    className="text-red-500 cursor-pointer"
-                  />
-                </div>
-              </td>
-            </>
+                      <Iconify
+                        onClick={() => openDeleteModal(row.id, row.room_name)}
+                        iconName="fluent-mdl2:delete"
+                        className="text-red-500 cursor-pointer"
+                      />
+                    </div>
+                  </td>
+                </>
+              )}
+            />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+            />
+          </div>
+
+          {isOpen && (
+            <DeleteModal
+              isLoading={isLoading}
+              title="Delete Room"
+              isOpen={isOpen}
+              onClose={toggleDrawer}
+              handleDelete={handleDelete}
+            >
+              <Typography variant="p">
+                Are you sure you want to delete {roomName}?
+              </Typography>
+            </DeleteModal>
           )}
-        />
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          setRowsPerPage={setRowsPerPage}
-        />
-      </div>
-
-      {isOpen && (
-        <DeleteModal
-          isLoading={isLoading}
-          title="Delete Room"
-          isOpen={isOpen}
-          onClose={toggleDrawer}
-          handleDelete={handleDelete}
-        >
-          <Typography variant="p">
-            Are you sure you want to delete {roomName}?
-          </Typography>
-        </DeleteModal>
+        </Pannel>
+      ) : (
+        <RoomListSkeleton />
       )}
-    </Pannel>
+    </>
   );
 });
 

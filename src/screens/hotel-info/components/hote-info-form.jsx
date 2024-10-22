@@ -1,5 +1,6 @@
 import {
   RHFInput,
+  RHFProfileImgUploader,
   RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
@@ -13,13 +14,6 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 
-const initialFacilities = [
-  { name: "Free WI-FI" },
-  { name: "Parking" },
-  { name: "Pool" },
-  { name: "Gym" },
-  { name: "Restaurant" },
-];
 
 const HotelInfoForm = () => {
   const [countries, setCountries] = useState([]);
@@ -31,16 +25,14 @@ const HotelInfoForm = () => {
   const [refetch, setRefetch] = useState(false);
   const { watch, setValue, reset } = useFormContext();
   const selectedFacilities = watch("facilities") || []; // Default to an empty array
-  console.log("selected", facilitiesArray);
 
   const country = watch("country");
   const city = watch("city");
 
-  console.log(country, city);
-
   const openModal = useModal();
 
   const handleCheckboxChange = (facility, checked) => {
+    console.log("fcility ",facility);
     setValue(
       "facilities",
       checked
@@ -71,7 +63,7 @@ const HotelInfoForm = () => {
   return (
     <div className="gap-y-4">
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFUploadAvatar name="hotel_image" />
+        <RHFProfileImgUploader name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 

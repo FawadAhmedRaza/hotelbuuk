@@ -24,8 +24,6 @@ export async function PUT(req, { params }) {
     const data = await req.json();
     const { room_info, hotel_id } = data || {};
 
-    console.log(data);
-
     const {
       room_name,
       room_type,

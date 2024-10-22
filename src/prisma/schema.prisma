@@ -25,6 +25,7 @@ model User {
   user_type                 UserType?
   email                     String     @unique
   password                  String
+  profile_img               String?
   googleId                  String?
   phone_number              String?
   terms                     Boolean?
@@ -63,6 +64,7 @@ model hotel_info {
   city             String
   address          String
   stars            Int
+  hotel_image      String?
 
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
@@ -72,6 +74,16 @@ model hotel_info {
 
   hotelFacilites hotel_facilities[]
   hotel_rooms    hotel_rooms[]
+  hotelImages    hotel_images[]
+}
+
+model hotel_images {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
+
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }
 
 model hotel_facilities {

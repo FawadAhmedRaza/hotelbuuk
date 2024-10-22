@@ -73,30 +73,30 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
 
-  const fetchData = async () => {
-    try {
-      const user = await getUserById(session?.user?.id);
-      console.log("user profile", user);
-      dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
-    } catch (err) {
-      console.log("Error Fetching detail", err);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const user = await getUserById(session?.user?.id);
+  //     console.log("user profile", user);
+  //     dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+  //   } catch (err) {
+  //     console.log("Error Fetching detail", err);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (session?.user?.id) {
-      fetchData();
-    }
-  }, [session?.user?.id]);
+  // useEffect(() => {
+  //   if (session?.user?.id) {
+  //     fetchData();
+  //   }
+  //   console.log("session", session);
+  // }, [session?.user?.id]);
 
   const initialize = useCallback(async () => {
     try {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
         const user = jwtDecode(accessToken);
-        console.log("triggred", user);
+        setSession(accessToken,user);
         await dispatch({
           type: Types.INITIAL,
           payload: {
@@ -106,9 +106,7 @@ export function AuthProvider({ children }) {
             },
           },
         });
-        console.log("state initialize", state);
       } else {
-        console.log("else conditon triggred");
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -137,6 +135,10 @@ export function AuthProvider({ children }) {
         },
       },
     });
+
+    setSession(accessToken, {
+      ...updatedUser,
+    });
   };
 
   useEffect(() => {
@@ -159,7 +161,9 @@ export function AuthProvider({ children }) {
         },
       });
       enqueueSnackbar("Login successfully", { variant: "success" });
-      router.push("/");
+      router.push(
+        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+      );
     } catch (err) {
       enqueueSnackbar(err?.message, { variant: "error" });
       console.log("Login Error", err?.message);

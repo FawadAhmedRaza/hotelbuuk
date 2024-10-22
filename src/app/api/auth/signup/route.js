@@ -46,11 +46,18 @@ export async function POST(req) {
       },
     });
 
-    await sendMail(
-      "Test OTP",
-      newUser.email,
-      otpTemplate(newUser.email, OTP)
-    );
+    await sendMail("Test OTP", newUser.email, otpTemplate(newUser.email, OTP));
+
+    const facilities = initialFacilities?.map((item) => {
+      return {
+        ...item,
+        user_id: newUser?.id,
+      };
+    });
+
+    await prisma.facilities.createMany({
+      data: facilities,
+    });
 
     return NextResponse.json(
       {
@@ -66,3 +73,11 @@ export async function POST(req) {
     );
   }
 }
+
+const initialFacilities = [
+  { name: "Free WI-FI" },
+  { name: "Parking" },
+  { name: "Pool" },
+  { name: "Gym" },
+  { name: "Restaurant" },
+];
