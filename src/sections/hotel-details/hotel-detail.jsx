@@ -6,7 +6,7 @@ import { HostBio } from "./host-bio";
 
 export const HotelDetail = () => {
   return (
-    <div className="flex flex-col justify-between md:py-10 !pt-0 px-5 sm:px-8 lg:px-14 xl:px-20 ">
+    <div className="flex flex-col justify-between md:py-10 !pt-0 px-5 sm:px-8 lg:px-14 xl:px-10 ">
       <Typography variant="h3" className="font-medium text-xl md:text-3xl mb-3">
         Refresh your mind before your business meetings
       </Typography>
