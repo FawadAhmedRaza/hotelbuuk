@@ -16,8 +16,6 @@ import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
 
-  console.log("profile screen", defaultValues);
-
   const HotelSchema = Yup.object({
     hotel_image: Yup.mixed().optional(),
     hotel_name: Yup.string().required("hotel name is required"),
@@ -34,11 +32,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
   const { user, setUser } = useAuthContext();
 
-  console.log(user, "user");
-
   const dispatch = useDispatch();
-
-  console.log("default values", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(HotelSchema),
@@ -111,7 +105,6 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             setActiveTab={setActiveTabs}
           />
         </div>
-
         <div className="flex justify-end my-5">
           <Button>Submit</Button>
         </div>
