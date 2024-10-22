@@ -16,19 +16,29 @@ const HotelImages = () => {
   const uploaderRef = useRef();
   const [uploadedImages, setUploadedImages] = useState(fieldImages);
 
-  const handleFileUpload = (images) => {
-    console.log("Uploaded Images:", images);
-    setUploadedImages(images); // Update state with the new image list
+  const handleFileUpload = (newImages) => {
+    console.log("Uploaded Images:", newImages);
+    setUploadedImages((prevImages) => [...prevImages, ...newImages]); // Append new images to the existing list
   };
 
   console.log(uploadedImages);
   console.log("form context images", watch("images"));
 
   const handleDeleteImage = (index) => {
-    if (uploaderRef.current) {
-      uploaderRef.current.deleteImage(index); // Call delete from RHFUploader via ref
+    const imageToDelete = uploadedImages[index];
+
+    if (imageToDelete.file) {
+      URL.revokeObjectURL(imageToDelete.file);
     }
-    setUploadedImages((prev) => prev.filter((_, i) => i !== index)); // Remove image from uploadedImages state
+
+    const updatedImages = uploadedImages.filter((_, i) => i !== index);
+
+    if (uploaderRef.current) {
+      uploaderRef.current.deleteImage(index);
+    }
+
+    setUploadedImages(updatedImages);
+    setValue("images", updatedImages); // Update form context
   };
 
   useEffect(() => {
@@ -69,31 +79,37 @@ const HotelImages = () => {
           onFileUpload={handleFileUpload}
         />
         {uploadedImages.length > 0 &&
-          uploadedImages.map((image, index) => (
-            <div key={index} className="relative group">
-              <div className="flex justify-center items-center">
-                <img
-                  src={image?.url || image?.img}
-                  alt={`Uploaded Image ${index}`}
-                  className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
-                />
-                <div
-                  type="button"
-                  onClick={() => handleDeleteImage(index)} // Trigger delete via parent
-                  className="absolute top-2 right-2 bg-red-600 text-white !text-xl rounded-full p-2 px-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                >
-                  <Iconify iconName="material-symbols-light:delete-outline" />
+          uploadedImages.map((image, index) => {
+            const imageSrc = image.file
+              ? URL.createObjectURL(image.file) // For file objects
+              : image.url; // existing image URL
+
+            return (
+              <div key={index} className="relative group">
+                <div className="flex justify-center items-center">
+                  <img
+                    src={imageSrc}
+                    alt={`Uploaded Image ${index}`}
+                    className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
+                  />
+                  <div
+                    type="button"
+                    onClick={() => handleDeleteImage(index)} // Trigger delete via parent
+                    className="absolute top-2 right-2 bg-red-600 text-white !text-xl rounded-full p-2 px-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                  >
+                    <Iconify iconName="material-symbols-light:delete-outline" />
+                  </div>
                 </div>
+                <input
+                  name={`image_name_${index}`} // Use a unique name for each image
+                  placeholder="Image Name"
+                  className="h-8 border-none outline-none w-full"
+                  value={image?.name || ""} // Bind input value to corresponding image name
+                  onChange={(e) => handleNameChange(index, e.target.value)} // Update image name
+                />
               </div>
-              <input
-                name={`image_name_${index}`} // Use a unique name for each image
-                placeholder="Image Name"
-                className="h-8 border-none outline-none w-full"
-                value={image?.name || ""} // Bind input value to corresponding image name
-                onChange={(e) => handleNameChange(index, e.target.value)} // Update image name
-              />
-            </div>
-          ))}
+            );
+          })}
         {imageBox.map((_, index) => (
           <div
             key={index}
