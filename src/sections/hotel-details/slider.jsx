@@ -12,7 +12,7 @@ import { Pagination } from "swiper/modules";
 
 export const Slider = ({ images }) => {
   return (
-    <div className="lowercase md:hidden ">
+    <div className="lowercase sm:hidden ">
       <Swiper
         pagination={{ clickable: true }}
         modules={[Pagination]}
