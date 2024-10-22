@@ -4,7 +4,7 @@ import { BookingStepsData } from "../_mock/_booking-steps";
 
 export const BookingSteps = () => {
   return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-white">
+    <Pannel className="flex flex-col gap-10 !py-5 justify-center items-center bg-white">
       <Typography variant="h3" className="font-semibold">
         Book in 3 Simple Steps
       </Typography>
