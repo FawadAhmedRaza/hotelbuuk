@@ -106,7 +106,6 @@ export const Booking = React.memo(() => {
 
               <div className="flex flex-col gap-1 sm:gap-2 w-auto">
                 <span className="flex gap-7  items-center justify-start sm:justify-start w-full">
-                  {/* <Iconify iconName="ion:calendar" className="text-primary" /> */}
                   <Typography
                     variant="p"
                     className="font-normal !text-sm !text-start text-secondary  py-1  "

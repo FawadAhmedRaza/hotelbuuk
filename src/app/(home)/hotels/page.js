@@ -1,9 +1,7 @@
-import React from 'react'
+import HotelsScreen from '@/src/screens/hotels'
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
+  return <HotelsScreen />
 }
 
 export default page

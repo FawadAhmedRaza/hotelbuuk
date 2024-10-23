@@ -9,8 +9,10 @@ export { LangaugeTranslator } from "./language-translator";
 export { PreviewHotels } from "./preview-hotels";
 export { BusinessFacts } from "./business-facts";
 
+export { PreviewHotelsSection } from "./preview-hotels-section";
 
 //---------------------//
+
 export { TermsBanner } from "./terms-banner";
 export { ImpressumContent } from "./impressum-content";
 export { QAContent } from "./privacy-policy-content";
@@ -20,5 +22,4 @@ export { ConditionsContent } from "./conditions-content";
 export { MissionStatement } from "./about-us/mission-statement";
 export { Vision } from "./about-us/vision";
 export { Destinations } from "./about-us/destinations";
-export {  Layout } from "./layout"
-
+export { Layout } from "./layout"

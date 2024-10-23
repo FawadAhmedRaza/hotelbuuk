@@ -48,11 +48,13 @@ export const LangaugeTranslator = React.memo(() => {
           <Iconify iconName={activeLang?.icon} className="size-5  " />
         </span>
       </div>
+      
       <CustomPopover
         popoverRef={popoverRef}
         isOpen={isOpen}
         onClose={toggleDrawer}
         arrow={true}
+        parentClass="!right-0"
         className="flex flex-col w-full overflow-hidden "
       >
         <div className="flex flex-col divide-y divide-gray-200 divide-dashed w-full">
