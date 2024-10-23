@@ -37,7 +37,6 @@ const RoomsListView = React.memo(() => {
   const [roomId, setRoomId] = useState("");
   const [roomName, setRoomName] = useState("");
   const { user } = useAuthContext();
-  console.log("sdfsdfsdds", user);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -85,17 +84,6 @@ const RoomsListView = React.memo(() => {
   };
 
   useEffect(() => {
-    const fetchHotel = async () => {
-      try {
-        await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
-      } catch (error) {
-        console.log("Error fetching hotel:", error);
-      }
-    };
-    fetchHotel();
-  }, [dispatch, user.id]);
-
-  useEffect(() => {
     const fetchRooms = async () => {
       try {
         await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
@@ -113,9 +101,9 @@ const RoomsListView = React.memo(() => {
           <Breadcrumb
             title="Rooms List"
             action={
-              <Button onClick={() => router.push("/create-room")}>
-                Create New room
-              </Button>
+              <AnchorTag href={paths.createRooms.root}>
+                <Button>Create Room</Button>
+              </AnchorTag>
             }
           />
           <div className="border border-gray-200 rounded-xl">
@@ -150,6 +138,21 @@ const RoomsListView = React.memo(() => {
                       {row.price}
                     </Typography>
                   </td>
+                  <td className=" px-6 py-4">
+                    <div className="flex gap-5">
+                      <Iconify
+                        onClick={() => handleRoomEdit(row.id)}
+                        iconName="lucide:edit"
+                        className="text-gray-500 cursor-pointer"
+                      />
+
+                      <Iconify
+                        onClick={() => openDeleteModal(row.id, row.room_name)}
+                        iconName="fluent-mdl2:delete"
+                        className="text-red-500 cursor-pointer"
+                      />
+                    </div>
+                  </td>
                 </>
               )}
             />
@@ -161,93 +164,25 @@ const RoomsListView = React.memo(() => {
               setRowsPerPage={setRowsPerPage}
             />
           </div>
+
+          {isOpen && (
+            <DeleteModal
+              isLoading={isLoading}
+              title="Delete Room"
+              isOpen={isOpen}
+              onClose={toggleDrawer}
+              handleDelete={handleDelete}
+            >
+              <Typography variant="p">
+                Are you sure you want to delete {roomName}?
+              </Typography>
+            </DeleteModal>
+          )}
         </Pannel>
       ) : (
         <RoomListSkeleton />
       )}
     </>
-    <Pannel className="flex flex-col gap-10">
-      <Breadcrumb
-        title="Rooms List"
-        action={
-          <AnchorTag href={paths.createRooms.root}>
-            <Button>Create Room</Button>
-          </AnchorTag>
-        }
-      />
-      <div className="border border-gray-200 rounded-xl">
-        <CustomTable
-          items={items}
-          TABLE_HEADER={header}
-          enableSelection={false}
-          renderRow={(row) => (
-            <>
-              <td className=" px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_name}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.description}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.maximum_occupancy}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.room_type}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row.price}
-                </Typography>
-              </td>
-              <td className=" px-6 py-4">
-                <div className="flex gap-5">
-                  <Iconify
-                    onClick={() => handleRoomEdit(row.id)}
-                    iconName="lucide:edit"
-                    className="text-gray-500 cursor-pointer"
-                  />
-
-                  <Iconify
-                    onClick={() => openDeleteModal(row.id, row.room_name)}
-                    iconName="fluent-mdl2:delete"
-                    className="text-red-500 cursor-pointer"
-                  />
-                </div>
-              </td>
-            </>
-          )}
-        />
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          setRowsPerPage={setRowsPerPage}
-        />
-      </div>
-
-      {isOpen && (
-        <DeleteModal
-          isLoading={isLoading}
-          title="Delete Room"
-          isOpen={isOpen}
-          onClose={toggleDrawer}
-          handleDelete={handleDelete}
-        >
-          <Typography variant="p">
-            Are you sure you want to delete {roomName}?
-          </Typography>
-        </DeleteModal>
-      )}
-    </Pannel>
   );
 });
 

@@ -1,6 +1,6 @@
 "use client";
 import * as Yup from "yup";
-import { Breadcrumb, Pannel } from "@/src/components";
+import { Breadcrumb, Button, Pannel } from "@/src/components";
 import Tabs from "@/src/components/tabs";
 import React, { useEffect, useState } from "react";
 import HotelProfile from "./components/hotel-profile";
@@ -15,8 +15,6 @@ import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
-
-  console.log("profile screen", defaultValues);
 
   const HotelSchema = Yup.object({
     hotel_image: Yup.mixed().optional(),
@@ -34,11 +32,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
   const { user, setUser } = useAuthContext();
 
-  console.log(user, "user");
-
   const dispatch = useDispatch();
-
-  console.log("default values", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(HotelSchema),
@@ -110,6 +104,9 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             activeTab={activeTabs}
             setActiveTab={setActiveTabs}
           />
+        </div>
+        <div className="flex justify-end my-5">
+          <Button>Submit</Button>
         </div>
       </RHFFormProvider>
     </Pannel>

@@ -18,7 +18,7 @@ const HomeScreen = React.memo(() => {
         <Booking />
         <PreviewHotelsSection />
         <Banner />
-        {/* <BusinessFacts /> */}
+        <BusinessFacts />
         <BookingSteps />
         <MeetOurPatners />
       </Layout>

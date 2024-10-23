@@ -115,11 +115,17 @@ export const StepperView = ({ defaultValues, isEdit }) => {
         ...data,
         user_id: user?.id,
       };
-
+      console.log("iamges", data?.images);
       const formData = new FormData();
-
+      console.log("Finnal Data", finalData);
+      const images = finalData.images?.map((da) => da.file);
+      const names = finalData.images?.map((da) => da.name);
       for (const key in finalData) {
-        if (finalData[key] !== null && finalData[key] !== undefined) {
+        if (
+          finalData[key] !== null &&
+          finalData[key] !== undefined &&
+          key !== "images"
+        ) {
           if (
             typeof finalData[key] === "object" &&
             !(finalData[key] instanceof File)
@@ -131,15 +137,23 @@ export const StepperView = ({ defaultValues, isEdit }) => {
         }
       }
 
+      console.log("iamges after map", images);
+      console.log("iamges after map", names);
+
+      images.forEach((file) => formData.append("images", file));
+      images.forEach((file) =>
+        formData.append("imagesNames", JSON.stringify(names))
+      );
+
       const response = await axiosInstance.post(
         endpoints.hotel.create,
         formData
       );
       if (response?.status === 201) {
-        // let { accessToken, user } = response?.data || {};
-        // await setUser(user, accessToken);
+        let { accessToken, user } = response?.data || {};
+        await setUser(user, accessToken);
         enqueueSnackbar("Hotel info created", { variant: "success" });
-        // router.push("/hotel-dashboard");
+        router.push("/hotel-dashboard");
       }
     } catch (error) {
       console.log(error);
