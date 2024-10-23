@@ -13,6 +13,7 @@ const storage = new Storage({
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
 });
 
+
 export const uploadFileToGoogleCloud = async (file) => {
   try {
     const buffer = await file.arrayBuffer();

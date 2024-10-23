@@ -20,7 +20,6 @@ const ImageUploader = () => {
   }, [fieldImages]);
 
   const handleFileUpload = (newImages) => {
-
     const updatedImages = [...uploadedImages, ...newImages];
     setUploadedImages(updatedImages);
     setValue("images", updatedImages); // Update form context
