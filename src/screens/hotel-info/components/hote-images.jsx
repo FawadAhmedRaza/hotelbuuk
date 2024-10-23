@@ -1,10 +1,10 @@
 "use client";
 
+import React, { useEffect, useRef, useState } from "react";
+
 import { Iconify } from "@/src/components";
 import { RHFUploader } from "@/src/components/hook-form";
 import ImageRender from "@/src/components/ImageRenderer";
-import { generateSignedUrl } from "@/src/utils/upload-images";
-import React, { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 const HotelImages = () => {
