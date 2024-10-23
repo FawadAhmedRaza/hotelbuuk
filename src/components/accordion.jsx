@@ -15,13 +15,17 @@ export const Accordion = React.memo(
 
     return (
       <div
-        className={`!max-w-full object-contain bg-white flex flex-col justify-center   drop-shadow-md px-2 py-4 rounded-2xl ${className}`}
+        className={`!max-w-full object-contain bg-white flex flex-col justify-center  drop-shadow-md px-2 py-4 rounded-2xl ${className}`}
       >
         <div
           className="flex items-center justify-between cursor-pointer px-5 py-3"
           // onClick={toggleDrawer}
         >
-          <Typography variant="h6" className="text-primary font-semibold">
+          <Typography
+            variant="h6"
+            className="text-primary font-semibold"
+            onClick={toggleDrawer}
+          >
             {title}
           </Typography>
 

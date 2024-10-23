@@ -36,7 +36,7 @@ export const HotelBio = () => {
   return (
     <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
       {/* Left Panel - Image and Time */}
-      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-xl p-4">
+      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-l-xl p-4">
         <div className="flex items-center justify-between w-full">
           <span className="text-lg font-medium flex items-center gap-2">
             <Iconify iconName="noto-v1:alarm-clock" />
@@ -46,7 +46,7 @@ export const HotelBio = () => {
             <Button className="bg-white text-primary ">Flexible</Button>
           )}
         </div>
-        <img src={hotelData?.image} alt="Hotel Room" className="mt-4 " />
+        <img src={hotelData?.image} alt="Hotel Room" className="mt-4 mx-auto " />
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
