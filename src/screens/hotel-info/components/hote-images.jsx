@@ -23,9 +23,6 @@ const HotelImages = () => {
     setUploadedImages((prevImages) => [...prevImages, ...newImages]); // Append new images to the existing list
   };
 
-  console.log(uploadedImages);
-  console.log("form context images", watch("images"));
-
   const handleDeleteImage = (index) => {
     const imageToDelete = uploadedImages[index];
 
