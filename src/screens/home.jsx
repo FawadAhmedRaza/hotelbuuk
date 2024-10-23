@@ -3,6 +3,7 @@ import {
   Banner,
   Booking,
   BookingSteps,
+  BusinessFacts,
   HeroSection,
   Layout,
   MeetOurPatners,
@@ -17,6 +18,7 @@ const HomeScreen = React.memo(() => {
         <Booking />
         <PreviewHotelsSection />
         <Banner />
+        {/* <BusinessFacts /> */}
         <BookingSteps />
         <MeetOurPatners />
       </Layout>

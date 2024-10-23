@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Link from "next/link";
 
-// Components and Others...
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
+import { paths } from "@/src/contants";
+
 import {
   AnchorTag,
   Button,
@@ -13,17 +17,15 @@ import {
   Typography,
   Pannel,
 } from "@/src/components";
-import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
-import { paths } from "@/src/contants";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const SetNewPasswordScreen = () => {
   const { resetPasswordHandle } = useAuthContext();
+
   const SetPasswordSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters"),
-      
+
     confirm_password: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
@@ -38,8 +40,7 @@ const SetNewPasswordScreen = () => {
   });
 
   const {
-    reset,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
 
   const handleSubmit = async (data) => {
@@ -81,7 +82,6 @@ const SetNewPasswordScreen = () => {
           onSubmit={methods.handleSubmit(handleSubmit)}
           className="flex flex-col gap-5"
         >
-          {/* Input for the code with validation */}
           <RHFInput
             label="Create Password"
             type="password"
@@ -99,11 +99,11 @@ const SetNewPasswordScreen = () => {
             variant="p"
             className="font-montserrat font-medium text-sm"
           >
-            Didn’t receive a code? <AnchorTag href="#">Resend</AnchorTag>
+            Didn't receive a code? <AnchorTag href="#">Resend</AnchorTag>
           </Typography>
 
           <div className="flex flex-col gap-8 mt-5">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" loading={isSubmitting}>
               Submit
             </Button>
           </div>

@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef } from "react";
 import { Button, Iconify, Typography } from ".";
 
@@ -9,6 +10,7 @@ const Modal = ({
   bgClass,
   title,
   handleSubmit,
+  isLoading,
 }) => {
   const modalRef = useRef(null);
 
@@ -27,7 +29,7 @@ const Modal = ({
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out   ${
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
@@ -69,6 +71,7 @@ const Modal = ({
             className="text-tertiary !px-4 !py-2"
             type="button"
             onClick={handleSubmit}
+            loading={isLoading}
           >
             Submit
           </Button>

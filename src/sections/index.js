@@ -8,6 +8,8 @@ export { MeetOurPatners } from "./meet-patners";
 export { LangaugeTranslator } from "./language-translator";
 export { PreviewHotels } from "./preview-hotels";
 export { PreviewHotelsSection } from "./preview-hotels-section";
+export { BusinessFacts } from "./business-facts";
+
 
 //---------------------//
 

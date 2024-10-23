@@ -27,7 +27,7 @@ export const LangaugeTranslator = React.memo(() => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-fit">
       <div
         ref={popoverRef}
         className={`flex items-center gap-2 sm:gap-3 cursor-pointer  px-2 py-1 sm:px-4 sm:py-2  rounded-lg ${"hover:bg-primary "}`}
@@ -54,7 +54,7 @@ export const LangaugeTranslator = React.memo(() => {
         isOpen={isOpen}
         onClose={toggleDrawer}
         arrow={true}
-        parentClass="!right-0"
+        parentClass=""
         className="flex flex-col w-full overflow-hidden "
       >
         <div className="flex flex-col divide-y divide-gray-200 divide-dashed w-full">
@@ -64,8 +64,8 @@ export const LangaugeTranslator = React.memo(() => {
               onClick={() => handleLangaugeChange(lng)}
               className={`flex items-center justify-between gap-3 px-3 py-2 hover:bg-custom-grey-2 text-[15px] w-full cursor-pointer  ${
                 activeLang?.value === lng?.value
-                  ? "bg-primary bg-opacity-20"
-                  : " "
+                  ? "bg-tertiary"
+                  : " hover:bg-tertiary "
               }`}
             >
               <Iconify iconName={lng?.icon} />

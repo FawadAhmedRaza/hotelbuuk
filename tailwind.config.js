@@ -6,12 +6,20 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
-    './node_modules/tailwind-datepicker-react/dist/**/*.js'
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
   theme: {
     extend: {
+      height: {
+        "10vh": "10vh",
+        "25vh": "25vh",
+        "50vh": "50vh",
+        "75vh": "75vh",
+      },
+
       fontSize: {
         "42fs": "42px",
+        "15fs": "15px", // Consolidated fontSize definitions
       },
       colors: {
         primary: "#852169",
@@ -26,21 +34,22 @@ module.exports = {
         "datepicker-bg": "#FFFFFF",
         "datepicker-text": "#1F2937",
       },
-
       lineHeight: {
         "50ld": "50px",
       },
       screens: {
         "min-450": { min: "450px" },
+        'min-500': { min: '500px' },
+        'min-900': { min: '900px' },
+        'min-1100': { min: '1100' },
+        'min-1100': { min: '1100px' },
         "2xl-custom": { min: "1500px" },
-      },
-      fontSize: {
-        "15fs": "15px",
       },
       boxShadow: {
         "custom-card-shadow": "0px 4px 23px 0px rgba(0, 0, 0, 0.15)",
         "custom-shadow-lg": "0px 4px 23px 0px #00000026",
         "custom-shadow-sm": "0px 3px 10px 0px #111B2329",
+        "custom-shadow-xs": "0px 1px 4px 0px #111B2329",
         "custom-shadow-md": "0px 0px 16px 0px rgba(0, 0, 0, 0.25)",
       },
       backgroundImage: {

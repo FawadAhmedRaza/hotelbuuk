@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "../libs/cn";
-import { Iconify } from "../components/iconify";
+import { Iconify } from "./iconify";
 import { Icon } from "@iconify/react";
 
 export const ImgButton = ({ className, src, iconName,onClick }) => {

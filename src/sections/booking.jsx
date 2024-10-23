@@ -75,9 +75,9 @@ export const Booking = React.memo(() => {
       onSubmit={methods.handleSubmit(handleSubmit)}
       className=""
     >
-      <div className="relative flex justify-center w-full bottom-36 md:bottom-24 lg:bottom-20">
-        <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 items-center w-11/12 lg:w-10/12 h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
-          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-5 lg:gap-20 xl:gap-28 grow w-full">
+      <div className="relative flex justify-center w-full bottom-40 md:bottom-24 lg:bottom-20">
+        <div className="absolute  flex flex-col md:flex-row gap-5 md:gap-0 lg:gap-10 items-center w-11/12 lg:w-fit h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
+          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-5 md:gap-5  grow w-full">
             <div className="flex  gap-1 sm:gap-3">
               <Iconify
                 iconName="carbon:location-filled"
@@ -88,7 +88,7 @@ export const Booking = React.memo(() => {
                   variant="p"
                   className="font-normal !text-sm !text-start !w-full py-1"
                 >
-                  Destination
+                  Destinations
                 </Typography>
                 <RHFInput
                   type="text"
@@ -135,10 +135,12 @@ export const Booking = React.memo(() => {
             </div>
           </div>
           <Button type="submit" className="w-full sm:w-fit text-nowrap ">
-            Book Now
+            Search
           </Button>
         </div>
       </div>
     </RHFFormProvider>
   );
 });
+
+

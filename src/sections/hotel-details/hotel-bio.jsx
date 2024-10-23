@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Iconify, Pannel, Typography } from "@/src/components";
+import Built from "@/src/components/built";
 
 // Mock data for hotel details
 const hotelData = {
@@ -48,9 +49,9 @@ export const HotelBio = () => {
         <img src={hotelData?.image} alt="Hotel Room" className="mt-4 " />
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
-      <div className=" flex flex-col justify-center items-start w-full   p-4">
+      <div className=" flex flex-col justify-start  items-start w-full   p-4">
         {/* Hotel Bio */}
-        <Typography variant="h5" className="font-semibold text-primary">
+        <Typography variant="h4" className="font-semibold text-primary ">
           Hotel Bio
         </Typography>
         <Typography variant="p" className="!text-sm text-secondary mt-2">
@@ -58,7 +59,7 @@ export const HotelBio = () => {
         </Typography>
 
         {/* Included Amenities */}
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <Typography variant="h4" className="font-semibold text-primary">
             Included Amenities
           </Typography>
@@ -73,15 +74,35 @@ export const HotelBio = () => {
               </div>
             ))}
           </div>
+        </div> */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-5">
+          <div className="">
+            <Typography variant="h4" className=" font-semibold text-primary">
+              Teaching Tool
+            </Typography>
+            <div className=" mt-3">
+              <Built>Video</Built>
+              <Built>Samples</Built>
+            </div>
+          </div>
+          <div className=" ">
+            <Typography variant="h4" className=" font-semibold text-primary">
+              Competence
+            </Typography>
+            <div className=" mt-3">
+              <Built>Market Research</Built>
+              <Built>Negotiation</Built>
+            </div>
+          </div>
         </div>
       </div>
       {/* Booking Information */}
-      <div className="w-full lg:w-2/3  py-4 px-6  flex flex-col justify-between lg:border-l-2 border-neutral-400">
+      <div className="w-full lg:w-2/3  py-4 px-5  flex flex-col justify-between lg:border-l-2 border-neutral-400">
         <div className="flex flex-col gap-1">
           <Typography variant="h6" className=" font-semibold">
             ${hotelData.pricePerNight} Per Night
           </Typography>
-          <Typography variant="h5" className="font-semibold text-center">
+          <Typography variant="h6" className="font-semibold text-start ">
             {hotelData.tourName}
           </Typography>
           <Typography variant="h5" className="font-semibold text-center">
@@ -102,7 +123,10 @@ export const HotelBio = () => {
               </Typography>
             </div>
             <div className="flex flex-col justify-center  items-center sm:items-start sm:p-5 lg:px-2">
-              <Typography variant="p" className="!text-xs sm:text-sm font-medium">
+              <Typography
+                variant="p"
+                className="!text-xs sm:text-sm font-medium"
+              >
                 Checkout
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
@@ -119,7 +143,7 @@ export const HotelBio = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 w-full mt-2">
+          <div className="flex flex-col gap-5 w-full pt-5">
             <div className=" flex gap-2  justify-between border-b w-full pb-2 border-neutral-500 ">
               <Typography
                 variant="p"
@@ -169,12 +193,12 @@ export const HotelBio = () => {
         </div>
         {/* Reserve Button */}
         <Button className="!w-full">Reserve</Button>
-        <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
+        {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
           <Iconify iconName="mynaui:flag-solid" className="text-black" />
           <Typography variant="p" className=" font-medium">
             Report This Listing
           </Typography>
-        </span>
+        </span> */}
       </div>
     </div>
   );

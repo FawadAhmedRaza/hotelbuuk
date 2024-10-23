@@ -2,35 +2,30 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-// Components and Others...
-import {
-  AnchorTag,
-  Button,
-  ImgButton,
-  Line,
-  Pannel,
-  Typography,
-} from "@/src/components";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import {
   RHFCheckbox,
   RHFFormProvider,
   RHFInput,
 } from "@/src/components/hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+
+import {
+  AnchorTag,
+  Button,
+  ImgButton,
+  Line,
+  Typography,
+} from "@/src/components";
 import { paths } from "@/src/contants";
-import { createUser, login } from "@/src/actions/auth.actions";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const SignUpAsHotel = () => {
-  const router = useRouter();
-
   const { register } = useAuthContext();
 
   const SignUpSchema = Yup.object().shape({
-    hotel_name: Yup.string().required("hotel name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
@@ -52,18 +47,16 @@ const SignUpAsHotel = () => {
 
   const {
     reset,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
-
-  console.log(errors);
 
   const handleSubmit = async (data) => {
     try {
-      //   await register(data);
-      //   reset();
-      router.push(paths.hotelInfo);
+      await register(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      reset();
     }
   };
 
@@ -78,12 +71,6 @@ const SignUpAsHotel = () => {
           className="flex flex-col gap-5 "
         >
           <div className="flex flex-col gap-y-4">
-            <RHFInput
-              type="text"
-              label="Hotel name"
-              placeholder="Hotel Adlon Kempinski"
-              name="hotel_name"
-            />
             <RHFInput
               type="email"
               label="E-mail"
@@ -116,7 +103,7 @@ const SignUpAsHotel = () => {
             }
           />
           <div className="flex flex-col gap-4 mt-3">
-            <Button type="submit" className="w-full">
+            <Button loading={isSubmitting} type="submit" className="w-full">
               Create account
             </Button>
             <Typography
@@ -130,7 +117,7 @@ const SignUpAsHotel = () => {
             <Line>Or Sign up with</Line>
 
             <ImgButton
-              onClick={() => signIn("google")}
+              // onClick={() => signIn("google")}
               src="/assets/images/google.png"
             />
           </div>

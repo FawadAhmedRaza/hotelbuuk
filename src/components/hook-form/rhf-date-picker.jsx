@@ -11,7 +11,7 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 720);
+      setIsMobile(window.innerWidth < 930);
     };
 
     handleResize();

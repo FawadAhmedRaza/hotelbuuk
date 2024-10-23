@@ -20,6 +20,15 @@ export const logout = async () => {
   revalidatePath("/");
 };
 
+export const getHotelId = async (userId) => {
+  const hotel = await prisma.hotel_info.findFirst({
+    where: {
+      user_id: userId,
+    },
+  });
+  return hotel;
+};
+
 // Create User
 export async function createUser(data) {
   const { first_name, last_name, email, password, phone_number, terms } = data;
@@ -33,7 +42,7 @@ export async function createUser(data) {
     !phone_number ||
     !terms
   ) {
-    return {message:"All fields are required.",statusCode:400};
+    return { message: "All fields are required.", statusCode: 400 };
   }
 
   try {
@@ -101,6 +110,7 @@ const getUserByEmail = async (email) => {
     return null;
   }
 };
+
 export const getUserById = async (id) => {
   try {
     const user = await prisma.user.findUnique({
@@ -149,8 +159,6 @@ export const loginWithCreds = async (data) => {
   }
 };
 
-// FORGET EMAIL
-
 export const forgetPassword = async (email) => {
   try {
     const user = await getUserByEmail(email);
@@ -191,8 +199,7 @@ export const forgetPassword = async (email) => {
   }
 };
 
-// Confirm Email Otp
-
+// signup
 export const CheckOTP = async (email, otp) => {
   try {
     const user = await prisma.user.findFirst({
@@ -229,6 +236,7 @@ export const CheckOTP = async (email, otp) => {
   }
 };
 
+// done
 export const CheckForgetOTP = async (email, otp) => {
   try {
     const user = await prisma.user.findFirst({
@@ -254,6 +262,7 @@ export const CheckForgetOTP = async (email, otp) => {
   }
 };
 
+// done
 export const resetPasssword = async (email, otp, newPassword) => {
   try {
     const user = await prisma.user.findFirst({

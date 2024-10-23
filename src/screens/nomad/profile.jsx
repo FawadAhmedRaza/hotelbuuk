@@ -1,13 +1,16 @@
+"use client";
 import React from "react";
 
-import { Layout } from "@/src/sections";
 import { NomadProfile } from "../../sections/nomad";
+import NomadProfileSkeleton from "@/src/components/Skeleton/nomad-profile-skeleton";
 
-const NomadProfileScreen = React.memo(() => {
+const NomadProfileScreen = React.memo(({ defaultValues, isEdit }) => {
   return (
-    <Layout isNavBg={true}>
-      <NomadProfile />
-    </Layout>
+    <div>
+      <NomadProfile defaultValues={defaultValues} isEdit={isEdit} />
+      {/* Skeleton */}
+      {/* <NomadProfileSkeleton /> */}
+    </div>
   );
 });
 

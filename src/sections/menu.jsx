@@ -1,19 +1,15 @@
 "use client";
-import React from "react";
-import { AnchorTag, Button, Drawer, Iconify, Typography } from "../components";
+
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "../providers/auth/context/auth-context";
+
+import { AnchorTag, Button, Drawer, Typography } from "../components";
 import { AuthLinks, MenuLinks } from "../_mock/_menu";
-import { usePathname, useRouter } from "next/navigation";
-import { useAuthContext } from "../auth/jwt/auth-context";
-import { auth } from "../auth";
 import { BgIcon } from "../components/bg-icon";
 
 export const Menu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
   const { authenticated, logout } = useAuthContext();
-
-  const pathname = usePathname();
-  console.log(pathname);
-  console.log("Is Auth true", authenticated);
 
   const handleLogout = async () => {
     await logout();
@@ -25,17 +21,19 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
       <div className="flex justify-between items-center">
         <Typography
           variant="h3"
-          className=" !text-3xl md:!text-4xl font-bold text-primary text-start  "
+          className=" !text-3xl md:!text-4xl font-bold text-primary text-start"
         >
           Hotelbuuk
         </Typography>
 
-        <BgIcon iconName="charm:cross" onClick={onClick} className="group hover:bg-primary" iconClass="text-primary group-hover:text-white size-6 block min-450:hidden"/>
+        <BgIcon
+          iconName="charm:cross"
+          onClick={onClick}
+          className="bg-primary !text-white flex min-450:hidden"
+          iconClass="!text-white size-6"
+        />
       </div>
-      <div
-        className="flex flex-col h-96 justify-center sm:justify-start items-center   sm:items-start
-       gap-5 mt-10"
-      >
+      <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
         {MenuLinks?.map((item) => {
           return (
             <AnchorTag
