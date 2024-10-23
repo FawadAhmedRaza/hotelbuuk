@@ -1,6 +1,6 @@
+"use server"
 import { Storage } from "@google-cloud/storage";
 import { v4 as uuidv4 } from "uuid";
-
 
 const credential = JSON.parse(
   Buffer.from(process.env.GOOGLE_CLOUD_SERVICE_KEY, "base64").toString()

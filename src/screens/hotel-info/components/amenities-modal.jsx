@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import RHFAutoComplete from "@/src/components/hook-form/rhf-auto-complete";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useDispatch, useSelector } from "react-redux";
 import { createHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
@@ -33,7 +32,7 @@ const AmenitiesModal = ({ isOpen, onClose }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const updatedArr = [...initialFacilities, ...data.facilities];
+      const updatedArr = [...data.facilities];
 
       let updatedData = {
         facilites: updatedArr,
@@ -64,11 +63,3 @@ const AmenitiesModal = ({ isOpen, onClose }) => {
 };
 
 export default AmenitiesModal;
-
-const initialFacilities = [
-  { name: "Free WI-FI", value: "freeWI-FI" },
-  { name: "Parking", value: "parking" },
-  { name: "Pool", value: "pool" },
-  { name: "Gym", value: "gym" },
-  { name: "Restaurant", value: "restaurant" },
-];
