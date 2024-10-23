@@ -1,8 +1,10 @@
 "use client";
 
+import React, { useEffect, useRef, useState } from "react";
+
 import { Iconify } from "@/src/components";
 import { RHFUploader } from "@/src/components/hook-form";
-import React, { useEffect, useRef, useState } from "react";
+import ImageRender from "@/src/components/ImageRenderer";
 import { useFormContext } from "react-hook-form";
 
 const HotelImages = () => {
@@ -20,9 +22,6 @@ const HotelImages = () => {
     console.log("Uploaded Images:", newImages);
     setUploadedImages((prevImages) => [...prevImages, ...newImages]); // Append new images to the existing list
   };
-
-  console.log(uploadedImages);
-  console.log("form context images", watch("images"));
 
   const handleDeleteImage = (index) => {
     const imageToDelete = uploadedImages[index];
@@ -83,15 +82,18 @@ const HotelImages = () => {
             const imageSrc = image.file
               ? URL.createObjectURL(image.file) // For file objects
               : image.url; // existing image URL
-
+             console.log("Image",image)
+             console.log("imageSrc",imageSrc)
             return (
               <div key={index} className="relative group">
                 <div className="flex justify-center items-center">
-                  <img
+                  <ImageRender
                     src={imageSrc}
+                    type={image.file ? "normal" : "server"}
                     alt={`Uploaded Image ${index}`}
                     className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                   />
+
                   <div
                     type="button"
                     onClick={() => handleDeleteImage(index)} // Trigger delete via parent

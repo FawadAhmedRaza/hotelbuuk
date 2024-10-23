@@ -1,13 +1,20 @@
+"use server"
 import { Storage } from "@google-cloud/storage";
 import { v4 as uuidv4 } from "uuid";
 
+const credential = JSON.parse(
+  Buffer.from(process.env.GOOGLE_CLOUD_SERVICE_KEY, "base64").toString()
+);
 const storage = new Storage({
+  credentials: {
+    client_email: credential.client_email,
+    private_key:  credential.private_key, // replace \\n with actual newlines
+  },
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
 
+
 export const uploadFileToGoogleCloud = async (file) => {
-  console.log("File ",file)
   try {
     const buffer = await file.arrayBuffer();
     const fileName = `${uuidv4()}-${file.name}`; // Create a unique filename

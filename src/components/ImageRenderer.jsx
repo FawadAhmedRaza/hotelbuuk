@@ -19,7 +19,7 @@ function getRatio(ratio = "1/1") {
   }[ratio];
 }
 
-const Image = forwardRef(
+const ImageRender = forwardRef(
   (
     {
       ratio,
@@ -31,11 +31,11 @@ const Image = forwardRef(
       delayTime,
       threshold,
       beforeLoad,
+      type,
       delayMethod,
       placeholder,
       wrapperProps,
       scrollPosition,
-      type,
       effect = "opacity", // Change this to "opacity" or remove for a sharper image
       visibleByDefault,
       wrapperClassName,
@@ -70,6 +70,11 @@ const Image = forwardRef(
     const content = (
       <LazyLoadImage
         alt={alt}
+        width={"100%"}
+        height={"100%"}
+        style={{
+          objectFit: "cover",
+        }}
         src={
           loading
             ? "/assets/placeholder.svg"
@@ -119,9 +124,9 @@ const Image = forwardRef(
   }
 );
 
-Image.displayName = "ImageComponent";
+ImageRender.displayName = "ImageRenderComponent";
 
-Image.propTypes = {
+ImageRender.propTypes = {
   afterLoad: PropTypes.func,
   alt: PropTypes.string,
   beforeLoad: PropTypes.func,
@@ -152,4 +157,4 @@ Image.propTypes = {
   placeholder: PropTypes.element,
 };
 
-export default Image;
+export default ImageRender;

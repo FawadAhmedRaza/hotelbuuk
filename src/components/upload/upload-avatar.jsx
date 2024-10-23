@@ -26,7 +26,8 @@ export default function UploadAvatar({
 
   useEffect(() => {
     if (file) {
-      const objectUrl = typeof file === "string" ? file : URL.createObjectURL(file);
+      const objectUrl =
+        typeof file === "string" ? file : URL.createObjectURL(file);
       setPreview(objectUrl);
 
       return () => URL.revokeObjectURL(objectUrl);
@@ -52,6 +53,7 @@ export default function UploadAvatar({
             alt="avatar"
             src={preview}
             className="w-full h-full rounded-full"
+            type={typeof file !== "string" ? "normal" : "server"}
           />
         )}
         {!hasFile && (

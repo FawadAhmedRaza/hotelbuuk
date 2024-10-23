@@ -20,6 +20,7 @@ import {
   RHFInput,
   RHFProfileImgUploader,
   RHFSelect,
+  RHFUploadAvatar,
 } from "@/src/components/hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
@@ -45,7 +46,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   ]);
 
   const nomadProfileSchema = Yup.object().shape({
-    profile: Yup.mixed().required("Profile is required"),
+    profile_img: Yup.mixed().required("Profile is required"),
     first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().optional("Last name is required"),
     phone_number: Yup.string().required("Phone number is required"),
@@ -138,7 +139,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     // update handling
     else {
       try {
-        console.log("truggred");
+        console.log("truggred", data);
 
         const formData = new FormData();
 
@@ -175,7 +176,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         onSubmit={onSubmit}
         className="flex flex-col gap-10 justify-center items-center w-full"
       >
-        <RHFProfileImgUploader name="profile" />
+        <RHFUploadAvatar name="profile_img" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
           <div className="flex flex-col sm:flex-row gap-5 w-full">
             <RHFInput

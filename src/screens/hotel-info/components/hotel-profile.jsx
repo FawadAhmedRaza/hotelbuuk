@@ -21,59 +21,58 @@ const HotelProfile = () => {
     (state) => state.hotelFacilities
   );
 
-  const [refetch, setRefetch] = useState(false);
-  const { watch, setValue, reset } = useFormContext();
-  const selectedFacilities = watch("facilities") || [];
-  console.log("selected", facilitiesArray);
+  const { watch, setValue } = useFormContext(); // Access form context
 
+  const selectedFacilities = watch("facilities") || [];
   const country = watch("country");
   const city = watch("city");
 
   const openModal = useModal();
+  const [refetch, setRefetch] = useState(false); // To re-trigger updates
+
+
+  // Fetch countries on initial render.
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const allCountries = await getCountries();
+        setCountries(allCountries);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  // Fetch cities when the country changes.
+  useEffect(() => {
+    if (country) {
+      fetchCitiesForCountry(country);
+    }
+  }, [country]);
+
+  const fetchCitiesForCountry = async (selectedCountry) => {
+    try {
+      const allCities = await getCities(selectedCountry);
+      setCities(allCities);
+      if (!city && allCities.length > 0) {
+        setValue("city", allCities[0].value); // Sync city with form context.
+      }
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+    }
+  };
 
   const handleCheckboxChange = (facility, checked) => {
     setValue(
       "facilities",
       checked
-        ? [...selectedFacilities, facility] // Add facility object if checked
+        ? [...selectedFacilities, facility]
         : selectedFacilities.filter(
             (selected) => selected.name !== facility.name
-          ) // Remove if unchecked
+          )
     );
   };
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
-  }, [refetch]);
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
-    fetchCities();
-  }, [country]);
 
   return (
     <div className="gap-y-4 my-10">
@@ -157,8 +156,9 @@ const HotelProfile = () => {
           <RHFSelect
             name="city"
             label="City"
-            placeholder="Select your City"
             options={cities}
+            value={city || ""}
+            onChange={(e) => setValue("city", e.target.value)}
           />
           <RHFInput
             name="address"
