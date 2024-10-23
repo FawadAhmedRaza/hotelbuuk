@@ -73,7 +73,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
       let files = [];
 
       data.images?.forEach((item) => {
-        if (item.url) {
+        if (item.url && !item?.file) {
           imageUrls.push(item);
         } else if (item.file) {
           files.push({ file: item?.file, name: item?.name });
