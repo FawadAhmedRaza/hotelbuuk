@@ -17,6 +17,7 @@ import { enqueueSnackbar } from "notistack";
 
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
+  console.log("default values ", defaultValues);
 
   const HotelSchema = Yup.object({
     hotel_image: Yup.mixed().optional(),
@@ -28,7 +29,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     country: Yup.string().required("country is required"),
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
-    facilites: Yup.array().optional(),
+    facilities: Yup.array().optional(),
     images: Yup.array(),
   });
 

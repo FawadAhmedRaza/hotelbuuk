@@ -85,7 +85,8 @@ const HotelImages = () => {
             const imageSrc = image.file
               ? URL.createObjectURL(image.file) // For file objects
               : image.url; // existing image URL
-
+             console.log("Image",image)
+             console.log("imageSrc",imageSrc)
             return (
               <div key={index} className="relative group">
                 <div className="flex justify-center items-center">

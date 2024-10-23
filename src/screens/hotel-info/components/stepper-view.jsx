@@ -31,7 +31,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
     country: Yup.string().required("country is required"),
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
-    facilites: Yup.array().optional(),
+    facilities: Yup.array().optional(),
     images: Yup.array(),
   });
 

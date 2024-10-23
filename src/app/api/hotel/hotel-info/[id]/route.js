@@ -24,7 +24,7 @@ export async function GET(req, { params }) {
     });
     const hotelInfo = {
       ...hotel,
-      facilites: hotel?.hotelFacilites?.map((x) => x?.facility),
+      facilities: hotel?.hotelFacilites?.map((x) => x?.facility),
     };
 
     const images = await Promise.all(
@@ -41,8 +41,6 @@ export async function GET(req, { params }) {
       ...hotelInfo,
       images,
     };
-
-    delete hotel?.hotelFacilites;
 
     return NextResponse.json(
       { message: "success", hotelInfo: finalWithImages },
