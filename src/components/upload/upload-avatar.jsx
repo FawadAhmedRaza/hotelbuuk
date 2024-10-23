@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "../image";
