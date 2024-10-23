@@ -12,6 +12,8 @@ export async function POST(req) {
     const body = await req.formData();
     const data = convertFormData(body);
     const files = body.getAll("images");
+    console.log("data", data);
+    console.log("images", files);
 
     const {
       hotel_name,
@@ -33,7 +35,7 @@ export async function POST(req) {
       );
     }
 
-    const hotelImage = await uploadFileToGoogleCloud(hotel_image);
+    const hotelImage = await uploadFileToGoogleCloud(hotel_image || "");
     const createHotelInfo = await prisma.hotel_info.create({
       data: {
         hotel_name,
@@ -44,7 +46,7 @@ export async function POST(req) {
         stars,
         hotel_contact_no,
         description,
-        hotel_image: hotelImage,
+        hotel_image: hotelImage || "",
         user_id,
       },
     });
@@ -80,8 +82,6 @@ export async function POST(req) {
       data: imagesWithUrl,
     });
 
-    console.log("imageswithurl", imagesWithUrl);
-
     // update user profile
     await prisma.user.update({
       where: {
@@ -90,7 +90,7 @@ export async function POST(req) {
       data: {
         is_user_profile_completed: true,
         hotel_name: hotel_name,
-        profile_img: hotelImage,
+        profile_img: hotelImage || "",
         phone_number: hotel_contact_no?.toString(),
       },
     });

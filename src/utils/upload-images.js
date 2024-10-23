@@ -1,3 +1,4 @@
+"use server";
 import { Storage } from "@google-cloud/storage";
 import { v4 as uuidv4 } from "uuid";
 

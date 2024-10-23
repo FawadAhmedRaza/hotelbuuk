@@ -11,18 +11,11 @@ export async function GET(req, { params }) {
   try {
     const { id } = params;
 
-    const nomadData = await prisma.nomad.findFirst({
+    const nomad = await prisma.nomad.findFirst({
       where: {
         userId: id,
       },
     });
-
-    let profileImgUrl = await generateSignedUrl(nomadData?.profile_img);
-
-    let nomad = {
-      ...nomadData,
-      profile: profileImgUrl,
-    };
 
     return NextResponse.json({ message: "success", nomad }, { status: 200 });
   } catch (error) {
@@ -44,7 +37,7 @@ export async function PUT(req, { params }) {
       last_name,
       phone_number,
       electronics,
-      profile,
+      profile_img,
       email,
       fundraising,
       manufacturing,
@@ -66,9 +59,10 @@ export async function PUT(req, { params }) {
 
     // update file
     let profileImage;
-    if (typeof profile === "object") {
-      profileImage = await uploadFileToGoogleCloud(profile);
+    if (typeof profile !== "string") {
+      profileImage = await uploadFileToGoogleCloud(profile_img);
     }
+    console.log("profile imgae",profileImage);
 
     await prisma.nomad.update({
       where: {

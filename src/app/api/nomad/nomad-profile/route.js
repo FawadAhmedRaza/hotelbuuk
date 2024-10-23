@@ -17,7 +17,7 @@ export async function POST(req) {
       last_name,
       phone_number,
       electronics,
-      profile,
+      profile_img,
       email,
       fundraising,
       manufacturing,
@@ -38,7 +38,7 @@ export async function POST(req) {
     }
 
     // get file name
-    const profileImage = await uploadFileToGoogleCloud(profile);
+    const profileImage = await uploadFileToGoogleCloud(profile_img);
 
     await prisma.nomad.create({
       data: {

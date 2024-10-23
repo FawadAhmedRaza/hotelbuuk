@@ -2,6 +2,8 @@
 
 import { Iconify } from "@/src/components";
 import { RHFUploader } from "@/src/components/hook-form";
+import ImageRender from "@/src/components/ImageRenderer";
+import { generateSignedUrl } from "@/src/utils/upload-images";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -87,11 +89,13 @@ const HotelImages = () => {
             return (
               <div key={index} className="relative group">
                 <div className="flex justify-center items-center">
-                  <img
+                  <ImageRender
                     src={imageSrc}
+                    type={image.file ? "normal" : "server"}
                     alt={`Uploaded Image ${index}`}
                     className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                   />
+
                   <div
                     type="button"
                     onClick={() => handleDeleteImage(index)} // Trigger delete via parent

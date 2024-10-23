@@ -115,9 +115,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
         ...data,
         user_id: user?.id,
       };
-      console.log("iamges", data?.images);
       const formData = new FormData();
-      console.log("Finnal Data", finalData);
       const images = finalData.images?.map((da) => da.file);
       const names = finalData.images?.map((da) => da.name);
       for (const key in finalData) {
@@ -136,9 +134,6 @@ export const StepperView = ({ defaultValues, isEdit }) => {
           }
         }
       }
-
-      console.log("iamges after map", images);
-      console.log("iamges after map", names);
 
       images.forEach((file) => formData.append("images", file));
       images.forEach((file) =>

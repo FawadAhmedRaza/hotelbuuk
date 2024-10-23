@@ -41,6 +41,7 @@ export const endpoints = {
   hotel: {
     root: "/hotel",
     create: "/hotel/hotel-info",
+    update: (id) => `/hotel/hotel-info/${id}`,
     facilites: {
       create: "/hotel/hotel-facilities",
       get_all: (id) => `/hotel/hotel-facilities?userId=${id}`,
