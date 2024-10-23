@@ -24,6 +24,11 @@ export const MenuLinks = [
     label: "Privacy Policy",
     path: "/privacy-policy",
   },
+  {
+    id: 5,
+    label: "Contact",
+    path: "/contact",
+  },
 ];
 
 export const AuthLinks = [
