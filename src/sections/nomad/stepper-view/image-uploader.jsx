@@ -7,14 +7,17 @@ import { useFormContext } from "react-hook-form";
 
 const ImageUploader = () => {
   const [imageBox, setImageBox] = useState(
-    Array.from({ length: 10 }, (_, index) => index)
+    Array.from({ length: 10 }, (value, index) => index)
   );
   const { getValues, setValue, watch } = useFormContext();
   const uploaderRef = useRef(); // Create ref for RHFUploader
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleFileUpload = (images) => {
-    const formattedImages = images.map((img) => ({ file: img.file }));
+    const formattedImages = images.map((img) => ({
+      file: img.file,
+      url: img.url,
+    }));
     setUploadedImages(formattedImages);
   };
 
@@ -42,13 +45,11 @@ const ImageUploader = () => {
     console.log("Name change ", value);
 
     setUploadedImages((prev) =>
-      prev.map((img, i) =>
-        i === index ? { file: img.file, name: value } : img
-      )
+      prev.map((img, i) => (i === index ? { ...img, name: value } : img))
     );
 
     const updatedImages = uploadedImages.map((img, i) =>
-      i === index ? { file: img.file, name: value } : img
+      i === index ? { ...img, name: value } : img
     );
     setValue("images", updatedImages);
   };
@@ -62,14 +63,14 @@ const ImageUploader = () => {
           name="images"
           icon="mdi-light:plus"
           iconClasses="!size-20"
-          onFileUpload={handleFileUpload} // Handle file uploads
+          onFileUpload={handleFileUpload}
         />
         {uploadedImages?.length > 0 &&
           uploadedImages.map((image, index) => (
             <div key={index} className="relative group">
               <div className="flex justify-center items-center">
                 <img
-                  src={URL.createObjectURL(image.file)} // Generate URL from file object for display
+                  src={image.url}
                   alt={`Uploaded Image ${index}`}
                   className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                 />
