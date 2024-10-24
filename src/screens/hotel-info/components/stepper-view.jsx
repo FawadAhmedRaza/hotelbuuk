@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 
-import { Pannel, Stepper } from "@/src/components";
+import { Breadcrumb, Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
 import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 import { enqueueSnackbar } from "notistack";
@@ -158,6 +158,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
+        <Breadcrumb title="Hotel profile" />
         <Stepper
           steps={steps}
           activeStep={activeStep}
