@@ -69,10 +69,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         start_date: Yup.string().required("Start date is required"),
         end_date: Yup.string().required("End date is required"),
       }),
-      time: Yup.object().shape({
-        start_time: Yup.string().required("Start time is required"),
-        end_time: Yup.string().required("End time is required"),
-      }),
     }),
   });
 
