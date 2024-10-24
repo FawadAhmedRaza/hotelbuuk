@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { Button, Iconify, Typography } from ".";
 
-const DeleteModal = ({
+export const DeleteModal = ({
   isOpen,
   onClose,
   children,
@@ -80,5 +80,3 @@ const DeleteModal = ({
     </div>
   );
 };
-
-export default DeleteModal;

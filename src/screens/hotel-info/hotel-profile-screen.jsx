@@ -147,9 +147,11 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   ];
 
   return (
-    <Pannel>
+    <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="w-full">
+
+        <Breadcrumb title="Update Hotel profile" />
+        <div className="w-full mt-4">
           <Tabs
             TABS={TABS}
             activeTab={activeTabs}
