@@ -46,6 +46,10 @@ export const endpoints = {
       create: "/hotel/hotel-facilities",
       get_all: (id) => `/hotel/hotel-facilities?userId=${id}`,
     },
+    roomFacilites: {
+      create: "/hotel/room-facilities",
+      get_all: (id) => `/hotel/room-facilities?userId=${id}`,
+    },
     getHotel: (id) => `/hotel/hotel-info/${id}`,
     updateHotel: (id) => `/hotel/hotel-info/${id}`,
     roomTypes: {
