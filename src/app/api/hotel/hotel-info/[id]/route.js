@@ -1,10 +1,7 @@
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
 import { convertFormData } from "@/src/utils/convert-form-data";
-import {
-  generateSignedUrl,
-  uploadFileToGoogleCloud,
-} from "@/src/utils/upload-images";
+import { uploadFileToGoogleCloud } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
@@ -127,7 +124,6 @@ export async function PUT(req, { params }) {
 
     if (data?.deletedImages.length > 0) {
       data?.deletedImages?.map(async (item) => {
-        console.log("Delted Item", item);
         try {
           await prisma.hotel_images.delete({
             where: {

@@ -26,6 +26,7 @@ import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useBoolean } from "@/src/hooks";
+import { useModal } from "@/src/hooks/use-modal";
 
 const header = [
   { id: 1, label: "Room Name" },
@@ -49,6 +50,9 @@ const RoomsListView = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
+  const { isLoading: deleteLoading } = useSelector(
+    (state) => state.rooms.deleteById
+  );
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(rooms?.length / rowsPerPage);
@@ -66,7 +70,6 @@ const RoomsListView = React.memo(() => {
 
   //Edit room
   const handleRoomEdit = (id) => {
-    console.log(id);
     router.push(paths.createRooms.edit(id));
   };
 
@@ -117,36 +120,6 @@ const RoomsListView = React.memo(() => {
               TABLE_HEADER={header}
               enableSelection={false}
               renderRow={(row) => {
-                const facilities = {
-                  air_conditioning: row.air_conditioning,
-                  blackout_curtains: row.blackout_curtains,
-                  coffee_machine: row.coffee_machine,
-                  desk_workspace: row.desk_workspace,
-                  flat_screen_tv: row.flat_screen_tv,
-                  heating: row.heating,
-                  high_thread_sheets: row.high_thread_sheets,
-                  king_bed: row.king_bed,
-                  luxury_toiletries: row.luxury_toiletries,
-                  mini_fridge: row.mini_fridge,
-                  private_balcony: row.private_balcony,
-                  private_bathroom: row.private_bathroom,
-                  room_service: row.room_service,
-                  smart_lighting: row.smart_lighting,
-                  soundproof_windows: row.soundproof_windows,
-                };
-
-                const trueFacilities = Object.entries(facilities)
-                  .filter(([key, value]) => value === true) // Filter out only true values
-                  .map(([key]) => key);
-
-                const newFacilities = trueFacilities.map((fac) => {
-                  const newString = fac.replaceAll("_", " ");
-                  return newString;
-                });
-
-                const initialFac = newFacilities.slice(0, 3);
-                
-
                 return (
                   <>
                     <td className=" px-6 py-4">
@@ -158,10 +131,7 @@ const RoomsListView = React.memo(() => {
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
-                      <Typography
-                        variant="p"
-                        className="  !text-nowrap max-w-56"
-                      >
+                      <Typography variant="p" className="!text-nowrap max-w-56">
                         {row.description}
                       </Typography>
                     </td>
@@ -181,13 +151,22 @@ const RoomsListView = React.memo(() => {
                         {row.room_type}
                       </Typography>
                     </td>
-                    <td className="px-6 py-4 overflow-x-scroll max-w-60 custom-scrollbar">
+                    <td className="px-6 py-4 max-w-full custom-scrollbar">
                       <div className="flex gap-2">
-                        {newFacilities.map((fac) => (
-                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
-                            {fac}
+                        {row?.room_facilities?.slice(0, 4)?.map((fac) => (
+                          <span
+                            className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap"
+                            key={fac?.id}
+                          >
+                            {fac?.name}
                           </span>
                         ))}
+
+                        {row?.room_facilities?.length > 4 && (
+                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                            +{row?.room_facilities?.length - 4} more
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -228,7 +207,7 @@ const RoomsListView = React.memo(() => {
 
           {isOpen && (
             <DeleteModal
-              isLoading={isLoading}
+              isLoading={deleteLoading}
               title="Delete Room"
               isOpen={isOpen}
               onClose={toggleDrawer}

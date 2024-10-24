@@ -11,10 +11,25 @@ export async function GET(_, { params }) {
       },
       include: {
         room_images: true,
+        room_associated_facilities: {
+          include: {
+            room_facility: true,
+          },
+        },
       },
     });
 
-    return NextResponse.json({ message: "success", room }, { status: 200 });
+    let updated = {
+      ...room,
+      room_facilities: room?.room_associated_facilities?.map(
+        (item) => item?.room_facility
+      ),
+    };
+
+    return NextResponse.json(
+      { message: "success", room: updated },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
@@ -30,18 +45,11 @@ export async function PUT(req, { params }) {
     const data = convertFormData(body);
 
     const newImages = body.getAll("new_room_images");
-    console.log("new iamges", newImages);
 
-    const { room_info, hotel_id } = data || {};
+    const { room_info, hotel_id, room_facilities } = data || {};
 
-    const {
-      room_name,
-      room_type,
-      price,
-      maximum_occupancy,
-      description,
-      room_facilities,
-    } = room_info || {};
+    const { room_name, room_type, price, maximum_occupancy, description } =
+      room_info || {};
 
     if (!room_name || !room_type || !price) {
       return NextResponse.json(
@@ -60,25 +68,30 @@ export async function PUT(req, { params }) {
         maximum_occupancy,
         description,
         price,
-        // checkboxes
-        air_conditioning: room_facilities?.air_conditioning || false,
-        heating: room_facilities?.heating || false,
-        king_bed: room_facilities?.king_bed || false,
-        private_balcony: room_facilities?.private_balcony || false,
-        mini_fridge: room_facilities?.mini_fridge || false,
-        flat_screen_tv: room_facilities?.flat_screen_tv || false,
-        room_service: room_facilities?.room_service || false,
-        coffee_machine: room_facilities?.coffee_machine || false,
-        desk_workspace: room_facilities?.desk_workspace || false,
-        private_bathroom: room_facilities?.private_bathroom || false,
-        smart_lighting: room_facilities?.smart_lighting || false,
-        soundproof_windows: room_facilities?.soundproof_windows || false,
-        wardrobe: room_facilities?.wardrobe || false,
-        blackout_curtains: room_facilities?.blackout_curtains || false,
-        luxury_toiletries: room_facilities?.luxury_toiletries || false,
-        high_thread_sheets: room_facilities?.high_thread_sheets || false,
       },
     });
+
+    // delete prev facilites
+    await prisma.room_associated_facilities.deleteMany({
+      where: {
+        room_id: params?.id,
+      },
+    });
+
+    const facilitiesData =
+      (room_facilities?.length > 0 &&
+        room_facilities.map((facility) => ({
+          room_facility_id: facility?.id,
+          room_id: params?.id,
+        }))) ||
+      [];
+
+    // create new
+    if (facilitiesData?.length > 0) {
+      await prisma.room_associated_facilities.createMany({
+        data: facilitiesData,
+      });
+    }
 
     // retrieve all images of room
     let allRoomImages = await prisma.room_images?.findMany({
@@ -134,7 +147,7 @@ export async function PUT(req, { params }) {
         });
       }
     }
-    console.log("new with urls", newImagesWithUrls);
+
     // upload new images
     if (newImagesWithUrls?.length > 0) {
       console.log("triggred");
@@ -162,6 +175,9 @@ export async function DELETE(_, { params }) {
       where: {
         id: params?.id,
       },
+      include:{
+        room_images:true,
+      }
     });
 
     return NextResponse.json({ message: "success" }, { status: 200 });

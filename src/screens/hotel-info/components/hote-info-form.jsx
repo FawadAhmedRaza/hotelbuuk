@@ -31,7 +31,6 @@ const HotelInfoForm = () => {
   const openModal = useModal();
 
   const handleCheckboxChange = (facility, checked) => {
-    console.log("fcility ", facility);
     setValue(
       "facilities",
       checked

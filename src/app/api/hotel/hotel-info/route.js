@@ -12,8 +12,6 @@ export async function POST(req) {
     const body = await req.formData();
     const data = convertFormData(body);
     const files = body.getAll("images");
-    console.log("files",files);
-
 
     const {
       hotel_name,
@@ -101,16 +99,10 @@ export async function POST(req) {
       },
     });
 
-    let userProfileImage = await generateSignedUrl(user?.profile_img);
-    let userWithProfileImage = {
-      ...user,
-      profile_img: userProfileImage,
-    };
-
     const accessToken = await generateToken(user);
 
     return NextResponse.json(
-      { message: "Success", accessToken, user: userWithProfileImage },
+      { message: "Success", accessToken, user },
       { status: 201 }
     );
   } catch (error) {
