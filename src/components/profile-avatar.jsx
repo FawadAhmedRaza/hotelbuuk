@@ -69,7 +69,7 @@ export const ProfileAvatar = forwardRef(
           }
         }
       })();
-    }, []);
+    }, [src]);
 
     const content = (
       <LazyLoadImage
