@@ -67,11 +67,12 @@ export default function UploadAvatar({
           </div>
         )}
       </div>
-      {isEdit && (
-        <Iconify
-          iconName="flowbite:edit-solid"
-          className="absolute z-40 size-12 bottom-0 right-2 text-gray-500"
-        />
+      {isEdit || preview ? (
+        <div className="flex justify-center items-center absolute p-2 bottom-0 right-3 rounded-full bg-primary">
+          <Iconify iconName="mage:edit" className=" z-40 size-5  text-white" />
+        </div>
+      ) : (
+        ""
       )}
       {helperText && <p className="text-xs text-red-500">{helperText}</p>}
     </div>

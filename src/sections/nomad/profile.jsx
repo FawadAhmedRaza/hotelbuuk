@@ -192,6 +192,9 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         </div>
         <RHFUploadAvatar isEdit={isEdit} name="profile_img" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
+          <Typography variant="h5" className="font-semibold">
+            Basic
+          </Typography>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {/* <div className="flex flex-col sm:flex-row gap-5 w-full"> */}
             <RHFInput

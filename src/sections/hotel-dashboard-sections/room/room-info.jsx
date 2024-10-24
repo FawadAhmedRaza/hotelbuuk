@@ -62,9 +62,9 @@ export const RoomInfo = () => {
           />
           <RHFTextArea
             name="room_info.description"
-            label="Tell guests whats special about this room"
+            label="Description"
             required={true}
-            placeholder="Describe your Business Tour "
+            placeholder="Tell guests whats special about this room"
           />
           <RHFInput
             name="room_info.maximum_occupancy"

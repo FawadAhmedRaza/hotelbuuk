@@ -144,6 +144,9 @@ const RoomsListView = React.memo(() => {
                   return newString;
                 });
 
+                const initialFac = newFacilities.slice(0, 3);
+                
+
                 return (
                   <>
                     <td className=" px-6 py-4">
