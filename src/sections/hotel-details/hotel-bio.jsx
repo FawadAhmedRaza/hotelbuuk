@@ -50,13 +50,8 @@ export const HotelBio = () => {
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
-        {/* Hotel Bio */}
-        <Typography variant="h4" className="font-semibold text-primary ">
-          Hotel Bio
-        </Typography>
-        <Typography variant="p" className="!text-sm text-secondary mt-2">
-          {hotelData?.bio}
-        </Typography>
+      
+
 
         {/* Included Amenities */}
         {/* <div className="mt-4">
@@ -75,7 +70,7 @@ export const HotelBio = () => {
             ))}
           </div>
         </div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
               Teaching Tool

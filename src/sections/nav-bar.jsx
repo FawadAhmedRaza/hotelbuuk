@@ -33,7 +33,7 @@ export const NavBar = React.memo(({ className }) => {
         className={"flex hover:no-underline items-center gap-2"}
       >
         <Image
-          src={"/assets/images/transperent-logo/transperent2/gold.png"}
+          src={"/assets/images/transperent-logo/transperent/gold.png"}
           height={200}
           width={85}
         />

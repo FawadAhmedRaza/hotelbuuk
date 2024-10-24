@@ -76,8 +76,8 @@ export const MeetOurPatners = React.memo(() => {
                   />
                 </span>
                 <Typography
-                  variant="h3"
-                  className="mt-4 font-medium z-10 text-center"
+                  variant="h6"
+                  className="mt-2 font-medium z-10 text-center"
                 >
                   {card.hotelName}
                 </Typography>
