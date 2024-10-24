@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "../image";
@@ -9,6 +9,7 @@ export default function UploadAvatar({
   file,
   disabled,
   helperText,
+  isEdit,
   ...other
 }) {
   const [preview, setPreview] = useState(null);
@@ -42,7 +43,7 @@ export default function UploadAvatar({
   return (
     <div
       {...getRootProps()}
-      className={`p-1 mx-auto md:w-[175px] md:h-[175px] w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
+      className={`relative   p-1 mx-auto md:w-[175px] md:h-[175px] w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
         hasError ? "border-red-500" : "border-[#852169]"
       } ${disabled ? "opacity-50 pointer-events-none" : ""}`}
     >
@@ -56,6 +57,7 @@ export default function UploadAvatar({
             type={typeof file !== "string" ? "normal" : "server"}
           />
         )}
+
         {!hasFile && (
           <div
             className={`absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full z-10 rounded-full transition-opacity duration-200 bg-gray-100 text-gray-500`}
@@ -65,6 +67,12 @@ export default function UploadAvatar({
           </div>
         )}
       </div>
+      {isEdit && (
+        <Iconify
+          iconName="flowbite:edit-solid"
+          className="absolute z-40 size-12 bottom-0 right-2 text-gray-500"
+        />
+      )}
       {helperText && <p className="text-xs text-red-500">{helperText}</p>}
     </div>
   );

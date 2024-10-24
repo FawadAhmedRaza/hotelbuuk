@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Components and Others...
 import {
   RHFCheckbox,
+  RHFDatePicker,
   RHFImageSelect,
   RHFInput,
   RHFRadio,
@@ -11,7 +12,14 @@ import {
   RHFTextArea,
 } from "@/src/components/hook-form";
 import { useForm, useFormContext } from "react-hook-form";
-import { Button, Iconify, Typography } from "@/src/components";
+import {
+  Button,
+  CalendarInput,
+  CustomPopover,
+  Iconify,
+  Typography,
+} from "@/src/components";
+import { addDays } from "date-fns";
 
 import { room_facilities } from "@/src/_mock/_room";
 import { useModal } from "@/src/hooks/use-modal";
@@ -27,8 +35,20 @@ const initialFacilities = [
 ];
 export const RoomInfo = () => {
   const { roomTypes } = useSelector((state) => state.rooms);
-
   const openModal = useModal();
+  const [isDateOpen, setIsDateOpen] = useState(false);
+  const datePopoverRef = useRef(null);
+
+  // Handle date state
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 1),
+      key: "selection",
+    },
+  ]);
+
+  const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
   return (
     <div className="flex flex-col gap-10">
@@ -42,7 +62,7 @@ export const RoomInfo = () => {
           />
           <RHFTextArea
             name="room_info.description"
-            label="Description"
+            label="Tell guests whats special about this room"
             required={true}
             placeholder="Describe your Business Tour "
           />
@@ -97,6 +117,29 @@ export const RoomInfo = () => {
               startIcon="marketeq:money-euro"
               startIconClass="size-8"
             />
+          </div>
+          <div ref={datePopoverRef} className="relative flex flex-col w-full  ">
+            <CalendarInput
+              label="Date"
+              startDate={date[0].startDate.toString().slice(0, 10)}
+              endDate={date[0].endDate.toString().slice(0, 10)}
+              onClick={toggleDateCalender}
+            />
+            <CustomPopover
+              popoverRef={datePopoverRef}
+              isOpen={isDateOpen}
+              onClose={toggleDateCalender}
+              arrow={false}
+              className="flex flex-col overflow-hidden mt-4 w-fit"
+              parentClass="!left-0"
+            >
+              <RHFDatePicker
+                name="availability"
+                onChange={(item) => setDate([item.selection])}
+                value={date}
+                rangeColors={["#852169"]}
+              />
+            </CustomPopover>
           </div>
         </div>
       </div>

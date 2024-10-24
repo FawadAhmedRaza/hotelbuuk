@@ -38,11 +38,12 @@ const header = [
 ];
 const RoomsListView = React.memo(() => {
   const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
-  const [roomId, setRoomId] = useState("");
-  const [roomName, setRoomName] = useState("");
   const { user } = useAuthContext();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [roomId, setRoomId] = useState("");
+  const [roomName, setRoomName] = useState("");
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

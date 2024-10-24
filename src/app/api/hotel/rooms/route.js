@@ -1,9 +1,14 @@
 import { prisma } from "@/src/db";
+import { convertFormData } from "@/src/utils/convert-form-data";
+import { uploadFileToGoogleCloud } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const data = await req.json();
+    const body = await req.formData();
+    const data = convertFormData(body);
+    const imageFiles = body.getAll("room_images");
+
     const { room_info, hotel_id } = data || {};
 
     const {
@@ -49,6 +54,25 @@ export async function POST(req) {
         high_thread_sheets: room_facilities?.high_thread_sheets || false,
       },
     });
+
+    let roomImagesWithUrl = [];
+    if (imageFiles?.length > 0) {
+      for (let fileKey in imageFiles) {
+        let imageUrl = await uploadFileToGoogleCloud(imageFiles[fileKey]);
+
+        roomImagesWithUrl?.push({
+          name: data?.room_images_names[fileKey],
+          img: imageUrl,
+          room_id: createdRoom?.id,
+        });
+      }
+    }
+
+    if (roomImagesWithUrl?.length > 0) {
+      await prisma.room_images?.createMany({
+        data: roomImagesWithUrl,
+      });
+    }
 
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {

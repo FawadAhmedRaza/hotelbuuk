@@ -1,4 +1,6 @@
 import { prisma } from "@/src/db";
+import { convertFormData } from "@/src/utils/convert-form-data";
+import { uploadFileToGoogleCloud } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(_, { params }) {
@@ -6,6 +8,9 @@ export async function GET(_, { params }) {
     const room = await prisma.hotel_rooms.findUnique({
       where: {
         id: params?.id,
+      },
+      include: {
+        room_images: true,
       },
     });
 
@@ -21,7 +26,12 @@ export async function GET(_, { params }) {
 
 export async function PUT(req, { params }) {
   try {
-    const data = await req.json();
+    const body = await req.formData();
+    const data = convertFormData(body);
+
+    const newImages = body.getAll("new_room_images");
+    console.log("new iamges", newImages);
+
     const { room_info, hotel_id } = data || {};
 
     const {
@@ -70,6 +80,70 @@ export async function PUT(req, { params }) {
       },
     });
 
+    // retrieve all images of room
+    let allRoomImages = await prisma.room_images?.findMany({
+      where: {
+        room_id: params?.id,
+      },
+    });
+    let remainedImagesWithUrls = data?.images_with_urls;
+    let remainingImagesIds = remainedImagesWithUrls?.map((item) => item?.id); // get ids
+
+    let imagesToDelete = allRoomImages?.filter(
+      // filter images to delete
+      (image) => !remainingImagesIds?.includes(image?.id)
+    );
+
+    // delete remaining images
+    if (imagesToDelete?.length > 0) {
+      imagesToDelete?.map(async (item) => {
+        await prisma.room_images.delete({
+          where: {
+            id: item?.id,
+          },
+        });
+      });
+    }
+
+    // update the existings
+    if (remainedImagesWithUrls?.length > 0) {
+      await Promise.all(
+        remainedImagesWithUrls?.map(async (item) => {
+          await prisma.room_images.update({
+            where: {
+              id: item?.id,
+            },
+            data: {
+              name: item?.name,
+            },
+          });
+        })
+      );
+    }
+
+    // upload new images
+    let newImagesWithUrls = [];
+    if (newImages?.length > 0) {
+      for (let fileKey in newImages) {
+        let imageUrl = await uploadFileToGoogleCloud(newImages[fileKey]);
+
+        newImagesWithUrls?.push({
+          name: data?.new_room_images_names[fileKey],
+          img: imageUrl,
+          room_id: params?.id,
+        });
+      }
+    }
+    console.log("new with urls", newImagesWithUrls);
+    // upload new images
+    if (newImagesWithUrls?.length > 0) {
+      console.log("triggred");
+      await prisma.room_images.createMany({
+        data: newImagesWithUrls,
+      });
+    }
+
+    // return updated list
     const allRooms = await prisma.hotel_rooms.findMany({ where: { hotel_id } });
 
     return NextResponse.json({ message: "success", allRooms }, { status: 200 });
