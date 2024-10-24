@@ -14,7 +14,6 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 
-
 const HotelInfoForm = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -32,7 +31,6 @@ const HotelInfoForm = () => {
   const openModal = useModal();
 
   const handleCheckboxChange = (facility, checked) => {
-    console.log("fcility ",facility);
     setValue(
       "facilities",
       checked
@@ -63,7 +61,8 @@ const HotelInfoForm = () => {
   return (
     <div className="gap-y-4">
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFProfileImgUploader name="hotel_image" />
+        {/* <RHFProfileImgUploader name="hotel_image" /> */}
+        <RHFUploadAvatar name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 

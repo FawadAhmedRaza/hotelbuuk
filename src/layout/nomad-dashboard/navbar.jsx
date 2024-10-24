@@ -75,7 +75,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
           <span className="flex items-center gap-1">
             <Typography
               variant="p"
-              className="font-medium !text-xs text-white text-nowrap"
+              className="hidden md:block font-medium !text-xs text-white text-nowrap"
             >
               Hi, {user ? user?.first_name : ""}
             </Typography>
@@ -83,7 +83,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
               src={user?.profile_img}
               type={"server"}
               alt={user?.first_name}
-              className="w-10 h-10  object-cover rounded-full"
+              className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
             />
             {/* <Avatar src={user?.profile_img} className="size-8 " /> */}
           </span>

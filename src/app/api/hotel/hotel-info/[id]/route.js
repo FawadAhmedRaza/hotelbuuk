@@ -1,10 +1,7 @@
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
 import { convertFormData } from "@/src/utils/convert-form-data";
-import {
-  generateSignedUrl,
-  uploadFileToGoogleCloud,
-} from "@/src/utils/upload-images";
+import { uploadFileToGoogleCloud } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {

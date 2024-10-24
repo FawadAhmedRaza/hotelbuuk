@@ -23,8 +23,10 @@ import { useParams } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
+import { getAllRoomFacilities } from "@/src/redux/room-facilities/thunk";
 
 const EditRoomScreen = ({ isEdit, defaultValues }) => {
+  console.log("default avlues", defaultValues);
   const router = useRouter();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
@@ -39,15 +41,8 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
       maximum_occupancy: Yup.string().required("Maximum occupancy is required"),
       room_type: Yup.string().required("Room type is required"),
       price: Yup.string().required("Pricing is required"),
-      room_facilities: Yup.lazy((value) =>
-        Yup.object().shape(
-          Object.keys(value || {}).reduce((schema, key) => {
-            schema[key] = Yup.boolean().required(`${key} is required`);
-            return schema;
-          }, {})
-        )
-      ),
     }),
+    room_facilities: Yup.array().optional(),
     room_images: Yup.array(),
     // .min(10, "At least ten images is required"),
   });
@@ -71,9 +66,33 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
     }
   };
 
+  const fetchRoomFacilities = async () => {
+    try {
+      await dispatch(getAllRoomFacilities(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchRoomTypes();
+    fetchRoomFacilities();
   }, []);
+
+  const TABS = [
+    {
+      label: "Room Info",
+      icon: "solar:home-outline",
+      value: "room-info",
+      component: <RoomInfo />,
+    },
+    {
+      label: "Upload Images",
+      icon: "ph:images",
+      value: "images",
+      component: <RHFMultipleImageUploader name="room_images" />,
+    },
+  ];
 
   const onSubmit = handleSubmit(async (data) => {
     data.hotel_id = user?.hotels?.[0]?.id;
@@ -95,7 +114,6 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
 
     let imagesWithUrls = [];
     let newUploadedImages = [];
-    console.log("images with urls", imagesWithUrls);
     data?.room_images?.forEach((item) => {
       if (item?.img && !item?.file) {
         imagesWithUrls?.push(item);
@@ -127,21 +145,6 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
       enqueueSnackbar(error?.message, { variant: "error" });
     }
   });
-
-  const TABS = [
-    {
-      label: "Room Info",
-      icon: "solar:home-outline",
-      value: "room-info",
-      component: <RoomInfo />,
-    },
-    {
-      label: "Upload Images",
-      icon: "ph:images",
-      value: "images",
-      component: <RHFMultipleImageUploader name="room_images" />,
-    },
-  ];
 
   return (
     <Pannel className="!py-8">

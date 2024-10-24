@@ -13,8 +13,10 @@ import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 const HotelProfile = () => {
+  const { user } = useAuthContext();
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const { hotelFacilities: facilitiesArray } = useSelector(
@@ -29,7 +31,6 @@ const HotelProfile = () => {
 
   const openModal = useModal();
   const [refetch, setRefetch] = useState(false); // To re-trigger updates
-
 
   // Fetch countries on initial render.
   useEffect(() => {
@@ -76,8 +77,13 @@ const HotelProfile = () => {
 
   return (
     <div className="gap-y-4 my-10">
+      <div className="flex justify-end w-full">
+        <Typography variant="h5">{`Profile ID: ${user?.id.slice(
+          -6
+        )}`}</Typography>
+      </div>
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFUploadAvatar name="hotel_image" />
+        <RHFUploadAvatar isEdit={true} name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 
@@ -90,8 +96,8 @@ const HotelProfile = () => {
           />
           <RHFTextArea
             name="description"
-            label="Hotel Description"
-            placeholder="Enter Hotel description"
+            label="Hotel Bio"
+            placeholder="Briefly describe your hotel"
           />
 
           <div className="flex flex-col gap-3 w-full mt-6">
@@ -104,7 +110,7 @@ const HotelProfile = () => {
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                Create
+                Add more
               </Typography>
             </div>
 
@@ -144,7 +150,7 @@ const HotelProfile = () => {
           <RHFInput
             type="number"
             name="hotel_contact_no"
-            label="Contact number"
+            label="Phone Number"
             placeholder="Enter Contact number"
           />
           <RHFSelect
@@ -163,7 +169,7 @@ const HotelProfile = () => {
           <RHFInput
             name="address"
             label="Address"
-            placeholder="Enter Address"
+            placeholder="Enter full address"
           />
         </div>
       </div>
