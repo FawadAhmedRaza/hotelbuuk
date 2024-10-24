@@ -14,19 +14,16 @@ export const HeroSection = React.memo(() => {
       />
 
       <div className="flex flex-col justify-center lg:justify-start  gap-5  z-20 w-full h-full ">
-        <div className="text-2xl lg:!text-[4rem] text-white font-bold  shadow !custom-line uppercase ">
-          <h1 className=" text-white">
-            <span className=" bg-[#8c3072dc] text-opacity-95  text-[60px]  text-white px-3 rounded-md">
+        <div className=" !text-[3rem] md:!text-[4.4rem] text-white font-bold  shadow !custom-line uppercase ">
+          <span className=" text-white ">
+            <span className=" bg-[#bd2c94bb] text-opacity-80  text-[#ffffffea] px-3 rounded-md">
               stay
             </span>
             <br /> for business insights
-          </h1>
+          </span>
           {/* <span className=""></span> */}
         </div>
-        <Typography
-          variant="p"
-          className=" !text-xl  text-white tracking-widest font-normal shadow "
-        >
+        <Typography variant="p" className="  text-white  ">
           Book hotels that offer analysis of business destinations.
         </Typography>
       </div>

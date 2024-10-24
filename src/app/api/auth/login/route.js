@@ -9,6 +9,7 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
+    console.log("daata", data);
     const { email, password } = data || {};
 
     if (!email || !password) {
@@ -55,10 +56,7 @@ export async function POST(req) {
 
     const token = await generateToken(user);
 
-    return NextResponse.json(
-      { accessToken: token, user },
-      { status: 200 }
-    );
+    return NextResponse.json({ accessToken: token, user }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json(

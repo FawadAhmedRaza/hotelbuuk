@@ -11,10 +11,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 // Assuming you have Button, Card, and Typography components defined elsewhere
-import { Button, Card, Pannel, Typography } from "../components";
-import { BgIcon } from "../components/bg-icon";
+import { Button, Card, Pannel, Typography } from "@/src/components";
+import { BgIcon } from "@/src/components/bg-icon";
 
-export const BusinessFacts = () => {
+export const BusinessFactsHotelDetail = () => {
   // Example data, can be fetched or updated later.
   const [count] = useState(Array.from({ length: 9 }, (_, index) => index));
 
@@ -28,21 +28,18 @@ export const BusinessFacts = () => {
         Business Facts
       </Typography>
 
-      {/* Left Arrow Button */}
       <BgIcon
         iconName="cuida:arrow-left-outline"
         iconClass="!size-4"
         className="swiper-button-prev custom-prev absolute left-0 md:left-3 lg:left-3   bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
       />
 
-      {/* Right Arrow Button */}
       <BgIcon
         iconName="cuida:arrow-right-outline"
         iconClass="!size-4"
         className="swiper-button-next custom-next absolute right-0 md:right-3 lg:right-3 bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
       />
 
-      {/* Swiper Component */}
       <Swiper
         spaceBetween={10}
         slidesPerView={3}
@@ -81,7 +78,6 @@ export const BusinessFacts = () => {
       >
         {count.map((item) => (
           <SwiperSlide key={item}>
-            {/* Card */}
             <Card className="flex flex-col gap-3 p-4 shadow-md">
               {/* Image */}
               <div className="relative w-full h-36">
@@ -117,4 +113,4 @@ export const BusinessFacts = () => {
   );
 };
 
-export default BusinessFacts;
+export default BusinessFactsHotelDetail;

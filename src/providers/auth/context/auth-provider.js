@@ -96,7 +96,7 @@ export function AuthProvider({ children }) {
 
       if (accessToken && isValidToken(accessToken)) {
         const user = jwtDecode(accessToken);
-        setSession(accessToken,user);
+        setSession(accessToken, user);
         await dispatch({
           type: Types.INITIAL,
           payload: {
@@ -148,24 +148,27 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (data) => {
     try {
+      console.log("data",data);
       const response = await axiosInstance.post(endpoints.AUTH.login, data);
-
-      const { accessToken, user } = response.data || {};
-      setSession(accessToken, {
-        ...user,
-      });
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
-      enqueueSnackbar("Login successfully", { variant: "success" });
-      router.push(
-        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
-      );
+      console.log("response",response?.data);
+      if (response?.status === 200) {
+        const { accessToken, user } = response.data || {};
+        setSession(accessToken, {
+          ...user,
+        });
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user,
+          },
+        });
+        enqueueSnackbar("Login successfully", { variant: "success" });
+        router.push(
+          user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+        );
+      }
     } catch (err) {
-      enqueueSnackbar(err?.message, { variant: "error" });
+      enqueueSnackbar(err?.message || "", { variant: "error" });
       console.log("Login Error", err?.message);
     }
   }, []);
