@@ -120,6 +120,15 @@ const HotelsListSection = React.memo(() => {
                   <StarRating rating={row.stars} className="!text-lg" />
                 </div>
               </td>
+              <td className="px-6 py-4 overflow-x-scroll max-w-60 custom-scrollbar">
+                <div className="flex gap-2">
+                  {row?.hotelFacilites.map((fac) => (
+                    <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                      {fac.name}
+                    </span>
+                  ))}
+                </div>
+              </td>
             </>
           )}
         />

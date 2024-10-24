@@ -18,3 +18,5 @@ export { Input } from "./input";
 export { Chip } from "./chip";
 export { CalendarInput } from "./calendar-input";
 export { ImageModal } from "./image-modal";
+export { DeleteModal } from "./delete-modal";
+export { ProfileAvatar } from "./profile-avatar";
