@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Pannel, Typography } from "../components";
 import { BookingStepsData } from "../_mock/_booking-steps";
+import Image from "next/image";
 
 export const BookingSteps = () => {
   return (
@@ -8,6 +9,8 @@ export const BookingSteps = () => {
       <Typography variant="h3" className="font-semibold">
         Book in 3 Simple Steps
       </Typography>
+
+     
       <div className="flex flex-col lg:flex-row justify-between gap-5 w-full">
         {BookingStepsData?.map((item) => (
           <Card

@@ -62,7 +62,6 @@ export async function PUT(req, { params }) {
     if (typeof profile !== "string") {
       profileImage = await uploadFileToGoogleCloud(profile_img);
     }
-    console.log("profile imgae",profileImage);
 
     await prisma.nomad.update({
       where: {
@@ -108,16 +107,10 @@ export async function PUT(req, { params }) {
       },
     });
 
-    const userImage = await generateSignedUrl(profileImage);
-    let updatedUser = {
-      ...user,
-      profile_img: userImage,
-    };
-
     const accessToken = await generateToken(user);
 
     return NextResponse.json(
-      { message: "Success", accessToken, user: updatedUser },
+      { message: "Success", accessToken, user },
       { status: 201 }
     );
   } catch (error) {

@@ -70,7 +70,7 @@ export const RoomInfo = () => {
             name="room_info.description"
             label="Description"
             required={true}
-            placeholder="Describe your Business Tour "
+            placeholder="Tell guests what's special about this room"
           />
           <RHFInput
             name="room_info.maximum_occupancy"
@@ -146,7 +146,11 @@ export const RoomInfo = () => {
               startIconClass="size-8"
             />
           </div>
-          <div ref={datePopoverRef} className="relative flex flex-col w-full  ">
+
+          <Typography variant="h6" className="font-medium">
+            Availability
+          </Typography>
+          <div ref={datePopoverRef} className="relative flex flex-col w-full">
             <CalendarInput
               label="Date"
               startDate={date[0].startDate.toString().slice(0, 10)}
