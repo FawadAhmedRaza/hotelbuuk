@@ -29,19 +29,22 @@ export const HotelOverview = () => {
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
         <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 grow">
           <Typography variant="h3">Bosphorus Hotel Istanbul</Typography>
-          <div className=" flex gap-5 items-center w-full ">
-            <span className="flex items-center gap-3">
-              <Iconify iconName="mdi:location" className="text-black size-3.5" />
-              <Typography className=' font-medium' variant="p">
+          <div className=" flex gap-5 md:flex-row flex-col text-start flex-wrap items-center w-full ">
+            <span className="flex   items-center gap-3">
+              <Iconify
+                iconName="mdi:location"
+                className="text-black size-3.5"
+              />
+              <Typography className=" font-medium" variant="p">
                 Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437
               </Typography>
             </span>
-            <span className="flex items-center  gap-6">
               <span className="flex items-center gap-3">
                 <Iconify iconName="gg:phone" className="text-black size-3.5" />
-                <Typography className=' font-medium' variant="p">000-000-000</Typography>
+                <Typography className=" text-nowrap font-medium" variant="p">
+                  000-000-000
+                </Typography>
               </span>
-            </span>
           </div>
         </div>
         <div className="flex gap-3">

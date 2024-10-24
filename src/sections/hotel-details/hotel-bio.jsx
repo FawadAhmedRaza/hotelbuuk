@@ -36,40 +36,17 @@ export const HotelBio = () => {
   return (
     <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
       {/* Left Panel - Image and Time */}
-      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-xl p-4">
-        <div className="flex items-center justify-between w-full">
+      <div className="flex flex-col items-start lg:items-start h-fit w-full lg:w-2/3 bg-primary text-white rounded-xl p-4">
+        <div className="flex items-center justify-between w-full ">
           <span className="text-lg font-medium flex items-center gap-2">
             <Iconify iconName="noto-v1:alarm-clock" />
             {hotelData?.time}
           </span>
-          {hotelData.flexible && (
-            <Button className="bg-white text-primary ">Flexible</Button>
-          )}
+          <Button className="bg-white text-primary ">Flexible</Button>
         </div>
-        <img src={hotelData?.image} alt="Hotel Room" className="mt-4 " />
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
-      
-
-
-        {/* Included Amenities */}
-        {/* <div className="mt-4">
-          <Typography variant="h4" className="font-semibold text-primary">
-            Included Amenities
-          </Typography>
-
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {hotelData?.amenities?.map((amenity) => (
-              <div key={amenity.id} className="flex items-center gap-2">
-                <Iconify iconName={amenity?.icon} className="border" />
-                <Typography variant="p" className="">
-                  {amenity?.name}
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
