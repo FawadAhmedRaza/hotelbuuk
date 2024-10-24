@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { Card, Iconify, Typography } from ".";
+import { AnchorTag, Card, Iconify, Typography } from ".";
 import { BgIcon } from "./bg-icon";
 
-const DashboardCard = ({ title, value, IconName, btnTitle }) => {
+const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
+  console.log(path);
+
   return (
     <div>
       <Card className="md:col-span-3 col-span-12 flex-col flex gap-1 py-5 px-4 ">
@@ -31,12 +33,14 @@ const DashboardCard = ({ title, value, IconName, btnTitle }) => {
         </div>
 
         <div className="w-full text-center py-2 mt-5 bg-[#fef5fc] rounded-md">
-          <Typography
-            variant="p"
-            className="text-primary uppercase !text-sm font-medium !py-0.5 cursor-pointer"
-          >
-            {btnTitle}
-          </Typography>
+          <AnchorTag href={path}>
+            <Typography
+              variant="p"
+              className="text-primary uppercase !text-sm font-medium !py-0.5 cursor-pointer"
+            >
+              {btnTitle}
+            </Typography>
+          </AnchorTag>
         </div>
       </Card>
     </div>

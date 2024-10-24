@@ -6,14 +6,36 @@ import { useBoolean } from "@/src/hooks";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 import { NomadDashboardMenu } from "./menu-link";
-import { AnchorTag, Avatar, Iconify, Typography } from "@/src/components";
+import {
+  AnchorTag,
+  Avatar,
+  Iconify,
+  ProfileAvatar,
+  Typography,
+} from "@/src/components";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
+import { useDispatch, useSelector } from "react-redux";
+import { getNomadProfileById } from "@/src/redux/nomad-profile/thunk";
 
 export const NomadDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
+  const dispatch = useDispatch();
+
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
   console.log("user", user);
+
+  const { nomad } = useSelector((state) => state.nomadProfile.getById);
+
+  console.log("nomad from thunk", nomad);
+
+  useEffect(() => {
+    async function fetchNomad() {
+      await dispatch(getNomadProfileById(user?.id)).unwrap();
+    }
+
+    fetchNomad();
+  }, []);
 
   return (
     <div
@@ -57,7 +79,13 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
             >
               Hi, {user ? user?.first_name : ""}
             </Typography>
-            <Avatar src={user?.profile_img} className="size-8" />
+            <ProfileAvatar
+              src={user?.profile_img}
+              type={"server"}
+              alt={user?.first_name}
+              className="w-10 h-10  object-cover rounded-full"
+            />
+            {/* <Avatar src={user?.profile_img} className="size-8 " /> */}
           </span>
         </div>
       </div>

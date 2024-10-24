@@ -1,10 +1,9 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 
 import { useBoolean } from "@/src/hooks";
 
-import { AnchorTag, Iconify, Typography } from "@/src/components";
+import { AnchorTag, Iconify, ProfileAvatar, Typography } from "@/src/components";
 import { HotelDashboardMenu } from "./menu-links";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
@@ -26,7 +25,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-3xl font-bold text-white text-start text-nowrap  "
+          className=" !text-lg sm:!text-xl md:!text-2xl font-bold text-white text-start text-nowrap  "
         >
           Hotelbuuk Dashboard
         </Typography>
@@ -45,7 +44,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
 
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
+          className="flex items-center gap-1 sm:gap-3 lg:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
         >
           <Iconify
             iconName="material-symbols:menu"
@@ -56,12 +55,20 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
               variant="p"
               className="font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? user?.hotel_name : ""} !{/* Fawad */}
+              Hi, {user ? user?.hotel_name : ""} {/* Fawad */}
             </Typography>
-            <Iconify
+
+            <ProfileAvatar
+              src={user?.profile_img}
+              type={"server"}
+              alt={user?.hotel_name}
+              className="w-10 h-10  object-cover rounded-full"
+            />
+
+            {/* <Iconify
               iconName="fluent:person-circle-12-filled"
               className="size-5 sm:size-8"
-            />
+            /> */}
           </span>
         </div>
       </div>
