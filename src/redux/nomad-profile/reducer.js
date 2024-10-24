@@ -61,7 +61,7 @@ export const nomadProfile = createSlice({
     builder.addCase(getNomadsProfile.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.nomads = action.payload.nomads;
-    
+      state.isLoading = false;
     });
     builder.addCase(getNomadsProfile.rejected, (state, action) => {
       state.error = action.error;

@@ -62,13 +62,19 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
             >
               Hi, {user ? user?.hotel_name : ""} {/* Fawad */}
             </Typography>
-
-            <ProfileAvatar
-              src={user?.profile_img}
-              type={"server"}
-              alt={user?.hotel_name}
-              className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
-            />
+            {user?.profile_img ? (
+              <ProfileAvatar
+                src={user?.profile_img}
+                type={"server"}
+                alt={user?.hotel_name}
+                className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
+              />
+            ) : (
+              <Iconify
+                iconName="carbon:user-avatar-filled"
+                className="!size-8 md:!size-10 text-white"
+              />
+            )}
 
             {/* <Iconify
               iconName="fluent:person-circle-12-filled"
