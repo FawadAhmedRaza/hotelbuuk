@@ -127,7 +127,6 @@ export async function PUT(req, { params }) {
 
     if (data?.deletedImages.length > 0) {
       data?.deletedImages?.map(async (item) => {
-        console.log("Delted Item", item);
         try {
           await prisma.hotel_images.delete({
             where: {

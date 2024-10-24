@@ -54,14 +54,9 @@ export async function POST(req) {
     }
 
     const token = await generateToken(user);
-    let userProfileImage = await generateSignedUrl(user?.profile_img);
-    let userWithProfileImage = {
-      ...user,
-      profile_img: userProfileImage,
-    };
 
     return NextResponse.json(
-      { accessToken: token, user: userWithProfileImage },
+      { accessToken: token, user },
       { status: 200 }
     );
   } catch (err) {

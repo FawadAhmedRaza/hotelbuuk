@@ -53,7 +53,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       label: "Settings",
       path: "",
       children: [
-        { id: 4, title: "Profile", path: `/nomad/profile/${user?.id}` },
+        { id: 4, title: "Profile", path:  `/nomad/profile/${user?.id}` },
         { id: 5, title: "Terms", path: "" },
         { id: 5, title: "Privacy", path: "" },
       ],

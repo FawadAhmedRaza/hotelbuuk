@@ -6,6 +6,7 @@ import {
   AnchorTag,
   Breadcrumb,
   Button,
+  DeleteModal,
   Iconify,
   Pannel,
   Typography,
@@ -24,14 +25,16 @@ import {
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import { useBoolean } from "@/src/hooks";
 
 const header = [
   { id: 1, label: "Room Name" },
   { id: 2, label: "Description" },
   { id: 3, label: "Maximum Occupancy" },
   { id: 4, label: "Room Type" },
-  { id: 5, label: "Price" },
-  { id: 6, label: "" },
+  { id: 5, label: "Facilities" },
+  { id: 6, label: "Price" },
+  { id: 7, label: "" },
 ];
 const RoomsListView = React.memo(() => {
   const { user } = useAuthContext();
@@ -113,50 +116,103 @@ const RoomsListView = React.memo(() => {
               items={items}
               TABLE_HEADER={header}
               enableSelection={false}
-              renderRow={(row) => (
-                <>
-                  <td className=" px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.room_name}
-                    </Typography>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.description}
-                    </Typography>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.maximum_occupancy}
-                    </Typography>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.room_type}
-                    </Typography>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.price}
-                    </Typography>
-                  </td>
-                  <td className=" px-6 py-4">
-                    <div className="flex gap-5">
-                      <Iconify
-                        onClick={() => handleRoomEdit(row.id)}
-                        iconName="lucide:edit"
-                        className="text-gray-500 cursor-pointer"
-                      />
+              renderRow={(row) => {
+                const facilities = {
+                  air_conditioning: row.air_conditioning,
+                  blackout_curtains: row.blackout_curtains,
+                  coffee_machine: row.coffee_machine,
+                  desk_workspace: row.desk_workspace,
+                  flat_screen_tv: row.flat_screen_tv,
+                  heating: row.heating,
+                  high_thread_sheets: row.high_thread_sheets,
+                  king_bed: row.king_bed,
+                  luxury_toiletries: row.luxury_toiletries,
+                  mini_fridge: row.mini_fridge,
+                  private_balcony: row.private_balcony,
+                  private_bathroom: row.private_bathroom,
+                  room_service: row.room_service,
+                  smart_lighting: row.smart_lighting,
+                  soundproof_windows: row.soundproof_windows,
+                };
 
-                      <Iconify
-                        onClick={() => openDeleteModal(row.id, row.room_name)}
-                        iconName="fluent-mdl2:delete"
-                        className="text-red-500 cursor-pointer"
-                      />
-                    </div>
-                  </td>
-                </>
-              )}
+                const trueFacilities = Object.entries(facilities)
+                  .filter(([key, value]) => value === true) // Filter out only true values
+                  .map(([key]) => key);
+
+                const newFacilities = trueFacilities.map((fac) => {
+                  const newString = fac.replaceAll("_", " ");
+                  return newString;
+                });
+
+                return (
+                  <>
+                    <td className=" px-6 py-4">
+                      <Typography
+                        variant="p"
+                        className="  !text-nowrap max-w-56"
+                      >
+                        {row.room_name}
+                      </Typography>
+                    </td>
+                    <td className="px-6 py-4">
+                      <Typography
+                        variant="p"
+                        className="  !text-nowrap max-w-56"
+                      >
+                        {row.description}
+                      </Typography>
+                    </td>
+                    <td className="px-6 py-4">
+                      <Typography
+                        variant="p"
+                        className="  !text-nowrap max-w-56"
+                      >
+                        {row.maximum_occupancy}
+                      </Typography>
+                    </td>
+                    <td className="px-6 py-4">
+                      <Typography
+                        variant="p"
+                        className="  !text-nowrap max-w-56"
+                      >
+                        {row.room_type}
+                      </Typography>
+                    </td>
+                    <td className="px-6 py-4 overflow-x-scroll max-w-60 custom-scrollbar">
+                      <div className="flex gap-2">
+                        {newFacilities.map((fac) => (
+                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                            {fac}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <Typography
+                        variant="p"
+                        className="  !text-nowrap max-w-56"
+                      >
+                        {row.price}
+                      </Typography>
+                    </td>
+                    <td className=" px-6 py-4">
+                      <div className="flex gap-5">
+                        <Iconify
+                          onClick={() => handleRoomEdit(row.id)}
+                          iconName="lucide:edit"
+                          className="text-gray-500 cursor-pointer"
+                        />
+
+                        <Iconify
+                          onClick={() => openDeleteModal(row.id, row.room_name)}
+                          iconName="fluent-mdl2:delete"
+                          className="text-red-500 cursor-pointer"
+                        />
+                      </div>
+                    </td>
+                  </>
+                );
+              }}
             />
             <Pagination
               currentPage={page}
@@ -176,7 +232,8 @@ const RoomsListView = React.memo(() => {
               handleDelete={handleDelete}
             >
               <Typography variant="p">
-                Are you sure you want to delete {roomName}?
+                Are you sure you want to delete{" "}
+                <span className="font-semibold">{roomName}</span> ?
               </Typography>
             </DeleteModal>
           )}
@@ -189,3 +246,21 @@ const RoomsListView = React.memo(() => {
 });
 
 export default RoomsListView;
+
+{
+  air_conditioning: false;
+  blackout_curtains: false;
+  coffee_machine: false;
+  desk_workspace: false;
+  flat_screen_tv: true;
+  heating: true;
+  high_thread_sheets: false;
+  king_bed: true;
+  luxury_toiletries: false;
+  mini_fridge: false;
+  private_balcony: false;
+  private_bathroom: false;
+  room_service: false;
+  smart_lighting: true;
+  soundproof_windows: false;
+}
