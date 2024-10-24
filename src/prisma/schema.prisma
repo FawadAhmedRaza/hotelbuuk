@@ -78,7 +78,7 @@ model hotel_info {
 }
 
 model hotel_images {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
   img  String
   name String?
 
@@ -156,9 +156,19 @@ model hotel_rooms {
   luxury_toiletries  Boolean
   high_thread_sheets Boolean
 
-  hotel_id String     @db.ObjectId
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+  hotel_id    String        @db.ObjectId
+  hotel       hotel_info    @relation(fields: [hotel_id], references: [id])
+  room_images room_images[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model room_images {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
+
+  room_id String      @db.ObjectId
+  room    hotel_rooms @relation(fields: [room_id], references: [id])
 }

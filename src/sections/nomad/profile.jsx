@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 // Components and Others...
 import {
+  Breadcrumb,
   Button,
   CalendarInput,
   CustomPopover,
@@ -176,6 +177,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         onSubmit={onSubmit}
         className="flex flex-col gap-10 justify-center items-center w-full"
       >
+        <Breadcrumb title={isEdit ? "Update nomad profile" : "Create profile"} />
         <RHFUploadAvatar name="profile_img" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
           <div className="flex flex-col sm:flex-row gap-5 w-full">
