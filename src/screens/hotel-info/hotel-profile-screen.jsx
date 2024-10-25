@@ -148,7 +148,6 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   return (
     <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-
         <Breadcrumb title="Update Hotel profile" />
         <div className="w-full mt-4">
           <Tabs
@@ -157,10 +156,11 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             setActiveTab={setActiveTabs}
           />
         </div>
+        
         {activeTabs === "hotel-images" && (
           <div className="flex justify-end my-5">
             <Button loading={isSubmitting} type="submit">
-              Submit
+              {isEdit ? "Save" : "Submit"}
             </Button>
           </div>
         )}

@@ -33,16 +33,16 @@ export const NavBar = React.memo(({ className }) => {
         className={"flex hover:no-underline items-center gap-2"}
       >
         <Image
-          src={"/assets/images/transperent-logo/transperent/gold.png"}
+          src={"/assets/images/transperent-logo/transperent/WHITE.png"}
           height={200}
-          width={85}
+          width={60}
         />
-        {/* <Typography
+        <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold !text-[#A6800B] text-start  "
+          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold !text-white text-start  "
         >
           Hotelbuuk
-        </Typography> */}
+        </Typography>
       </AnchorTag>
 
       {isOpen && (
