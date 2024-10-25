@@ -43,7 +43,6 @@ export const RoomInfo = () => {
   const { roomFacilities } = useSelector((state) => state.roomFacilities);
 
   const selectedFacilities = watch("room_facilities") || [];
-  console.log("seelcted", selectedFacilities);
 
   const handleCheckboxChange = (facility, checked) => {
     setValue(
