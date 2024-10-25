@@ -9,6 +9,8 @@ export async function POST(req) {
     const data = convertFormData(body);
     const imageFiles = body.getAll("room_images");
 
+    console.log("Body Data", body);
+
     const { room_info, hotel_id, room_facilities } = data || {};
 
     const { room_name, room_type, price, maximum_occupancy, description } =
@@ -99,6 +101,7 @@ export async function GET(req) {
         },
       },
     });
+    console.log("rooms", hotelRooms);
 
     let formatedList = hotelRooms?.map((item) => {
       return {
@@ -108,6 +111,8 @@ export async function GET(req) {
         ),
       };
     });
+
+    console.log("Rooms List", formatedList);
 
     return NextResponse.json(
       { message: "success", hotelRooms: formatedList },
