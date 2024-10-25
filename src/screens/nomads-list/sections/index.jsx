@@ -8,6 +8,7 @@ import {
   Button,
   Iconify,
   Pannel,
+  ProfileAvatar,
   Typography,
 } from "@/src/components";
 import Link from "next/link";
@@ -82,11 +83,25 @@ const NomadsListSection = React.memo(() => {
                 <>
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
-                      <img
+                      {/* <img
                         src="/assets/images/hotel-det-1.png"
                         alt="avatar"
                         className="h-8 w-8 rounded-full"
-                      />
+                      /> */}
+                      {!row?.profile_img ? (
+                        <Iconify
+                          iconName="carbon:user-avatar-filled"
+                          className="!size-10   rounded-full object-cover text-gray-500"
+                        />
+                      ) : (
+                        <ProfileAvatar
+                          src={row?.profile_img}
+                          type={"server"}
+                          alt={row?.first_name}
+                          className="  h-10 w-10 rounded-full object-cover"
+                        />
+                      )}
+
                       <div className="flex gap-1">
                         <Typography
                           variant="p"
