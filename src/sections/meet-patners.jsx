@@ -3,7 +3,7 @@ import React from "react";
 
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pannel, Typography } from "../components";
+import { Iconify, Pannel, Typography } from "../components";
 import { SwiperCards } from "../_mock/_swiper";
 import { BgIcon } from "../components/bg-icon";
 import { Navigation } from "swiper/modules";
@@ -19,17 +19,16 @@ export const MeetOurPatners = React.memo(() => {
         Meet Our Partners
       </Typography>
 
-      <div className="w-full relative ">
-        <BgIcon
-          iconName="cuida:arrow-left-outline"
-          iconClass="!size-6"
-          className="swiper-button-prev custom-prev absolute -left-8 md:-left-8 lg:-left-10 -mt-8 bg-primary size-8 z-30 top-1/2"
-        />
-        <BgIcon
-          iconName="cuida:arrow-right-outline"
-          iconClass="!size-6"
-          className=" swiper-button-next custom-next absolute -right-8 md:-right-8 lg:-right-10 -mt-8 bg-primary size-8 z-30 top-1/2"
-        />
+      <div className="w-full relative">
+        {/* Left Arrow Button */}
+        <span className="swiper-button-prev custom-prev absolute -left-3 bg-primary !h-8 !w-8 z-30 top-1/2 md:top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full cursor-pointer text-black p-1">
+          <Iconify iconName="cuida:arrow-left-outline" />
+        </span>
+
+        {/* Right Arrow Button */}
+        <span className="swiper-button-next custom-next absolute -right-3 bg-primary !h-8 !w-8 z-30 top-1/2 md:top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full cursor-pointer text-black p-1">
+          <Iconify iconName="cuida:arrow-right-outline" />
+        </span>
 
         <Swiper
           spaceBetween={30}
@@ -37,7 +36,7 @@ export const MeetOurPatners = React.memo(() => {
           modules={[Navigation]}
           navigation={{
             nextEl: ".custom-next",
-            prevEl: ".custom-prev",
+            prevEl: ".custom-prev", // Fix: properly target the prev element
           }}
           breakpoints={{
             0: {

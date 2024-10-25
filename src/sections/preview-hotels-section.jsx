@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Pannel, Typography } from "../components";
 import { PreviewHotels } from "./preview-hotels";
+import { paths } from "../contants";
+import Link from "next/link";
 
 export const PreviewHotelsSection = React.memo(() => {
   return (
@@ -23,8 +25,11 @@ export const PreviewHotelsSection = React.memo(() => {
         <Typography variant="h4" className="font-semibold text-center mt-2">
           Find More Business Hotels
         </Typography>
-
-        <Button className=" w-full sm:w-fit">Show More</Button>
+        <Link href={paths.hotels.root}>
+          <Button className=" w-full sm:w-fit">
+            Show More
+          </Button>
+        </Link>
       </div>
     </Pannel>
   );

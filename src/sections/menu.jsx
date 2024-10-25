@@ -29,8 +29,8 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
         <BgIcon
           iconName="charm:cross"
           onClick={onClick}
-          className="bg-primary !text-white"
-          iconClass="!text-white size-8"
+          className="bg-primary !text-white flex min-450:hidden"
+          iconClass="!text-white size-6"
         />
       </div>
       <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
