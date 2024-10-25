@@ -29,15 +29,15 @@ export const BusinessFactsHotelDetail = () => {
       </Typography>
 
       <BgIcon
-        iconName="cuida:arrow-left-outline"
+        iconName="mingcute:left-fill"
         iconClass="!size-4"
-        className="swiper-button-prev custom-prev absolute left-0 md:left-3 lg:left-3   bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
+        className="swiper-button-prev  h-8 w-8 custom-prev absolute left-0 md:left-3 lg:left-3   bg-black  z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
       />
 
       <BgIcon
-        iconName="cuida:arrow-right-outline"
+        iconName="mingcute:right-fill"
         iconClass="!size-4"
-        className="swiper-button-next custom-next absolute right-0 md:right-3 lg:right-3 bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
+        className="swiper-button-next h-8 w-8 custom-next absolute right-0 md:right-3 lg:right-3 bg-black  z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
       />
 
       <Swiper

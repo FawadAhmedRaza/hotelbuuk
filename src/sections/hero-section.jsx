@@ -31,7 +31,7 @@ export const HeroSection = React.memo(() => {
           </Typography>
         </div>
       </div>
-      <div className="absolute left-0 right-0 flex justify-center absoluter w-full bottom-0  mb-4 z-10 ">
+      <div className="absolute left-0 right-0 flex justify-center absoluter w-full bottom-0  mb-10 z-10 ">
         <Booking />
       </div>
     </Pannel>
