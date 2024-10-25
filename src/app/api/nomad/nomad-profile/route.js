@@ -17,7 +17,7 @@ export async function POST(req) {
       last_name,
       phone_number,
       electronics,
-      profile,
+      profile_img,
       email,
       fundraising,
       manufacturing,
@@ -38,7 +38,7 @@ export async function POST(req) {
     }
 
     // get file name
-    const profileImage = await uploadFileToGoogleCloud(profile);
+    const profileImage = await uploadFileToGoogleCloud(profile_img);
 
     await prisma.nomad.create({
       data: {
@@ -83,15 +83,9 @@ export async function POST(req) {
     });
 
     const accessToken = await generateToken(user);
-    
-    let userProfileImage = await generateSignedUrl(user?.profile_img);
-    let userWithProfileImage = {
-      ...user,
-      profile_img: userProfileImage,
-    };
 
     return NextResponse.json(
-      { message: "Success", accessToken, user: userWithProfileImage },
+      { message: "Success", accessToken, user },
       { status: 201 }
     );
   } catch (error) {

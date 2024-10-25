@@ -61,16 +61,14 @@ export const nomadProfile = createSlice({
     builder.addCase(getNomadsProfile.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.nomads = action.payload.nomads;
-      // state.create.accessToken = action.payload.accessToken;
-      //   state.create.user = action.payload.user;
-      // state.create.isLoading = false;
+      state.isLoading = false;
     });
     builder.addCase(getNomadsProfile.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     });
 
-    // get by Id
+    // get nomads by Id
     builder.addCase(getNomadProfileById.pending, (state, action) => {
       state.getById.isLoading = true;
     });

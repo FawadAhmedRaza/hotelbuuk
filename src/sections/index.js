@@ -10,6 +10,7 @@ export { PreviewHotels } from "./preview-hotels";
 export { PreviewHotelsSection } from "./preview-hotels-section";
 export { BusinessFacts } from "./business-facts";
 
+export { PreviewHotelsSection } from "./preview-hotels-section";
 
 //---------------------//
 

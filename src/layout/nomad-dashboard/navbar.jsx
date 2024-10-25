@@ -6,14 +6,32 @@ import { useBoolean } from "@/src/hooks";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 import { NomadDashboardMenu } from "./menu-link";
-import { AnchorTag, Avatar, Iconify, Typography } from "@/src/components";
+import {
+  AnchorTag,
+  Avatar,
+  Iconify,
+  ProfileAvatar,
+  Typography,
+} from "@/src/components";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
+import { useDispatch, useSelector } from "react-redux";
+import { getNomadProfileById } from "@/src/redux/nomad-profile/thunk";
 
 export const NomadDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
+  const dispatch = useDispatch();
+
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-  console.log("user", user);
+
+  const { nomad } = useSelector((state) => state.nomadProfile.getById);
+
+  useEffect(() => {
+    async function fetchNomad() {
+      await dispatch(getNomadProfileById(user?.id)).unwrap();
+    }
+    fetchNomad();
+  }, []);
 
   return (
     <div
@@ -25,7 +43,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl text-nowrap md:!text-[27px] font-bold text-white text-start  "
+          className="sm:!text-xl md:!text-2xl !text-[14px] font-bold text-white text-start text-nowrap"
         >
           Hotelbuuk Dashboard
         </Typography>
@@ -53,11 +71,24 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
           <span className="flex items-center gap-1">
             <Typography
               variant="p"
-              className="font-medium !text-xs text-white text-nowrap"
+              className="hidden md:block font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? user?.first_name : ""}
+              {user ? `Hi, ${user?.first_name}` : ""}
             </Typography>
-            <Avatar src={user?.profile_img} className="size-8" />
+
+            {user.profile_img ? (
+              <ProfileAvatar
+                src={user?.profile_img}
+                type={"server"}
+                alt={user?.first_name}
+                className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
+              />
+            ) : (
+              <Iconify
+                iconName="carbon:user-avatar-filled"
+                className="!size-8 md:!size-10 text-white"
+              />
+            )}
           </span>
         </div>
       </div>

@@ -8,10 +8,12 @@ import HotelImages from "./components/hote-images";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { enqueueSnackbar } from "notistack";
 
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
@@ -26,13 +28,14 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     country: Yup.string().required("country is required"),
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
-    facilites: Yup.array().optional(),
+    facilities: Yup.array().optional(),
     images: Yup.array(),
   });
 
   const { user, setUser } = useAuthContext();
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const methods = useForm({
     resolver: yupResolver(HotelSchema),
@@ -42,8 +45,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const {
     handleSubmit,
     trigger,
-
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   const fetchHotelFacilities = async () => {
@@ -66,15 +68,63 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
         ...data,
         user_id: user?.id,
       };
+      let imageUrls = [];
+      let files = [];
 
-      const response = await axiosInstance.post(
-        endpoints.hotel.create,
-        finalData
+      data.images?.forEach((item) => {
+        if (item.url && !item?.file) {
+          imageUrls.push(item);
+        } else if (item.file) {
+          files.push({ file: item?.file, name: item?.name });
+        }
+      });
+      let firstArrayIds = imageUrls?.map((item) => item?.id);
+      let secondArrayIds = data.hotelImages?.map((item) => item?.id);
+      let remaingImages = secondArrayIds.filter(
+        (item) => !firstArrayIds.includes(item)
+      );
+      let deletedImages = data?.hotelImages?.filter((item) =>
+        remaingImages.includes(item?.id)
+      );
+
+      const formData = new FormData();
+      const images = files?.map((da) => da?.file);
+      const names = files?.map((da) => da?.name);
+
+      for (const key in finalData) {
+        if (
+          finalData[key] !== null &&
+          finalData[key] !== undefined &&
+          key !== "images"
+        ) {
+          if (
+            typeof finalData[key] === "object" &&
+            !(finalData[key] instanceof File)
+          ) {
+            formData.append(key, JSON.stringify(finalData[key]));
+          } else {
+            formData.append(key, finalData[key]);
+          }
+        }
+      }
+      delete formData.hotelImages;
+
+      formData.append("imagesUrl", JSON.stringify(imageUrls));
+      formData.append("deletedImages", JSON.stringify(deletedImages));
+      console.log("iamges array ", images);
+      images?.forEach((file) => formData.append("files", file));
+      images.forEach((file) =>
+        formData.append("imagesNames", JSON.stringify(names))
+      );
+
+      const response = await axiosInstance.put(
+        endpoints.hotel.update(defaultValues?.id),
+        formData
       );
       if (response?.status === 201) {
         let { accessToken, user } = response?.data || {};
         await setUser(user, accessToken);
-        enqueueSnackbar("Hotel info created", { variant: "success" });
+        enqueueSnackbar("Hotel info updated", { variant: "success" });
         router.push("/hotel-dashboard");
       }
     } catch (error) {
@@ -96,18 +146,24 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   ];
 
   return (
-    <Pannel>
+    <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="w-full">
+
+        <Breadcrumb title="Update Hotel profile" />
+        <div className="w-full mt-4">
           <Tabs
             TABS={TABS}
             activeTab={activeTabs}
             setActiveTab={setActiveTabs}
           />
         </div>
-        <div className="flex justify-end my-5">
-          <Button>Submit</Button>
-        </div>
+        {activeTabs === "hotel-images" && (
+          <div className="flex justify-end my-5">
+            <Button loading={isSubmitting} type="submit">
+              Submit
+            </Button>
+          </div>
+        )}
       </RHFFormProvider>
     </Pannel>
   );

@@ -7,6 +7,7 @@ import { LangaugeTranslator } from ".";
 import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
 import { cn } from "../libs/cn";
+import Image from "next/image";
 
 export const NavBar = React.memo(({ className }) => {
   const [user, setUser] = useState({});
@@ -18,22 +19,30 @@ export const NavBar = React.memo(({ className }) => {
     setUser(user);
   }, []);
 
-  console.log("user",user);
+  console.log("user", user);
 
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-20 ",
+        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-10 ",
         className
       )}
     >
-      <AnchorTag href={"/"}>
-        <Typography
+      <AnchorTag
+        href={"/"}
+        className={"flex hover:no-underline items-center gap-2"}
+      >
+        <Image
+          src={"/assets/images/transperent-logo/transperent/gold.png"}
+          height={200}
+          width={85}
+        />
+        {/* <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold text-white text-start  "
+          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold !text-[#A6800B] text-start  "
         >
           Hotelbuuk
-        </Typography>
+        </Typography> */}
       </AnchorTag>
 
       {isOpen && (

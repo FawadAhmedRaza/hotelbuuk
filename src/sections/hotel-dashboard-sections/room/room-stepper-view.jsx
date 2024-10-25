@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RHFFormProvider } from "@/src/components/hook-form";
-import { Pannel, Stepper, Typography } from "@/src/components";
+import {
+  RHFFormProvider,
+  RHFMultipleImageUploader,
+} from "@/src/components/hook-form";
+import { Breadcrumb, Pannel, Stepper, Typography } from "@/src/components";
 import { RoomInfo } from "./room-info";
 import ImageUploader from "../../nomad/stepper-view/image-uploader";
 import { useDispatch } from "react-redux";
@@ -14,25 +17,15 @@ import { getHotelId } from "@/src/actions/auth.actions";
 import { enqueueSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
+import { getAllRoomFacilities } from "@/src/redux/room-facilities/thunk";
 
 export const RoomStepperView = () => {
   const router = useRouter();
-  const [currentSteps, setCurrentSteps] = useState([]);
-  const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const { user } = useAuthContext();
 
-  const [hotelId, setHotelId] = useState("");
-
-  const checkBoxSchema = (amenities) => {
-    return Yup.object().shape(
-      amenities.reduce((schema, amenity) => {
-        schema[amenity] = Yup.boolean().required(`${amenity} is required`);
-
-        return schema;
-      }, {})
-    );
-  };
+  const [currentSteps, setCurrentSteps] = useState([]);
+  const [activeStep, setActiveStep] = useState(0);
 
   const RoomSchema = Yup.object().shape({
     room_info: Yup.object().shape({
@@ -41,11 +34,9 @@ export const RoomStepperView = () => {
       maximum_occupancy: Yup.string().required("Maximum occupancy is required"),
       room_type: Yup.string().required("Room type is required"),
       price: Yup.string().required("Pricing is required"),
-      room_facilities: Yup.lazy((value) =>
-        checkBoxSchema(Object.keys(value || {}))
-      ),
+      room_facilities: Yup.array().optional(),
     }),
-    images: Yup.array(),
+    room_images: Yup.array(),
     // .min(10, "At least ten images are required")
     // .required("Files are required"),
   });
@@ -60,8 +51,6 @@ export const RoomStepperView = () => {
     formState: { errors, isSubmitting },
   } = methods;
 
-  console.log("errors", errors);
-
   const fetchRoomTypes = async () => {
     try {
       await dispatch(getAllRoomTypes(user?.id)).unwrap();
@@ -70,11 +59,9 @@ export const RoomStepperView = () => {
     }
   };
 
-  const fetchHotelId = async () => {
+  const fetchRoomFacilities = async () => {
     try {
-      const request = await getHotelId(user?.id);
-      console.log("reques", request?.id);
-      setHotelId(request?.id);
+      await dispatch(getAllRoomFacilities(user?.id)).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -82,21 +69,8 @@ export const RoomStepperView = () => {
 
   useEffect(() => {
     fetchRoomTypes();
-    fetchHotelId();
+    fetchRoomFacilities();
   }, []);
-
-  const onSubmit = handleSubmit(async (data) => {
-    data.hotel_id = hotelId;
-    console.log("Form submitted: ", data);
-    try {
-      await dispatch(createRoom(data)).unwrap();
-      enqueueSnackbar("Room created", { variant: "success" });
-      router.push(paths.hotelDashboard.rooms);
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
-    }
-  });
 
   const steps = [
     {
@@ -109,7 +83,7 @@ export const RoomStepperView = () => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
-      component: <ImageUploader />,
+      component: <RHFMultipleImageUploader name="room_images" />,
     },
   ];
 
@@ -140,9 +114,45 @@ export const RoomStepperView = () => {
     setActiveStep((prev) => prev - 1);
   };
 
+  const onSubmit = handleSubmit(async (data) => {
+    data.hotel_id = user?.hotels?.[0]?.id;
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (
+        data[key] !== null &&
+        data[key] !== undefined &&
+        key !== "room_images"
+      ) {
+        if (typeof data[key] === "object" && !(data[key] instanceof File)) {
+          formData.append(key, JSON.stringify(data[key]));
+        } else {
+          formData.append(key, data[key]);
+        }
+      }
+    }
+    const roomImages = data.room_images?.map((item) => item?.file);
+    const roomImagesNames = data.room_images?.map((item) => item?.name);
+
+    roomImages?.forEach((file) => formData.append("room_images", file));
+    roomImagesNames?.forEach(() =>
+      formData.append("room_images_names", JSON.stringify(roomImagesNames))
+    );
+
+    try {
+      await dispatch(createRoom(formData)).unwrap();
+      enqueueSnackbar("Room created", { variant: "success" });
+      router.push(paths.hotelDashboard.rooms);
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  });
+
   return (
-    <Pannel>
+    <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
+        <Breadcrumb title="Add a New Room" />
         <Stepper
           steps={currentSteps}
           activeStep={activeStep}

@@ -4,6 +4,7 @@ import { generateOTP, saltAndHashPassword } from "@/src/libs/helper";
 import { prisma } from "@/src/db";
 import { sendMail } from "@/src/service/mailService";
 import { otpTemplate } from "@/src/libs/otpTemplate";
+import { room_facilities } from "@/src/_mock/_room";
 
 export async function POST(req) {
   try {
@@ -47,17 +48,34 @@ export async function POST(req) {
     });
 
     await sendMail("Test OTP", newUser.email, otpTemplate(newUser.email, OTP));
-
+    
     const facilities = initialFacilities?.map((item) => {
       return {
         ...item,
-        user_id: newUser?.id,
+        user_id: String(newUser?.id),
       };
     });
 
-    await prisma.facilities.createMany({
-      data: facilities,
+    const roomFacilites = room_facilities?.map((item) => {
+      return {
+        ...item,
+        user_id: String(newUser?.id),
+      };
     });
+
+    // create initial facilities
+    await prisma.facilities
+      .createMany({
+        data: facilities,
+      })
+      .catch((error) => console.log("facilites error", error));
+
+    // create initial room facilities
+    await prisma.room_facilities
+      .createMany({
+        data: roomFacilites,
+      })
+      .catch((error) => console.log("room facilites error", error));
 
     return NextResponse.json(
       {

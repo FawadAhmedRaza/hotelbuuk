@@ -42,40 +42,13 @@ export const HotelBio = () => {
             <Iconify iconName="noto-v1:alarm-clock" />
             {hotelData?.time}
           </span>
-          {hotelData.flexible && (
-            <Button className="bg-white text-primary ">Flexible</Button>
-          )}
+          <Button className="bg-white text-primary ">Flexible</Button>
         </div>
         <img src={hotelData?.image} alt="Hotel Room" className="mt-4 mx-auto " />
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
-        {/* Hotel Bio */}
-        <Typography variant="h4" className="font-semibold text-primary ">
-          Hotel Bio
-        </Typography>
-        <Typography variant="p" className="!text-sm text-secondary mt-2">
-          {hotelData?.bio}
-        </Typography>
-
-        {/* Included Amenities */}
-        {/* <div className="mt-4">
-          <Typography variant="h4" className="font-semibold text-primary">
-            Included Amenities
-          </Typography>
-
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {hotelData?.amenities?.map((amenity) => (
-              <div key={amenity.id} className="flex items-center gap-2">
-                <Iconify iconName={amenity?.icon} className="border" />
-                <Typography variant="p" className="">
-                  {amenity?.name}
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
               Teaching Tool

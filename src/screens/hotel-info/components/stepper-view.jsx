@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 
-import { Pannel, Stepper } from "@/src/components";
+import { Breadcrumb, Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
 import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
 import { enqueueSnackbar } from "notistack";
@@ -31,7 +31,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
     country: Yup.string().required("country is required"),
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
-    facilites: Yup.array().optional(),
+    facilities: Yup.array().optional(),
     images: Yup.array(),
   });
 
@@ -115,9 +115,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
         ...data,
         user_id: user?.id,
       };
-      console.log("iamges", data?.images);
       const formData = new FormData();
-      console.log("Finnal Data", finalData);
       const images = finalData.images?.map((da) => da.file);
       const names = finalData.images?.map((da) => da.name);
       for (const key in finalData) {
@@ -136,9 +134,6 @@ export const StepperView = ({ defaultValues, isEdit }) => {
           }
         }
       }
-
-      console.log("iamges after map", images);
-      console.log("iamges after map", names);
 
       images.forEach((file) => formData.append("images", file));
       images.forEach((file) =>
@@ -163,6 +158,7 @@ export const StepperView = ({ defaultValues, isEdit }) => {
   return (
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
+        <Breadcrumb title="Hotel profile" />
         <Stepper
           steps={steps}
           activeStep={activeStep}

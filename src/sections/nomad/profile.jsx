@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 // Components and Others...
 import {
+  Breadcrumb,
   Button,
   CalendarInput,
   CustomPopover,
@@ -20,12 +21,19 @@ import {
   RHFInput,
   RHFProfileImgUploader,
   RHFSelect,
+  RHFUploadAvatar,
 } from "@/src/components/hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
+import {
+  electronics,
+  fundraising,
+  manufacturing,
+  retails,
+} from "@/src/_mock/_speciality";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
@@ -45,7 +53,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   ]);
 
   const nomadProfileSchema = Yup.object().shape({
-    profile: Yup.mixed().required("Profile is required"),
+    profile_img: Yup.mixed().required("Profile is required"),
     first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().optional("Last name is required"),
     phone_number: Yup.string().required("Phone number is required"),
@@ -66,10 +74,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
       date: Yup.object().shape({
         start_date: Yup.string().required("Start date is required"),
         end_date: Yup.string().required("End date is required"),
-      }),
-      time: Yup.object().shape({
-        start_time: Yup.string().required("Start time is required"),
-        end_time: Yup.string().required("End time is required"),
       }),
     }),
   });
@@ -138,7 +142,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     // update handling
     else {
       try {
-        console.log("truggred");
+        console.log("truggred", data);
 
         const formData = new FormData();
 
@@ -175,9 +179,26 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         onSubmit={onSubmit}
         className="flex flex-col gap-10 justify-center items-center w-full"
       >
-        <RHFProfileImgUploader name="profile" />
+        <div
+          className={`flex ${
+            isEdit ? "justify-between" : "justify-start"
+          } items-center w-full`}
+        >
+          <Breadcrumb title={"Nomad Profile"} />
+
+          {isEdit && (
+            <Typography variant="h5">{`Profile ID: ${user.id.slice(
+              -6
+            )}`}</Typography>
+          )}
+        </div>
+        <RHFUploadAvatar isEdit={isEdit} name="profile_img" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
-          <div className="flex flex-col sm:flex-row gap-5 w-full">
+          <Typography variant="h5" className="font-semibold">
+            Basic
+          </Typography>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {/* <div className="flex flex-col sm:flex-row gap-5 w-full"> */}
             <RHFInput
               name="first_name"
               placeholder="Enter your First Name"
@@ -188,8 +209,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Last Name"
               label="Last Name"
             />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-5 w-full">
+            {/* </div> */}
+            {/* <div className="flex flex-col sm:flex-row gap-5 w-full"> */}
             <RHFInput
               name="phone_number"
               type="number"
@@ -201,17 +222,19 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Email"
               label="Email"
             />
+            {/* </div> */}
+            <RHFSelect
+              name="experience"
+              label="Experience"
+              placeholder="Experience"
+              options={[
+                { label: "Option 1", value: "option1" },
+                { label: "Option 2", value: "option2" },
+                { label: "Option 3", value: "option3" },
+              ]}
+            />
           </div>
-          <RHFSelect
-            name="experience"
-            label="Experience"
-            placeholder="  Experience "
-            options={[
-              { label: "Option 1", value: "option1" },
-              { label: "Option 2", value: "option2" },
-              { label: "Option 3", value: "option3" },
-            ]}
-          />
+
           {/* Specialty  */}
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
@@ -222,44 +245,28 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               <RHFSelect
                 name="electronics"
                 label="Electronics"
-                placeholder=" Electronics "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                placeholder="Electronics"
+                options={electronics}
               />
               <RHFSelect
                 name="manufacturing"
                 label="Manufacturing"
                 placeholder=" Manufacturing "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                options={manufacturing}
               />
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="fundraising"
                 label="Fundraising"
-                placeholder=" fundraising "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                placeholder=" Fundraising "
+                options={fundraising}
               />
               <RHFSelect
                 name="retails"
                 label="Retails"
                 placeholder="Retails"
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                options={retails}
               />
             </div>
           </div>
@@ -268,7 +275,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <Typography variant="h5" className="font-semibold">
-                TEACHING TOOLS
+                Teaching Tools
               </Typography>
               <Typography
                 variant="p"
@@ -293,20 +300,20 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
-              AVAILABILITY
+              Availability
             </Typography>
             <div className="flex flex-col sm:flex-row gap-5 w-full">
               {/* Date Picker */}
               <div
                 ref={datePopoverRef}
-                className="relative flex flex-col w-full"
+                className="relative flex flex-col w-full md:w-1/2 "
               >
-                {/* <CalendarInput
+                <CalendarInput
                   label="Date"
                   startDate={date[0].startDate.toString().slice(0, 10)}
                   endDate={date[0].endDate.toString().slice(0, 10)}
                   onClick={toggleDateCalender}
-                /> */}
+                />
                 <CustomPopover
                   popoverRef={datePopoverRef}
                   isOpen={isDateOpen}
@@ -325,7 +332,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               </div>
 
               {/* Time Picker */}
-              <div className="flex flex-col md:flex-row gap-5 w-full">
+              {/* <div className="flex flex-col md:flex-row gap-5 w-full">
                 <RHFInput
                   name="availability.time.start_time"
                   placeholder="Start Time"
@@ -338,13 +345,13 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                   label="End Time"
                   type="time"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         <div className="flex justify-end w-full">
           <Button type="submit" loading={isSubmitting}>
-            Submit
+            {isEdit ? "Save" : "Submit"}
           </Button>
         </div>
       </RHFFormProvider>

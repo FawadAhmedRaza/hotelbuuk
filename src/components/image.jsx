@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { generateSignedUrl } from "../utils/upload-images";
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,7 @@ const Image = forwardRef(
       placeholder,
       wrapperProps,
       scrollPosition,
+      type,
       effect = "opacity", // Change this to "opacity" or remove for a sharper image
       visibleByDefault,
       wrapperClassName,
@@ -43,14 +45,38 @@ const Image = forwardRef(
     },
     ref
   ) => {
+    const [signedUrl, setSignedUrl] = useState(null);
+    const [loading, setLoading] = useState(false);
     const overlayStyles = overlay
       ? `absolute inset-0 z-10 bg-opacity-50 ${overlay}`
       : "";
 
+    useEffect(() => {
+      (async () => {
+        if (type === "server") {
+          setLoading(true);
+          try {
+            const url = await generateSignedUrl(src);
+            setSignedUrl(url);
+          } catch (err) {
+            console.log("error");
+          } finally {
+            setLoading(false);
+          }
+        }
+      })();
+    }, []);
+
     const content = (
       <LazyLoadImage
         alt={alt}
-        src={src}
+        src={
+          loading
+            ? "/assets/placeholder.svg"
+            : type == "server"
+            ? signedUrl
+            : src
+        }
         afterLoad={afterLoad}
         delayTime={delayTime}
         threshold={threshold}

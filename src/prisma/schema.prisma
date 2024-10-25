@@ -36,10 +36,11 @@ model User {
   is_user_type_completed    Boolean?
   auth_method               AuthMethod @default(EMAIL)
 
-  facilities facilities[]
-  room_types room_types[]
-  hotels     hotel_info[]
-  nomad      nomad[]
+  hotels          hotel_info[]
+  nomad           nomad[]
+  facilities      facilities[]
+  room_facilities room_facilities[]
+  room_types      room_types[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,7 +79,7 @@ model hotel_info {
 }
 
 model hotel_images {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
   img  String
   name String?
 
@@ -93,14 +94,6 @@ model hotel_facilities {
 
   facility facilities @relation(fields: [facility_id], references: [id])
   hotel    hotel_info @relation(fields: [hotel_id], references: [id])
-}
-
-model room_types {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-
-  user_id String @db.ObjectId
-  user    User   @relation(fields: [user_id], references: [id])
 }
 
 model nomad {
@@ -120,8 +113,6 @@ model nomad {
   sample        String
   end_date      String
   start_date    String
-  start_time    String
-  end_time      String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -133,32 +124,52 @@ model nomad {
 model hotel_rooms {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  room_name          String
-  description        String
-  maximum_occupancy  String
-  room_type          String
-  price              String
-  // checkboxes
-  air_conditioning   Boolean
-  heating            Boolean
-  king_bed           Boolean
-  private_balcony    Boolean
-  mini_fridge        Boolean
-  flat_screen_tv     Boolean
-  room_service       Boolean
-  coffee_machine     Boolean
-  desk_workspace     Boolean
-  private_bathroom   Boolean
-  smart_lighting     Boolean
-  soundproof_windows Boolean
-  wardrobe           Boolean
-  blackout_curtains  Boolean
-  luxury_toiletries  Boolean
-  high_thread_sheets Boolean
+  room_name         String
+  description       String
+  maximum_occupancy String
+  room_type         String
+  price             String
 
-  hotel_id String     @db.ObjectId
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+  hotel_id    String        @db.ObjectId
+  hotel       hotel_info    @relation(fields: [hotel_id], references: [id])
+  room_images room_images[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  room_associated_facilities room_associated_facilities[]
+}
+
+model room_types {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+}
+
+model room_facilities {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id                    String                       @db.ObjectId
+  user                       User                         @relation(fields: [user_id], references: [id])
+  room_associated_facilities room_associated_facilities[]
+}
+
+model room_associated_facilities {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  room_id          String @db.ObjectId
+  room_facility_id String @db.ObjectId
+
+  room          hotel_rooms     @relation(fields: [room_id], references: [id])
+  room_facility room_facilities @relation(fields: [room_facility_id], references: [id])
+}
+
+model room_images {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
+
+  room_id String      @db.ObjectId
+  room    hotel_rooms @relation(fields: [room_id], references: [id], onDelete: Cascade)
 }

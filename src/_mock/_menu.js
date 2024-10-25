@@ -9,21 +9,28 @@ export const MenuLinks = [
     label: "About Us",
     path: "/about",
   },
+
   {
-    id: 3,
+    id: 5,
+    label: "Contact US",
+    path: "/contact",
+  },
+  {
+    id: 6,
     label: "Terms and Conditions",
     path: "/terms",
   },
   {
-    id: 4,
+    id: 7,
     label: "Impressum",
     path: "/impressum",
   },
   {
-    id: 5,
+    id: 8,
     label: "Privacy Policy",
     path: "/privacy-policy",
   },
+
 ];
 
 export const AuthLinks = [

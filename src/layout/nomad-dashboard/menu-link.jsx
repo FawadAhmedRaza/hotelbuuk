@@ -26,7 +26,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     {
       id: 1,
       label: "Home",
-      path: "/",
+      path: "/nomad-dashboard",
     },
     {
       id: 2,
@@ -183,7 +183,7 @@ export const MenuLinks = [
   {
     id: 1,
     label: "Home",
-    path: "/",
+    path: "/nomad-dashboard",
   },
   {
     id: 2,

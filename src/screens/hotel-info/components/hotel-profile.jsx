@@ -13,72 +13,77 @@ import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 const HotelProfile = () => {
+  const { user } = useAuthContext();
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const { hotelFacilities: facilitiesArray } = useSelector(
     (state) => state.hotelFacilities
   );
 
-  const [refetch, setRefetch] = useState(false);
-  const { watch, setValue, reset } = useFormContext();
-  const selectedFacilities = watch("facilities") || [];
-  console.log("selected", facilitiesArray);
+  const { watch, setValue } = useFormContext(); // Access form context
 
+  const selectedFacilities = watch("facilities") || [];
   const country = watch("country");
   const city = watch("city");
 
   const openModal = useModal();
+  const [refetch, setRefetch] = useState(false); // To re-trigger updates
+
+  // Fetch countries on initial render.
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const allCountries = await getCountries();
+        setCountries(allCountries);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  // Fetch cities when the country changes.
+  useEffect(() => {
+    if (country) {
+      fetchCitiesForCountry(country);
+    }
+  }, [country]);
+
+  const fetchCitiesForCountry = async (selectedCountry) => {
+    try {
+      const allCities = await getCities(selectedCountry);
+      setCities(allCities);
+      if (!city && allCities.length > 0) {
+        setValue("city", allCities[0].value); // Sync city with form context.
+      }
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+    }
+  };
 
   const handleCheckboxChange = (facility, checked) => {
     setValue(
       "facilities",
       checked
-        ? [...selectedFacilities, facility] // Add facility object if checked
+        ? [...selectedFacilities, facility]
         : selectedFacilities.filter(
             (selected) => selected.name !== facility.name
-          ) // Remove if unchecked
+          )
     );
   };
 
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
-  }, [refetch]);
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
-    fetchCities();
-  }, [country]);
-
   return (
     <div className="gap-y-4 my-10">
+      <div className="flex justify-end w-full">
+        <Typography variant="h5">{`Profile ID: ${user?.id.slice(
+          -6
+        )}`}</Typography>
+      </div>
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFUploadAvatar name="hotel_image" />
+        <RHFUploadAvatar isEdit={true} name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 
@@ -87,12 +92,12 @@ const HotelProfile = () => {
           <RHFInput
             name="hotel_name"
             label="Hotel Name"
-            placeholder="Movenpick hotel"
+            placeholder="Marriott hotel"
           />
           <RHFTextArea
             name="description"
-            label="Hotel Description"
-            placeholder="Enter Hotel description"
+            label="Hotel Bio"
+            placeholder="Briefly describe your hotel"
           />
 
           <div className="flex flex-col gap-3 w-full mt-6">
@@ -105,7 +110,7 @@ const HotelProfile = () => {
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                Create
+                Add more
               </Typography>
             </div>
 
@@ -145,7 +150,7 @@ const HotelProfile = () => {
           <RHFInput
             type="number"
             name="hotel_contact_no"
-            label="Contact number"
+            label="Phone Number"
             placeholder="Enter Contact number"
           />
           <RHFSelect
@@ -157,13 +162,14 @@ const HotelProfile = () => {
           <RHFSelect
             name="city"
             label="City"
-            placeholder="Select your City"
             options={cities}
+            value={city || ""}
+            onChange={(e) => setValue("city", e.target.value)}
           />
           <RHFInput
             name="address"
             label="Address"
-            placeholder="Enter Address"
+            placeholder="Enter full address"
           />
         </div>
       </div>
