@@ -123,7 +123,6 @@ export const hotelRooms = createSlice({
       state.deleteById.isLoading = true;
     });
     builder.addCase(deleteRoom.fulfilled, (state, action) => {
-      console.log("deleted room", action.payload);
       state.deleteById.room = action.payload;
       state.deleteById.isLoading = false;
     });

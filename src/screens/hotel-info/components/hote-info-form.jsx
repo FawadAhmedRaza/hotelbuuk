@@ -1,6 +1,5 @@
 import {
   RHFInput,
-  RHFProfileImgUploader,
   RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
@@ -14,7 +13,6 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 
-
 const HotelInfoForm = () => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -27,12 +25,10 @@ const HotelInfoForm = () => {
   const selectedFacilities = watch("facilities") || []; // Default to an empty array
 
   const country = watch("country");
-  const city = watch("city");
 
   const openModal = useModal();
 
   const handleCheckboxChange = (facility, checked) => {
-    console.log("fcility ",facility);
     setValue(
       "facilities",
       checked
@@ -63,7 +59,7 @@ const HotelInfoForm = () => {
   return (
     <div className="gap-y-4">
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
-        <RHFProfileImgUploader name="hotel_image" />
+        <RHFUploadAvatar name="hotel_image" />
         <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
       </div>
 
@@ -72,12 +68,12 @@ const HotelInfoForm = () => {
           <RHFInput
             name="hotel_name"
             label="Hotel Name"
-            placeholder="Movenpick hotel"
+            placeholder="Marriott hotels"
           />
           <RHFTextArea
             name="description"
-            label="Hotel Description"
-            placeholder="Enter Hotel description"
+            label="Hotel bio"
+            placeholder="Briefly describe your hotel"
           />
 
           <div className="flex flex-col gap-3 w-full mt-6">
@@ -90,7 +86,7 @@ const HotelInfoForm = () => {
                 className="font-medium text-primary hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
-                Create
+                Add more
               </Typography>
             </div>
 
@@ -125,13 +121,13 @@ const HotelInfoForm = () => {
           <RHFInput
             name="contact_email"
             label="Contact E-mail"
-            placeholder="support@movenpick.com"
+            placeholder="support@marriott.com"
           />
           <RHFInput
             type="number"
             name="hotel_contact_no"
-            label="Contact number"
-            placeholder="Enter Contact number"
+            label="Phone number"
+            placeholder="Enter phone number"
           />
           <RHFSelect
             name="country"
@@ -148,7 +144,7 @@ const HotelInfoForm = () => {
           <RHFInput
             name="address"
             label="Address"
-            placeholder="Enter Address"
+            placeholder="Enter full Address"
           />
         </div>
       </div>

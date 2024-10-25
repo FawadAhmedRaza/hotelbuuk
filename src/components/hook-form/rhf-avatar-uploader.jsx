@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 
 import { useFormContext, Controller } from "react-hook-form";
 import UploadAvatar from "../upload/upload-avatar";
+import { Iconify } from "..";
 
-export function RHFUploadAvatar({ name, sx, ...other }) {
+export function RHFUploadAvatar({ name, sx, isEdit, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -11,13 +12,15 @@ export function RHFUploadAvatar({ name, sx, ...other }) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div>
+        <div className="relative">
           <UploadAvatar
+            isEdit={isEdit}
             error={!!error}
             file={field.value}
             onChange={field.onChange}
             {...other}
           />
+
           {!!error && (
             <span sx={{ px: 2, textAlign: "center" }}>{error.message}</span>
           )}
