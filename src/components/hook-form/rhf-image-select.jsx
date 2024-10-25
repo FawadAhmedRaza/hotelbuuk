@@ -65,7 +65,7 @@ export const RHFImageSelect = ({
       render={({ field, formState: { errors } }) => (
         <div
           className={cn(
-            "relative flex flex-col gap-1 w-full",
+            "relative flex flex-col gap-1 w-full z-[9999]",
             className,
             disabled && "cursor-not-allowed"
           )}
@@ -137,7 +137,7 @@ export const RHFImageSelect = ({
             </div>
 
             {openDropdown && (
-              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
+              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-[9999] max-h-56 shadow-lg overflow-hidden">
                 <div className="p-2">
                   <input
                     className="!border-b border-primary !py-1.5 w-full text-sm outline-none px-2 placeholder:text-neutral-300 text-secondary"
