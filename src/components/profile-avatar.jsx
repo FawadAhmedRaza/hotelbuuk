@@ -48,7 +48,6 @@ export const ProfileAvatar = forwardRef(
     ref
   ) => {
     const [signedUrl, setSignedUrl] = useState(null);
-    console.log(signedUrl);
 
     const [loading, setLoading] = useState(false);
     const overlayStyles = overlay

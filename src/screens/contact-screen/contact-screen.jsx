@@ -52,15 +52,17 @@ const ContactScreen = () => {
           className="bg-about"
         />
 
-        <div className=" flex md:flex-row flex-col gap-10 py-10 px-5 md:px-10">
+        <div className=" flex md:flex-row flex-col gap-10 py-10 px-5 md:px-10 items-start">
           <div className=" flex justify-center items-center rounded-md w-full md:w-[40%]">
             <img
               src="/assets/images/forgot-password.png"
               className=" rounded-xl h-[300px] md:h-[450px] w-full lg:w-[80%]  object-center "
             />
           </div>
-          <div className=" w-full md:w-[60%]">
-            <Typography variant="h1">Contact Us</Typography>
+          <div className=" w-full md:w-[60%]  ">
+            <Typography variant="h1" className=" text-black ">
+              Contact Us
+            </Typography>
             <div className=" flex flex-col gap-5 mt-10">
               <RHFInput
                 name="name"
@@ -85,7 +87,7 @@ const ContactScreen = () => {
             </div>
 
             <div className=" flex justify-end pt-5">
-              <Button >Submit</Button>
+              <Button>Submit</Button>
             </div>
           </div>
         </div>

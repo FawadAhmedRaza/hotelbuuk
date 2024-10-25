@@ -92,7 +92,7 @@ const HotelProfile = () => {
           <RHFInput
             name="hotel_name"
             label="Hotel Name"
-            placeholder="Movenpick hotel"
+            placeholder="Marriott hotel"
           />
           <RHFTextArea
             name="description"

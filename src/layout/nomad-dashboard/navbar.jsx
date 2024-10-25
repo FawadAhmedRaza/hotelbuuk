@@ -23,17 +23,13 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
   const dispatch = useDispatch();
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-  console.log("user", user);
 
   const { nomad } = useSelector((state) => state.nomadProfile.getById);
-
-  console.log("nomad from thunk", nomad);
 
   useEffect(() => {
     async function fetchNomad() {
       await dispatch(getNomadProfileById(user?.id)).unwrap();
     }
-
     fetchNomad();
   }, []);
 
@@ -47,7 +43,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl text-nowrap md:!text-[27px] font-bold text-white text-start  "
+          className="sm:!text-xl md:!text-2xl !text-[14px] font-bold text-white text-start text-nowrap"
         >
           Hotelbuuk Dashboard
         </Typography>
@@ -77,7 +73,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
               variant="p"
               className="hidden md:block font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? user?.first_name : ""}
+              {user ? `Hi, ${user?.first_name}` : ""}
             </Typography>
 
             {user.profile_img ? (
