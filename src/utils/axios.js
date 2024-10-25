@@ -69,5 +69,9 @@ export const endpoints = {
     create: "/nomad/nomad-profile",
     getProfile: (id) => `/nomad/nomad-profile/${id}`,
     updateProfile: (id) => `/nomad/nomad-profile/${id}`,
+    amenities: {
+      create: "/nomad/event-amenities",
+      getAll: (id) => `/nomad/event-amenities?userId=${id}`,
+    },
   },
 };

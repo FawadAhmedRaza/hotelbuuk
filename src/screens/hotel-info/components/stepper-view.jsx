@@ -14,7 +14,7 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 
 import { Breadcrumb, Pannel, Stepper } from "@/src/components";
 import HotelInfoForm from "./hote-info-form";
-import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
+import ImageUploader from "@/src/sections/event/stepper-view/image-uploader";
 import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";

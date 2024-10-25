@@ -3,38 +3,36 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RHFFormProvider } from "@/src/components/hook-form";
+import {
+  RHFFormProvider,
+  RHFMultipleImageUploader,
+} from "@/src/components/hook-form";
 
-// Components and Others...
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
-import ImageUploader from "./image-uploader";
+import { useDispatch } from "react-redux";
+import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { getAllAmenities } from "@/src/redux/amenities/thunk";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-const checkBoxSchema = (amenities) => {
-  return Yup.object().shape(
-    amenities.reduce((schema, amenity) => {
-      schema[amenity] = Yup.boolean().required(`${amenity} is required`);
-
-      return schema;
-    }, {})
-  );
-};
-
-export const StepperView = () => {
+export const EventStepperView = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
-  // Nomad Form Schema
-  const NomadSchema = Yup.object().shape({
+  const dispatch = useDispatch();
+  const { user } = useAuthContext();
+
+  const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
       description: Yup.string().required("required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
+      amenities: Yup.array().optional(),
       hotel: Yup.string().when("accomodation_type", {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
@@ -57,7 +55,6 @@ export const StepperView = () => {
           otherwise: (schema) => schema.notRequired(),
         }),
       }),
-      amenities: Yup.lazy((value) => checkBoxSchema(Object.keys(value || {}))),
     }),
     images: Yup.array()
       .when("accomodation_type", {
@@ -65,7 +62,7 @@ export const StepperView = () => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       })
-      .min(10, "At least ten images are required")
+      // .min(4, "At least 4 images are required")
       .required("Files are required"),
 
     topics: Yup.array()
@@ -80,7 +77,7 @@ export const StepperView = () => {
   });
 
   const methods = useForm({
-    resolver: yupResolver(NomadSchema),
+    resolver: yupResolver(eventSchema),
     defaultValues: {
       business_meeting: {
         title: "",
@@ -94,7 +91,7 @@ export const StepperView = () => {
           city: "",
           street_name: "",
         },
-        amenities: {},
+        amenities: [],
       },
       images: [],
       topics: [],
@@ -111,9 +108,26 @@ export const StepperView = () => {
 
   const { trigger, watch, handleSubmit } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
-    console.log("Form submitted: ", data);
-  });
+  const fetchHotels = async () => {
+    try {
+      await dispatch(getHotelInfo()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAmenities = async () => {
+    try {
+      await dispatch(getAllAmenities(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHotels();
+    fetchAmenities();
+  }, []);
 
   const steps = [
     {
@@ -126,7 +140,7 @@ export const StepperView = () => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
-      component: <ImageUploader />,
+      component: <RHFMultipleImageUploader />,
     },
     {
       label: "What Guest will Learn",
@@ -182,7 +196,6 @@ export const StepperView = () => {
         );
       }
     } else if (activeStep === 1) {
-      // Allow skipping the image validation if hotel type
       if (accomodationType === "bnb") {
         fieldsToValidate.push("images");
       }
@@ -195,13 +208,13 @@ export const StepperView = () => {
     const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
 
     if (isStepValid) {
-      setActiveStep((prev) => prev + 1); // Move to next step if valid
+      setActiveStep((prev) => prev + 1);
     }
   };
 
-  const handleBack = () => {
-    setActiveStep((prev) => prev - 1);
-  };
+  const onSubmit = handleSubmit(async (data) => {
+    console.log("Form submitted: ", data);
+  });
 
   return (
     <Pannel>
@@ -211,7 +224,7 @@ export const StepperView = () => {
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           handleNext={handleNext}
-          handleBack={handleBack}
+          handleBack={() => setActiveStep((prev) => prev - 1)}
           isLastStep={activeStep === currentSteps.length - 1}
         />
       </RHFFormProvider>

@@ -9,7 +9,7 @@ import {
 } from "@/src/components/hook-form";
 import { Breadcrumb, Pannel, Stepper, Typography } from "@/src/components";
 import { RoomInfo } from "./room-info";
-import ImageUploader from "../../nomad/stepper-view/image-uploader";
+import ImageUploader from "../../event/stepper-view/image-uploader";
 import { useDispatch } from "react-redux";
 import { createRoom, getAllRoomTypes } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
