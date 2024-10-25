@@ -101,7 +101,6 @@ export async function GET(req) {
         },
       },
     });
-    console.log("rooms", hotelRooms);
 
     let formatedList = hotelRooms?.map((item) => {
       return {
@@ -112,7 +111,6 @@ export async function GET(req) {
       };
     });
 
-    console.log("Rooms List", formatedList);
 
     return NextResponse.json(
       { message: "success", hotelRooms: formatedList },

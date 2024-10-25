@@ -53,7 +53,8 @@ export default function UploadAvatar({
           <Image
             alt="avatar"
             src={preview}
-            className="w-full h-full rounded-full"
+            
+            className="w-full h-full rounded-full object-cover"
             type={typeof file !== "string" ? "normal" : "server"}
           />
         )}
