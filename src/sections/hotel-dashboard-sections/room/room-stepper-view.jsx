@@ -142,7 +142,7 @@ export const RoomStepperView = () => {
     try {
       await dispatch(createRoom(formData)).unwrap();
       enqueueSnackbar("Room created", { variant: "success" });
-      // router.push(paths.hotelDashboard.rooms);
+      router.push(paths.hotelDashboard.rooms);
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });

@@ -62,6 +62,7 @@ export const hotelInfo = createSlice({
     builder.addCase(getHotelInfo.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.hotels = action.payload.hotelList;
+      state.isLoading = false;
     });
     builder.addCase(getHotelInfo.rejected, (state, action) => {
       state.error = action.error;
@@ -74,14 +75,12 @@ export const hotelInfo = createSlice({
     });
     builder.addCase(getHotelById.fulfilled, (state, action) => {
       state.getById.hotel = action.payload.hotelInfo;
-      state.getById.isLoading = false
+      state.getById.isLoading = false;
     });
     builder.addCase(getHotelById.rejected, (state, action) => {
       state.getById.error = action.error;
       state.getById.isLoading = false;
     });
-
-    
   },
 });
 

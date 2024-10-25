@@ -48,30 +48,34 @@ export async function POST(req) {
     });
 
     await sendMail("Test OTP", newUser.email, otpTemplate(newUser.email, OTP));
-
+    
     const facilities = initialFacilities?.map((item) => {
       return {
         ...item,
-        user_id: newUser?.id,
+        user_id: String(newUser?.id),
       };
     });
 
     const roomFacilites = room_facilities?.map((item) => {
       return {
         ...item,
-        user_id: newUser?.id,
+        user_id: String(newUser?.id),
       };
     });
 
     // create initial facilities
-    await prisma.facilities.createMany({
-      data: facilities,
-    });
+    await prisma.facilities
+      .createMany({
+        data: facilities,
+      })
+      .catch((error) => console.log("facilites error", error));
 
     // create initial room facilities
-    await prisma.room_facilities.createMany({
-      data: roomFacilites,
-    });
+    await prisma.room_facilities
+      .createMany({
+        data: roomFacilites,
+      })
+      .catch((error) => console.log("room facilites error", error));
 
     return NextResponse.json(
       {

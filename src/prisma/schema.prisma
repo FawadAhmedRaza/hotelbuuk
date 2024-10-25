@@ -113,8 +113,6 @@ model nomad {
   sample        String
   end_date      String
   start_date    String
-  start_time    String
-  end_time      String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

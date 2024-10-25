@@ -30,7 +30,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
       <AnchorTag href={"/"}>
         <Typography
           variant="h3"
-          className=" !text-lg sm:!text-xl md:!text-2xl font-bold text-white text-start text-nowrap  "
+          className="sm:!text-xl md:!text-2xl !text-[14px] font-bold text-white text-start text-nowrap"
         >
           Hotelbuuk Dashboard
         </Typography>
@@ -60,7 +60,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
               variant="p"
               className="hidden md:block font-medium !text-xs text-white text-nowrap"
             >
-              Hi, {user ? user?.hotel_name : ""} {/* Fawad */}
+              {user ? `Hi, ${user?.hotel_name}` : ""}
             </Typography>
             {user?.profile_img ? (
               <ProfileAvatar
@@ -75,11 +75,6 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
                 className="!size-8 md:!size-10 text-white"
               />
             )}
-
-            {/* <Iconify
-              iconName="fluent:person-circle-12-filled"
-              className="size-5 sm:size-8"
-            /> */}
           </span>
         </div>
       </div>

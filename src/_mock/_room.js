@@ -9,7 +9,6 @@ export const room_facilities = [
     name: "Private Balcony",
   },
   {
-    id: 4,
     name: "Mini Fridge",
   },
   {

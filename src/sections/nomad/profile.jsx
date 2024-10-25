@@ -28,6 +28,12 @@ import { enqueueSnackbar } from "notistack";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
+import {
+  electronics,
+  fundraising,
+  manufacturing,
+  retails,
+} from "@/src/_mock/_speciality";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
@@ -220,7 +226,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
             <RHFSelect
               name="experience"
               label="Experience"
-              placeholder="  Experience "
+              placeholder="Experience"
               options={[
                 { label: "Option 1", value: "option1" },
                 { label: "Option 2", value: "option2" },
@@ -239,44 +245,28 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               <RHFSelect
                 name="electronics"
                 label="Electronics"
-                placeholder=" Electronics "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                placeholder="Electronics"
+                options={electronics}
               />
               <RHFSelect
                 name="manufacturing"
                 label="Manufacturing"
                 placeholder=" Manufacturing "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                options={manufacturing}
               />
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="fundraising"
                 label="Fundraising"
-                placeholder=" fundraising "
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                placeholder=" Fundraising "
+                options={fundraising}
               />
               <RHFSelect
                 name="retails"
                 label="Retails"
                 placeholder="Retails"
-                options={[
-                  { label: "Option 1", value: "option1" },
-                  { label: "Option 2", value: "option2" },
-                  { label: "Option 3", value: "option3" },
-                ]}
+                options={retails}
               />
             </div>
           </div>
