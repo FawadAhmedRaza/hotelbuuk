@@ -1,17 +1,40 @@
 "use client";
-import { Button, Card, Typography } from "@/src/components";
-import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  Iconify,
+  ProfileAvatar,
+  Typography,
+} from "@/src/components";
+import React, { useEffect, useState } from "react";
 import { RecentBookingListView } from "./recent-booking-list-view";
 import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
+  const dispatch = useDispatch();
+
+  const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
+  console.log("list from nomad", hotels);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
+
+  const fetchHotels = async () => {
+    try {
+      await dispatch(getHotelInfo()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHotels();
+  }, []);
 
   return (
     <div className=" my-10">
@@ -30,23 +53,29 @@ const RecentBooking = () => {
                 showMore ? "overflow-y-auto" : ""
               } h-[27rem]  sm:h-[10rem] md:h-[25rem] overflow-hidden`}
             >
-              {recommended_nomad
+              {hotels
                 .slice(0, showMore ? recommended_nomad.length : 4)
-                .map((person) => (
-                  <div key={person.id}>
-                    <Card className="!shadow-custom-shadow-xs !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md">
-                      <div className="flex gap-4">
-                        <Image
-                          src={person.imageSrc}
-                          height={80}
-                          width={80}
-                          className="border-primary border-2 h-16 w-16 rounded-full object-cover"
-                          alt={person.name}
-                        />
-                        <div>
-                          <div className=" flex mr-3  justify-between items-center ">
+                .map((hotel) => (
+                  <div key={hotel.id} className="w-full">
+                    <Card className="!shadow-custom-shadow-xs !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md w-full">
+                      <div className="flex gap-4 w-full">
+                        {!hotel?.hotel_image ? (
+                          <Iconify
+                            iconName="carbon:user-avatar-filled"
+                            className="!size-16 border-primary border-2 h-16 w-16 rounded-full object-cover text-gray-500"
+                          />
+                        ) : (
+                          <ProfileAvatar
+                            src={hotel?.hotel_image}
+                            type={"server"}
+                            alt={hotel?.hotel_name}
+                            className="border-primary border-2 h-16 w-16 rounded-full object-cover"
+                          />
+                        )}
+                        <div className="flex flex-1 flex-col grow">
+                          <div className=" flex grow mr-3  justify-between items-center w-full ">
                             <Typography variant="p" className="font-semibold">
-                              {person.name}
+                              {hotel.hotel_name}
                             </Typography>
                             <Button
                               className={
@@ -57,7 +86,7 @@ const RecentBooking = () => {
                             </Button>
                           </div>
                           <Typography variant="p" className="!text-xs">
-                            {person.description}
+                            {hotel.description}
                           </Typography>
                         </div>
                       </div>
