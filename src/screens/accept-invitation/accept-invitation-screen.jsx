@@ -6,16 +6,6 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
 const AcceptInvitationScreen = () => {
-  //   const { width, height } = useWindowSize(); // Dynamically handle screen size
-  //   const [showConfetti, setShowConfetti] = useState(true); // Control confetti visibility
-
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       setShowConfetti(false); // Stop confetti after 5 seconds
-  //     }, 5000);
-  //     return () => clearTimeout(timer); // Cleanup timer on component unmount
-  //   }, []);
-
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
