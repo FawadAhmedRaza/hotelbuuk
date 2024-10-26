@@ -10,7 +10,7 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
-    const { hotel_id, email } = data || {};
+    const { hotel_id, email, nomad_type, nomad } = data || {};
 
     // await prisma.hotel_internal_nomads.create({
     //   data:{
@@ -27,35 +27,64 @@ export async function POST(req) {
 
     const profileImage = await generateSignedUrl(hotel?.hotel_image);
 
-    const isNomadUserExist = await prisma.user.findFirst({
-      where: {
-        email: email,
-        user_type: "NOMAD",
-      },
-    });
+    if (nomad_type === "registered") {
+      let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+      await sendMail(
+        "Hotel Invitation",
+        nomad?.email,
+        "",
+        true,
+        invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
+      );
 
-    const isNomadExist = await prisma.nomad.findFirst({
-      where: {
+      // create internal nomad
+      await prisma.hotel_internal_nomads.create({
+        data: {
+          hotel_id: hotel_id,
+          nomad_id: nomad?.id,
+        },
+      });
+    } else {
+      let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+      await sendMail(
+        "Hotel Invitation",
         email,
-      },
-    });
-
-    let queryParams =
-      !isNomadExist && !isNomadUserExist
-        ? `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`
-        : `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
-
-    await sendMail(
-      "Hotel Invitation",
-      email,
-      "",
-      true,
-      invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
-    );
+        "",
+        true,
+        invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
+      );
+    }
 
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {
     console.log(error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const hotel_id = searchParams.get("hotel_id");
+
+    const internalNomads = await prisma.hotel_internal_nomads?.findMany({
+      where: {
+        hotel_id: hotel_id,
+      },
+      include: {
+        nomad: true,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Success", internalNomads },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log("internal nomads error");
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
