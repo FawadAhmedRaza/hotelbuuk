@@ -135,9 +135,6 @@ input::-webkit-inner-spin-button {
   }
 } */
 
-
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -195,10 +192,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-
-
-
-
 /* @layer base {
   * {
     @apply border-border;
@@ -207,4 +200,7 @@ input::-webkit-inner-spin-button {
     @apply bg-background text-foreground;
   }
 } */
-
+.custom-border-shape {
+  border-radius: 200px 80px 200px 80px;
+  overflow: hidden;
+}
