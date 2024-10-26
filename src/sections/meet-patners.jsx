@@ -14,8 +14,8 @@ import "../app/globals.css";
 
 export const MeetOurPatners = React.memo(() => {
   return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10">
-      <Typography variant="h3" className="font-semibold">
+    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10 w-full">
+      <Typography variant="h3" className="text-start font-semibold w-full">
         Meet Our Partners
       </Typography>
 
@@ -57,29 +57,35 @@ export const MeetOurPatners = React.memo(() => {
             },
           }}
         >
+          {/* <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"> */}
           <div className="w-full flex">
             {SwiperCards.map((card) => (
               <SwiperSlide
                 key={card.id}
                 className="flex flex-col  relative w-fit"
               >
-                <span className="relative">
+                <span className="relative ">
+                  <div className="absolute rounded-3xl inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
                   <img
                     src={card.img}
                     alt={card.hotelName}
                     className="rounded-lg w-full"
                   />
+
                   <BgIcon
                     iconName="skill-icons:instagram"
-                    className="absolute bottom-4 right-4"
+                    className="absolute top-4 right-4"
+                    q
                   />
+
+                  <Typography
+                    variant="h4"
+                    className="absolute mt-2 font-semibold bottom-4 w-full z-30 text-center text-white "
+                  >
+                    {/* {card.hotelName} */}
+                    Hotel Name
+                  </Typography>
                 </span>
-                <Typography
-                  variant="h6"
-                  className="mt-2 font-medium z-10 text-center"
-                >
-                  {card.hotelName}
-                </Typography>
               </SwiperSlide>
             ))}
           </div>
