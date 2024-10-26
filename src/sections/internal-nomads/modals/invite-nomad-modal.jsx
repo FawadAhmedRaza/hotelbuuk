@@ -1,34 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useDispatch, useSelector } from "react-redux";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RHFFormProvider, RHFImageSelect } from "@/src/components/hook-form";
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 
 import Modal from "@/src/components/modal";
-import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { enqueueSnackbar } from "notistack";
 
 const InviteNomadModal = ({ isOpen, onClose }) => {
   const { user } = useAuthContext();
 
-  const dispatch = useDispatch();
-
-  const { nomads } = useSelector((state) => state.nomadProfile);
-  const modifiedNomadsList = nomads?.map((item) => {
-    return {
-      hotel_name: item?.first_name + "" + item?.last_name,
-      image: item?.profile_img,
-      address: item?.email,
-      value: item?.id,
-    };
-  });
-
   const schema = yup.object({
-    nomad: yup.string().required("nomad is required"),
+    email: yup
+      .string()
+      .email("this is not a valid email")
+      .required("email is required"),
   });
 
   const methods = useForm({
@@ -41,28 +31,17 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
     formState: { isSubmitting },
   } = methods;
 
-  const fetchNomads = async () => {
-    try {
-      await dispatch(getNomadsProfile()).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchNomads();
-  }, []);
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      data.user_id = user?.id;
+      data.hotel_id = user?.hotels?.[0]?.id;
 
       const request = await axiosInstance.post(
         endpoints.hotel.inviteNomads,
         data
       );
-      onClose();
       reset();
+      onClose();
+      enqueueSnackbar("Invitation email send", { variant: "success" });
     } catch (error) {
       console.log(error);
     }
@@ -77,11 +56,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       isLoading={isSubmitting}
     >
       <RHFFormProvider methods={methods}>
-        <RHFImageSelect
-          name="nomad"
-          label="Select nomad"
-          options={modifiedNomadsList}
-        />
+        <RHFInput name="email" label="Enter email" />
       </RHFFormProvider>
     </Modal>
   );
