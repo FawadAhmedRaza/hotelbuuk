@@ -103,18 +103,18 @@ model nomad {
   profile_img   String?
   first_name    String?
   last_name     String?
-  phone_number  Int
+  phone_number  Int?
   email         String
-  experience    String
-  electronics   String
-  manufacturing String
-  fundraising   String
-  retails       String
-  projector     String
-  video         String
-  sample        String
-  end_date      String
-  start_date    String
+  experience    String?
+  electronics   String?
+  manufacturing String?
+  fundraising   String?
+  retails       String?
+  projector     String?
+  video         String?
+  sample        String?
+  end_date      String?
+  start_date    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

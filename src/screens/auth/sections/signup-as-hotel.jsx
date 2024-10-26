@@ -29,8 +29,8 @@ const SignUpAsHotel = () => {
 
   const email = params.get("email");
   const isRegistered = params.get("isRegistered");
-
-  console.log("params", email, isRegistered);
+  const hotel = params.get("hotel");
+  const hotelId = params.get("hotelId")
 
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
@@ -59,7 +59,8 @@ const SignUpAsHotel = () => {
 
   const handleSubmit = async (data) => {
     try {
-      await register(data);
+      let invited = email && isRegistered ? true : false;
+      await register(data, invited, hotel,hotelId);
     } catch (error) {
       console.log(error);
     } finally {

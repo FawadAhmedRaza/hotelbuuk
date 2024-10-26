@@ -23,6 +23,8 @@ const VerifyCodeScreen = () => {
   const serachParamas = useSearchParams();
 
   const step = serachParamas.get("step");
+  const isInvited = serachParamas.get("isInvited");
+  const hotel = serachParamas.get("hotel");
 
   const { otpVerification } = useAuthContext();
 
@@ -45,7 +47,7 @@ const VerifyCodeScreen = () => {
   } = methods;
 
   const handleSubmit = async (data) => {
-    await otpVerification(step, data.code);
+    await otpVerification(step, data.code, isInvited, hotel);
   };
 
   return (

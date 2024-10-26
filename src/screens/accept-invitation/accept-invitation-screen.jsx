@@ -1,10 +1,13 @@
 "use client";
 
 import { Button, Pannel, Typography } from "@/src/components";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 
-const AcceptInvitationScreen = () => {
+const AcceptInvitationScreen = ({ hotelName }) => {
+  const router = useRouter();
+
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -49,10 +52,12 @@ const AcceptInvitationScreen = () => {
               Congratulations!
             </Typography>
             <Typography variant="h4" className="">
-              You have joined hotel as their internal Nomad.
+              You have joined {hotelName} as their internal Nomad.
             </Typography>
 
-            <Button>Continue</Button>
+            <Button onClick={() => router.push("/nomad-dashboard")}>
+              Continue
+            </Button>
           </div>
         </div>
       </Pannel>
