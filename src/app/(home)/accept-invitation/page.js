@@ -12,12 +12,15 @@ const page = () => {
   const email = params.get("email");
   const isRegistered = params.get("isRegistered");
   const hotel = params.get("hotel");
+  const hotelId = params.get("hotelId");
 
-//   useEffect(() => {
-//     if (!isRegistered) {
-//       redirect(`/sign-up?email=${email}&userType="NOMAD"`);
-//     }
-//   }, [isRegistered]);
+  useEffect(() => {
+    if (!isRegistered) {
+      redirect(
+        `sign-up?email=${email}&isRegistered=false&hotel=${hotel}&hotelId=${hotelId}`
+      );
+    }
+  }, [isRegistered]);
 
   return (
     <Layout isNavBg={true}>

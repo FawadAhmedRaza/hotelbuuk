@@ -23,25 +23,32 @@ import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
 const InviteNomadModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
-  const { nomads, isLoading } = useSelector((state) => state.nomadProfile);   
+  const { nomads } = useSelector((state) => state.nomadProfile);
 
-  console.log("All Nomads", nomads);
-
-  // let modifiedNomadList = nomads?.map((item) => {
-  //   return {
-  //     hotel_name: `${item?.first_name} ${item?.first_name} `,
-  //     image: item?.profile_img,
-  //     address: item?.address,
-  //     value: item?.hotel_name,
-  //   };
-  // });
+  const modifiedNomadsList = nomads?.map((item) => {
+    return {
+      hotel_name: item?.first_name + "" + item?.last_name,
+      image: item?.profile_img,
+      address: item?.email,
+      value: item,
+    };
+  });
 
   const schema = yup.object({
     email: yup
       .string()
       .email("this is not a valid email")
-      .required("email is required"),
+      .when("nomad_type", {
+        is: "invite",
+        then: (schema) => schema.required("email can not be null"),
+        otherwise: (schema) => schema.optional(),
+      }),
     nomad_type: yup.string().default("registered"),
+    nomad: yup.mixed().when("nomad_type", {
+      is: "registered",
+      then: (schema) => schema.required("nomad can not be null"),
+      otherwise: (schema) => schema.optional(),
+    }),
   });
 
   const methods = useForm({
@@ -109,20 +116,21 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
             <RHFRadio
               id="non_registered"
               name="nomad_type"
-              value="non_registered"
-              label="Non Registered"
+              value="invite"
+              label="Invite"
             />
           </div>
 
           {nomadType === "registered" ? (
             <RHFImageSelect
-              name="business_meeting.hotel"
-              placeholder="Select Hotels"
-              label="Hotels"
-              // options={modifiedNomadList}
+              name="nomad"
+              placeholder="Select registered nomads"
+              label="Nomads"
+              options={modifiedNomadsList}
+              className={"!mt-2"}
             />
           ) : (
-            <RHFInput name="email" label="Enter email" /> 
+            <RHFInput name="email" label="Enter email" className={"!mt-2"} />
           )}
         </div>
       </RHFFormProvider>
