@@ -15,7 +15,6 @@ const HomeScreen = React.memo(() => {
     <main className="relative">
       <Layout>
         <HeroSection />
-        <Booking />
         <PreviewHotelsSection />
         <Banner />
         <BusinessFacts />

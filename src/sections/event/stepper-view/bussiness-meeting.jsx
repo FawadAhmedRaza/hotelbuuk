@@ -16,19 +16,42 @@ import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
 import { getCities, getCountries } from "@/src/libs/helper";
+import { useSelector } from "react-redux";
+import { useBoolean } from "@/src/hooks";
+import { useModal } from "@/src/hooks/use-modal";
+import CreateEditAmenities from "./modals/create-edit-amenities";
 
 export const BussinessMeeting = () => {
+  const { watch, setValue } = useFormContext();
+  const openAmenitiesModal = useModal();
+
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const { watch, setValue } = useFormContext();
+
+  const { hotels } = useSelector((state) => state.hotelInfo);
+  const { amenities } = useSelector((state) => state.eventAmenities);
+  let modifiedHotelList = hotels?.map((item) => {
+    return {
+      hotel_name: item?.hotel_name,
+      image: item?.hotel_image,
+      address: item?.address,
+      value: item?.hotel_name,
+    };
+  });
+
   const accomodationType = watch("business_meeting.accomodation_type");
   const country = watch("business_meeting.location.country");
-  const city = watch("business_meeting.location.city");
-
-  // State to force re-render on accomodationType change
+  const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
 
-  console.log(watch("business_meeting.location.country"));
+  const handleCheckboxChange = (amenity, checked) => {
+    setValue(
+      "business_meeting.amenities",
+      checked
+        ? [...selectedAmenities, amenity] // add if checked
+        : selectedAmenities.filter((selected) => selected.name !== amenity.name) // remove if unchecked
+    );
+  };
 
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
@@ -73,16 +96,38 @@ export const BussinessMeeting = () => {
             placeholder="John Tesla Factory Tour"
           />
           <div className="flex flex-col gap-5 ">
-            <Typography variant="h4" className="font-semibold">
-              Available Amenities in your B&B
-            </Typography>
+            <div className="flex gap-3 justify-start items-center">
+              <Typography variant="h4" className="font-semibold">
+                Available Amenities in your B&B
+              </Typography>
+              <Typography
+                variant="h5"
+                className="font-semibold !text-primary cursor-pointer"
+                onClick={openAmenitiesModal.onTrue}
+              >
+                Add more
+              </Typography>
+            </div>
             <div className="grid grid-cols-1  md:grid-cols-3 gap-3 py-5 lg:py-0">
-              {bnb_amenities.map((amenity, index) => (
-                <RHFCheckbox
-                  key={index}
-                  name={`business_meeting.amenities.${amenity.name}`}
-                  label={amenity.label}
-                />
+              {amenities?.map((amenity, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedAmenities?.some(
+                      (selected) => selected?.name === amenity?.name
+                    )} // check if the facility is selected
+                    onChange={(e) =>
+                      handleCheckboxChange(amenity, e.target.checked)
+                    }
+                    className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                  />
+                  <label
+                    className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
+                    htmlFor={amenity?.name}
+                  >
+                    {amenity?.name}
+                  </label>
+                </div>
               ))}
             </div>
           </div>
@@ -155,55 +200,22 @@ export const BussinessMeeting = () => {
               />
             </>
           ) : (
-            // <RHFSelect
-            //   name="business_meeting.hotels"
-            //   placeholder="Select Hotels"
-            //   label="Hotels"
-            //   options={[
-            //     { label: "Option 1", value: "option1" },
-            //     { label: "Option 2", value: "option2" },
-            //     { label: "Option 3", value: "option3" },
-            //   ]}
-            // />
-
             <RHFImageSelect
               name="business_meeting.hotel"
               placeholder="Select Hotels"
               label="Hotels"
-              options={hotels}
+              options={modifiedHotelList}
             />
           )}
         </div>
       </div>
 
-      {/* Image Uploader */}
-
-      {/* <div className="w-full">
-        <label
-          for="uploadFile1"
-          className="bg-white text-primary-500 font-semibold text-base rounded  h-52 flex flex-col items-center justify-center cursor-pointer border-2 !border-primary-300 border-dashed mx-auto font-[sans-serif]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-8 sm:w-11 mb-2 fill-gray-500"
-            viewBox="0 0 32 32"
-          >
-            <path
-              d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-              data-original="#000000"
-            />
-            <path
-              d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-              data-original="#000000"
-            />
-          </svg>
-          Upload file
-          <input type="file" id="uploadFile1" className="hidden" />
-          <p class="text-xs font-medium text-gray-400 mt-2">
-            PNG, JPG and JPEG are Allowed.
-          </p>
-        </label>
-      </div> */}
+      {openAmenitiesModal.onTrue && (
+        <CreateEditAmenities
+          isOpen={openAmenitiesModal.value}
+          onClose={openAmenitiesModal.onFalse}
+        />
+      )}
     </div>
   );
 };

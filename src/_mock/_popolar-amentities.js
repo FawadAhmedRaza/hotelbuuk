@@ -21,84 +21,52 @@ export const mockAmenities = [
 
 export const bnb_amenities = [
   {
-    id: 1,
-    name: "ev_charger",
-    label: "EV Charger",
+    name: "EV Charger",
   },
   {
-    id: 2,
-    name: "fast_wifi",
-    label: "Fast WiFI",
+    name: "Fast WiFI",
   },
   {
-    id: 3,
-    name: "safe_box",
-    label: "Safe Box",
+    name: "Safe Box",
   },
   {
-    id: 4,
-    name: "fitness_center",
-    label: "Fitness center",
+    name: "Fitness center",
   },
   {
-    id: 5,
-    name: "laundry",
-    label: "Laundry",
+    name: "Laundry",
   },
   {
-    id: 6,
-    name: "toiletries",
-    label: "Toiletries",
+    name: "Toiletries",
   },
   {
-    id: 7,
-    name: "breakfast",
-    label: "Breakfast",
+    name: "Breakfast",
   },
   {
-    id: 8,
-    name: "equipped_cowork_space",
-    label: "Equipped Cowork space",
+    name: "Equipped Cowork space",
   },
   {
-    id: 9,
-    name: "ppe_gadgets",
-    label: "PPE Gadgets",
+    name: "PPE Gadgets",
   },
   {
-    id: 10,
-    name: "projector",
-    label: "Projector",
+    name: "Projector",
   },
   {
-    id: 11,
-    name: "separate_room",
-    label: "Separate Room",
+    name: "Separate Room",
   },
   {
-    id: 12,
-    name: "separate_bath",
-    label: "Separate Bath",
+    name: "Separate Bath",
   },
   {
-    id: 13,
-    name: "cctv",
-    label: "CCTV",
+    name: "CCTV",
   },
   {
-    id: 14,
-    name: "snacks",
-    label: "Snacks",
+    name: "Snacks",
   },
   {
-    id: 15,
-    name: "beverages",
-    label: "Beverages",
+    name: "Beverages",
   },
   {
-    id: 16,
-    name: "standard_bed",
-    label: "Standard Bed",
+    name: "Standard Bed",
   },
 ];
 

@@ -5,6 +5,7 @@ import { prisma } from "@/src/db";
 import { sendMail } from "@/src/service/mailService";
 import { otpTemplate } from "@/src/libs/otpTemplate";
 import { room_facilities } from "@/src/_mock/_room";
+import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 
 export async function POST(req) {
   try {
@@ -48,7 +49,7 @@ export async function POST(req) {
     });
 
     await sendMail("Test OTP", newUser.email, otpTemplate(newUser.email, OTP));
-    
+
     const facilities = initialFacilities?.map((item) => {
       return {
         ...item,
@@ -57,6 +58,13 @@ export async function POST(req) {
     });
 
     const roomFacilites = room_facilities?.map((item) => {
+      return {
+        ...item,
+        user_id: String(newUser?.id),
+      };
+    });
+
+    const eventAmenities = bnb_amenities?.map((item) => {
       return {
         ...item,
         user_id: String(newUser?.id),
@@ -76,6 +84,13 @@ export async function POST(req) {
         data: roomFacilites,
       })
       .catch((error) => console.log("room facilites error", error));
+
+    // create initial event amenities
+    await prisma.amenities
+      .createMany({
+        data: eventAmenities,
+      })
+      .catch((error) => console.log("event amenities error", error));
 
     return NextResponse.json(
       {
