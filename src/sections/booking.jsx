@@ -4,13 +4,10 @@ import React, { useRef } from "react";
 import { Button, Iconify, Typography } from "../components";
 import * as Yup from "yup";
 import {
-  RHFCheckbox,
-  RHFDatePicker,
   RHFFormProvider,
   RHFInput,
 } from "@/src/components/hook-form";
-import { Controller, useForm } from "react-hook-form";
-import { addDays } from "date-fns";
+import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
@@ -76,8 +73,7 @@ export const Booking = React.memo(() => {
       className=""
     >
       <div >
-        <div className="flex flex-col md:flex-row gap-5 md:gap-0 lg:gap-10 items-center w-11/12 lg:w-[60%]   h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
-        
+        <div className="flex flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:w-[60%] h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
           <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-5 md:gap-5  grow w-full">
             <div className="flex  gap-1 sm:gap-3">
               <Iconify
@@ -130,12 +126,11 @@ export const Booking = React.memo(() => {
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
-                  inputClassName="!text-sm md:text-base bg-transparent md:w-56 !appearance-none !text-black outline-none w-full  "
+                  inputClassName="!text-sm md:text-base bg-transparent !w-56 !appearance-none !text-black outline-none w-full  "
                 />
               </div>
             </div>
           </div>
-
           <Button type="submit" className="w-full sm:w-fit text-nowrap ">
             Search
           </Button>

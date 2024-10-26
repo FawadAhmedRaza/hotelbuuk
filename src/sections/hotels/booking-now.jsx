@@ -67,18 +67,18 @@ export const BookNow = React.memo(() => {
       <RHFFormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(handleSubmit)}
-        className="flex flex-col gap-5 justify-start items-start "
+        className="flex flex-col gap-5 justify-start items-start w-full"
       >
         <Typography
           variant="h3"
-          className="font-semibold text-center mt-24 md:mt-16 lg:mt-10"
+          className="font-semibold text-center"
         >
           Stay For Business Meetings
         </Typography>
-        <Card className="w-full">
-          <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-3 md:gap-5 lg:gap-20 xl:gap-28 grow w-full">
+        <div className="flex flex-col min-900:flex-row gap-10 min-900:gap-0 justify-between items-center w-full  bg-white shadow-custom-shadow-sm px-6 py-8 rounded-2xl">
+          <div className="relative flex flex-col sm:flex-row justify-between min-900:justify-start items-center gap-3  lg:gap-12 xl:gap-28 w-full min-900:w-fit lg:w-full ">
             {/* Destination  */}
-            <div className="flex flex-col gap-2 items-start justify-start sm:justify-start min-w-56 ">
+            <div className="flex flex-col gap-2 items-start justify-start sm:justify-start w-full sm:w-fit min-900:min-w-40 lg:min-w-48 min-1100:min-w-56 ">
               <span className="flex items-center gap-3">
                 <Iconify
                   iconName="carbon:location-filled"
@@ -100,12 +100,11 @@ export const BookNow = React.memo(() => {
                 className="outline-none border-none !p-0 h-8  ml-1"
               />
             </div>
-
-            <span className=" hidden sm:flex h-16 w-[2px] bg-primary" />
+            <span className=" hidden sm:flex h-16 w-[2px] bg-primary mr-8 min-900:mr-0" />
             {/* Calendar   */}
             <div
               ref={datePopoverRef}
-              className=" relative flex flex-col gap-2 items-start justify-start sm:justify-start w-full"
+              className=" relative flex flex-col gap-2 items-start justify-start sm:justify-start w-full sm:w-fit"
             >
               <span className="flex items-center gap-3">
                 <Iconify
@@ -138,7 +137,7 @@ export const BookNow = React.memo(() => {
                 onClose={toggleDateCalender}
                 arrow={false}
                 className="flex flex-col overflow-hidden mt-4 w-fit "
-                parentClass="!left-0 top-12"
+                parentClass=" right-0 min-450:!right-0 lg:!left-0 top-12"
               >
                 <RHFDatePicker
                   name="availability"
@@ -149,10 +148,10 @@ export const BookNow = React.memo(() => {
               </CustomPopover>
             </div>
           </div>
-          <Button type="submit" className="w-full sm:w-fit text-nowrap ">
+          <Button type="submit" className="w-full sm:w-fit text-nowrap  ">
             Book Now
           </Button>
-        </Card>
+        </div>
       </RHFFormProvider>
     </Pannel>
   );

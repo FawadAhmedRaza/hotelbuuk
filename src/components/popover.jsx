@@ -39,7 +39,7 @@ export const CustomPopover = ({
     <div
       ref={popoverRef}
       className={cn(
-        "absolute top-10 right-1 flex flex-col  transition-opacity duration-300 ease-in-out !z-50",
+        "absolute top-10 right-1 flex flex-col items-end  transition-opacity duration-300 ease-in-out !z-50",
         parentClass,
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
@@ -47,7 +47,7 @@ export const CustomPopover = ({
       {arrow && (
         <Iconify
           iconName="bxs:up-arrow"
-          className={`!w-4 !h-4 justify-end -mb-1  size-5 sm:size-8  popover-button text-primary ${arrowClass}`}
+          className={`!w-4 !h-4  -mb-1 mr-1  size-5 sm:size-8  popover-button text-primary ${arrowClass}`}
           onClick={(e) => e.stopPropagation()}
         />
       )}
