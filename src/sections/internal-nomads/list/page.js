@@ -25,6 +25,8 @@ const InternalNomadsListView = () => {
           onClose={inviteModal.onFalse}
         />
       )}
+
+      
     </Pannel>
   );
 };

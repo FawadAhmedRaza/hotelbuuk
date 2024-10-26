@@ -122,7 +122,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
               // options={modifiedNomadList}
             />
           ) : (
-            <RHFInput name="email" label="Enter email" />
+            <RHFInput name="email" label="Enter email" /> 
           )}
         </div>
       </RHFFormProvider>
