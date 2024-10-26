@@ -13,7 +13,7 @@ import {
   RHFMultipleImageUploader,
 } from "@/src/components/hook-form";
 import { RoomInfo } from "@/src/sections/hotel-dashboard-sections/room";
-import ImageUploader from "@/src/sections/nomad/stepper-view/image-uploader";
+import ImageUploader from "@/src/sections/event/stepper-view/image-uploader";
 import {
   getAllRoomTypes,
   getRoomById,

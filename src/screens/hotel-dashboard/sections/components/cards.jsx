@@ -11,7 +11,7 @@ const HotelCards = () => {
     {
       id: 1,
       icon: "mdi:shop-complete",
-      title: "Booking ",
+      title: "Booking",
       value: "40",
       btnTitle: "View Details",
       path: "#",
@@ -19,9 +19,9 @@ const HotelCards = () => {
     {
       id: 2,
       icon: "mingcute:invite-line",
-      title: "Listing ",
+      title: "Listing",
       value: "41",
-      btnTitle: "Invite Nomad",
+      btnTitle: "View Details",
       path: "#",
     },
     {
@@ -30,14 +30,14 @@ const HotelCards = () => {
       title: "Nomad ",
       value: "33",
       btnTitle: "View Details",
-      path: paths.hotelDashboard.nomads,
+      path: paths.hotelDashboard.internalNomads,
     },
     {
       id: 4,
       icon: "mingcute:invite-line",
       title: "Revenue ",
       value: "41",
-      btnTitle: "Invite Nomad",
+      btnTitle: "View Details",
       path: "#",
     },
     {
@@ -45,8 +45,8 @@ const HotelCards = () => {
       icon: "material-symbols:meeting-room",
       title: "Rooms ",
       value: "25",
-      btnTitle: "Create Room",
-      path: paths.createRooms.root,
+      btnTitle: "View Details",
+      path: paths.hotelDashboard.rooms,
     },
   ];
 

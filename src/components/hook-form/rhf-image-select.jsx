@@ -6,6 +6,7 @@ import { Typography } from "../typography";
 import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
+import { ProfileAvatar } from "..";
 
 export const RHFImageSelect = ({
   label,
@@ -64,7 +65,7 @@ export const RHFImageSelect = ({
       render={({ field, formState: { errors } }) => (
         <div
           className={cn(
-            "relative flex flex-col gap-1 w-full",
+            "relative flex flex-col gap-1 w-full z-[9999]",
             className,
             disabled && "cursor-not-allowed"
           )}
@@ -90,9 +91,17 @@ export const RHFImageSelect = ({
               <div className="flex items-center">
                 {selectedHotel ? ( // Display the selected hotel
                   <div className="flex items-center gap-2 w-full">
-                    <img
-                      src={selectedHotel.image}
+                    {/* <img
+                      src={
+                        selectedHotel.image ||
+                        "https://cdn-icons-png.flaticon.com/512/48/48779.png"
+                      }
                       alt={selectedHotel.hotel_name}
+                      className="w-7 h-7 object-cover rounded-md"
+                    /> */}
+                    <ProfileAvatar
+                      src={selectedHotel?.image}
+                      type="server"
                       className="w-7 h-7 object-cover rounded-md"
                     />
                     <div>
@@ -128,7 +137,7 @@ export const RHFImageSelect = ({
             </div>
 
             {openDropdown && (
-              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
+              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-[9999] max-h-56 shadow-lg overflow-hidden">
                 <div className="p-2">
                   <input
                     className="!border-b border-primary !py-1.5 w-full text-sm outline-none px-2 placeholder:text-neutral-300 text-secondary"
@@ -151,9 +160,17 @@ export const RHFImageSelect = ({
                           handleOptionClick(field, option.value, option)
                         }
                       >
-                        <img
-                          src={option.image}
+                        {/* <img
+                          src={
+                            option.image ||
+                            "https://cdn-icons-png.flaticon.com/512/48/48779.png"
+                          }
                           alt={option.hotel_name}
+                          className="w-10 h-10 object-cover rounded-md"
+                        /> */}
+                        <ProfileAvatar
+                          src={option?.image}
+                          type="server"
                           className="w-10 h-10 object-cover rounded-md"
                         />
                         <div>

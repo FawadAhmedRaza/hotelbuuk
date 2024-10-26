@@ -9,7 +9,7 @@ import {
 } from "@/src/components/hook-form";
 import { Breadcrumb, Pannel, Stepper, Typography } from "@/src/components";
 import { RoomInfo } from "./room-info";
-import ImageUploader from "../../nomad/stepper-view/image-uploader";
+import ImageUploader from "../../event/stepper-view/image-uploader";
 import { useDispatch } from "react-redux";
 import { createRoom, getAllRoomTypes } from "@/src/redux/hotel-rooms/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
@@ -140,7 +140,7 @@ export const RoomStepperView = () => {
     );
 
     try {
-      await dispatch(createRoom(formData)).unwrap();
+      await dispatch(createRoom(formData)).unwrap(); 
       enqueueSnackbar("Room created", { variant: "success" });
       router.push(paths.hotelDashboard.rooms);
     } catch (error) {

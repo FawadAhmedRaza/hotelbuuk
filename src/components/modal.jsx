@@ -56,7 +56,7 @@ const Modal = ({
         </div>
 
         {/* Modal Content */}
-        <div className="p-4">{children}</div>
+        <div className="p-4 overflow-visible">{children}</div>
 
         {/* Modal Footer */}
         <div className="sticky bottom-0 w-full p-4 bg-white flex justify-end gap-2 border-t">

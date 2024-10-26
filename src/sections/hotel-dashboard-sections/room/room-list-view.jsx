@@ -228,21 +228,3 @@ const RoomsListView = React.memo(() => {
 });
 
 export default RoomsListView;
-
-{
-  air_conditioning: false;
-  blackout_curtains: false;
-  coffee_machine: false;
-  desk_workspace: false;
-  flat_screen_tv: true;
-  heating: true;
-  high_thread_sheets: false;
-  king_bed: true;
-  luxury_toiletries: false;
-  mini_fridge: false;
-  private_balcony: false;
-  private_bathroom: false;
-  room_service: false;
-  smart_lighting: true;
-  soundproof_windows: false;
-}

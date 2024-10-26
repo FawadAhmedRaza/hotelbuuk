@@ -30,6 +30,7 @@ export const paths = {
     root: "/hotel-dashboard",
     nomads: "/hotel-dashboard/nomads-list",
     rooms: "/hotel-dashboard/rooms",
+    internalNomads: "/hotel-dashboard/internal-nomads",
   },
   createRooms: {
     root: "/create-room",
