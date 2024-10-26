@@ -11,7 +11,6 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { getUserById } from "@/src/actions/auth.actions";
-import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 /**
@@ -148,9 +147,7 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (data) => {
     try {
-      console.log("data",data);
       const response = await axiosInstance.post(endpoints.AUTH.login, data);
-      console.log("response",response?.data);
       if (response?.status === 200) {
         const { accessToken, user } = response.data || {};
         setSession(accessToken, {
@@ -191,7 +188,6 @@ export function AuthProvider({ children }) {
     try {
       const userDetails = JSON.parse(sessionStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
-      console.log("data", data);
 
       const response = await axiosInstance.post(
         endpoints.AUTH.setup_user_type,
@@ -231,7 +227,7 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
-  const otpVerification = useCallback(async (step, code) => {
+  const otpVerification = useCallback(async (step, code, isInvitedUser) => {
     if (step === "signup") {
       try {
         const email = localStorage.getItem("signupEmail");
@@ -254,7 +250,11 @@ export function AuthProvider({ children }) {
             },
           });
           enqueueSnackbar("User verified successfully", { variant: "success" });
-          router.push("/setup-user-profile");
+          if (isInvitedUser) {
+            router.push("/accept-invitation");
+          } else {
+            router.push("/setup-user-profile");
+          }
         }
       } catch (error) {
         console.log(error);

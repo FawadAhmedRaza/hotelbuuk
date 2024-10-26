@@ -1,11 +1,22 @@
-"use client"
+"use client";
 
 import { Pannel, Typography } from "@/src/components";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const page = () => {
   const params = useSearchParams();
-  console.log("params", params);
+
+  const email = params.get("email");
+  const isRegistered = params.get("isRegistered");
+
+  console.log("params", email, isRegistered);
+
+  useEffect(() => {
+    if (!isRegistered) {
+      redirect(`/sign-up?email=${email}&userType="NOMAD"`);
+    }
+  }, [isRegistered]);
 
   return (
     <Pannel>
