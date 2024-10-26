@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const BookingSteps = () => {
   return (
-    <Pannel className="flex flex-col gap-16 justify-center items-center ">
+    <Pannel className="flex flex-col gap-16 justify-center items-center  bg-section-bg">
       <Typography variant="h2" className="font-semibold text-center">
         Book in 3 Simple Steps
       </Typography>

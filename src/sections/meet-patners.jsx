@@ -14,7 +14,7 @@ import "../app/globals.css";
 
 export const MeetOurPatners = React.memo(() => {
   return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10 w-full">
+    <Pannel className="flex flex-col gap-10 justify-center items-center bg-white p-10 w-full">
       <Typography variant="h3" className="text-start font-semibold w-full">
         Meet Our Partners
       </Typography>
@@ -75,7 +75,6 @@ export const MeetOurPatners = React.memo(() => {
                   <BgIcon
                     iconName="skill-icons:instagram"
                     className="absolute top-4 right-4"
-                    q
                   />
 
                   <Typography

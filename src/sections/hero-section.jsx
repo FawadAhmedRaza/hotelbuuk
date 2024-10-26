@@ -6,7 +6,7 @@ import { Booking } from ".";
 export const HeroSection = React.memo(() => {
   return (
     <Pannel className=" relative  w-full h-screen bg-hero bg-center bg-no-repeat bg-cover  py-10 pt-32  md:py-40">
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center h-full md:h-fit">
         <Image
           src="/assets/images/hero-bg.png"
           alt="bg"
@@ -31,7 +31,7 @@ export const HeroSection = React.memo(() => {
           </Typography>
         </div>
       </div>
-      <div className="absolute left-0 right-0 flex justify-center absoluter w-full bottom-0  mb-10 z-10 ">
+      <div className="absolute left-0 right-0 hidden md:flex justify-center absoluter w-full bottom-0  -mb-20  sm:mb-6 md:mb-10 z-10 ">
         <Booking />
       </div>
     </Pannel>
