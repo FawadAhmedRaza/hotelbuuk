@@ -15,21 +15,37 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
 
   const fieldImages = watch(name) || [];
 
+  console.log(fieldImages);
+
   useEffect(() => {
     setUploadedImages(fieldImages);
   }, []);
 
   const handleFileUpload = (newImages) => {
-    const updatedImages = [...uploadedImages, ...newImages];
+    const imagesWithId = newImages.map((img) => ({
+      ...img,
+      id: crypto.randomUUID(), // Assign a unique ID
+      url: URL.createObjectURL(img.file), // Create the URL here once
+    }));
+
+    const updatedImages = [...uploadedImages, ...imagesWithId];
     setUploadedImages(updatedImages);
     setValue(name, updatedImages);
   };
 
-  const handleDeleteImage = (index) => {
-    const updatedImages = uploadedImages.filter((_, i) => i !== index);
+  const handleDeleteImage = (id) => {
+    const imageToRemove = uploadedImages.find((img) => img.id === id);
+
+    if (imageToRemove?.url) {
+      URL.revokeObjectURL(imageToRemove.url); // Clean up object URL to avoid memory leaks
+    }
+
+    const updatedImages = uploadedImages.filter((img) => img.id !== id);
     setUploadedImages(updatedImages);
     setValue(name, updatedImages); // Update form context
   };
+
+  // ******************
 
   useEffect(() => {
     const imageCount = uploadedImages.length;
@@ -53,13 +69,14 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
           name={name}
           onFileUpload={handleFileUpload}
         />
+
         {uploadedImages?.map((image, index) => {
           const imageSrc = image?.file
             ? URL.createObjectURL(image?.file)
             : image?.img;
 
           return (
-            <div key={index} className="relative group">
+            <div key={image.id} className="relative group">
               <div className="flex justify-center items-center">
                 <ImageRender
                   src={imageSrc}
@@ -69,7 +86,7 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
                 />
                 <div
                   className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                  onClick={() => handleDeleteImage(index)}
+                  onClick={() => handleDeleteImage(image.id)}
                 >
                   <Iconify iconName="material-symbols-light:delete-outline" />
                 </div>

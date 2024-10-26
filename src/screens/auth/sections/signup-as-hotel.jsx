@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
@@ -21,9 +21,16 @@ import {
   Typography,
 } from "@/src/components";
 import { paths } from "@/src/contants";
+import { useSearchParams } from "next/navigation";
 
 const SignUpAsHotel = () => {
   const { register } = useAuthContext();
+  const params = useSearchParams();
+
+  const email = params.get("email");
+  const isRegistered = params.get("isRegistered");
+  const hotel = params.get("hotel");
+  const hotelId = params.get("hotelId")
 
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
@@ -52,7 +59,8 @@ const SignUpAsHotel = () => {
 
   const handleSubmit = async (data) => {
     try {
-      await register(data);
+      let invited = email && isRegistered ? true : false;
+      await register(data, invited, hotel,hotelId);
     } catch (error) {
       console.log(error);
     } finally {
