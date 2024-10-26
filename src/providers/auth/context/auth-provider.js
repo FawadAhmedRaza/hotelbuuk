@@ -11,7 +11,6 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { getUserById } from "@/src/actions/auth.actions";
-import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 /**
@@ -148,9 +147,7 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (data) => {
     try {
-      console.log("data",data);
       const response = await axiosInstance.post(endpoints.AUTH.login, data);
-      console.log("response",response?.data);
       if (response?.status === 200) {
         const { accessToken, user } = response.data || {};
         setSession(accessToken, {
@@ -173,13 +170,19 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const register = useCallback(async (data) => {
+  const register = useCallback(async (data, isInvited, hotelName, hotelId) => {
     try {
+      data.isInvited = isInvited;
+      data.hotel_id = hotelId;
       const response = await axiosInstance.post(endpoints.AUTH.signup, data);
 
       if (response.status === 201) {
         localStorage.setItem("signupEmail", data?.email);
-        router.push("/verify-code?step=signup");
+        isInvited
+          ? router.push(
+              `/verify-code?step=signup&isInvited=true&hotel=${hotelName}`
+            )
+          : router.push("/verify-code?step=signup");
       }
     } catch (err) {
       enqueueSnackbar(err?.message, { variant: "error" });
@@ -191,7 +194,6 @@ export function AuthProvider({ children }) {
     try {
       const userDetails = JSON.parse(sessionStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
-      console.log("data", data);
 
       const response = await axiosInstance.post(
         endpoints.AUTH.setup_user_type,
@@ -231,53 +233,64 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
-  const otpVerification = useCallback(async (step, code) => {
-    if (step === "signup") {
-      try {
-        const email = localStorage.getItem("signupEmail");
-        let data = { email, otp: code };
-        const response = await axiosInstance.post(
-          endpoints.AUTH.verify_user_OTP,
-          data
-        );
-        if (response.status === 201) {
-          setSession(response?.data?.data?.accessToken);
-          localStorage.removeItem("signupEmail");
-          sessionStorage.setItem(
-            "user",
-            JSON.stringify(response?.data?.data?.user)
+  const otpVerification = useCallback(
+    async (step, code, isInvitedUser, hotel) => {
+      if (step === "signup") {
+        try {
+          const email = localStorage.getItem("signupEmail");
+          let data = { email, otp: code };
+          const response = await axiosInstance.post(
+            endpoints.AUTH.verify_user_OTP,
+            data
           );
-          dispatch({
-            type: Types.LOGIN,
-            payload: {
-              user: response.data?.data?.user,
-            },
-          });
-          enqueueSnackbar("User verified successfully", { variant: "success" });
-          router.push("/setup-user-profile");
+          if (response.status === 201) {
+            setSession(response?.data?.data?.accessToken);
+            localStorage.removeItem("signupEmail");
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify(response?.data?.data?.user)
+            );
+            dispatch({
+              type: Types.LOGIN,
+              payload: {
+                user: response.data?.data?.user,
+              },
+            });
+            enqueueSnackbar("User verified successfully", {
+              variant: "success",
+            });
+            if (isInvitedUser) {
+              router.push(
+                `/accept-invitation?isRegistered=true&hotel=${hotel}`
+              );
+            } else {
+              router.push("/setup-user-profile");
+            }
+          }
+        } catch (error) {
+          console.log(error);
+          enqueueSnackbar(error?.message, { variant: "error" });
         }
-      } catch (error) {
-        console.log(error);
-        enqueueSnackbar(error?.message, { variant: "error" });
-      }
-    } else {
-      try {
-        const email = localStorage.getItem("forgotEmail");
-        let data = { email, otp: code };
-        const response = await axiosInstance.post(
-          endpoints.AUTH.forget_password.verify_forget_password_otp,
-          data
-        );
-        localStorage.setItem("forgotOtp", code);
-        if (response.status == 200) {
-          router.push("/set-new-password");
+      } else {
+        try {
+          const email = localStorage.getItem("forgotEmail");
+          let data = { email, otp: code };
+          const response = await axiosInstance.post(
+            endpoints.AUTH.forget_password.verify_forget_password_otp,
+            data
+          );
+          localStorage.setItem("forgotOtp", code);
+          if (response.status == 200) {
+            router.push("/set-new-password");
+          }
+        } catch (error) {
+          console.log(error);
+          enqueueSnackbar(error?.message, { variant: "error" });
         }
-      } catch (error) {
-        console.log(error);
-        enqueueSnackbar(error?.message, { variant: "error" });
       }
-    }
-  }, []);
+    },
+    []
+  );
 
   const resetPasswordHandle = useCallback(async (newPassword) => {
     try {

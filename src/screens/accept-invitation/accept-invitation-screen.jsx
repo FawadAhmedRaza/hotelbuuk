@@ -1,18 +1,19 @@
 "use client";
 
 import { Button, Pannel, Typography } from "@/src/components";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
-import { useWindowSize } from "react-use";
 
-const AcceptInvitationScreen = () => {
+const AcceptInvitationScreen = ({ hotelName }) => {
+  const router = useRouter();
+
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
   const [showConfetti, setShowConfetti] = useState(true);
 
-  // Handle window resize to make sure the confetti fills the screen dynamically
   useEffect(() => {
     const handleResize = () => {
       setWindowDimensions({
@@ -25,7 +26,6 @@ const AcceptInvitationScreen = () => {
     return () => window.removeEventListener("resize", handleResize); // Cleanup listener on unmount
   }, []);
 
-  // Stop confetti after 5 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 5000);
     return () => clearTimeout(timer);
@@ -52,10 +52,12 @@ const AcceptInvitationScreen = () => {
               Congratulations!
             </Typography>
             <Typography variant="h4" className="">
-              You have joined hotel as their internal Nomad.
+              You have joined {hotelName} as their internal Nomad.
             </Typography>
 
-            <Button>Continue</Button>
+            <Button onClick={() => router.push("/nomad-dashboard")}>
+              Continue
+            </Button>
           </div>
         </div>
       </Pannel>

@@ -40,13 +40,10 @@ export async function POST(req) {
       },
     });
 
-    console.log("isNomad exist", isNomadExist);
-    console.log("isNomad user exist", isNomadUserExist);
-
     let queryParams =
       !isNomadExist && !isNomadUserExist
-        ? `sign-up?email=${email}&isRegistered=false`
-        : `accept-invitation?email=${email}&isRegistered=true`;
+        ? `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`
+        : `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
 
     await sendMail(
       "Hotel Invitation",
