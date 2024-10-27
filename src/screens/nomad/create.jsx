@@ -1,8 +1,8 @@
 import React from "react";
-import { StepperView } from "@/src/sections/nomad";
+import { NomadListView } from "@/src/sections/nomad";
 
 const NomadCreateScreen = React.memo(() => {
-  return <StepperView />;
+  return <NomadListView />;
 });
 
 export default NomadCreateScreen;

@@ -16,7 +16,7 @@ export const Button = ({
   return (
     <button
       className={cn(
-        `flex items-center justify-center gap-3 px-8 py-2.5 text-white bg-primary  text-base text-center rounded-full w-fit text-nowrap cursor-pointer ${
+        `flex items-center justify-center gap-3 px-8 py-2.5 text-white bg-primary  text-base text-center rounded-full w-fit text-nowrap cursor-pointer !font-dmSans  ${
           (loading || disabled) &&
           "opacity-50 !cursor-not-allowed pointer-events-none"
         } `,

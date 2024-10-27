@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // Components and Others...
 import { hotels } from "../_mock/_hotels";
@@ -9,29 +9,61 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/swiper-bundle.css";
 import "../app/globals.css";
 
 export const PreviewHotels = () => {
-  return (
-    <div className="w-full relative">
-      {/* Left Arrow Button */}
-      <span className="swiper-button-prev custom-prev absolute -left-3 bg-primary !h-8 !w-8 z-30 top-1/2 md:top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full cursor-pointer text-black p-1">
-        <Iconify iconName="cuida:arrow-left-outline" />
-      </span>
+  const swiperRef = React.useRef(null);
+  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
+  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
 
-      {/* Right Arrow Button */}
-      <span className="swiper-button-next custom-next absolute -right-3 bg-primary !h-8 !w-8 z-30 top-1/2 md:top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full cursor-pointer text-black p-1">
-        <Iconify iconName="cuida:arrow-right-outline" />
-      </span>
+  const updateNavigation = () => {
+    if (swiperRef.current) {
+      const { isBeginning, isEnd } = swiperRef.current.swiper;
+
+      setIsPrevDisabled(isBeginning); // Disable left button if at the beginning
+      setIsNextDisabled(isEnd); // Disable right button if at the end
+    }
+  };
+
+  React.useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef?.current?.navigation?.update();
+    }
+  }, [swiperRef]);
+
+
+  return (
+    <div className="w-full relative px-10">
+       {/* Left Arrow Button */}
+       <span
+          className={`swiper-button-prev custom-prev ${isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""}`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slidePrev();
+            updateNavigation();
+          }}
+          aria-disabled={isPrevDisabled}
+        >
+          <Iconify iconName="cuida:arrow-left-outline" />
+        </span>
+
+        {/* Right Arrow Button */}
+        <span
+          className={`swiper-button-next custom-next ${
+            isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slideNext();
+            updateNavigation(); 
+          }}
+        >
+          <Iconify iconName="cuida:arrow-right-outline" />
+        </span>
+
       <Swiper
+        ref={swiperRef}
         spaceBetween={10}
         slidesPerView={4}
         modules={[Navigation]}
-        navigation={{
-          nextEl: ".custom-next",
-          prevEl: ".custom-prev",
-        }}
         breakpoints={{
           0: {
             slidesPerView: 1,
@@ -51,13 +83,11 @@ export const PreviewHotels = () => {
           },
         }}
       >
-        <div className="w-full flex">
-          {hotels?.map((item) => (
-            <SwiperSlide key={item.id} className="flex flex-col">
-              <HotelCard hotel={item} />
-            </SwiperSlide>
-          ))}
-        </div>
+        {hotels?.map((item) => (
+          <SwiperSlide key={item.id} className="flex flex-col">
+            <HotelCard hotel={item} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

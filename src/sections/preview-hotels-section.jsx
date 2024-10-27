@@ -9,12 +9,12 @@ export const PreviewHotelsSection = React.memo(() => {
     <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg ">
       <div>
         <Typography
-          variant="h1"
+          variant="h2"
           className="font-semibold text-center !text-black"
         >
           Stay For Business Meetings
         </Typography>
-        <Typography variant="h4" className="font-semibold text-center mt-2">
+        <Typography variant="h6" className="font-normal text-center mt-2 text-neutral-400">
           Find Business Hotels with Local Market Insights.
         </Typography>
       </div>

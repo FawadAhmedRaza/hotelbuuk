@@ -6,7 +6,7 @@ export const ThingsKnow = () => {
   const { rules, safety, cancellationPolicy } = HotelsThings[0];
 
   return (
-    <Pannel className="flex flex-col flex-wrap gap-5 md:gap-8 p-5">
+    <Pannel className="flex flex-col flex-wrap gap-5 md:gap-8 p-5 bg-section-bg">
       {/* Header */}
       <Typography variant="h3" className="font-semibold">
         Things to Know
