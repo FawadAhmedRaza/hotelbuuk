@@ -88,7 +88,7 @@ const VerifyCodeScreen = () => {
           <RHFInput
             label="Enter Code"
             type="text"
-            placeholder="7789BM6X"
+            placeholder="XXXXXX"
             name="code"
           />
 

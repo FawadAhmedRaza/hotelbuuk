@@ -3,10 +3,7 @@
 import React, { useRef } from "react";
 import { Button, Iconify, Typography } from "../components";
 import * as Yup from "yup";
-import {
-  RHFFormProvider,
-  RHFInput,
-} from "@/src/components/hook-form";
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -72,7 +69,7 @@ export const Booking = React.memo(() => {
       onSubmit={methods.handleSubmit(handleSubmit)}
       className=""
     >
-      <div >
+      <div>
         <div className="flex flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:w-[60%] h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
           <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-5 md:gap-5  grow w-full">
             <div className="flex  gap-1 sm:gap-3">
@@ -139,5 +136,3 @@ export const Booking = React.memo(() => {
     </RHFFormProvider>
   );
 });
-
-

@@ -94,6 +94,7 @@ export const nomadProfile = createSlice({
       state.updateById.isLoading = false;
     });
 
+    
     // Get Internal Nomads
     builder.addCase(getInternalNomad.pending, (state, action) => {
       state.isLoading = true;
