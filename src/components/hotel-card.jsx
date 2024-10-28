@@ -11,7 +11,7 @@ export const HotelCard = React.memo(({ hotel, className }) => {
   return (
     <AnchorTag
       href={paths.hotels.getHotelById(hotel?.id)}
-      className={cn("relative w-full", className)}
+      className={cn("relative w-full !text-black", className)}
     >
       <div className="w-full h-auto relative">
         <img
@@ -47,26 +47,26 @@ export const HotelCard = React.memo(({ hotel, className }) => {
         <div className="absolute bottom-2 left-8 w-full h-full flex flex-col justify-end hotels-start pb-5">
           <Typography
             variant="p"
-            className="!text-base font-semibold text-white"
+            className="!text-base font-semibold text-white font-dmSans"
           >
             {hotel.price} / Per Night
           </Typography>
           <Typography
             variant="p"
-            className="!text-base font-semibold text-white"
+            className="!text-base font-semibold text-white font-dmSans"
           >
             {hotel.guestType}
           </Typography>
         </div>
       </div>
-      <div className="flex flex-col gap-1 mt-1 px-2">
-        <Typography variant="p" className="font-bold">
+      <div className="flex flex-col  mt-1 px-2 !font-dmSans">
+        <Typography variant="h6" className="font-bold ">
           {hotel.eventTopic}
         </Typography>
         <Typography variant="p" className="font-normal">
           {hotel.location}
         </Typography>
-        <Typography variant="p" className="font-medium">
+        <Typography variant="p" className=" !text-sm font-medium text-neutral-400 mt-1">
           {hotel.dateRange}
         </Typography>
       </div>

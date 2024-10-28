@@ -30,16 +30,15 @@ export const NavBar = React.memo(({ className }) => {
     >
       <AnchorTag
         href={"/"}
-        className={"flex hover:no-underline items-center gap-2"}
+        className="flex hover:no-underline items-center gap-2"
       >
-        <Image
-          src={"/assets/images/transperent-logo/transperent/WHITE.png"}
-          height={200}
-          width={60}
+        <img
+          src="/assets/images/transperent-logo/transperent/WHITE.png"
+          className="w-16"
         />
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-4xl font-bold !text-white text-start  "
+          className=" !text-xl sm:!text-3xl md:!text-4xl font-semibold !text-white text-start font-poppins  "
         >
           Hotelbuuk
         </Typography>
@@ -52,7 +51,6 @@ export const NavBar = React.memo(({ className }) => {
         {/* language  */}
         <LangaugeTranslator />
         {/* Login  */}
-
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
@@ -71,7 +69,6 @@ export const NavBar = React.memo(({ className }) => {
               className=" font-medium !text-xs text-white text-nowrap"
             >
               {user ? user?.first_name : ""}
-              {/* Fawad */}
             </Typography>
           </span>
         </div>

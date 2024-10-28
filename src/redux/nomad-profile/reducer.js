@@ -31,6 +31,11 @@ const initialState = {
     isLoading: false,
     error: null,
   },
+  allInternalNomads: {
+    isLoading: false,
+    error: null,
+    internalNomads: [],
+  },
 };
 
 // ---------------------------------------------------------
@@ -94,19 +99,17 @@ export const nomadProfile = createSlice({
       state.updateById.isLoading = false;
     });
 
-    
     // Get Internal Nomads
     builder.addCase(getInternalNomad.pending, (state, action) => {
-      state.isLoading = true;
+      state.allInternalNomads.isLoading = true;
     });
     builder.addCase(getInternalNomad.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
-      state.nomads = action.payload.internalNomads;
-      state.isLoading = false;
+      state.allInternalNomads.internalNomads = action.payload.internalNomads;
+      state.allInternalNomads.isLoading = false;
     });
     builder.addCase(getInternalNomad.rejected, (state, action) => {
-      state.error = action.error;
-      state.isLoading = false;
+      state.allInternalNomads.error = action.error;
+      state.allInternalNomads.isLoading = false;
     });
   },
 });

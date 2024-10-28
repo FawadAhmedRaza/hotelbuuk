@@ -28,8 +28,6 @@ export const Booking = React.memo(() => {
 
   const bookingSchema = Yup.object().shape({
     destination: Yup.string().required("Destination is required"),
-    // check_in: Yup.string().required("CheckIn is required"),
-    // check_out: Yup.string().required("Checkout is required"),
   });
 
   const methods = useForm({
@@ -70,7 +68,7 @@ export const Booking = React.memo(() => {
       className=""
     >
       <div>
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:w-[60%] h-fit rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
+        <div className="flex flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:!w-[70%] h-full md:!h-28 rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10  bg-white mx-auto ">
           <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-5 md:gap-5  grow w-full">
             <div className="flex  gap-1 sm:gap-3">
               <Iconify
@@ -93,7 +91,7 @@ export const Booking = React.memo(() => {
                 />
               </span>
             </div>
-            <span className=" hidden sm:flex h-16 w-[2px] bg-primary" />
+            <span className=" hidden sm:flex h-16 w-[2px] mx-10 bg-primary" />
 
             <div className="flex gap-1 sm:gap-3">
               <Iconify iconName="ion:calendar" className="text-primary mt-1" />
@@ -117,13 +115,15 @@ export const Booking = React.memo(() => {
                 {/* CUSTOM CALENDER */}
 
                 <Datepicker
-                  primaryColor="purple"
+                  primaryColor="#852169"
                   value={date}
                   placeholder={`${getFormattedDate()} - ${getFormattedDate(
                     Date()
                   )}`}
                   onChange={(newValue) => setDate(newValue)}
                   inputClassName="!text-sm md:text-base bg-transparent !w-56 !appearance-none !text-black outline-none w-full  "
+                  className="!text-sm md:text-base !text-[#852169]" // Apply your custom color here
+
                 />
               </div>
             </div>

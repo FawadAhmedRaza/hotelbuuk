@@ -44,17 +44,21 @@ const InternalNomadsListView = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
+  const { internalNomads, isLoading } = useSelector(
+    (state) => state.nomadProfile.allInternalNomads
+  );
+
+  console.log("Internel Nomads", isLoading, internalNomads);
 
   const totalPages = React.useMemo(() => {
-    return Math.ceil(nomads?.length / rowsPerPage);
-  }, [nomads, rowsPerPage]);
+    return Math.ceil(internalNomads?.length / rowsPerPage);
+  }, [internalNomads, rowsPerPage]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    return nomads?.slice(start, end);
-  }, [page, nomads, rowsPerPage]);
+    return internalNomads?.slice(start, end);
+  }, [page, internalNomads, rowsPerPage]);
 
   console.log("All internal nomads", items);
 
@@ -93,7 +97,7 @@ const InternalNomadsListView = () => {
       )}
 
       {!isLoading ? (
-        <div className="border border-gray-200 rounded-xl">
+        <div>
           <CustomTable
             items={items}
             TABLE_HEADER={header}
@@ -151,15 +155,6 @@ const InternalNomadsListView = () => {
                     <span>-</span>
                     <Typography variant="p" className="  !text-nowrap max-w-56">
                       {nomad?.end_date.toString().slice(0, 10)}
-                    </Typography>
-                  </div>
-                  <div className="flex gap-1">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.start_time}
-                    </Typography>
-                    <span>-</span>
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.end_time}
                     </Typography>
                   </div>
                 </td>

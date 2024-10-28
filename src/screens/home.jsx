@@ -11,6 +11,7 @@ import {
 } from "../sections";
 import { Pannel } from "../components";
 
+
 const HomeScreen = React.memo(() => {
   return (
     <main className="relative">

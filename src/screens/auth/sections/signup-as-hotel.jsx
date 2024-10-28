@@ -30,7 +30,7 @@ const SignUpAsHotel = () => {
   const email = params.get("email");
   const isRegistered = params.get("isRegistered");
   const hotel = params.get("hotel");
-  const hotelId = params.get("hotelId")
+  const hotelId = params.get("hotelId");
 
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
@@ -54,13 +54,16 @@ const SignUpAsHotel = () => {
 
   const {
     reset,
+    watch,
     formState: { isSubmitting },
   } = methods;
+
+  const termsCheck = watch("terms");
 
   const handleSubmit = async (data) => {
     try {
       let invited = email && isRegistered ? true : false;
-      await register(data, invited, hotel,hotelId);
+      await register(data, invited, hotel, hotelId);
     } catch (error) {
       console.log(error);
     } finally {
@@ -111,7 +114,12 @@ const SignUpAsHotel = () => {
             }
           />
           <div className="flex flex-col gap-4 mt-3">
-            <Button loading={isSubmitting} type="submit" className="w-full">
+            <Button
+              disabled={!termsCheck}
+              loading={isSubmitting}
+              type="submit"
+              className="w-full"
+            >
               Create account
             </Button>
             <Typography
