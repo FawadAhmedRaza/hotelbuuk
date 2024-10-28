@@ -67,6 +67,13 @@ export const endpoints = {
     },
     inviteNomads: "/hotel/invite-nomad",
     internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
+    event: {
+      create: "/hotel/events",
+      getAll: (id) => `/hotel/events?user_id=${id}`,
+      getById: (id) => `/hotel/events/${id}`,
+      updateById: (id) => `/hotel/events/${id}`,
+      deleteById: (id) => `/hotel/events/${id}`,
+    },
   },
   nomad: {
     root: "/nomad",

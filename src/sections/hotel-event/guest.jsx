@@ -3,26 +3,18 @@ import { Button, Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Accordion } from "@/src/components";
-import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
 
 export const GuestLearn = () => {
   const initialState = { title: "", description: "" };
 
   const [topicInfo, setTopicInfo] = useState(initialState);
   const [topics, setTopics] = useState([]);
-  const [isAccordionVisible, setAccordionVisible] = useState(false);
 
-  // Get the form context
   const { watch, setValue, getValues } = useFormContext();
 
-  // Watch the learning info values from the form state
-  const learningInfo = watch("learning_info");
-  console.log("Learning Info", learningInfo);
-
   const formTopics = watch("topics");
-  console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
     const currentTopics = getValues("topics") || []; // Get existing topics (fallback to empty array)
@@ -32,8 +24,6 @@ export const GuestLearn = () => {
     setValue("topics", [...currentTopics, topicInfo], { shouldValidate: true });
 
     setTopicInfo({ title: "", description: "" });
-
-    console.log("this is toic info", topicInfo);
   };
 
   const handleDelete = (id) => {
@@ -46,7 +36,6 @@ export const GuestLearn = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e);
     setTopicInfo((prev) => ({
       ...prev,
       id: uuidv4(),

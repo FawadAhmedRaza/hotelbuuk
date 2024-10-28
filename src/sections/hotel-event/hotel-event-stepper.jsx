@@ -3,29 +3,38 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  RHFFormProvider,
-  RHFMultipleImageUploader,
-} from "@/src/components/hook-form";
+import { RHFFormProvider } from "@/src/components/hook-form";
 
 import { Pannel, Stepper } from "@/src/components";
 import { BussinessMeeting } from "./bussiness-meeting";
 import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
-import { useDispatch } from "react-redux";
-import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
+import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
+import {
+  createHotelEvent,
+  updateHotelEventById,
+} from "@/src/redux/hotel-event/thunk";
+import { useRouter } from "next/navigation";
+import { paths } from "@/src/contants";
 
-export const HotelEventStepper = () => {
-  const [currentSteps, setCurrentSteps] = useState([]);
+export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const dispatch = useDispatch();
   const { user } = useAuthContext();
+  const router = useRouter();
+
+  const { isLoading, error: createErr } = useSelector(
+    (state) => state.hotelEvent.create
+  );
+  const { isLoading: updateLoading } = useSelector(
+    (state) => state.hotelEvent.updateById
+  );
 
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
@@ -42,40 +51,9 @@ export const HotelEventStepper = () => {
       description: Yup.string().required("required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
-      accomodation_type: Yup.string().default("bnb"),
       amenities: Yup.array().optional(),
-      hotel: Yup.string().when("accomodation_type", {
-        is: "hotel",
-        then: (schema) => schema.required("hotel is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      location: Yup.object().shape({
-        country: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("country is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        city: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("city is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        address: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("street is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-      }),
+      nomad_id: Yup.string().required("Please select nomad"),
     }),
-    images: Yup.array()
-      .when("accomodation_type", {
-        is: "hotel",
-        then: (schema) => schema.required("hotel is required"),
-        otherwise: (schema) => schema.notRequired(),
-      })
-      // .min(4, "At least 4 images are required")
-      .required("Files are required"),
-
     topics: Yup.array()
       .min(1, "At least one topic is required")
       .required("Files are required"),
@@ -89,39 +67,30 @@ export const HotelEventStepper = () => {
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),
-    defaultValues: {
-      business_meeting: {
-        title: "",
-        description: "",
-        official_name: "",
-        business_category: "",
-        accomodation_type: "bnb",
-        hotel: "",
-        location: {
-          country: "",
-          city: "",
-          address: "",
+    defaultValues: isEdit
+      ? defaultValues
+      : {
+          business_meeting: {
+            title: "",
+            description: "",
+            official_name: "",
+            business_category: "",
+            amenities: [],
+          },
+          topics: [],
+          availibility: {
+            start_date: "",
+            end_date: "",
+            rules: {},
+          },
         },
-        amenities: [],
-      },
-      images: [],
-      topics: [],
-      availibility: {
-        start_date: "",
-        end_date: "",
-        rules: {},
-      },
-    },
-    context: {
-      accomodation_type: "bnb",
-    },
   });
 
-  const { trigger, watch, handleSubmit } = methods;
+  const { trigger, handleSubmit } = methods;
 
-  const fetchHotels = async () => {
+  const fetchNomads = async () => {
     try {
-      await dispatch(getHotelInfo()).unwrap();
+      await dispatch(getNomadsProfile()).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -136,7 +105,7 @@ export const HotelEventStepper = () => {
   };
 
   useEffect(() => {
-    fetchHotels();
+    fetchNomads();
     fetchAmenities();
   }, []);
 
@@ -146,12 +115,6 @@ export const HotelEventStepper = () => {
       icon: "mdi:business-outline",
       value: "bussiness",
       component: <BussinessMeeting />,
-    },
-    {
-      label: "Upload Images",
-      icon: "ph:images",
-      value: "images",
-      component: <RHFMultipleImageUploader name="images" />,
     },
     {
       label: "What Guest will Learn",
@@ -173,17 +136,6 @@ export const HotelEventStepper = () => {
     },
   ];
 
-  const accomodationType = watch("business_meeting.accomodation_type");
-
-  useEffect(() => {
-    if (accomodationType === "bnb") {
-      setCurrentSteps(steps);
-    } else {
-      const newSteps = steps.filter((step) => step.value !== "images");
-      setCurrentSteps(newSteps);
-    }
-  }, [accomodationType]);
-
   const handleNext = async () => {
     const fieldsToValidate = [];
 
@@ -193,26 +145,11 @@ export const HotelEventStepper = () => {
         "business_meeting.description",
         "business_meeting.official_name",
         "business_meeting.business_category",
-        "business_meeting.accomodation_type", // Ensure it’s present
         "business_meeting.amenities"
       );
-
-      if (accomodationType === "hotel") {
-        fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
-      } else if (accomodationType === "bnb") {
-        fieldsToValidate.push(
-          "business_meeting.location.country",
-          "business_meeting.location.city",
-          "business_meeting.location.street_name"
-        );
-      }
     } else if (activeStep === 1) {
-      if (accomodationType === "bnb") {
-        fieldsToValidate.push("images");
-      }
-    } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 3) {
+    } else if (activeStep === 2) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
@@ -224,43 +161,31 @@ export const HotelEventStepper = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      const finalData = {
-        ...data,
-        user_id: user?.id,
-      };
-      // const formData = new FormData();
-      // const images = finalData.images?.map((da) => da.file);
-      // const names = finalData.images?.map((da) => da.name);
-      // for (const key in finalData) {
-      //   if (
-      //     finalData[key] !== null &&
-      //     finalData[key] !== undefined &&
-      //     key !== "images"
-      //   ) {
-      //     if (
-      //       typeof finalData[key] === "object" &&
-      //       !(finalData[key] instanceof File)
-      //     ) {
-      //       formData.append(key, JSON.stringify(finalData[key]));
-      //     } else {
-      //       formData.append(key, finalData[key]);
-      //     }
-      //   }
-      // }
-
-      // images.forEach((file) => formData.append("images", file));
-      // images.forEach((file) =>
-      //   formData.append("imagesNames", JSON.stringify(names))
-      // );
-
-      // const request = await axiosInstance.post(endpoints.nomad.event, formData);
-      // if (request?.status === 201) {
-      //   enqueueSnackbar("Event created", { variant: "success" });
-      // }
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
+    const finalData = {
+      ...data,
+      user_id: user?.id,
+    };
+    if (!isEdit) {
+      try {
+        await dispatch(createHotelEvent(finalData)).unwrap();
+        enqueueSnackbar("hotel event created", { variant: "success" });
+        router.push(paths.hotelDashboard.events.root);
+      } catch (error) {
+        console.log(error);
+        console.log(createErr);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
+    } else {
+      try {
+        await dispatch(
+          updateHotelEventById({ id: defaultValues?.id, data: finalData })
+        ).unwrap();
+        enqueueSnackbar("Updated successfully", { variant: "success" });
+        router.push(paths.hotelDashboard.events.root);
+      } catch (error) {
+        console.log("form error", error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
     }
   });
 
@@ -268,12 +193,13 @@ export const HotelEventStepper = () => {
     <Pannel>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
         <Stepper
-          steps={currentSteps}
+          steps={steps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}
           handleNext={handleNext}
           handleBack={() => setActiveStep((prev) => prev - 1)}
-          isLastStep={activeStep === currentSteps.length - 1}
+          isLastStep={activeStep === steps.length - 1}
+          loading={isEdit ? updateLoading : isLoading}
         />
       </RHFFormProvider>
     </Pannel>

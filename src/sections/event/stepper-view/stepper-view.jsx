@@ -19,8 +19,6 @@ import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { enqueueSnackbar } from "notistack";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
@@ -271,13 +269,13 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           formData.append("imagesNames", JSON.stringify(names))
         );
 
-        // const request = await axiosInstance.post(
-        //   endpoints.nomad.event.create,
-        //   formData
-        // );
-        // if (request?.status === 201) {
-        //   enqueueSnackbar("Event created", { variant: "success" });
-        // }
+        const request = await axiosInstance.post(
+          endpoints.nomad.event.create,
+          formData
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Event created", { variant: "success" });
+        }
       } catch (error) {
         console.log(error);
         enqueueSnackbar(error?.message, { variant: "error" });

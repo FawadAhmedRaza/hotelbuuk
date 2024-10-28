@@ -26,25 +26,19 @@ export const BussinessMeeting = () => {
   const { watch, setValue } = useFormContext();
   const openAmenitiesModal = useModal();
 
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-
-  const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+  const { nomads } = useSelector((state) => state.nomadProfile);
 
-  let modifiedHotelList = hotels?.map((item) => {
+  let modifiedNomadList = nomads?.map((item) => {
     return {
-      hotel_name: item?.hotel_name,
-      image: item?.hotel_image,
-      address: item?.address,
-      value: item?.hotel_name,
+      hotel_name: item?.first_name + " " + item?.last_name,
+      image: item?.profile_img,
+      address: item?.email,
+      value: item?.id,
     };
   });
 
-  const accomodationType = watch("business_meeting.accomodation_type");
-  const country = watch("business_meeting.location.country");
   const selectedAmenities = watch("business_meeting.amenities") || [];
-  const [type, setType] = useState(accomodationType);
 
   const handleCheckboxChange = (amenity, checked) => {
     setValue(
@@ -54,27 +48,6 @@ export const BussinessMeeting = () => {
         : selectedAmenities.filter((selected) => selected.name !== amenity.name) // remove if unchecked
     );
   };
-
-  useEffect(() => {
-    setType(accomodationType); // Update local state when type changes
-  }, [accomodationType]);
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const allCountries = await getCountries();
-      setCountries(allCountries);
-    }
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    setValue("business_meeting.location.city", "");
-    async function fetchCities() {
-      const allCities = await getCities(country);
-      setCities(allCities);
-    }
-    fetchCities();
-  }, [country]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -142,73 +115,13 @@ export const BussinessMeeting = () => {
             label="Bussiness Category"
             options={businessCategories}
           />
-          <div className="flex flex-col gap-3 w-full">
-            <Typography variant="h5" className="font-semibold">
-              Accommodation Type (Where Guests will Sleep)
-            </Typography>
-            <div className="flex flex-col  gap-5 w-full">
-              <div className="flex flex-col gap-1">
-                <RHFRadio
-                  id="hotel"
-                  name="business_meeting.accomodation_type"
-                  value="hotel"
-                  label="Hotel"
-                />
-                <Typography variant="p" className="!text-xs">
-                  (You partnered with local hotels to take their guests on
-                  Business Tours){" "}
-                </Typography>
-              </div>
-              <div className="flex flex-col gap-1">
-                <RHFRadio
-                  id="bnb"
-                  name="business_meeting.accomodation_type"
-                  value="bnb"
-                  label="B&B"
-                />
-                <Typography variant="p" className="!text-xs">
-                  (Business Guests stay in your B&B. You also take them on
-                  Business Tours)
-                </Typography>
-              </div>
-            </div>
-          </div>
 
-          {type === "bnb" ? (
-            <>
-              <div className="flex flex-col gap-3 w-full">
-                <Typography variant="h5" className="font-semibold">
-                  Location
-                </Typography>
-                <div className="flex flex-col md:flex-row gap-5  w-full">
-                  <RHFSelect
-                    name="business_meeting.location.country"
-                    placeholder="Select your Country"
-                    label="Country"
-                    options={countries}
-                  />
-                  <RHFSelect
-                    name="business_meeting.location.city"
-                    placeholder="Select your City"
-                    label="City"
-                    options={cities}
-                  />
-                </div>
-              </div>
-              <RHFInput
-                name="business_meeting.location.address"
-                label="Street Address"
-                placeholder="Address of your B&B"
-              />
-            </>
-          ) : (
-            <RHFImageSelect
-              name="business_meeting.hotel"
-              placeholder="Select Hotels"
-              label="Hotels"
-              options={modifiedHotelList}
-            />
-          )}
+          <RHFImageSelect
+            name="business_meeting.nomad_id"
+            placeholder="Select Nomad"
+            label="Nomads"
+            options={modifiedNomadList}
+          />
         </div>
       </div>
 

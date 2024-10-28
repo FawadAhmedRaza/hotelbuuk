@@ -285,7 +285,7 @@ export async function PUT(req, { params }) {
   }
 }
 
-export async function name(_, { params }) {
+export async function DELETE(_, { params }) {
   try {
     const event_id = params?.id;
 
