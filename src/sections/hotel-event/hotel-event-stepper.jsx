@@ -19,10 +19,8 @@ import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
-import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { enqueueSnackbar } from "notistack";
 
-export const EventStepperView = ({ defaultValues, isEdit }) => {
+export const HotelEventStepper = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -46,7 +44,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
       amenities: Yup.array().optional(),
-      hotel_id: Yup.string().when("accomodation_type", {
+      hotel: Yup.string().when("accomodation_type", {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
@@ -91,44 +89,35 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),
-    defaultValues: isEdit
-      ? defaultValues
-      : {
-          business_meeting: {
-            title: "",
-            description: "",
-            official_name: "",
-            business_category: "",
-            accomodation_type: "bnb",
-            hotel: "",
-            location: {
-              country: "",
-              city: "",
-              address: "",
-            },
-            amenities: [],
-          },
-          images: [],
-          topics: [],
-          availibility: {
-            start_date: "",
-            end_date: "",
-            rules: {},
-          },
+    defaultValues: {
+      business_meeting: {
+        title: "",
+        description: "",
+        official_name: "",
+        business_category: "",
+        accomodation_type: "bnb",
+        hotel: "",
+        location: {
+          country: "",
+          city: "",
+          address: "",
         },
+        amenities: [],
+      },
+      images: [],
+      topics: [],
+      availibility: {
+        start_date: "",
+        end_date: "",
+        rules: {},
+      },
+    },
     context: {
       accomodation_type: "bnb",
     },
   });
 
-  const {
-    trigger,
-    watch,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = methods;
-
-  console.log("errors", errors);
+  const { trigger, watch, handleSubmit } = methods;
 
   const fetchHotels = async () => {
     try {
@@ -151,8 +140,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     fetchAmenities();
   }, []);
 
-  console.log(watch("business_meeting.accomodation_type"));
-
   const steps = [
     {
       label: "Bussiness Meeting Info",
@@ -164,7 +151,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
-      component: <RHFMultipleImageUploader name="images" />,
       component: <RHFMultipleImageUploader name="images" />,
     },
     {
@@ -238,100 +224,43 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const finalData = {
-      ...data,
-      user_id: user?.id,
-    };
-    console.log("final data", finalData);
-    if (!isEdit) {
-      // create
-      try {
-        const formData = new FormData();
-        const images = finalData?.images?.map((da) => da.file);
-        const names = finalData?.images?.map((da) => da.name);
-        for (const key in finalData) {
-          if (
-            finalData[key] !== null &&
-            finalData[key] !== undefined &&
-            key !== "images"
-          ) {
-            if (
-              typeof finalData[key] === "object" &&
-              !(finalData[key] instanceof File)
-            ) {
-              formData.append(key, JSON.stringify(finalData[key]));
-            } else {
-              formData.append(key, finalData[key]);
-            }
-          }
-        }
+    try {
+      const finalData = {
+        ...data,
+        user_id: user?.id,
+      };
+      // const formData = new FormData();
+      // const images = finalData.images?.map((da) => da.file);
+      // const names = finalData.images?.map((da) => da.name);
+      // for (const key in finalData) {
+      //   if (
+      //     finalData[key] !== null &&
+      //     finalData[key] !== undefined &&
+      //     key !== "images"
+      //   ) {
+      //     if (
+      //       typeof finalData[key] === "object" &&
+      //       !(finalData[key] instanceof File)
+      //     ) {
+      //       formData.append(key, JSON.stringify(finalData[key]));
+      //     } else {
+      //       formData.append(key, finalData[key]);
+      //     }
+      //   }
+      // }
 
-        images?.forEach((file) => formData.append("images", file));
-        images?.forEach(() =>
-          formData.append("imagesNames", JSON.stringify(names))
-        );
+      // images.forEach((file) => formData.append("images", file));
+      // images.forEach((file) =>
+      //   formData.append("imagesNames", JSON.stringify(names))
+      // );
 
-        // const request = await axiosInstance.post(
-        //   endpoints.nomad.event.create,
-        //   formData
-        // );
-        // if (request?.status === 201) {
-        //   enqueueSnackbar("Event created", { variant: "success" });
-        // }
-      } catch (error) {
-        console.log(error);
-        enqueueSnackbar(error?.message, { variant: "error" });
-      }
-    } else {
-      try {
-        const formData = new FormData();
-        for (const key in finalData) {
-          if (
-            finalData[key] !== null &&
-            finalData[key] !== undefined &&
-            key !== "images"
-          ) {
-            if (
-              typeof finalData[key] === "object" &&
-              !(finalData[key] instanceof File)
-            ) {
-              formData.append(key, JSON.stringify(finalData[key]));
-            } else {
-              formData.append(key, finalData[key]);
-            }
-          }
-        }
-
-        let imagesWithUrls = [];
-        let newUploadedImages = [];
-        data.images?.forEach((item) => {
-          if (item.img && !item?.file) {
-            imagesWithUrls.push(item);
-          } else if (item.file) {
-            newUploadedImages.push({ file: item?.file, name: item?.name });
-          }
-        });
-
-        const newImages = newUploadedImages?.map((item) => item?.file);
-        const newImagesNames = newUploadedImages?.map((item) => item?.name);
-
-        formData.append("images_with_urls", JSON.stringify(imagesWithUrls)); // old with urls
-        newImages?.forEach((file) => formData.append("new_images", file)); // new images
-        newImagesNames?.forEach(() =>
-          // new uploaded names
-          formData.append("new_images_names", JSON.stringify(newImagesNames))
-        );
-        const request = await axiosInstance.put(
-          endpoints.nomad.event.updateById(defaultValues?.id),
-          formData
-        );
-        if (request?.status === 201) {
-          enqueueSnackbar("Event updated", { variant: "success" });
-        }
-      } catch (error) {
-        console.log(error);
-        enqueueSnackbar(error?.message, { variant: "error" });
-      }
+      // const request = await axiosInstance.post(endpoints.nomad.event, formData);
+      // if (request?.status === 201) {
+      //   enqueueSnackbar("Event created", { variant: "success" });
+      // }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
     }
   });
 
@@ -345,7 +274,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           handleNext={handleNext}
           handleBack={() => setActiveStep((prev) => prev - 1)}
           isLastStep={activeStep === currentSteps.length - 1}
-          loading={isSubmitting}
         />
       </RHFFormProvider>
     </Pannel>

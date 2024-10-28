@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 // Components and Others...
@@ -38,8 +39,8 @@ export const Pricing = () => {
         </Typography>
         <div className="w-full">
           <ul className="grid grid-cols-2 gap-5 w-full ">
-            {price_includes.map((item, index) => (
-              <div key={index} className="flex gap-2 items-center">
+            {price_includes.map((item) => (
+              <div className="flex gap-2 items-center">
                 <Iconify
                   iconName="material-symbols:check"
                   className="text-black"

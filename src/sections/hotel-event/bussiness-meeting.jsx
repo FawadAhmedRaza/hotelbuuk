@@ -12,6 +12,7 @@ import {
 } from "@/src/components/hook-form";
 import { useForm, useFormContext } from "react-hook-form";
 import { Button, Typography } from "@/src/components";
+
 import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
@@ -30,28 +31,20 @@ export const BussinessMeeting = () => {
 
   const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+
   let modifiedHotelList = hotels?.map((item) => {
     return {
       hotel_name: item?.hotel_name,
       image: item?.hotel_image,
       address: item?.address,
-      value: item?.id,
+      value: item?.hotel_name,
     };
   });
 
-  console.log(watch("business_meeting"));
-
   const accomodationType = watch("business_meeting.accomodation_type");
-
   const country = watch("business_meeting.location.country");
-  const city = watch("business_meeting.location.city");
-
-  console.log(city);
-
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
-
-  console.log(type);
 
   const handleCheckboxChange = (amenity, checked) => {
     setValue(
@@ -210,7 +203,7 @@ export const BussinessMeeting = () => {
             </>
           ) : (
             <RHFImageSelect
-              name="business_meeting.hotel_id"
+              name="business_meeting.hotel"
               placeholder="Select Hotels"
               label="Hotels"
               options={modifiedHotelList}

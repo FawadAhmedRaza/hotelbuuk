@@ -25,6 +25,10 @@ export const paths = {
   nomadDashboard: {
     root: "/nomad-dashboard",
     hotels: "/nomad-dashboard/hotels-list",
+    events: {
+      root: "/nomad-dashboard/event",
+      create: "/nomad-dashboard/event/create",
+    },
   },
   hotelDashboard: {
     root: "/hotel-dashboard",
@@ -34,6 +38,10 @@ export const paths = {
     },
     rooms: "/hotel-dashboard/rooms",
     internalNomads: "/hotel-dashboard/internal-nomads",
+    events: {
+      root: "/hotel-dashboard/event",
+      create: "/hotel-dashboard/event/create",
+    },
   },
   createRooms: {
     root: "/create-room",

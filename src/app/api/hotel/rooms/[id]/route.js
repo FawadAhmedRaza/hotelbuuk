@@ -171,13 +171,15 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(_, { params }) {
   try {
+    console.log(params.id);
+
     await prisma.hotel_rooms.delete({
       where: {
         id: params?.id,
       },
-      include:{
-        room_images:true,
-      }
+      include: {
+        room_images: true,
+      },
     });
 
     return NextResponse.json({ message: "success" }, { status: 200 });
