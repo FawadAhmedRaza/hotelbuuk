@@ -42,10 +42,7 @@ const SignUpAsHotel = () => {
     confirm_password: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm password is required"),
-    terms: Yup.boolean().oneOf(
-      [true],
-      "You must accept the terms and conditions"
-    ),
+    terms: Yup.boolean().required("please accept terms and conditions"),
   });
 
   const methods = useForm({
@@ -54,8 +51,9 @@ const SignUpAsHotel = () => {
 
   const {
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting,errors },
   } = methods;
+  console.log(errors);
 
   const handleSubmit = async (data) => {
     try {
