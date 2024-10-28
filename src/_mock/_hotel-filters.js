@@ -1,12 +1,13 @@
 export const HotelsFilters = [
     { id: 0, label: "All", value: "all" },
-    { id: 1, label: "New York", value: "new-york" },
-    { id: 2, label: "Paris", value: "paris" },
-    { id: 3, label: "Tokyo", value: "tokyo" },
-    { id: 4, label: "Dubai", value: "dubai" },
-    { id: 5, label: "Sydney", value: "sydney" },
-    { id: 6, label: "Barcelona", value: "barcelona" },
-    { id: 7, label: "Rome", value: "rome" },
-    { id: 8, label: "Amsterdam", value: "amsterdam" },
-    { id: 9, label: "Berlin", value: "berlin" }
+    { id: 1, label: "Berlin", value: "berlin" },
+    { id: 2, label: "Munich", value: "munich" },
+    { id: 3, label: "Hamburg", value: "hamburg" },
+    { id: 4, label: "Frankfurt", value: "frankfurt" },
+    { id: 5, label: "Cologne", value: "cologne" },
+    { id: 6, label: "Stuttgart", value: "stuttgart" },
+    { id: 7, label: "Düsseldorf", value: "dusseldorf" },
+    { id: 8, label: "Dortmund", value: "dortmund" },
+    { id: 9, label: "Leipzig", value: "leipzig" },
+    { id: 10, label: "Bremen", value: "bremen" }
 ];

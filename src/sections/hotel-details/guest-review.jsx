@@ -17,7 +17,7 @@ export const GuestReviews = () => {
     }
   };
   return (
-    <Pannel className="flex flex-col gap-10 justify-start items-start bg-section-bg ">
+    <Pannel className="flex flex-col gap-10 justify-start items-start  ">
       {/* Header */}
       <Typography variant="h3" className="font-semibold">
         Guests Reviews

@@ -1,4 +1,5 @@
 import { prisma } from "@/src/db";
+import { generateSignedUrl } from "@/src/utils/upload-images";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
@@ -13,12 +14,13 @@ export async function GET(req) {
       },
     });
 
-    const hotelList = hotels?.map((hotel) => ({
+    const hotelList =  await Promise.all(hotels?.map(async(hotel) => ({
       ...hotel,
+      hotel_image:await generateSignedUrl(hotel.hotel_image),
       hotelFacilites: hotel?.hotelFacilites?.map(
         (facilityEntry) => facilityEntry?.facility
       ),
-    }));
+    })));
 
     return NextResponse.json(
       { message: "success", hotelList },

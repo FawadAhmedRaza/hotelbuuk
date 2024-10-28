@@ -1,4 +1,4 @@
-import { Poppins, Montserrat } from "next/font/google";
+import { DM_Sans, Montserrat , Poppins} from "next/font/google";
 import LocalFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/src/auth";
@@ -23,6 +23,12 @@ export const metadata = {
     },
   ],
 };
+
+const DMSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-dmSans",
+});
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -76,9 +82,9 @@ export default async function RootLayout({ children }) {
       <SessionProvider session={session}>
         <html
           lang="en"
-          className={`${poppins.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable}`}
+          className={`${DMSans.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable} ${poppins.variable}`}
         >
-          <body className="font-poppins overflow-x-hidden">
+          <body className="font-dmSans overflow-x-hidden">
             <AuthProvider>
               <Toaster position="top-right" reverseOrder={false} />
               {children}

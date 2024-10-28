@@ -20,3 +20,6 @@ export { CalendarInput } from "./calendar-input";
 export { ImageModal } from "./image-modal";
 export { DeleteModal } from "./delete-modal";
 export { ProfileAvatar } from "./profile-avatar";
+
+export { HotelCard } from "./hotel-card";
+export { BgIcon } from "./bg-icon";

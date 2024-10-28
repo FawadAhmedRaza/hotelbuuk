@@ -25,7 +25,7 @@ export async function POST(req) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "Invalid Crediantials" },
+        { message: "Invalid OTP" },
         { status: 404 }
       );
     }

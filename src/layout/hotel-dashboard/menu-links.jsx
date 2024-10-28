@@ -69,19 +69,19 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
               onClick={() => handleDropdownToggle(item.label)}
               className={`flex justify-between items-center ${
                 isActive(item?.path)
-                  ? "bg-[#feccf4] hover:bg-[#feccf4] "
-                  : "hover:bg-[#fef5fc]"
+                  ? "bg-tertiary hover:bg-tertiary "
+                  : "hover:bg-tertiary"
               } rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                 isActive(item?.path)
-                  ? "bg-[#feccf4] shadow-custom-shadow"
-                  : "hover:bg-[#feccf4]-2"
+                  ? "bg-tertiary shadow-custom-shadow"
+                  : "hover:bg-tertiary"
               }`}
             >
               <span className="text-lg">{item?.label}</span>
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
-                  className={`transition-all duration-300 text-black size-7 ${
+                  className={`transition-all duration-300 text-primary size-7 ${
                     isDropdownOpen === item.label ? "rotate-90" : ""
                   }`}
                 />
@@ -166,7 +166,16 @@ export const MenuLinks = (UserId) => {
     {
       id: 6,
       label: "Nomads",
-      path: paths.hotelDashboard.nomads,
+      // path: paths.hotelDashboard.nomads.root,
+      // path: "",
+      children: [
+        { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
+        {
+          id: 2,
+          title: "Internal Nomads",
+          path: paths.hotelDashboard.nomads.internalNomads,
+        },
+      ],
     },
     {
       id: 8,

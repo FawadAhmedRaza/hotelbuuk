@@ -5,8 +5,8 @@ import { Booking } from ".";
 
 export const HeroSection = React.memo(() => {
   return (
-    <Pannel className=" relative  w-full h-screen bg-hero bg-center bg-no-repeat bg-cover  py-10 pt-32  md:py-40">
-      <div className="flex justify-center items-center">
+    <Pannel className=" relative  w-full h-screen bg-hero bg-center bg-no-repeat bg-cover  py-10 pt-40  md:py-40">
+      <div className="flex justify-center items-center h-full md:h-fit">
         <Image
           src="/assets/images/hero-bg.png"
           alt="bg"
@@ -15,23 +15,20 @@ export const HeroSection = React.memo(() => {
           className="w-full h-screen absolute top-0 left-0 z-10 "
         />
 
-        <div className="flex flex-col  justify-center lg:justify-start   gap-5  z-10 w-full h-full  ">
-          <div className=" !text-[3rem] md:!text-[4.2rem] text-white font-bold  shadow !custom-line uppercase ">
-            <span className=" text-white ">
-              <span className=" bg-[#bd2c94bb] text-opacity-80  text-[#ffffffea] px-3 rounded-md">
-                stay
-              </span>
-              <br /> for business insights
+        <div className="flex flex-col  justify-center lg:justify-start gap-5 z-10 w-full h-full  ">
+          <div className=" !text-[3rem] md:!text-[4rem] text-white font-bold  !custom-line uppercase font-poppins  ">
+            <span className=" bg-[#bd2c94bb] text-opacity-80 text-[#ffffffea] px-3 rounded-md ">
+              Stay
             </span>
-            {/* <span className=""></span> */}
+            <br /> For Business Insights
           </div>
-          <Typography variant="p" className="  text-white  ">
+          <Typography variant="h5" className="  text-white  !font-helvetica ">
             Our partner hotels offer business tours and market insights to
             business leaders
           </Typography>
         </div>
       </div>
-      <div className="absolute left-0 right-0 flex justify-center absoluter w-full bottom-0  mb-10 z-10 ">
+      <div className="absolute left-0 right-0 hidden md:flex justify-center absoluter w-full bottom-0  -mb-20  sm:mb-6 md:mb-10 z-10 ">
         <Booking />
       </div>
     </Pannel>

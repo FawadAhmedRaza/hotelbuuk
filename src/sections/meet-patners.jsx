@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pannel, Typography } from "../components";
+import { Iconify, Pannel, Typography } from "../components";
 import { SwiperCards } from "../_mock/_swiper";
 import { BgIcon } from "../components/bg-icon";
 import { Navigation } from "swiper/modules";
@@ -13,26 +12,68 @@ import "swiper/swiper-bundle.css";
 import "../app/globals.css";
 
 export const MeetOurPatners = React.memo(() => {
-  return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10 w-full">
-      <Typography variant="h3" className="text-start font-semibold w-full">
-        Meet Our Partners
-      </Typography>
+  const swiperRef = React.useRef(null);
+  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
+  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
 
-      <div className="w-full relative ">
-        <BgIcon
-          iconName="cuida:arrow-left-outline"
-          iconClass="!size-6"
-          className="swiper-button-prev custom-prev absolute -left-8 md:-left-8 lg:-left-10 -mt-8 bg-primary size-8 z-30 top-1/2"
-        />
-        <BgIcon
-          iconName="cuida:arrow-right-outline"
-          iconClass="!size-6"
-          className=" swiper-button-next custom-next absolute -right-8 md:-right-8 lg:-right-10 -mt-8 bg-primary size-8 z-30 top-1/2"
-        />
+  const updateNavigation = () => {
+    if (swiperRef.current) {
+      const { isBeginning, isEnd } = swiperRef.current.swiper;
+
+      setIsPrevDisabled(isBeginning); // Disable left button if at the beginning
+      setIsNextDisabled(isEnd); // Disable right button if at the end
+    }
+  };
+
+  React.useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef?.current?.navigation?.update();
+    }
+  }, [swiperRef]);
+
+  return (
+    <Pannel className="flex flex-col gap-10  justify-center items-center bg-section-bg p-10 w-full">
+      <div>
+        <Typography variant="h2" className="text-center font-semibold w-full">
+          Meet Our Partners
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-normal text-center mt-2 text-neutral-400"
+        >
+          Introducing the partners who help us elevate your stay
+        </Typography>
+      </div>
+
+      <div className="w-full relative px-10">
+        {/* Left Arrow Button */}
+        <span
+          className={`swiper-button-prev custom-prev ${isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""}`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slidePrev();
+            updateNavigation();
+          }}
+          aria-disabled={isPrevDisabled}
+        >
+          <Iconify iconName="cuida:arrow-left-outline" />
+        </span>
+
+        {/* Right Arrow Button */}
+        <span
+          className={`swiper-button-next custom-next ${
+            isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slideNext();
+            updateNavigation(); 
+          }}
+        >
+          <Iconify iconName="cuida:arrow-right-outline" />
+        </span>
 
         <Swiper
-          spaceBetween={30}
+          ref={swiperRef}
+          spaceBetween={20}
           slidesPerView={4}
           modules={[Navigation]}
           navigation={{
@@ -46,19 +87,15 @@ export const MeetOurPatners = React.memo(() => {
             },
             640: {
               slidesPerView: 2,
-              spaceBetween: 20,
             },
             768: {
               slidesPerView: 3,
-              spaceBetween: 30,
             },
             1024: {
               slidesPerView: 4,
-              spaceBetween: 40,
             },
           }}
         >
-          {/* <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"> */}
           <div className="w-full flex">
             {SwiperCards.map((card) => (
               <SwiperSlide
@@ -76,7 +113,6 @@ export const MeetOurPatners = React.memo(() => {
                   <BgIcon
                     iconName="skill-icons:instagram"
                     className="absolute top-4 right-4"
-                    q
                   />
 
                   <Typography

@@ -103,6 +103,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       title="Invite Nomad"
       handleSubmit={onSubmit}
       isLoading={isSubmitting}
+      className="h-auto"
     >
       <RHFFormProvider methods={methods}>
         <div className="flex flex-col gap-5">

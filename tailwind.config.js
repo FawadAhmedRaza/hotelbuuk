@@ -39,6 +39,10 @@ module.exports = {
       },
       screens: {
         "min-450": { min: "450px" },
+        'min-500': { min: '500px' },
+        'min-900': { min: '900px' },
+        'min-1100': { min: '1100' },
+        'min-1100': { min: '1100px' },
         "2xl-custom": { min: "1500px" },
       },
       boxShadow: {
@@ -59,6 +63,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
+        dmSans: ["var(--font-dmSans)", "sans-serif"],
         montserrat: ["var(--font-montserrat)", "sans-serif"],
         lemonMilk: ["var(--font-lemonMilk)", "sans-serif"],
         helvetica: ["var(--font-helvetica)", "sans-serif"],

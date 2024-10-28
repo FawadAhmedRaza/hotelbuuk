@@ -1,112 +1,117 @@
 import React from "react";
 import { Card, Pannel, Typography } from "../components";
-import { BookingStepsData } from "../_mock/_booking-steps";
 import Image from "next/image";
 
 export const BookingSteps = () => {
   return (
-    <Pannel className="flex flex-col gap-10 px-3 md:!px-5 py-3 md:!py-6 justify-center items-center bg-white">
-      <Typography variant="h3" className="font-semibold">
-        Book in 3 Simple Steps
-      </Typography>
-
-      {/* <div className="flex flex-col lg:flex-row justify-between gap-5 w-full">
-        {BookingStepsData?.map((item) => (
-          <Card
-            className="flex flex-col sm:flex-row lg:flex-col justify-start  gap-3 w-full sm:h-full  lg:h-96"
-            key={item?.id}
-          >
-            <img src={item?.img} alt="img" className=" " />
-            <span className=" flex flex-col justify-start gap-1 sm:gap-3 ">
-              <Typography
-                variant="h4"
-                className="font-semibold text-center sm:text-start lg:text-center"
-              >
-                {item?.title}
-              </Typography>
-              <Typography
-                variant="p"
-                className=" text-center sm:text-start lg:text-center text-secondary lg:mt-5"
-              >
-                {item?.description}
-              </Typography>
-            </span>
-          </Card>
-        ))}
-      </div> */}
-
-      <div className=" md:px-10 space-y-10">
-        <Card className="w-full px-3 sm:px-6  shadow-md py-4 f rounded-md border  md:flex-row flex-col gap-[30px] items-start">
-          <div className="  w-full md:w-[20%] flex justify-center items-center">
+    <Pannel className="flex flex-col gap-10 justify-center items-center ">
+      <div>
+        <Typography variant="h2" className="font-semibold text-center">
+          Book in 3 Simple Steps
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-normal text-center mt-2 text-neutral-400"
+        >
+          Easily secure your stay with our quick 3-step booking process.
+        </Typography>
+      </div>
+      <div className=" xl:px-10 md:space-y-0 space-y-5  w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
+        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%] ">
+          <div className="relative ">
+            {/* SVG Background Image */}
             <Image
-              src={"/assets/images/hotel-det-3.png"}
-              height={200}
-              width={250}
-              className="rounded-md object-fill h-full md:h-[160px] w-full"
-              alt="Hotel"
-            />
-          </div>
-          <div className="  w-full  md:w-[80%] p-">
-            <Typography variant="h3">Luxury Business Hotel</Typography>
-
-            <Typography variant="p" className="mt-3 font-medium">
-              Free High-Speed Wi-Fi, Complimentary Airport Shuttle Service,
-              Fully Equipped Meeting Rooms, Luxury Spa and Wellness Center, 24/7
-              In-Room Dining and Room Service, Dedicated Concierge Services,
-              State-of-the-Art Fitness Center, Fine Dining Restaurant with
-              Gourmet Cuisine, Outdoor Swimming Pool,Fine Dining Restaurant with
-              Gourmet Cuisine, Outdoor Swimming Pool,
-            </Typography>
-          </div>
-        </Card>
-
-        <Card className="w-full shadow-md py-4 flex-col md:flex-row-reverse    gap-[30px] items-start rounded-md border">
-          <div className=" w-full md:w-[20%] flex justify-center items-center">
-            <Image
-              src={"/assets/images/hotel-det-3.png"}
-              height={200}
-              width={250}
-              className="rounded-md object-fill h-full md:h-[160px] w-full"
-              alt="Hotel"
-            />
-          </div>
-          <div className="   w-full  md:w-[80%] ">
-            <Typography variant="h3"> Budget-Friendly Hotel</Typography>
-
-            <Typography variant="p" className=" font-medium mt-2">
-              Enjoy a comfortable and affordable stay with essential services
-              for business travelers. Our budget-friendly hotel provides all the
-              basics, making it ideal for short stays without breaking the bank
-              Dedicated Concierge Services, State-of-the-Art Fitness Center,
-              Fine Dining Restaurant with Gourmet Cuisine, Outdoor Swimming
-              Pool, Fine Dining Restaurant with Gourmet Cuisine,
-            </Typography>
-          </div>
-        </Card>
-
-        <Card className="w-full shadow-md py-5 f md:flex-row flex-col gap-[30px] items-start   rounded-md border">
-          <div className="  w-full md:w-[20%] flex justify-center items-center">
-            <Image
-              src={"/assets/images/hotel-det-3.png"}
+              src={"/assets/images/step-back.svg"}
               height={100}
-              width={100}
-              className="rounded-md object-fill h-full md:h-[160px] w-full"
-              alt="Hotel"
+              width={130}
+              className="absolute -top-3 -left-1 md:-left-3 "
             />
-          </div>
-          <div className="  w-full  md:w-[80%] ">
-            <Typography variant="h3">Boutique Hotel</Typography>
 
-            <Typography variant="p" className="mt-2 font-medium">
-              A unique boutique hotel that blends modern style with personal
-              service, perfect for those who want a more intimate, exclusive
-              experience. Located in the city center, this hotel offers a cozy
-              atmosphere with luxurious touches. Dedicated Concierge Services,
-              State-of-the-Art Fitness Center, Fine Dining Restaurant with
-              Gourmet Cuisine, Outdoor Swimming Pool,
+            {/* Foreground Content */}
+            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
+              <img
+                src={"/assets/images/bedroom.png"}
+                className="h-full w-full object-fill"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Typography variant="h3" className="font-medium">
+              Free internet and utility setup!
+            </Typography>
+            <Typography variant="p" className=" mt-2">
+              Our Connect team specializes in making your life easier after
+              you're matched with your new apartment. Get hooked up with the
+              best rates on utilities, insurance, and all the services you need
+              for a stress-free move.
             </Typography>
           </div>
-        </Card>
+        </div>
+
+        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row-reverse gap-10 w-full  md:w-[90%]">
+          <div className="relative ">
+            {/* SVG Background Image */}
+            <Image
+              src={"/assets/images/step-back.svg"}
+              height={100}
+              width={130}
+              className="absolute -top-3 md:left-3 md:-right-3 "
+            />
+
+            {/* Foreground Content */}
+            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
+              <img
+                src={"/assets/images/bedroom.png"}
+                className="h-full w-full object-fill"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Typography variant="h3" className="font-medium">
+              Free internet and utility setup!
+            </Typography>
+            <Typography variant="p" className=" mt-2">
+              Our Connect team specializes in making your life easier after
+              you're matched with your new apartment. Get hooked up with the
+              best rates on utilities, insurance, and all the services you need
+              for a stress-free move.
+            </Typography>
+          </div>
+        </div>
+
+        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%]">
+          <div className="relative ">
+            {/* SVG Background Image */}
+            <Image
+              src={"/assets/images/step-back.svg"}
+              height={100}
+              width={130}
+              className="absolute -top-3 -left-1 md:-left-3 " // Lower z-index for background
+            />
+
+            {/* Foreground Content */}
+            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
+              <img
+                src={"/assets/images/bedroom.png"}
+                className="h-full w-full object-fill"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Typography variant="h3" className="font-medium">
+              Free internet and utility setup!
+            </Typography>
+            <Typography variant="p" className=" mt-2">
+              Our Connect team specializes in making your life easier after
+              you're matched with your new apartment. Get hooked up with the
+              best rates on utilities, insurance, and all the services you need
+              for a stress-free move.
+            </Typography>
+          </div>
+        </div>
       </div>
     </Pannel>
   );

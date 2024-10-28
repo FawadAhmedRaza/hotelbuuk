@@ -91,19 +91,19 @@ export const RHFImageSelect = ({
               <div className="flex items-center">
                 {selectedHotel ? ( // Display the selected hotel
                   <div className="flex items-center gap-2 w-full">
-                    {/* <img
-                      src={
-                        selectedHotel.image ||
-                        "https://cdn-icons-png.flaticon.com/512/48/48779.png"
-                      }
-                      alt={selectedHotel.hotel_name}
-                      className="w-7 h-7 object-cover rounded-md"
-                    /> */}
-                    <ProfileAvatar
-                      src={selectedHotel?.image}
-                      type="server"
-                      className="w-7 h-7 object-cover rounded-md"
-                    />
+                    {!selectedHotel?.image ? (
+                      <Iconify
+                        iconName="carbon:user-avatar-filled"
+                        className="!size-10   rounded-full object-cover text-gray-500"
+                      />
+                    ) : (
+                      <ProfileAvatar
+                        src={selectedHotel?.image}
+                        type="server"
+                        className="w-7 h-7 object-cover rounded-md"
+                      />
+                    )}
+
                     <div>
                       <Typography
                         variant="p"
