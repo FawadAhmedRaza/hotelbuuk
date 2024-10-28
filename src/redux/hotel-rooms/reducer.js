@@ -31,7 +31,7 @@ const initialState = {
   deleteById: {
     isLoading: false,
     error: null,
-    room: {},
+    // room: {},
   },
   updateById: {
     isLoading: false,
@@ -123,7 +123,7 @@ export const hotelRooms = createSlice({
       state.deleteById.isLoading = true;
     });
     builder.addCase(deleteRoom.fulfilled, (state, action) => {
-      state.deleteById.room = action.payload;
+      // state.deleteById.room = action.payload;
       state.deleteById.isLoading = false;
     });
     builder.addCase(deleteRoom.rejected, (state, action) => {

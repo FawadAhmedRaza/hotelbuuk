@@ -9,7 +9,7 @@ import {
   Button,
   Iconify,
   Pannel,
-  ProfileAvatar,
+  ProfileAvatar, 
   Typography,
 } from "@/src/components";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,8 +48,6 @@ const InternalNomadsListView = () => {
     (state) => state.nomadProfile.allInternalNomads
   );
 
-  console.log("Internel Nomads", isLoading, internalNomads);
-
   const totalPages = React.useMemo(() => {
     return Math.ceil(internalNomads?.length / rowsPerPage);
   }, [internalNomads, rowsPerPage]);
@@ -59,8 +57,6 @@ const InternalNomadsListView = () => {
     const end = start + rowsPerPage;
     return internalNomads?.slice(start, end);
   }, [page, internalNomads, rowsPerPage]);
-
-  console.log("All internal nomads", items);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);

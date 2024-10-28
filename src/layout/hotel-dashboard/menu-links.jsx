@@ -171,7 +171,7 @@ export const MenuLinks = (UserId) => {
       children: [
         { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
         {
-          id: 2,
+          id: 2, 
           title: "Internal Nomads",
           path: paths.hotelDashboard.nomads.internalNomads,
         },
