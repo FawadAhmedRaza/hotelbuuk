@@ -11,7 +11,7 @@ export async function POST(req) {
   try {
     const data = await req?.json();
 
-    const { email, password, terms } = data;
+    const { email, password, terms, isInvited, hotel_id } = data;
 
     if (!email || !password) {
       return NextResponse.json(
@@ -44,11 +44,35 @@ export async function POST(req) {
         email,
         password: hashedPassword,
         terms,
+        user_type: isInvited ? "NOMAD" : null,
+        is_user_profile_completed: isInvited ? true : false,
+        is_user_type_completed: isInvited ? true : false,
         confirmation_OTP: OTP,
       },
     });
 
-    await sendMail("Test OTP", newUser.email, otpTemplate(newUser.email, OTP));
+    // for invited nomad user
+    if (isInvited) {
+      const nomad = await prisma.nomad.create({
+        data: {
+          email,
+          userId: newUser?.id,
+        },
+      });
+
+      await prisma.hotel_internal_nomads.create({
+        data: {
+          hotel_id: hotel_id,
+          nomad_id: nomad?.id,
+        },
+      });
+    }
+
+    await sendMail(
+      "Account verification OTP",
+      newUser.email,
+      otpTemplate(newUser.email, OTP)
+    );
 
     const facilities = initialFacilities?.map((item) => {
       return {

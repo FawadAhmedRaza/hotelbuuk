@@ -41,10 +41,10 @@ model User {
   facilities      facilities[]
   room_facilities room_facilities[]
   room_types      room_types[]
-  amenities amenities[]
+  amenities       amenities[]
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model facilities {
@@ -74,9 +74,10 @@ model hotel_info {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  hotelFacilites hotel_facilities[]
-  hotel_rooms    hotel_rooms[]
-  hotelImages    hotel_images[]
+  hotelFacilites        hotel_facilities[]
+  hotel_rooms           hotel_rooms[]
+  hotelImages           hotel_images[]
+  hotel_internal_nomads hotel_internal_nomads[]
 }
 
 model hotel_images {
@@ -102,24 +103,25 @@ model nomad {
   profile_img   String?
   first_name    String?
   last_name     String?
-  phone_number  Int
+  phone_number  Int?
   email         String
-  experience    String
-  electronics   String
-  manufacturing String
-  fundraising   String
-  retails       String
-  projector     String
-  video         String
-  sample        String
-  end_date      String
-  start_date    String
+  experience    String?
+  electronics   String?
+  manufacturing String?
+  fundraising   String?
+  retails       String?
+  projector     String?
+  video         String?
+  sample        String?
+  end_date      String?
+  start_date    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String? @db.ObjectId
+  User                  User?                   @relation(fields: [userId], references: [id])
+  userId                String?                 @db.ObjectId
+  hotel_internal_nomads hotel_internal_nomads[]
 }
 
 model hotel_rooms {
@@ -181,4 +183,14 @@ model amenities {
 
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
+}
+
+model hotel_internal_nomads {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  hotel_id String @db.ObjectId
+  nomad_id String @db.ObjectId
+
+  hotel hotel_info @relation(fields: [hotel_id], references: [id])
+  nomad nomad      @relation(fields: [nomad_id], references: [id])
 }
