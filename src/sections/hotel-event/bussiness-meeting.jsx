@@ -12,6 +12,7 @@ import {
 } from "@/src/components/hook-form";
 import { useForm, useFormContext } from "react-hook-form";
 import { Button, Typography } from "@/src/components";
+
 import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
@@ -30,6 +31,7 @@ export const BussinessMeeting = () => {
 
   const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+
   let modifiedHotelList = hotels?.map((item) => {
     return {
       hotel_name: item?.hotel_name,

@@ -7,14 +7,18 @@ import {
   RHFFormProvider,
   RHFMultipleImageUploader,
 } from "@/src/components/hook-form";
-import { getAllAmenities } from "@/src/redux/amenities/thunk";
-import { BussinessMeeting } from "../event/stepper-view/bussiness-meeting";
-import { GuestLearn } from "../event/stepper-view/guest";
-import { SetAvailability } from "../event/stepper-view/availabilty";
-import { Pricing } from "../event/stepper-view/pricing";
+
 import { Pannel, Stepper } from "@/src/components";
+import { BussinessMeeting } from "./bussiness-meeting";
+import { GuestLearn } from "./guest";
+import { SetAvailability } from "./availabilty";
+import { Pricing } from "./pricing";
 import { useDispatch } from "react-redux";
+import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { enqueueSnackbar } from "notistack";
 
 export const HotelEventStepper = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
@@ -22,6 +26,15 @@ export const HotelEventStepper = () => {
 
   const dispatch = useDispatch();
   const { user } = useAuthContext();
+
+  const checkBoxSchema = (amenities) => {
+    return Yup.object().shape(
+      amenities.reduce((schema, amenity) => {
+        schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+        return schema;
+      }, {})
+    );
+  };
 
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
@@ -47,7 +60,7 @@ export const HotelEventStepper = () => {
           then: (schema) => schema.required("city is required"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        street_name: Yup.string().when("$accomodation_type", {
+        address: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("street is required"),
           otherwise: (schema) => schema.notRequired(),
@@ -87,7 +100,7 @@ export const HotelEventStepper = () => {
         location: {
           country: "",
           city: "",
-          street_name: "",
+          address: "",
         },
         amenities: [],
       },
@@ -138,7 +151,7 @@ export const HotelEventStepper = () => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
-      component: <RHFMultipleImageUploader />,
+      component: <RHFMultipleImageUploader name="images" />,
     },
     {
       label: "What Guest will Learn",
@@ -211,7 +224,44 @@ export const HotelEventStepper = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("Form submitted: ", data);
+    try {
+      const finalData = {
+        ...data,
+        user_id: user?.id,
+      };
+      const formData = new FormData();
+      const images = finalData.images?.map((da) => da.file);
+      const names = finalData.images?.map((da) => da.name);
+      for (const key in finalData) {
+        if (
+          finalData[key] !== null &&
+          finalData[key] !== undefined &&
+          key !== "images"
+        ) {
+          if (
+            typeof finalData[key] === "object" &&
+            !(finalData[key] instanceof File)
+          ) {
+            formData.append(key, JSON.stringify(finalData[key]));
+          } else {
+            formData.append(key, finalData[key]);
+          }
+        }
+      }
+
+      images.forEach((file) => formData.append("images", file));
+      images.forEach((file) =>
+        formData.append("imagesNames", JSON.stringify(names))
+      );
+
+      const request = await axiosInstance.post(endpoints.nomad.event, formData);
+      if (request?.status === 201) {
+        enqueueSnackbar("Event created", { variant: "success" });
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
   });
 
   return (

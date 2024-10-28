@@ -1,11 +1,11 @@
 "use client";
 import { Button, Typography } from "@/src/components";
+import { useFormContext } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 import React, { useState, useEffect } from "react";
 import { Accordion } from "@/src/components";
 import { RHFInput, RHFTextArea } from "@/src/components/hook-form";
-import { useFormContext } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 
 export const GuestLearn = () => {
   const initialState = { title: "", description: "" };
@@ -22,7 +22,6 @@ export const GuestLearn = () => {
   console.log("Learning Info", learningInfo);
 
   const formTopics = watch("topics");
-
   console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
