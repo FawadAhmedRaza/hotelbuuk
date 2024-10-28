@@ -63,6 +63,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
+        dmSans: ["var(--font-dmSans)", "sans-serif"],
         montserrat: ["var(--font-montserrat)", "sans-serif"],
         lemonMilk: ["var(--font-lemonMilk)", "sans-serif"],
         helvetica: ["var(--font-helvetica)", "sans-serif"],

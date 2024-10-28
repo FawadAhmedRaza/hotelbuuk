@@ -1,120 +1,102 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules"; // Import Navigation and Pagination modules
+import { Button, Pannel, Typography } from "../components";
+import { BusinessFactsData } from "../_mock/_business-facts";
+import { cn } from "@/lib/utils";
+import { Collapsible } from "../components/ui/collapsible";
+import { CustomCollapsible } from "../components/custom-collapsible";
 
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+export const BusinessFacts = React.memo(({ className }) => {
+  const [visibleFacts, setVisibleFacts] = React.useState(4);
+  const [isOpen, setIsOpen] = useState(true);
 
-// Assuming you have Button, Card, and Typography components defined elsewhere
-import { Button, Card, Pannel, Typography } from "../components";
-import { BgIcon } from "../components/bg-icon";
-
-export const BusinessFacts = () => {
-  // Example data, can be fetched or updated later.
-  const [count] = useState(Array.from({ length: 9 }, (_, index) => index));
-
+  const handleVisibleFacts = () => {
+    setIsOpen(true);
+    if (visibleFacts < BusinessFactsData?.length) {
+      setVisibleFacts((prevNum) => prevNum + 2);
+    } else {
+      setVisibleFacts(4);
+    }
+  };
   return (
-    <Pannel className="flex flex-col gap-5 items-center  !pt-10 relative !overflow-hidden !px-12">
-      {/* Heading */}
-      <Typography
-        variant="h1"
-        className="font-semibold !text-black text-center"
-      >
-        Business Facts
-      </Typography>
-
-      {/* Left Arrow Button */}
-      <BgIcon
-        iconName="cuida:arrow-left-outline"
-        iconClass="!size-4"
-        className="swiper-button-prev custom-prev absolute left-0 md:left-3 lg:left-2   bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
-      />
-
-      {/* Right Arrow Button */}
-      <BgIcon
-        iconName="cuida:arrow-right-outline"
-        iconClass="!size-4"
-        className="swiper-button-next custom-next absolute right-0 md:right-3 lg:right-2 bg-black size-8 z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
-      />
-
-      {/* Swiper Component */}
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={3}
-        modules={[Navigation, Pagination]}
-        navigation={{
-          nextEl: ".custom-next",
-          prevEl: ".custom-prev",
-        }}
-        breakpoints={{
-          0: {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            pagination: {
-              enabled: true,
-            },
-          },
-          700: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-            pagination: {
-              enabled: true,
-            },
-          },
-          950: {
-            slidesPerView: 3,
-            spaceBetween: 20,
-            pagination: false,
-          },
-          1200: {
-            slidesPerView: 4,
-            spaceBetween: 15,
-            pagination: false,
-          },
-        }}
-        className="w-full px-2  py-3  overflow-hidden "
-      >
-        {count.map((item) => (
-          <SwiperSlide key={item}>
-            {/* Card */}
-            <Card className="flex flex-col gap-3 p-4 shadow-md">
-              {/* Image */}
-              <div className="relative w-full h-36">
-                <Image
-                  src="/assets/images/privacy-policy.png" // Replace with your image path
-                  alt="Business Fact"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-md"
+    <Pannel
+      className={cn(
+        "w-full flex flex-col gap-10 bg-section-bg  px-0 sm:px-3 lg:px-9 xl:px-5",
+        className
+      )}
+    >
+      <div className="flex flex-col gap-2">
+        <Typography
+          variant="h2"
+          className="font-semibold text-center !text-black"
+        >
+          Business Facts
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-normal text-center  text-neutral-400"
+        >
+          Our journey in numbers and highlights.
+        </Typography>
+      </div>
+      <CustomCollapsible isOpen={isOpen}>
+        <div className=" grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {BusinessFactsData?.slice(0, visibleFacts)?.map((item, index) => (
+            <div
+              key={index + 1}
+              className={cn(
+                " flex flex-col gap-4 w-full p-5 rounded-2xl !shadow-custom-shadow-sm x bg-white ",
+                [1, 2, 5].includes(index) &&
+                  "!bg-white  !shadow-custom-shadow-sm"
+              )}
+            >
+              <div className="flex flex-col min-500:flex-row gap-3 min-500:gap-5 items-start">
+                <img
+                  src={item?.image}
+                  alt="img"
+                  className="w-full min-500:w-36 h-full rounded"
                 />
+                <span className="flex flex-col gap-1">
+                  <Typography variant="h4" className="font-semibold">
+                    {item?.title}
+                  </Typography>
+                  <Typography variant="p" className="font-medium  !text-sm ">
+                    {item?.description}
+                  </Typography>
+                </span>
               </div>
-
-              {/* Content */}
-              <div className="flex flex-col gap-2">
-                <Typography variant="h4" className=" font-semibold">
-                  Shanghai Electronic Market Tour
+              <ul className="list-disc list-inside flex flex-col  ">
+                {item?.points?.map((point, index) => (
+                  <li key={index} className="text-sm">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <Typography variant="p" className="font-medium text-start">
+                  {item?.price}
                 </Typography>
-                <Typography variant="body2">
-                  A visit to CyberMart Market
-                </Typography>
-                <Typography variant="body2">A visit to Taobao HQ</Typography>
-                <Typography variant="h6" className="font-medium">
-                  $20 for 3 Days Per guest
-                </Typography>
-                <Button className="w-full  mt-2 bg-black">Ask John</Button>
+                <Button className="py-1.5 px-4 mx-auto min-450:mx-0">
+                  Ask John
+                </Button>
               </div>
-            </Card>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="swiper-pagination" />
+            </div>
+          ))}
+        </div>
+      </CustomCollapsible>
+      <div className="flex flex-col justify-center items-center gap-5">
+        <Typography variant="h4" className="font-semibold text-center mt-2">
+          Explore More Business Facts
+        </Typography>
+        <Button onClick={handleVisibleFacts}>
+          {visibleFacts === BusinessFactsData?.length
+            ? "Show less "
+            : "Show More"}
+        </Button>
+      </div>
     </Pannel>
   );
-};
+});
 
 export default BusinessFacts;

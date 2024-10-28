@@ -11,12 +11,29 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 // Assuming you have Button, Card, and Typography components defined elsewhere
-import { Button, Card, Pannel, Typography } from "@/src/components";
+import { Button, Card, Iconify, Pannel, Typography } from "@/src/components";
 import { BgIcon } from "@/src/components/bg-icon";
 
 export const BusinessFactsHotelDetail = () => {
-  // Example data, can be fetched or updated later.
   const [count] = useState(Array.from({ length: 9 }, (_, index) => index));
+  const swiperRef = React.useRef(null);
+  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
+  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
+
+  const updateNavigation = () => {
+    if (swiperRef.current) {
+      const { isBeginning, isEnd } = swiperRef.current.swiper;
+
+      setIsPrevDisabled(isBeginning); // Disable left button if at the beginning
+      setIsNextDisabled(isEnd); // Disable right button if at the end
+    }
+  };
+
+  React.useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef?.current?.navigation?.update();
+    }
+  }, [swiperRef]);
 
   return (
     <Pannel className="flex flex-col gap-5 items-center  !pt-10 relative !overflow-hidden !px-12">
@@ -27,20 +44,35 @@ export const BusinessFactsHotelDetail = () => {
       >
         Business Facts
       </Typography>
+      {/* Left Arrow Button */}
+      <span
+        className={`swiper-button-prev custom-prev ${
+          isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""
+        }`}
+        onClick={() => {
+          swiperRef.current?.swiper?.slidePrev();
+          updateNavigation();
+        }}
+        aria-disabled={isPrevDisabled}
+      >
+        <Iconify iconName="cuida:arrow-left-outline" />
+      </span>
 
-      <BgIcon
-        iconName="mingcute:left-fill"
-        iconClass="!size-4"
-        className="swiper-button-prev  h-8 w-8 custom-prev absolute left-0 md:left-3 lg:left-3   bg-black  z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
-      />
-
-      <BgIcon
-        iconName="mingcute:right-fill"
-        iconClass="!size-4"
-        className="swiper-button-next h-8 w-8 custom-next absolute right-0 md:right-3 lg:right-3 bg-black  z-50 top-[60%] transform -translate-y-1/2 cursor-pointer"
-      />
+      {/* Right Arrow Button */}
+      <span
+        className={`swiper-button-next custom-next ${
+          isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        onClick={() => {
+          swiperRef.current?.swiper?.slideNext();
+          updateNavigation();
+        }}
+      >
+        <Iconify iconName="cuida:arrow-right-outline" />
+      </span>
 
       <Swiper
+        ref={swiperRef}
         spaceBetween={10}
         slidesPerView={3}
         modules={[Navigation, Pagination]}
@@ -74,7 +106,7 @@ export const BusinessFactsHotelDetail = () => {
             pagination: false,
           },
         }}
-        className="w-full px-2  py-3  overflow-hidden "
+        className="w-full  py-3  overflow-hidden px-10 "
       >
         {count.map((item) => (
           <SwiperSlide key={item}>

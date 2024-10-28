@@ -4,19 +4,27 @@ import Image from "next/image";
 
 export const BookingSteps = () => {
   return (
-    <Pannel className="flex flex-col gap-16 justify-center items-center  bg-section-bg">
-      <Typography variant="h2" className="font-semibold text-center">
-        Book in 3 Simple Steps
-      </Typography>
-      <div className="   xl:px-10 md:space-y-0 space-y-5  w-full px-5 flex flex-col gap-10 justify-center items-center mt-5">
-        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%]">
+    <Pannel className="flex flex-col gap-10 justify-center items-center ">
+      <div>
+        <Typography variant="h2" className="font-semibold text-center">
+          Book in 3 Simple Steps
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-normal text-center mt-2 text-neutral-400"
+        >
+          Easily secure your stay with our quick 3-step booking process.
+        </Typography>
+      </div>
+      <div className=" xl:px-10 md:space-y-0 space-y-5  w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
+        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%] ">
           <div className="relative ">
             {/* SVG Background Image */}
             <Image
               src={"/assets/images/step-back.svg"}
               height={100}
               width={130}
-              className="absolute -top-3 -left-1 md:-left-3 " // Lower z-index for background
+              className="absolute -top-3 -left-1 md:-left-3 "
             />
 
             {/* Foreground Content */}
@@ -29,10 +37,10 @@ export const BookingSteps = () => {
           </div>
 
           <div>
-            <Typography variant="h3" className=" mt-2 md:mt-5">
+            <Typography variant="h3" className="font-medium">
               Free internet and utility setup!
             </Typography>
-            <Typography variant="p" className=" mt-3">
+            <Typography variant="p" className=" mt-2">
               Our Connect team specializes in making your life easier after
               you're matched with your new apartment. Get hooked up with the
               best rates on utilities, insurance, and all the services you need
@@ -48,7 +56,7 @@ export const BookingSteps = () => {
               src={"/assets/images/step-back.svg"}
               height={100}
               width={130}
-              className="absolute -top-3 md:left-3 md:-right-3 " // Lower z-index for background
+              className="absolute -top-3 md:left-3 md:-right-3 "
             />
 
             {/* Foreground Content */}
@@ -61,10 +69,10 @@ export const BookingSteps = () => {
           </div>
 
           <div>
-            <Typography variant="h3" className=" t-3 md:mt-5 ">
+            <Typography variant="h3" className="font-medium">
               Free internet and utility setup!
             </Typography>
-            <Typography variant="p" className=" mt-3">
+            <Typography variant="p" className=" mt-2">
               Our Connect team specializes in making your life easier after
               you're matched with your new apartment. Get hooked up with the
               best rates on utilities, insurance, and all the services you need
@@ -93,10 +101,10 @@ export const BookingSteps = () => {
           </div>
 
           <div>
-            <Typography variant="h3" className=" mt-2 md:mt-5">
+            <Typography variant="h3" className="font-medium">
               Free internet and utility setup!
             </Typography>
-            <Typography variant="p" className=" mt-3">
+            <Typography variant="p" className=" mt-2">
               Our Connect team specializes in making your life easier after
               you're matched with your new apartment. Get hooked up with the
               best rates on utilities, insurance, and all the services you need
