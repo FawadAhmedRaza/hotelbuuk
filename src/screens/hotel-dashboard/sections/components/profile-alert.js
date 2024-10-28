@@ -6,7 +6,7 @@ const ProfileAlert = ({ setShowAlert }) => {
   return (
     <div
       role="alert"
-      className="mb-4 relative flex flex-col md:flex-row items-center justify-between p-4 text-white bg-[#d54fd5] rounded-md"
+      className="mb-4 relative flex flex-col md:flex-row items-center justify-between p-4 text-white bg-[#ec5555] rounded-md"
     >
       <div className="flex-1 md:mr-4 font-montserrat">
         <Link
