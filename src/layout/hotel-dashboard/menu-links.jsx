@@ -166,7 +166,16 @@ export const MenuLinks = (UserId) => {
     {
       id: 6,
       label: "Nomads",
-      path: paths.hotelDashboard.nomads,
+      // path: paths.hotelDashboard.nomads.root,
+      // path: "",
+      children: [
+        { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
+        {
+          id: 2,
+          title: "Internal Nomads",
+          path: paths.hotelDashboard.nomads.internalNomads,
+        },
+      ],
     },
     {
       id: 8,

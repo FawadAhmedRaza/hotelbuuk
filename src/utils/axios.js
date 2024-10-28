@@ -66,6 +66,7 @@ export const endpoints = {
       delete_room: (id) => `/hotel/rooms/${id}`,
     },
     inviteNomads: "/hotel/invite-nomad",
+    internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
   },
   nomad: {
     root: "/nomad",

@@ -15,7 +15,7 @@ export const paths = {
   impressum: "/impressum",
   privacyPolicy: "/privacy-policy",
   hotels: {
-    root: '/hotels',
+    root: "/hotels",
     getHotelById: (id) => `/hotels/${id}`,
   },
   nomad: {
@@ -28,7 +28,10 @@ export const paths = {
   },
   hotelDashboard: {
     root: "/hotel-dashboard",
-    nomads: "/hotel-dashboard/nomads-list",
+    nomads: {
+      root: "/hotel-dashboard/nomads-list",
+      internalNomads: "/hotel-dashboard/internal-nomads",
+    },
     rooms: "/hotel-dashboard/rooms",
     internalNomads: "/hotel-dashboard/internal-nomads",
   },
