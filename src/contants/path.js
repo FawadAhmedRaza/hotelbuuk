@@ -34,6 +34,10 @@ export const paths = {
     },
     rooms: "/hotel-dashboard/rooms",
     internalNomads: "/hotel-dashboard/internal-nomads",
+    events: {
+      root: "/hotel-dashboard/event",
+      create: "/hotel-dashboard/event/create",
+    },
   },
   createRooms: {
     root: "/create-room",

@@ -164,6 +164,14 @@ export const MenuLinks = (UserId) => {
       path: "",
     },
     {
+      id: 4,
+      label: "Events",
+      // path: "",
+      children: [
+        { id: 1, title: "Create", path: paths.hotelDashboard.events.create },
+      ],
+    },
+    {
       id: 6,
       label: "Nomads",
       // path: paths.hotelDashboard.nomads.root,
@@ -171,7 +179,7 @@ export const MenuLinks = (UserId) => {
       children: [
         { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
         {
-          id: 2, 
+          id: 2,
           title: "Internal Nomads",
           path: paths.hotelDashboard.nomads.internalNomads,
         },

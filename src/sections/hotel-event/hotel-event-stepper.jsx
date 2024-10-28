@@ -7,18 +7,16 @@ import {
   RHFFormProvider,
   RHFMultipleImageUploader,
 } from "@/src/components/hook-form";
-
-import { Pannel, Stepper } from "@/src/components";
-import { BussinessMeeting } from "./bussiness-meeting";
-import { GuestLearn } from "./guest";
-import { SetAvailability } from "./availabilty";
-import { Pricing } from "./pricing";
-import { useDispatch } from "react-redux";
-import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
+import { BussinessMeeting } from "../event/stepper-view/bussiness-meeting";
+import { GuestLearn } from "../event/stepper-view/guest";
+import { SetAvailability } from "../event/stepper-view/availabilty";
+import { Pricing } from "../event/stepper-view/pricing";
+import { Pannel, Stepper } from "@/src/components";
+import { useDispatch } from "react-redux";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-export const EventStepperView = () => {
+export const HotelEventStepper = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 

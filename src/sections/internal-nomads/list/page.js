@@ -9,7 +9,7 @@ import {
   Button,
   Iconify,
   Pannel,
-  ProfileAvatar, 
+  ProfileAvatar,
   Typography,
 } from "@/src/components";
 import { useDispatch, useSelector } from "react-redux";
@@ -146,11 +146,11 @@ const InternalNomadsListView = () => {
                 <td className="px-6 py-4">
                   <div className="flex gap-1">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.start_date.toString().slice(0, 10)}
+                      {nomad?.start_date?.toString().slice(0, 10)}
                     </Typography>
-                    <span>-</span>
+                    {nomad?.start_date && <span>-</span>}
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.end_date.toString().slice(0, 10)}
+                      {nomad?.end_date?.toString().slice(0, 10)}
                     </Typography>
                   </div>
                 </td>
