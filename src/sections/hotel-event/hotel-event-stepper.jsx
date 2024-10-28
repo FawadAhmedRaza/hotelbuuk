@@ -229,35 +229,35 @@ export const HotelEventStepper = () => {
         ...data,
         user_id: user?.id,
       };
-      const formData = new FormData();
-      const images = finalData.images?.map((da) => da.file);
-      const names = finalData.images?.map((da) => da.name);
-      for (const key in finalData) {
-        if (
-          finalData[key] !== null &&
-          finalData[key] !== undefined &&
-          key !== "images"
-        ) {
-          if (
-            typeof finalData[key] === "object" &&
-            !(finalData[key] instanceof File)
-          ) {
-            formData.append(key, JSON.stringify(finalData[key]));
-          } else {
-            formData.append(key, finalData[key]);
-          }
-        }
-      }
+      // const formData = new FormData();
+      // const images = finalData.images?.map((da) => da.file);
+      // const names = finalData.images?.map((da) => da.name);
+      // for (const key in finalData) {
+      //   if (
+      //     finalData[key] !== null &&
+      //     finalData[key] !== undefined &&
+      //     key !== "images"
+      //   ) {
+      //     if (
+      //       typeof finalData[key] === "object" &&
+      //       !(finalData[key] instanceof File)
+      //     ) {
+      //       formData.append(key, JSON.stringify(finalData[key]));
+      //     } else {
+      //       formData.append(key, finalData[key]);
+      //     }
+      //   }
+      // }
 
-      images.forEach((file) => formData.append("images", file));
-      images.forEach((file) =>
-        formData.append("imagesNames", JSON.stringify(names))
-      );
+      // images.forEach((file) => formData.append("images", file));
+      // images.forEach((file) =>
+      //   formData.append("imagesNames", JSON.stringify(names))
+      // );
 
-      const request = await axiosInstance.post(endpoints.nomad.event, formData);
-      if (request?.status === 201) {
-        enqueueSnackbar("Event created", { variant: "success" });
-      }
+      // const request = await axiosInstance.post(endpoints.nomad.event, formData);
+      // if (request?.status === 201) {
+      //   enqueueSnackbar("Event created", { variant: "success" });
+      // }
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });

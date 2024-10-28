@@ -21,7 +21,7 @@ export const GuestLearn = () => {
   const learningInfo = watch("learning_info");
   console.log("Learning Info", learningInfo);
 
-  const formTopics = watch("topics");
+    const formTopics = watch("topics");
 
   console.log("Form Topics", formTopics);
 

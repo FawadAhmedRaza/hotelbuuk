@@ -39,10 +39,19 @@ export const BussinessMeeting = () => {
     };
   });
 
+  console.log(watch("business_meeting"));
+
   const accomodationType = watch("business_meeting.accomodation_type");
+
   const country = watch("business_meeting.location.country");
+  const city = watch("business_meeting.location.city");
+
+  console.log(city);
+
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
+
+  console.log(type);
 
   const handleCheckboxChange = (amenity, checked) => {
     setValue(

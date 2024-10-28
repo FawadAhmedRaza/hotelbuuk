@@ -140,6 +140,8 @@ export const EventStepperView = () => {
     fetchAmenities();
   }, []);
 
+  console.log(watch("business_meeting.accomodation_type"));
+
   const steps = [
     {
       label: "Bussiness Meeting Info",
@@ -224,13 +226,12 @@ export const EventStepperView = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("final data", data);
     try {
       const finalData = {
         ...data,
         user_id: user?.id,
       };
-
-      console.log("final data", finalData);
 
       const formData = new FormData();
       const images = finalData.images?.map((da) => da.file);
