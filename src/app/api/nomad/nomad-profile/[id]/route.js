@@ -105,6 +105,13 @@ export async function PUT(req, { params }) {
       where: {
         id: userId,
       },
+      include: {
+        nomad: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     const accessToken = await generateToken(user);
