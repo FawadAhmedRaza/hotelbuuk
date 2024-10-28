@@ -56,9 +56,9 @@ const CreateEditAmenities = ({ isOpen, onClose }) => {
       handleSubmit={onSubmit}
       isLoading={isLoading}
     >
-      <RHFFormProvider methods={methods}>
-        <RHFAutoComplete name="amenities" label="Enter amenities" />
-      </RHFFormProvider>
+      {/* <RHFFormProvider methods={methods}> */}
+      <RHFAutoComplete name="amenities" label="Enter amenities" />
+      {/* </RHFFormProvider> */}
     </Modal>
   );
 };

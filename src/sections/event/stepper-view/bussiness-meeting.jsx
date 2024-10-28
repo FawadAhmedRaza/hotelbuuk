@@ -35,7 +35,7 @@ export const BussinessMeeting = () => {
       hotel_name: item?.hotel_name,
       image: item?.hotel_image,
       address: item?.address,
-      value: item?.hotel_name,
+      value: item?.id,
     };
   });
 
@@ -194,14 +194,14 @@ export const BussinessMeeting = () => {
                 </div>
               </div>
               <RHFInput
-                name="business_meeting.location.street_name"
+                name="business_meeting.location.address"
                 label="Street Address"
                 placeholder="Address of your B&B"
               />
             </>
           ) : (
             <RHFImageSelect
-              name="business_meeting.hotel"
+              name="business_meeting.hotel_id"
               placeholder="Select Hotels"
               label="Hotels"
               options={modifiedHotelList}

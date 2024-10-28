@@ -17,13 +17,24 @@ import { useDispatch } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
+import { enqueueSnackbar } from "notistack";
 
-export const EventStepperView = () => {
+export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
 
   const dispatch = useDispatch();
   const { user } = useAuthContext();
+
+  const checkBoxSchema = (amenities) => {
+    return Yup.object().shape(
+      amenities.reduce((schema, amenity) => {
+        schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+        return schema;
+      }, {})
+    );
+  };
 
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
@@ -33,7 +44,7 @@ export const EventStepperView = () => {
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
       amenities: Yup.array().optional(),
-      hotel: Yup.string().when("accomodation_type", {
+      hotel_id: Yup.string().when("accomodation_type", {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
@@ -49,7 +60,7 @@ export const EventStepperView = () => {
           then: (schema) => schema.required("city is required"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        street_name: Yup.string().when("$accomodation_type", {
+        address: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("street is required"),
           otherwise: (schema) => schema.notRequired(),
@@ -78,35 +89,44 @@ export const EventStepperView = () => {
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),
-    defaultValues: {
-      business_meeting: {
-        title: "",
-        description: "",
-        official_name: "",
-        business_category: "",
-        accomodation_type: "bnb",
-        hotel: "",
-        location: {
-          country: "",
-          city: "",
-          street_name: "",
+    defaultValues: isEdit
+      ? defaultValues
+      : {
+          business_meeting: {
+            title: "",
+            description: "",
+            official_name: "",
+            business_category: "",
+            accomodation_type: "bnb",
+            hotel: "",
+            location: {
+              country: "",
+              city: "",
+              address: "",
+            },
+            amenities: [],
+          },
+          images: [],
+          topics: [],
+          availibility: {
+            start_date: "",
+            end_date: "",
+            rules: {},
+          },
         },
-        amenities: [],
-      },
-      images: [],
-      topics: [],
-      availibility: {
-        start_date: "",
-        end_date: "",
-        rules: {},
-      },
+    context: {
+      accomodation_type: "bnb",
     },
-    // context: {
-    //   accomodation_type: "bnb",
-    // },
   });
 
-  const { trigger, watch, handleSubmit } = methods;
+  const {
+    trigger,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = methods;
+
+  console.log("errors", errors);
 
   const fetchHotels = async () => {
     try {
@@ -140,7 +160,7 @@ export const EventStepperView = () => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
-      component: <RHFMultipleImageUploader />,
+      component: <RHFMultipleImageUploader name="images" />,
     },
     {
       label: "What Guest will Learn",
@@ -213,7 +233,101 @@ export const EventStepperView = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("Form submitted: ", data);
+    const finalData = {
+      ...data,
+      user_id: user?.id,
+    };
+    console.log("final data", finalData);
+    if (!isEdit) {
+      // create
+      try {
+        const formData = new FormData();
+        const images = finalData?.images?.map((da) => da.file);
+        const names = finalData?.images?.map((da) => da.name);
+        for (const key in finalData) {
+          if (
+            finalData[key] !== null &&
+            finalData[key] !== undefined &&
+            key !== "images"
+          ) {
+            if (
+              typeof finalData[key] === "object" &&
+              !(finalData[key] instanceof File)
+            ) {
+              formData.append(key, JSON.stringify(finalData[key]));
+            } else {
+              formData.append(key, finalData[key]);
+            }
+          }
+        }
+
+        images?.forEach((file) => formData.append("images", file));
+        images?.forEach(() =>
+          formData.append("imagesNames", JSON.stringify(names))
+        );
+
+        // const request = await axiosInstance.post(
+        //   endpoints.nomad.event.create,
+        //   formData
+        // );
+        // if (request?.status === 201) {
+        //   enqueueSnackbar("Event created", { variant: "success" });
+        // }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
+    } else {
+      try {
+        const formData = new FormData();
+        for (const key in finalData) {
+          if (
+            finalData[key] !== null &&
+            finalData[key] !== undefined &&
+            key !== "images"
+          ) {
+            if (
+              typeof finalData[key] === "object" &&
+              !(finalData[key] instanceof File)
+            ) {
+              formData.append(key, JSON.stringify(finalData[key]));
+            } else {
+              formData.append(key, finalData[key]);
+            }
+          }
+        }
+
+        let imagesWithUrls = [];
+        let newUploadedImages = [];
+        data.images?.forEach((item) => {
+          if (item.img && !item?.file) {
+            imagesWithUrls.push(item);
+          } else if (item.file) {
+            newUploadedImages.push({ file: item?.file, name: item?.name });
+          }
+        });
+
+        const newImages = newUploadedImages?.map((item) => item?.file);
+        const newImagesNames = newUploadedImages?.map((item) => item?.name);
+
+        formData.append("images_with_urls", JSON.stringify(imagesWithUrls)); // old with urls
+        newImages?.forEach((file) => formData.append("new_images", file)); // new images
+        newImagesNames?.forEach(() =>
+          // new uploaded names
+          formData.append("new_images_names", JSON.stringify(newImagesNames))
+        );
+        const request = await axiosInstance.put(
+          endpoints.nomad.event.updateById(defaultValues?.id),
+          formData
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Event updated", { variant: "success" });
+        }
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
+    }
   });
 
   return (
@@ -226,6 +340,7 @@ export const EventStepperView = () => {
           handleNext={handleNext}
           handleBack={() => setActiveStep((prev) => prev - 1)}
           isLastStep={activeStep === currentSteps.length - 1}
+          loading={isSubmitting}
         />
       </RHFFormProvider>
     </Pannel>

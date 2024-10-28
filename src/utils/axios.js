@@ -77,5 +77,10 @@ export const endpoints = {
       create: "/nomad/event-amenities",
       getAll: (id) => `/nomad/event-amenities?userId=${id}`,
     },
+    event: {
+      create: "/nomad/event",
+      getById: (id) => `/nomad/event/${id}`,
+      updateById: (id) => `/nomad/event/${id}`,
+    },
   },
 };

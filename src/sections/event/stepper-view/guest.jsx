@@ -22,6 +22,7 @@ export const GuestLearn = () => {
   console.log("Learning Info", learningInfo);
 
   const formTopics = watch("topics");
+
   console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
@@ -37,7 +38,6 @@ export const GuestLearn = () => {
   };
 
   const handleDelete = (id) => {
-  
     const newTopics = topics.filter((topic) => topic.id !== id);
 
     const currentTopics = getValues("topics") || []; // Get current topics
@@ -144,8 +144,8 @@ export const GuestLearn = () => {
           </div>
         ))} */}
 
-      {topics &&
-        topics?.map((topic) => (
+      {formTopics &&
+        formTopics?.map((topic) => (
           <div key={topic.id} className="w-full">
             <Accordion
               id={topic.id}

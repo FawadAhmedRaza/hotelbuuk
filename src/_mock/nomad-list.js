@@ -89,14 +89,14 @@ export const NomadList = [
 export const hotelRules = [
   {
     ruleId: 1,
-    name: "check-in",
+    name: "check_in",
     title: "Check-in Time",
     description: "Guests can check in from 2:00 PM onwards.",
     priority: "High",
   },
   {
     ruleId: 2,
-    name: "check-out",
+    name: "check_out",
     title: "Check-out Time",
     description: "Check-out is required by 11:00 AM to avoid extra charges.",
     priority: "High",
