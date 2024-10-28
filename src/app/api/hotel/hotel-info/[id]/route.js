@@ -197,6 +197,13 @@ export async function PUT(req, { params }) {
       where: {
         id: user_id,
       },
+      include: {
+        hotels: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     const accessToken = await generateToken(user);

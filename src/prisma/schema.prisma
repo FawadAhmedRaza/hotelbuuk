@@ -58,14 +58,14 @@ model facilities {
 
 model hotel_info {
   id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  hotel_name       String
-  hotel_contact_no Int
-  contact_email    String
+  hotel_name       String?
+  hotel_contact_no Int?
+  contact_email    String?
   description      String?
-  country          String
-  city             String
-  address          String
-  stars            Int
+  country          String?
+  city             String?
+  address          String?
+  stars            Int?
   hotel_image      String?
 
   user_id String @db.ObjectId

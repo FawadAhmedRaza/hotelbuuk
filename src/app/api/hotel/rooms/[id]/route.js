@@ -134,7 +134,7 @@ export async function PUT(req, { params }) {
       );
     }
 
-    // upload new images
+    // format new images with url
     let newImagesWithUrls = [];
     if (newImages?.length > 0) {
       for (let fileKey in newImages) {

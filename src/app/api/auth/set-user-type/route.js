@@ -24,7 +24,8 @@ export async function POST(req) {
       return NextResponse.json({ message: "Invalid user" }, { status: 404 });
     }
 
-    const updatedUser = await prisma.user.update({
+    // update user
+    await prisma.user.update({
       where: {
         id: id,
       },
@@ -34,12 +35,59 @@ export async function POST(req) {
       },
     });
 
-    const accessToken = await generateToken(updatedUser);
+    if (user_type === "HOTEL") {
+      // for user type hotel
+      await prisma.hotel_info.create({
+        data: {
+          contact_email: user?.email,
+          user_id: user?.id,
+        },
+      });
+    } else {
+      // for user type nomad
+      await prisma.nomad.create({
+        data: {
+          email: user?.email,
+          userId: user?.id,
+        },
+      });
+    }
+
+    let updatedUserWithProfile;
+    if (user_type === "HOTEL") {
+      updatedUserWithProfile = await prisma.user.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          hotels: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+    } else {
+      updatedUserWithProfile = await prisma.user.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          nomad: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+    }
+
+    const accessToken = await generateToken(updatedUserWithProfile);
 
     return NextResponse.json(
       {
         accessToken,
-        user: updatedUser,
+        user: updatedUserWithProfile,
         message: "User profile completed",
       },
       { status: 201 }

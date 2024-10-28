@@ -245,7 +245,7 @@ export function AuthProvider({ children }) {
           );
           if (response.status === 201) {
             setSession(response?.data?.data?.accessToken);
-            localStorage.removeItem("signupEmail");
+            // localStorage.removeItem("signupEmail");
             sessionStorage.setItem(
               "user",
               JSON.stringify(response?.data?.data?.user)
@@ -355,6 +355,48 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const resendEmails = useCallback(async (step) => {
+    if (step === "signup") {
+      try {
+        const email = localStorage.getItem("signupEmail");
+        let data = {
+          userEmail: email,
+        };
+        const request = await axiosInstance.post(
+          endpoints.AUTH.resend_verify_user_OTP,
+          data
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Email resended successfully", {
+            variant: "success",
+          });
+        }
+      } catch (error) {
+        enqueueSnackbar(err?.message, { variant: "error" });
+        console.log("errror in resend verification otp ", error);
+      }
+    } else {
+      try {
+        const email = localStorage.getItem("forgotEmail");
+        let data = {
+          userEmail: email,
+        };
+        const request = await axiosInstance.post(
+          endpoints.AUTH.forget_password.resend_forget_password_otp,
+          data
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Email resended successfully", {
+            variant: "success",
+          });
+        }
+      } catch (error) {
+        enqueueSnackbar(err?.message, { variant: "error" });
+        console.log("errror in resend verification otp ", error);
+      }
+    }
+  },[]);
+
   // ----------------------------------------------------------------------
 
   const checkAuthenticated = state.user ? "authenticated" : "unauthenticated";
@@ -378,8 +420,18 @@ export function AuthProvider({ children }) {
       setupUserType,
       logout,
       setUser,
+      resendEmails,
     }),
-    [login, logout, register, state.user, status, setupUserType, setUser]
+    [
+      login,
+      logout,
+      register,
+      state.user,
+      status,
+      setupUserType,
+      setUser,
+      resendEmails,
+    ]
   );
 
   return (

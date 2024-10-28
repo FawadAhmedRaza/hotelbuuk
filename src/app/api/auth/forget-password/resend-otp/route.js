@@ -1,34 +1,24 @@
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/src/db";
 import { generateOTP } from "@/src/libs/helper";
 import { forgotPasswordTemplate } from "@/src/libs/otpTemplate";
 import { sendMail } from "@/src/service/mailService";
+import { prisma } from "@/src/db";
 
 export async function POST(req) {
   try {
     const data = await req.json();
+    const { userEmail } = data;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        email: data?.email,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          message: "user not exists",
-        },
-        { status: 404 }
-      );
+    if(!userEmail){
+        return NextResponse.json({message:"Please provide email"},{status:404});
     }
 
-    const OTP = generateOTP(6);
+    const OTP = generateOTP();
 
-    await prisma.user.update({
+    const user = await prisma.user.update({
       where: {
-        email: data?.email,
+        email: userEmail,
       },
       data: {
         forget_password_OTP: OTP,
@@ -36,19 +26,17 @@ export async function POST(req) {
     });
 
     await sendMail(
-      "Forget Password OTP",
+      "New OTP for Password Reset Request",
       user.email,
-      forgotPasswordTemplate(user?.email, OTP)
+      forgotPasswordTemplate(userEmail, OTP)
     );
 
     return NextResponse.json(
-      {
-        message: "Otp is sent to your email",
-      },
-      { status: 200 }
+      { message: "email sended successfully" },
+      { status: 201 }
     );
   } catch (error) {
-    console.log(error);
+    console.log("resend forgot password otp error", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

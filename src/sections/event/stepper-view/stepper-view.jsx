@@ -101,9 +101,9 @@ export const EventStepperView = () => {
         rules: {},
       },
     },
-    context: {
-      accomodation_type: "bnb",
-    },
+    // context: {
+    //   accomodation_type: "bnb",
+    // },
   });
 
   const { trigger, watch, handleSubmit } = methods;
