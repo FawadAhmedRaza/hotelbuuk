@@ -49,7 +49,7 @@ const RecentBooking = () => {
           <Card className=" p-2.5 md:p-5 flex flex-col gap-5 mt-5">
             {/* Container with fixed height and scrollable content */}
             <div
-              className={`space-y-4 custom-scrollbar ${
+              className={`space-y-4 custom-scrollbar w-full ${
                 showMore ? "overflow-y-auto" : ""
               } h-[27rem]  sm:h-[10rem] md:h-[25rem] overflow-hidden`}
             >
@@ -57,7 +57,7 @@ const RecentBooking = () => {
                 .slice(0, showMore ? recommended_nomad.length : 4)
                 .map((hotel) => (
                   <div key={hotel.id} className="w-full">
-                    <Card className="!shadow-custom-shadow-xs !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md w-full">
+                    <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                       <div className="flex gap-4 w-full">
                         {!hotel?.hotel_image ? (
                           <Iconify
@@ -95,7 +95,7 @@ const RecentBooking = () => {
                 ))}
             </div>
 
-            <div className="mt-1">
+            <div className="mt-1 border-dashed border-t flex justify-center items-center border-primary w-full pt-[20px]">
               <Button className="text-sm" onClick={toggleShowMore}>
                 {showMore ? "Show Less" : "Show More"}
               </Button>

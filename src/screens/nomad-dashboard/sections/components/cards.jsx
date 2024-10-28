@@ -23,7 +23,7 @@ const cardsData = [
   {
     id: 3,
     icon: "ic:outline-card-membership",
-    title: "Hotel ",
+    title: "Hotel",
     value: "33",
     btnTitle: "View Details",
     path: paths.nomadDashboard.hotels,

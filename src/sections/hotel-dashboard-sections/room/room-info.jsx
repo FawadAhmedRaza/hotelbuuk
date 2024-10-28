@@ -93,6 +93,7 @@ export const RoomInfo = () => {
               {roomFacilities?.map((facility, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <input
+                    id={`roomFacilities-${index}`}
                     type="checkbox"
                     checked={selectedFacilities.some(
                       (selected) => selected?.name === facility?.name
@@ -104,7 +105,7 @@ export const RoomInfo = () => {
                   />
                   <label
                     className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                    htmlFor={facility?.name}
+                    htmlFor={`roomFacilities-${index}`}
                   >
                     {facility?.name}
                   </label>

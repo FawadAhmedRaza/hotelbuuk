@@ -6,12 +6,12 @@ const ProfileAlert = ({ setShowAlert }) => {
   return (
     <div
       role="alert"
-      className="mb-4 relative flex flex-col md:flex-row items-center justify-between p-4 text-white bg-[#d54fd5] rounded-md"
+      className="mb-4 relative flex flex-col md:flex-row items-center justify-between p-4 text-primary bg-[#fef5fc] rounded-md"
     >
       <div className="flex-1 md:mr-4 font-montserrat">
         <Link
           href={"/nomad/profile"}
-          className={`font-medium text-md text-white hover:underline font-montserrat`}
+          className={`font-medium text-md text-primary hover:underline font-montserrat`}
           rel="noopener noreferrer"
         >
           Your profile is incomplete. complete now
@@ -19,7 +19,7 @@ const ProfileAlert = ({ setShowAlert }) => {
       </div>
 
       <button
-        className="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-auto right-2"
+        className="flex items-center justify-center transition-all w-8 h-8 rounded-md !text-primary hover:bg-white/10 active:bg-white/10 absolute top-auto right-2"
         type="button"
         onClick={() => setShowAlert(false)}
       >

@@ -72,7 +72,7 @@ const ThisMonthBooking = () => {
       },
       grid: {
         show: true,
-        borderColor: "#79747E",
+        borderColor: "#dcdadd",
         strokeDashArray: 5,
         xaxis: {
           lines: {

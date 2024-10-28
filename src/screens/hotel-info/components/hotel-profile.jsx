@@ -119,6 +119,7 @@ const HotelProfile = () => {
                 ? facilitiesArray.map((facility, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <input
+                        id={`facilities-${index}`}
                         type="checkbox"
                         checked={selectedFacilities?.some(
                           (selected) => selected.name === facility.name
@@ -130,7 +131,7 @@ const HotelProfile = () => {
                       />
                       <label
                         className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                        htmlFor={facility.name}
+                        htmlFor={`facilities-${index}`}
                       >
                         {facility.name}
                       </label>
