@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { forwardRef, useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { generateSignedUrl } from "../utils/upload-images";
+import { Iconify } from ".";
 
 // ----------------------------------------------------------------------
 
@@ -107,6 +108,15 @@ export const ProfileAvatar = forwardRef(
       />
     );
 
+    if (!src) {
+      return (
+        <Iconify
+          iconName="carbon:user-avatar-filled"
+          className="!size-8 md:!size-10 text-gray-500"
+        />
+      );
+    }
+
     return (
       <span
         ref={ref}
@@ -159,5 +169,3 @@ ProfileAvatar.propTypes = {
   wrapperProps: PropTypes.object,
   placeholder: PropTypes.element,
 };
-
-

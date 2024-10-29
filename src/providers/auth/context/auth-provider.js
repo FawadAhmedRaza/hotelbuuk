@@ -229,7 +229,6 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     setSession(null);
-    // router.push(paths.auth.login);
     router.push("/");
     dispatch({
       type: Types.LOGOUT,
