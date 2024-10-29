@@ -36,7 +36,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 fixed top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-10 ",
+        "w-full flex justify-between items-center gap-1 py-5 fixed top-0 z-50 px-2 sm:px-8 lg:px-14 xl:px-10 ",
         className
       )}
     >

@@ -1,3 +1,4 @@
+import { Iconify } from "@/src/components";
 import React from "react";
 
 const mockUsers = [
@@ -26,9 +27,18 @@ const mockUsers = [
 
 const ChatSidebar = ({ setSelectedUser }) => {
   return (
-    <div className="w-[500px] bg-slate-50 border-r flex flex-col h-screen">
+    <div className="w-full bg-slate-50 border-r flex flex-col h-screen">
       <div className="h-16 border-b px-4 flex items-center justify-center space-x-4">
-        <input className=" w-full border border-zinc-400 bg-transparent rounded-xl py-1 px-3 outline-none" />
+        <div className="border border-zinc-300 bg-transparent flex gap-2  w-full rounded-md px-3 items-center">
+          <Iconify
+            iconName="ic:baseline-search"
+            className="size-7  text-zinc-300"
+          />
+          <input
+            className=" w-full   py-1  bg-transparent outline-none"
+            placeholder="Search"
+          />
+        </div>
       </div>
 
       <div className="h-full overflow-y-scroll">
@@ -36,7 +46,7 @@ const ChatSidebar = ({ setSelectedUser }) => {
           <div
             key={user.id}
             onClick={() => setSelectedUser(user)}
-            className="px-5 py-4 flex items-center cursor-pointer border-l-4 border-l-transparent hover:bg-slate-100"
+            className=" px-2 md:px-5 py-4 flex items-center cursor-pointer border-l-4 border-l-transparent hover:bg-slate-100"
           >
             <img
               src={user.avatar}
@@ -47,7 +57,7 @@ const ChatSidebar = ({ setSelectedUser }) => {
               <p className="text-md font-semibold text-slate-600 m-0 p-0">
                 {user.name}
               </p>
-              <p className="text-xs text-slate-400 -mt-0.5 font-semibold">
+              <p className="text-xs text-slate-400  font-semibold">
                 {user.message}
               </p>
             </div>

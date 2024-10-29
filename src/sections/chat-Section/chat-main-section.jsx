@@ -1,7 +1,7 @@
 import { Button, Iconify } from "@/src/components";
 import React from "react";
 
-const ChatMainSection = ({ selectedUser }) => {
+const ChatMainSection = ({ selectedUser, onBack }) => {
   if (!selectedUser) {
     return (
       <div className="w-full h-full flex justify-center items-center text-slate-400">
@@ -13,12 +13,20 @@ const ChatMainSection = ({ selectedUser }) => {
   return (
     <div className="w-full h-full flex flex-col relative">
       <div className="h-16 border-b flex justify-between items-center w-full px-5 py-2 shadow-sm">
-        <div className="flex items-center">
-          <img
-            className="h-10 w-10 overflow-hidden rounded-full"
-            src={selectedUser.avatar}
-            alt="User Avatar"
-          />
+        <div className="flex items-center ">
+          <div className=" flex gap-2 items-center">
+            <Iconify
+              iconName="gg:arrow-left"
+              onClick={onBack}
+              className=" md:hidden flex text-gray-400 cursor-pointer"
+            />
+
+            <img
+              className="h-10 w-10 overflow-hidden rounded-full"
+              src={selectedUser.avatar}
+              alt="User Avatar"
+            />
+          </div>
           <p className="font-semibold ml-3 text-slate-600">
             {selectedUser.name}
           </p>
@@ -31,7 +39,7 @@ const ChatMainSection = ({ selectedUser }) => {
       <div className="px-5 pt-4 pb-24 overflow-y-scroll">
         {/* Message from User */}
         <div className="w-full flex flex-start">
-          <div className="w-1/2">
+          <div className=" w-[80%] md:w-1/2">
             <div className="flex items-center">
               <img
                 className="h-5 w-5 overflow-hidden rounded-full"
@@ -55,7 +63,7 @@ const ChatMainSection = ({ selectedUser }) => {
 
         {/* Message from Me */}
         <div className="w-full flex justify-end mt-3">
-          <div className="w-1/2">
+          <div className=" w-[80%] md:w-1/2">
             <div className="flex items-center justify-end">
               <p className="font-semibold mr-3 text-sm text-slate-600">
                 Me <span className="text-slate-400 text-xs">3:25 PM</span>
@@ -66,7 +74,7 @@ const ChatMainSection = ({ selectedUser }) => {
                 alt="User Avatar"
               />
             </div>
-            <div className="mt-3 w-full bg-blue-500 p-4 rounded-b-xl rounded-tl-xl">
+            <div className="mt-3 w-full bg-[#c732a3]  p-4 rounded-b-xl rounded-tl-xl">
               <p className="text-sm text-white">
                 Hey, <br />
                 We own a hidden lake forest, a natural lake typically found in
@@ -76,7 +84,7 @@ const ChatMainSection = ({ selectedUser }) => {
           </div>
         </div>
         <div className="w-full flex justify-end mt-3">
-          <div className="w-1/2">
+          <div className=" w-[80%] md:w-1/2">
             <div className="flex items-center justify-end">
               <p className="font-semibold mr-3 text-sm text-slate-600">
                 Me <span className="text-slate-400 text-xs">3:25 PM</span>
@@ -87,7 +95,7 @@ const ChatMainSection = ({ selectedUser }) => {
                 alt="User Avatar"
               />
             </div>
-            <div className="mt-3 w-full bg-blue-500 p-4 rounded-b-xl rounded-tl-xl">
+            <div className="mt-3 w-full bg-[#c732a3] p-4 rounded-b-xl rounded-tl-xl">
               <p className="text-sm text-white">
                 Hey, <br />
                 We own a hidden lake forest, a natural lake typically found in
@@ -97,7 +105,7 @@ const ChatMainSection = ({ selectedUser }) => {
           </div>
         </div>
         <div className="w-full flex justify-end mt-3">
-          <div className="w-1/2">
+          <div className=" w-[80%] md:w-1/2">
             <div className="flex items-center justify-end">
               <p className="font-semibold mr-3 text-sm text-slate-600">
                 Me <span className="text-slate-400 text-xs">3:25 PM</span>
@@ -108,7 +116,7 @@ const ChatMainSection = ({ selectedUser }) => {
                 alt="User Avatar"
               />
             </div>
-            <div className="mt-3 w-full bg-blue-500 p-4 rounded-b-xl rounded-tl-xl">
+            <div className="mt-3 w-full bg-[#c732a3] p-4 rounded-b-xl rounded-tl-xl">
               <p className="text-sm text-white">
                 Hey, <br />
                 We own a hidden lake forest, a natural lake typically found in
@@ -128,7 +136,7 @@ const ChatMainSection = ({ selectedUser }) => {
 
         {/* Another User Message */}
         <div className="w-full flex flex-start">
-          <div className="w-1/2">
+          <div className=" w-[80%] md:w-1/2">
             <div className="flex items-center">
               <img
                 className="h-5 w-5 overflow-hidden rounded-full"
