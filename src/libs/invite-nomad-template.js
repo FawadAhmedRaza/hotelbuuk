@@ -148,7 +148,7 @@ export const invitationEmailTemplate = (name, imageUrl, query) => {
           <a
             href="${process.env.ACCEPT_INVITATION_LINK + `${query}`}"
             class="btns"
-            
+            style="color:white;"
             >Accept</a
           >
         </div>
