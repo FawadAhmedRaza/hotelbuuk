@@ -7,7 +7,7 @@ import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
 import { ProfileAvatar } from "..";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 export const RHFImageSelect = ({
   label,
@@ -24,11 +24,17 @@ export const RHFImageSelect = ({
   const dropDownRef = useRef(null);
   console.log("selected Hotel", selectedHotel);
 
-  const params = useParams();
+  const pathName = usePathname();
 
-  console.log(params);
+  console.log(pathName.split("/")[1]);
 
-  // const hotelId = watch("business_meeting.hotel_id");
+  const dashboardPath = pathName.split("/")[1];
+
+  const hotelId = watch("business_meeting.hotel_id");
+  const nomadId = watch("business_meeting.nomad_id");
+
+  console.log("hotel id", hotelId);
+  console.log("nomad id", nomadId);
 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
@@ -62,7 +68,17 @@ export const RHFImageSelect = ({
       console.log(existingHotel);
       setSelectedHotel(existingHotel[0]);
     }
-  }, []);
+  }, [hotelId]);
+
+  useEffect(() => {
+    if (nomadId) {
+      const existingNomad = filterOptions.filter(
+        (option) => option.value === nomadId
+      );
+      console.log(existingNomad);
+      setSelectedHotel(existingNomad[0]);
+    }
+  }, [nomadId]);
 
   useEffect(() => {
     const outsideClickHandler = (e) => {

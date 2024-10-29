@@ -27,12 +27,11 @@ export const GuestLearn = () => {
   };
 
   const handleDelete = (id) => {
-    const newTopics = topics.filter((topic) => topic.id !== id);
+    const newTopics = topics.filter((topic) => topic.id !== id); // Filter topics by id
+    setTopics(newTopics); // Update state
 
-    const currentTopics = getValues("topics") || []; // Get current topics
-    const updatedTopics = currentTopics.filter((_, index) => index !== id); // Remove the topic
-    setValue("topics", updatedTopics, { shouldValidate: true }); // Update the fo
-    setTopics(newTopics);
+    // Update form topics
+    setValue("topics", newTopics, { shouldValidate: true });
   };
 
   const handleChange = (e) => {
@@ -50,15 +49,6 @@ export const GuestLearn = () => {
       </Typography>
 
       <div className="flex flex-col gap-3 w-full">
-        {/* <RHFInput
-          // name="learning_info.title"
-          name="title"
-          label="Title"
-          placeholder="Title of your Topic"
-          value={topicInfo.title}
-          onChange={handleChange}
-        /> */}
-
         {/* Input */}
         <div className={"relative flex flex-col gap-1 w-full"}>
           <Typography
@@ -82,15 +72,6 @@ export const GuestLearn = () => {
             />
           </div>
         </div>
-
-        {/* <RHFTextArea
-          // name="learning_info.description"
-          name="description"
-          label="Description"
-          placeholder="Description of your Topic"
-          value={topicInfo.description}
-          onChange={handleChange}
-        /> */}
 
         {/* TextArea */}
         <div className={" relative flex flex-col gap-1 w-full"}>
