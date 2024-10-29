@@ -30,19 +30,30 @@ export const BussinessMeeting = () => {
 
   const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+
   let modifiedHotelList = hotels?.map((item) => {
     return {
       hotel_name: item?.hotel_name,
       image: item?.hotel_image,
       address: item?.address,
-      value: item?.hotel_name,
+      value: item?.id,
     };
   });
 
+  console.log(watch("business_meeting"));
+
   const accomodationType = watch("business_meeting.accomodation_type");
+
   const country = watch("business_meeting.location.country");
+  const city = watch("business_meeting.location.city");
+  // const hotelId = watch("business_meeting.hotel_id");
+
+  console.log(city);
+
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
+
+  console.log(type);
 
   const handleCheckboxChange = (amenity, checked) => {
     setValue(
@@ -57,6 +68,8 @@ export const BussinessMeeting = () => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
 
+  // console.log(hotelId);
+
   useEffect(() => {
     async function fetchCountries() {
       const allCountries = await getCountries();
@@ -66,7 +79,7 @@ export const BussinessMeeting = () => {
   }, []);
 
   useEffect(() => {
-    setValue("business_meeting.location.city", "");
+    setValue("city", "");
     async function fetchCities() {
       const allCities = await getCities(country);
       setCities(allCities);
@@ -113,6 +126,7 @@ export const BussinessMeeting = () => {
                 <div key={index} className="flex items-center gap-2">
                   <input
                     type="checkbox"
+                    id={`amenities-${index}`}
                     checked={selectedAmenities?.some(
                       (selected) => selected?.name === amenity?.name
                     )} // check if the facility is selected
@@ -123,7 +137,7 @@ export const BussinessMeeting = () => {
                   />
                   <label
                     className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                    htmlFor={amenity?.name}
+                    htmlFor={`amenities-${index}`}
                   >
                     {amenity?.name}
                   </label>
@@ -194,14 +208,14 @@ export const BussinessMeeting = () => {
                 </div>
               </div>
               <RHFInput
-                name="business_meeting.location.street_name"
+                name="business_meeting.location.address"
                 label="Street Address"
                 placeholder="Address of your B&B"
               />
             </>
           ) : (
             <RHFImageSelect
-              name="business_meeting.hotel"
+              name="business_meeting.hotel_id"
               placeholder="Select Hotels"
               label="Hotels"
               options={modifiedHotelList}

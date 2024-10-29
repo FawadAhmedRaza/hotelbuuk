@@ -11,6 +11,7 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { getUserById } from "@/src/actions/auth.actions";
+import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 /**
@@ -215,7 +216,9 @@ export function AuthProvider({ children }) {
 
       enqueueSnackbar("Success", { variant: "success" });
       router.push(
-        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+        user?.user_type === "HOTEL"
+          ? paths.auth.setup_basic_info_hotel
+          : paths.auth.setup_basic_info_nomad
       );
     } catch (error) {
       console.log(error);
@@ -395,7 +398,84 @@ export function AuthProvider({ children }) {
         console.log("errror in resend verification otp ", error);
       }
     }
-  },[]);
+  }, []);
+
+  const setupBasicInfo = useCallback(async (type, data) => {
+    data.type = type;
+    try {
+      const response = await axiosInstance.post(
+        endpoints.AUTH.setup_basic_info,
+        data
+      );
+      const { accessToken, user } = await response.data;
+
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+      router.push(
+        user?.user_type === "HOTEL"
+          ? "/setup-extra-info-hotel"
+          : "/setup-extra-info-nomad"
+      );
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  }, []);
+
+  const completeProfile = useCallback(async (type, data) => {
+    data.type = type;
+    try {
+      const formData = new FormData();
+
+      for (const key in data) {
+        if (data[key] !== null && data[key] !== undefined) {
+          if (typeof data[key] === "object" && !(data[key] instanceof File)) {
+            // value is an object
+            formData.append(key, JSON.stringify(data[key]));
+          } else {
+            // otherwise, append as it is
+            formData.append(key, data[key]);
+          }
+        }
+      }
+
+      const response = await axiosInstance.post(
+        endpoints.AUTH.complete_profile,
+        formData
+      );
+
+      const { accessToken, user } = await response.data;
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+      router.push(
+        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+      );
+      enqueueSnackbar("Profile completed", { variant: "success" });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  }, []);
 
   // ----------------------------------------------------------------------
 
@@ -421,6 +501,8 @@ export function AuthProvider({ children }) {
       logout,
       setUser,
       resendEmails,
+      setupBasicInfo,
+      completeProfile,
     }),
     [
       login,
@@ -431,6 +513,8 @@ export function AuthProvider({ children }) {
       setupUserType,
       setUser,
       resendEmails,
+      setupBasicInfo,
+      completeProfile,
     ]
   );
 

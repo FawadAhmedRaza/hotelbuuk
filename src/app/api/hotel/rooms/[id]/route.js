@@ -71,26 +71,25 @@ export async function PUT(req, { params }) {
       },
     });
 
-    // delete prev facilites
-    await prisma.room_associated_facilities.deleteMany({
-      where: {
-        room_id: params?.id,
-      },
-    });
-
-    const facilitiesData =
-      (room_facilities?.length > 0 &&
-        room_facilities.map((facility) => ({
-          room_facility_id: facility?.id,
+    if (room_facilities?.length > 0) {
+      // delete prev facilites
+      await prisma.room_associated_facilities.deleteMany({
+        where: {
           room_id: params?.id,
-        }))) ||
-      [];
-
-    // create new
-    if (facilitiesData?.length > 0) {
-      await prisma.room_associated_facilities.createMany({
-        data: facilitiesData,
+        },
       });
+
+      const facilitiesData = room_facilities.map((facility) => ({
+        room_facility_id: facility?.id,
+        room_id: params?.id,
+      }));
+
+      // create new
+      if (facilitiesData?.length > 0) {
+        await prisma.room_associated_facilities.createMany({
+          data: facilitiesData,
+        });
+      }
     }
 
     // retrieve all images of room
@@ -134,7 +133,7 @@ export async function PUT(req, { params }) {
       );
     }
 
-    // upload new images
+    // format new images with url
     let newImagesWithUrls = [];
     if (newImages?.length > 0) {
       for (let fileKey in newImages) {
@@ -146,10 +145,8 @@ export async function PUT(req, { params }) {
           room_id: params?.id,
         });
       }
-    }
 
-    // upload new images
-    if (newImagesWithUrls?.length > 0) {
+      // upload new images
       console.log("triggred");
       await prisma.room_images.createMany({
         data: newImagesWithUrls,
@@ -171,14 +168,21 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(_, { params }) {
   try {
-    await prisma.hotel_rooms.delete({
-      where: {
-        id: params?.id,
-      },
-      include:{
-        room_images:true,
-      }
-    });
+    console.log(params.id);
+
+    await prisma.$transaction([
+      prisma.room_associated_facilities.deleteMany({
+        where: { room_id: params?.id },
+      }),
+
+      prisma.room_images.deleteMany({
+        where: { room_id: params?.id },
+      }),
+
+      prisma.hotel_rooms.delete({
+        where: { id: params?.id },
+      }),
+    ]);
 
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {

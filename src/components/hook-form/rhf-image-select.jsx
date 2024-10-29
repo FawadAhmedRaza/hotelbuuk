@@ -7,6 +7,7 @@ import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
 import { ProfileAvatar } from "..";
+import { useParams, usePathname } from "next/navigation";
 
 export const RHFImageSelect = ({
   label,
@@ -16,11 +17,24 @@ export const RHFImageSelect = ({
   disabled = false,
   className,
 }) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedHotel, setSelectedHotel] = useState(null); // Store selected hotel info
   const dropDownRef = useRef(null);
+  console.log("selected Hotel", selectedHotel);
+
+  const pathName = usePathname();
+
+  console.log(pathName.split("/")[1]);
+
+  const dashboardPath = pathName.split("/")[1];
+
+  const hotelId = watch("business_meeting.hotel_id");
+  const nomadId = watch("business_meeting.nomad_id");
+
+  console.log("hotel id", hotelId);
+  console.log("nomad id", nomadId);
 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
@@ -47,6 +61,26 @@ export const RHFImageSelect = ({
   };
 
   useEffect(() => {
+    if (hotelId) {
+      const existingHotel = filterOptions.filter(
+        (option) => option.value === hotelId
+      );
+      console.log(existingHotel);
+      setSelectedHotel(existingHotel[0]);
+    }
+  }, [hotelId]);
+
+  useEffect(() => {
+    if (nomadId) {
+      const existingNomad = filterOptions.filter(
+        (option) => option.value === nomadId
+      );
+      console.log(existingNomad);
+      setSelectedHotel(existingNomad[0]);
+    }
+  }, [nomadId]);
+
+  useEffect(() => {
     const outsideClickHandler = (e) => {
       if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
         setOpenDropdown(false);
@@ -65,7 +99,7 @@ export const RHFImageSelect = ({
       render={({ field, formState: { errors } }) => (
         <div
           className={cn(
-            "relative flex flex-col gap-1 w-full z-[9999]",
+            "relative flex flex-col gap-1 w-full z-10",
             className,
             disabled && "cursor-not-allowed"
           )}
@@ -94,7 +128,7 @@ export const RHFImageSelect = ({
                     {!selectedHotel?.image ? (
                       <Iconify
                         iconName="carbon:user-avatar-filled"
-                        className="!size-10   rounded-full object-cover text-gray-500"
+                        className="!size-8   rounded-full object-cover text-gray-500"
                       />
                     ) : (
                       <ProfileAvatar
@@ -168,11 +202,19 @@ export const RHFImageSelect = ({
                           alt={option.hotel_name}
                           className="w-10 h-10 object-cover rounded-md"
                         /> */}
-                        <ProfileAvatar
-                          src={option?.image}
-                          type="server"
-                          className="w-10 h-10 object-cover rounded-md"
-                        />
+                        {!option?.image ? (
+                          <Iconify
+                            iconName="carbon:user-avatar-filled"
+                            className="!size-10   rounded-full object-cover text-gray-500"
+                          />
+                        ) : (
+                          <ProfileAvatar
+                            src={option?.image}
+                            type="server"
+                            className="w-10 h-10 object-cover rounded-md"
+                          />
+                        )}
+
                         <div>
                           <Typography variant="p" className="!text-sm">
                             {option.hotel_name}

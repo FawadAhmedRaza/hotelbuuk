@@ -48,8 +48,6 @@ const InternalNomadsListView = () => {
     (state) => state.nomadProfile.allInternalNomads
   );
 
-  console.log("Internel Nomads", isLoading, internalNomads);
-
   const totalPages = React.useMemo(() => {
     return Math.ceil(internalNomads?.length / rowsPerPage);
   }, [internalNomads, rowsPerPage]);
@@ -59,8 +57,6 @@ const InternalNomadsListView = () => {
     const end = start + rowsPerPage;
     return internalNomads?.slice(start, end);
   }, [page, internalNomads, rowsPerPage]);
-
-  console.log("All internal nomads", items);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -150,11 +146,11 @@ const InternalNomadsListView = () => {
                 <td className="px-6 py-4">
                   <div className="flex gap-1">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.start_date.toString().slice(0, 10)}
+                      {nomad?.start_date?.toString().slice(0, 10)}
                     </Typography>
-                    <span>-</span>
+                    {nomad?.start_date && <span>-</span>}
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.end_date.toString().slice(0, 10)}
+                      {nomad?.end_date?.toString().slice(0, 10)}
                     </Typography>
                   </div>
                 </td>

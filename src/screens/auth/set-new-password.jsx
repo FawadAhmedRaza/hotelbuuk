@@ -95,13 +95,6 @@ const SetNewPasswordScreen = () => {
             name="confirm_password"
           />
 
-          <Typography
-            variant="p"
-            className="font-montserrat font-medium text-sm"
-          >
-            Didn't receive a code? <AnchorTag href="#">Resend</AnchorTag>
-          </Typography>
-
           <div className="flex flex-col gap-8 mt-5">
             <Button type="submit" className="w-full" loading={isSubmitting}>
               Submit

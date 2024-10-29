@@ -101,25 +101,24 @@ export async function PUT(req, { params }) {
       },
     });
 
-    // delete prev facilites
-    await prisma.hotel_facilities.deleteMany({
-      where: {
-        hotel_id: params?.id,
-      },
-    });
-
-    const facilitiesData =
-      (data?.facilities?.length > 0 &&
-        data?.facilities.map((facility) => ({
-          facility_id: facility?.id,
-          hotel_id: createHotelInfo?.id,
-        }))) ||
-      [];
-
-    if (facilitiesData?.length > 0) {
-      await prisma.hotel_facilities.createMany({
-        data: facilitiesData,
+    if (data?.facilities?.length > 0) {
+      // delete prev facilites
+      await prisma.hotel_facilities.deleteMany({
+        where: {
+          hotel_id: params?.id,
+        },
       });
+
+      const facilitiesData = data?.facilities.map((facility) => ({
+        facility_id: facility?.id,
+        hotel_id: createHotelInfo?.id,
+      }));
+
+      if (facilitiesData?.length > 0) {
+        await prisma.hotel_facilities.createMany({
+          data: facilitiesData,
+        });
+      }
     }
 
     if (data?.deletedImages.length > 0) {
@@ -131,14 +130,11 @@ export async function PUT(req, { params }) {
             },
           });
         } catch (error) {
-          // Check if the error is a known Prisma error
           if (error.code === "P2025") {
             console.warn(
               `Image with ID ${item?.id} not found, skipping deletion.`
             );
-            // You can log the error or take any other action if needed
           } else {
-            // Handle other potential errors
             console.error(`Error deleting image with ID ${item?.id}:`, error);
           }
         }
@@ -173,9 +169,7 @@ export async function PUT(req, { params }) {
           hotel_id: createHotelInfo?.id,
         });
       }
-    }
 
-    if (imagesWithUrl?.length > 0) {
       await prisma.hotel_images.createMany({
         data: imagesWithUrl,
       });
@@ -196,6 +190,13 @@ export async function PUT(req, { params }) {
     const user = await prisma.user.findFirst({
       where: {
         id: user_id,
+      },
+      include: {
+        hotels: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 

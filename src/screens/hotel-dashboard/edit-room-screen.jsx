@@ -43,8 +43,12 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
       price: Yup.string().required("Pricing is required"),
     }),
     room_facilities: Yup.array().optional(),
-    room_images: Yup.array(),
-    // .min(10, "At least ten images is required"),
+    room_images: Yup.array().min(2, "At least ten images is required"),
+
+    availibility: Yup.object().shape({
+      start_date: Yup.string().required("Start date is required"),
+      end_date: Yup.string().required("End date is required"),
+    }),
   });
 
   const methods = useForm({

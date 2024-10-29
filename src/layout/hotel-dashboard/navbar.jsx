@@ -23,7 +23,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-10 ",
+        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-50 px-2 sm:px-8 lg:px-14 xl:px-10 ",
         className
       )}
     >
@@ -56,12 +56,14 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
             className="size-5 sm:size-8"
           />
           <span className="flex items-center gap-1">
-            <Typography
-              variant="p"
-              className="hidden md:block font-medium !text-xs text-white text-nowrap"
-            >
-              {user ? `Hi, ${user?.hotel_name}` : ""}
-            </Typography>
+            {user?.hotel_name && (
+              <Typography
+                variant="p"
+                className="hidden md:block font-medium !text-xs text-white text-nowrap"
+              >
+                {`Hi, ${user?.hotel_name}`}
+              </Typography>
+            )}
             {user?.profile_img ? (
               <ProfileAvatar
                 src={user?.profile_img}

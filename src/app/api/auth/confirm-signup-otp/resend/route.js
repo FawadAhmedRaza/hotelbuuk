@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { generateOTP } from "@/src/libs/helper";
-import { otpTemplate } from "@/src/libs/otpTemplate";
+import { generateResetPasswordOtpTemplate, otpTemplate } from "@/src/libs/otpTemplate";
 import { sendMail } from "@/src/service/mailService";
 import { prisma } from "@/src/db";
 
@@ -32,7 +32,7 @@ export async function POST(req) {
     await sendMail(
       "New OTP for Account verfication Request",
       userEmail,
-      otpTemplate(userEmail, OTP)
+      generateResetPasswordOtpTemplate(userEmail, OTP)
     );
 
     return NextResponse.json(

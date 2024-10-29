@@ -75,8 +75,8 @@ const MountChart = () => {
       },
       grid: {
         show: true,
-        borderColor: "#79747E",
-        strokeDashArray: 5,
+        borderColor: "#dcdadd",
+        strokeDashArray: 4,
         xaxis: {
           lines: {
             show: true,

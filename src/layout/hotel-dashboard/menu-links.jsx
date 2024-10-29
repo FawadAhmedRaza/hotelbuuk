@@ -164,6 +164,11 @@ export const MenuLinks = (UserId) => {
       path: "",
     },
     {
+      id: 4,
+      label: "Events",
+      path: paths.hotelDashboard.events.root,
+    },
+    {
       id: 6,
       label: "Nomads",
       // path: paths.hotelDashboard.nomads.root,
@@ -195,9 +200,7 @@ export const MenuLinks = (UserId) => {
         {
           id: 1,
           title: "Profile",
-          path: !user?.is_user_profile_completed
-            ? paths.hotelInfo.root
-            : `/hotel-info/${UserId}`,
+          path: `/hotel-info/${UserId}`,
         },
         { id: 2, title: "Terms", path: "" },
         { id: 3, title: "Privacy", path: "" },

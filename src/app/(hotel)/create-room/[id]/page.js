@@ -36,6 +36,10 @@ const page = () => {
     },
     room_facilities: room?.room_facilities,
     room_images: room?.room_images,
+    availibility: {
+      start_date: "",
+      end_date: "",
+    },
   };
 
   return isLoading ? (

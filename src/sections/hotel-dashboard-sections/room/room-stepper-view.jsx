@@ -35,10 +35,12 @@ export const RoomStepperView = () => {
       room_type: Yup.string().required("Room type is required"),
       price: Yup.string().required("Pricing is required"),
       room_facilities: Yup.array().optional(),
+      start_date: Yup.string().required("start date is required"),
+      end_date: Yup.string().required("end date is required"),
     }),
-    room_images: Yup.array(),
-    // .min(10, "At least ten images are required")
-    // .required("Files are required"),
+    room_images: Yup.array()
+      .min(2, "At least ten images are required")
+      .required("Files are required"),
   });
 
   const methods = useForm({
@@ -100,6 +102,8 @@ export const RoomStepperView = () => {
         "room_info.maximum_occupancy",
         "room_info.room_type",
         "room_info.price",
+        "room_info.start_date",
+        "room_info.end_date",
       ];
     } else if (activeStep === 1) {
       fieldsToValidate = ["images"];
@@ -117,6 +121,8 @@ export const RoomStepperView = () => {
   const onSubmit = handleSubmit(async (data) => {
     data.hotel_id = user?.hotels?.[0]?.id;
     const formData = new FormData();
+
+    console.log(formData);
 
     for (const key in data) {
       if (
@@ -140,7 +146,7 @@ export const RoomStepperView = () => {
     );
 
     try {
-      await dispatch(createRoom(formData)).unwrap(); 
+      await dispatch(createRoom(formData)).unwrap();
       enqueueSnackbar("Room created", { variant: "success" });
       router.push(paths.hotelDashboard.rooms);
     } catch (error) {

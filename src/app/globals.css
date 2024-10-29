@@ -173,3 +173,71 @@ input::-webkit-inner-spin-button {
   width: 20px; 
   height: 20px; 
 }
+
+/* DateRangeStyles.css */
+
+
+/* Main container */
+.calendar-container {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  text-align: left;
+}
+
+/* Calendar styling */
+.custom-calendar .rdrCalendarWrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  background-color: #0071c2;
+}
+
+.custom-calendar .rdrMonthAndYearWrapper {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  text-align: center;
+}
+
+.custom-calendar .rdrWeekDays {
+  font-weight: normal;
+  color: #666;
+}
+
+.custom-calendar .rdrDayNumber span {
+  color: #333;
+}
+
+.custom-calendar .rdrDayNumber span:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.custom-calendar .rdrSelected,
+.custom-calendar .rdrStartEdge,
+.custom-calendar .rdrEndEdge {
+  background-color: #000000 !important; /* Dark color for start and end dates */
+  color: #fff !important;
+  border-radius: 50%;
+   /* Rounded selection */
+}
+
+.custom-calendar .rdrInRange {
+  background-color: #f0f0f0 !important; /* Light background for in-range dates */
+  color: #333;
+}
+
+/* Styling for Clear dates button */
+.clear-dates-button {
+  margin-top: 10px;
+  color: #0071c2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.clear-dates-button:hover {
+  text-decoration: underline;
+}
