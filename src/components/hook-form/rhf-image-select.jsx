@@ -7,6 +7,7 @@ import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
 import { ProfileAvatar } from "..";
+import { useParams, usePathname } from "next/navigation";
 
 export const RHFImageSelect = ({
   label,
@@ -16,11 +17,24 @@ export const RHFImageSelect = ({
   disabled = false,
   className,
 }) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedHotel, setSelectedHotel] = useState(null); // Store selected hotel info
   const dropDownRef = useRef(null);
+  console.log("selected Hotel", selectedHotel);
+
+  const pathName = usePathname();
+
+  console.log(pathName.split("/")[1]);
+
+  const dashboardPath = pathName.split("/")[1];
+
+  const hotelId = watch("business_meeting.hotel_id");
+  const nomadId = watch("business_meeting.nomad_id");
+
+  console.log("hotel id", hotelId);
+  console.log("nomad id", nomadId);
 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
@@ -45,6 +59,26 @@ export const RHFImageSelect = ({
     setOpenDropdown(false);
     setQuery("");
   };
+
+  useEffect(() => {
+    if (hotelId) {
+      const existingHotel = filterOptions.filter(
+        (option) => option.value === hotelId
+      );
+      console.log(existingHotel);
+      setSelectedHotel(existingHotel[0]);
+    }
+  }, [hotelId]);
+
+  useEffect(() => {
+    if (nomadId) {
+      const existingNomad = filterOptions.filter(
+        (option) => option.value === nomadId
+      );
+      console.log(existingNomad);
+      setSelectedHotel(existingNomad[0]);
+    }
+  }, [nomadId]);
 
   useEffect(() => {
     const outsideClickHandler = (e) => {

@@ -14,15 +14,19 @@ import { GuestLearn } from "./guest";
 import { SetAvailability } from "./availabilty";
 import { Pricing } from "./pricing";
 import { useDispatch } from "react-redux";
-import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { getHotelById, getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
+import { Router } from "lucide-react";
+import { paths } from "@/src/contants";
+import { useRouter } from "next/navigation";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
+  const router = useRouter();
 
   const dispatch = useDispatch();
   const { user } = useAuthContext();
@@ -49,20 +53,21 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
+
       location: Yup.object().shape({
-        country: Yup.string().when("$accomodation_type", {
+        country: Yup.string().when("business_meeting.accomodation_type", {
           is: "bnb",
-          then: (schema) => schema.required("country is required"),
+          then: (schema) => schema.required("Country is required for BnB"),
+          otherwise: (schema) => schema.notRequired(), // Optional for hotel
+        }),
+        city: Yup.string().when("business_meeting.accomodation_type", {
+          is: "bnb",
+          then: (schema) => schema.required("City is required for BnB"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        city: Yup.string().when("$accomodation_type", {
+        address: Yup.string().when("business_meeting.accomodation_type", {
           is: "bnb",
-          then: (schema) => schema.required("city is required"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        address: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("street is required"),
+          then: (schema) => schema.required("Address is required for BnB"),
           otherwise: (schema) => schema.notRequired(),
         }),
       }),
@@ -98,7 +103,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             official_name: "",
             business_category: "",
             accomodation_type: "bnb",
-            hotel: "",
+            hotel_id: "",
             location: {
               country: "",
               city: "",
@@ -126,7 +131,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     formState: { isSubmitting, errors },
   } = methods;
 
-  console.log("errors", errors);
+  console.log(errors);
 
   const fetchHotels = async () => {
     try {
@@ -148,8 +153,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     fetchHotels();
     fetchAmenities();
   }, []);
-
-  console.log(watch("business_meeting.accomodation_type"));
 
   const steps = [
     {
@@ -275,6 +278,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         );
         if (request?.status === 201) {
           enqueueSnackbar("Event created", { variant: "success" });
+          router.push(paths.nomadDashboard.events.root);
         }
       } catch (error) {
         console.log(error);
@@ -326,6 +330,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         if (request?.status === 201) {
           enqueueSnackbar("Event updated", { variant: "success" });
         }
+        router.push(paths.nomadDashboard.events.root);
       } catch (error) {
         console.log(error);
         enqueueSnackbar(error?.message, { variant: "error" });

@@ -1,29 +1,29 @@
 "use client";
 
 import { LoadingScreen } from "@/src/components/loading-screen";
+import { getEventById } from "@/src/redux/events/thunk";
 import { EventStepperView } from "@/src/sections/event/stepper-view";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const page = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [event, setEvent] = useState({});
+  const { event, isLoading } = useSelector(
+    (state) => state.nomadEvents.getById
+  );
+
+  console.log(event);
 
   const fetchEvent = async () => {
     try {
-      setIsLoading(true);
-      const request = await axiosInstance.get(
-        endpoints.nomad.event.getById(id)
-      );
-      setEvent(request?.data?.nomadEvent);
+      await dispatch(getEventById(id)).unwrap;
     } catch (error) {
       setIsLoading(false);
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

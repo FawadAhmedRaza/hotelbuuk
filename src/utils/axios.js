@@ -66,6 +66,7 @@ export const endpoints = {
       update_room: (id) => `/hotel/rooms/${id}`,
       delete_room: (id) => `/hotel/rooms/${id}`,
     },
+
     inviteNomads: "/hotel/invite-nomad",
     internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
     event: {
@@ -76,6 +77,7 @@ export const endpoints = {
       deleteById: (id) => `/hotel/events/${id}`,
     },
   },
+
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
@@ -87,7 +89,10 @@ export const endpoints = {
     },
     event: {
       create: "/nomad/event",
+      getAllEvents: (id) => `/nomad/event?user_id=${id}`,
+
       getById: (id) => `/nomad/event/${id}`,
+      delete_by_id: (id) => `/nomad/event/${id}`,
       updateById: (id) => `/nomad/event/${id}`,
     },
   },

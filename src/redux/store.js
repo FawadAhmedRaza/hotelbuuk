@@ -6,6 +6,7 @@ import rooms from "./hotel-rooms/reducer";
 import nomadProfile from "./nomad-profile/reducer";
 import roomFacilities from "./room-facilities/reducer";
 import eventAmenities from "./amenities/reducer";
+import nomadEvents from "./events/reducer";
 import hotelEvent from "./hotel-event/reducer";
 
 const store = configureStore({
@@ -17,6 +18,7 @@ const store = configureStore({
     rooms,
     eventAmenities,
     hotelEvent,
+    nomadEvents,
   },
 });
 

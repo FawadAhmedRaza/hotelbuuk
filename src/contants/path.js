@@ -23,6 +23,7 @@ export const paths = {
   nomad: {
     root: "/nomad",
     create: "/nomad/create",
+    profile: (id) => `/nomad/profile/${id}`,
   },
   nomadDashboard: {
     root: "/nomad-dashboard",
@@ -30,6 +31,7 @@ export const paths = {
     events: {
       root: "/nomad-dashboard/event",
       create: "/nomad-dashboard/event/create",
+      edit: (id) => `/nomad-dashboard/event/${id}`,
     },
   },
   hotelDashboard: {

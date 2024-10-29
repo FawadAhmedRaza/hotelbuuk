@@ -1,8 +1,14 @@
+"use client";
+
 import React from "react";
 
 import Link from "next/link";
+import { paths } from "@/src/contants";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 const ProfileAlert = ({ setShowAlert }) => {
+  const { user } = useAuthContext();
+
   return (
     <div
       role="alert"
@@ -10,8 +16,8 @@ const ProfileAlert = ({ setShowAlert }) => {
     >
       <div className="flex-1 md:mr-4 font-montserrat">
         <Link
-          href={"/hotel-info"}
-          className={`font-normal text-md text-primary hover:underline font-montserrat`}
+          href={paths.hotelInfo.edit(user?.id)}
+          className={`font-medium text-md text-white hover:underline font-montserrat`}
           rel="noopener noreferrer"
         >
           Your profile is incomplete. complete now

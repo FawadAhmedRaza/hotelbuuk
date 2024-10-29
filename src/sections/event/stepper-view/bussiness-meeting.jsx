@@ -30,6 +30,7 @@ export const BussinessMeeting = () => {
 
   const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+
   let modifiedHotelList = hotels?.map((item) => {
     return {
       hotel_name: item?.hotel_name,
@@ -45,6 +46,7 @@ export const BussinessMeeting = () => {
 
   const country = watch("business_meeting.location.country");
   const city = watch("business_meeting.location.city");
+  // const hotelId = watch("business_meeting.hotel_id");
 
   console.log(city);
 
@@ -66,6 +68,8 @@ export const BussinessMeeting = () => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
 
+  // console.log(hotelId);
+
   useEffect(() => {
     async function fetchCountries() {
       const allCountries = await getCountries();
@@ -75,7 +79,7 @@ export const BussinessMeeting = () => {
   }, []);
 
   useEffect(() => {
-    setValue("business_meeting.location.city", "");
+    setValue("city", "");
     async function fetchCities() {
       const allCities = await getCities(country);
       setCities(allCities);
