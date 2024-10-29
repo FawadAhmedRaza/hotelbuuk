@@ -8,7 +8,7 @@ import { LoadingScreen } from "@/src/components/loading-screen";
 
 // ----------------------------------------------------------------------
 
-export function NomadDashboardGuard({ children }) {
+export function GuestDashboardGuard({ children }) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ export function NomadDashboardGuard({ children }) {
   );
 }
 
-NomadDashboardGuard.propTypes = {
+GuestDashboardGuard.propTypes = {
   children: PropTypes.node,
 };
 
@@ -38,7 +38,7 @@ function Container({ children, isLoading, setIsLoading }) {
   const [checked, setChecked] = useState(false);
 
   const check = useCallback(async () => {
-    if (user?.user_type === "NOMAD") {
+    if (user?.user_type === "GUEST") {
       setChecked(true);
     } else {
       setChecked(false);
