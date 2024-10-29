@@ -27,7 +27,7 @@ export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[999] transition-opacity duration-300 ${
         isDrawerOpen ? "bg-black bg-opacity-50" : "pointer-events-none"
       }`}
     >
@@ -41,4 +41,4 @@ export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children }) => {
       </div>
     </div>
   );
-};
+}

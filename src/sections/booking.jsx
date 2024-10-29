@@ -74,7 +74,7 @@ export const Booking = React.memo(() => {
       className=""
     >
       <div>
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:!w-[70%] h-full md:!h-28 rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10 bg-white mx-auto ">
+        <div className="flex z-50 flex-col md:flex-row gap-8 lg:gap-10 items-center w-11/12 lg:!w-[70%] h-full md:!h-28 rounded-3xl shadow-lg p-5 sm:py-2 sm:px-10 bg-white mx-auto ">
           <div className="relative flex flex-col sm:flex-row justify-between md:justify-start items-center gap-5 md:gap-5 grow w-full">
             <div className="flex gap-1 sm:gap-3">
               <Iconify
