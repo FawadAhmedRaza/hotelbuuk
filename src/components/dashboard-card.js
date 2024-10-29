@@ -21,7 +21,7 @@ const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
               </h2>
               <p
                 variant="p"
-                className="!text-[12px]  leading-none !font-medium"
+                className="!text-[12px] text-primary  leading-none !font-medium"
               >
                 {title === "Hotel" ? "Registered" : "Total"}
               </p>
@@ -32,11 +32,11 @@ const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
           </div>
         </div>
 
-        <div className="w-full text-center py-2 mt-5 bg-[#fef5fc] rounded-md">
-          <AnchorTag href={path}>
+        <div className="w-full text-center py-2 mt-5 bg-gray-100 rounded-md">
+          <AnchorTag href={path} className={"hover:no-underline"}>
             <Typography
               variant="p"
-              className="text-primary uppercase !text-sm font-medium !py-0.5 cursor-pointer"
+              className="text-gray-500 uppercase !text-sm font-medium !py-0.5 cursor-pointer"
             >
               {btnTitle}
             </Typography>

@@ -7,7 +7,7 @@ import { NomadDashboardNavBar } from "./navbar";
 const NomadDashboardLayout = React.memo(({ children, isNavBg = true }) => {
   return (
     <>
-      <NomadDashboardNavBar className={isNavBg ? "bg-primary static" : ""} />
+      <NomadDashboardNavBar className={isNavBg ? "bg-primary sticky" : ""} />
       {children}
     </>
   );

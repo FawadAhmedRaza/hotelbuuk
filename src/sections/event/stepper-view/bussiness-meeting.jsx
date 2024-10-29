@@ -122,6 +122,7 @@ export const BussinessMeeting = () => {
                 <div key={index} className="flex items-center gap-2">
                   <input
                     type="checkbox"
+                    id={`amenities-${index}`}
                     checked={selectedAmenities?.some(
                       (selected) => selected?.name === amenity?.name
                     )} // check if the facility is selected
@@ -132,7 +133,7 @@ export const BussinessMeeting = () => {
                   />
                   <label
                     className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
-                    htmlFor={amenity?.name}
+                    htmlFor={`amenities-${index}`}
                   >
                     {amenity?.name}
                   </label>

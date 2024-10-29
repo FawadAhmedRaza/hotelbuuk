@@ -7,7 +7,7 @@ import { HotelDashboardNavBar } from "./navbar";
 const HotelDashboardLayout = React.memo(({ children, isNavBg = true }) => {
   return (
     <>
-      <HotelDashboardNavBar className={isNavBg ? "bg-primary static" : ""} />
+      <HotelDashboardNavBar className={isNavBg ? "bg-primary  sticky" : ""} />
       {children}
     </>
   );
