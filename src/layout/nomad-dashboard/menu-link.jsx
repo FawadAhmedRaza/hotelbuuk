@@ -41,11 +41,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     {
       id: 4,
       label: "Events",
-      // path: "",
-      children: [
-        { id: 1, title: "Events", path: paths.nomadDashboard.events.root },
-        { id: 2, title: "Create", path: paths.nomadDashboard.events.create },
-      ],
+      path: paths.nomadDashboard.events.root,
     },
     {
       id: 6,

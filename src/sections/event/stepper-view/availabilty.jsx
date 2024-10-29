@@ -18,6 +18,9 @@ export const SetAvailability = () => {
   console.log(watch("availibility"));
 
   const [openCalender, setOpenCalender] = useState(false);
+  const startDate = watch("availibility.start_date");
+  const endDate = watch("availibility.end_date");
+
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -58,6 +61,16 @@ export const SetAvailability = () => {
     return () => {
       document.removeEventListener("mousedown", outsideClickHandler);
     };
+  }, []);
+
+  useEffect(() => {
+    setDate([
+      {
+        startDate: startDate,
+        endDate: endDate,
+        key: "selection",
+      },
+    ]);
   }, []);
 
   return (
