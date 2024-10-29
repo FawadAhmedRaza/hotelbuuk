@@ -108,7 +108,7 @@ export async function POST(req) {
 
     let updatedUserWithProfile = await prisma.user.findFirst({
       where: {
-        id: id,
+        id: user_id,
       },
       include: includeProfile,
     });
