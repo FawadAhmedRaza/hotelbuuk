@@ -9,8 +9,6 @@ export async function POST(req) {
     const data = convertFormData(body);
     const imageFiles = body.getAll("room_images");
 
-    console.log("Body Data", body);
-
     const { room_info, hotel_id, room_facilities } = data || {};
 
     const { room_name, room_type, price, maximum_occupancy, description } =
@@ -34,15 +32,12 @@ export async function POST(req) {
       },
     });
 
-    const facilitiesData =
-      (room_facilities?.length > 0 &&
-        room_facilities.map((facility) => ({
-          room_facility_id: facility?.id,
-          room_id: createdRoom?.id,
-        }))) ||
-      [];
+    if (room_facilities?.length > 0) {
+      const facilitiesData = room_facilities.map((facility) => ({
+        room_facility_id: facility?.id,
+        room_id: createdRoom?.id,
+      }));
 
-    if (facilitiesData?.length > 0) {
       await prisma.room_associated_facilities.createMany({
         data: facilitiesData,
       });
@@ -59,9 +54,7 @@ export async function POST(req) {
           room_id: createdRoom?.id,
         });
       }
-    }
 
-    if (roomImagesWithUrl?.length > 0) {
       await prisma.room_images?.createMany({
         data: roomImagesWithUrl,
       });
@@ -110,7 +103,6 @@ export async function GET(req) {
         ),
       };
     });
-
 
     return NextResponse.json(
       { message: "success", hotelRooms: formatedList },

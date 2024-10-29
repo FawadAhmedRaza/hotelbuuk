@@ -49,15 +49,12 @@ export async function POST(req) {
       },
     });
 
-    const facilitiesData =
-      (data?.facilities?.length > 0 &&
-        data?.facilities.map((facility) => ({
-          facility_id: facility?.id,
-          hotel_id: createHotelInfo?.id,
-        }))) ||
-      [];
+    if (data?.facilities?.length > 0) {
+      const facilitiesData = data?.facilities.map((facility) => ({
+        facility_id: facility?.id,
+        hotel_id: createHotelInfo?.id,
+      }));
 
-    if (facilitiesData?.length > 0) {
       await prisma.hotel_facilities.createMany({
         data: facilitiesData,
       });
@@ -74,11 +71,11 @@ export async function POST(req) {
           hotel_id: createHotelInfo?.id,
         });
       }
+      
+      await prisma.hotel_images.createMany({
+        data: imagesWithUrl,
+      });
     }
-
-    await prisma.hotel_images.createMany({
-      data: imagesWithUrl,
-    });
 
     // update user profile
     await prisma.user.update({
