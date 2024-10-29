@@ -203,6 +203,42 @@ model hotel_internal_nomads {
   nomad nomad      @relation(fields: [nomad_id], references: [id])
 }
 
+// model nomad_event {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   title               String
+//   description         String
+//   business_category   String
+//   official_name       String
+//   accomodation_type   String
+//   city                String?
+//   country             String?
+//   address             String?
+//   start_date          String?
+//   end_date            String?
+//   // rules
+//   check_in            Boolean?
+//   cancellation_policy Boolean?
+//   check_out           Boolean?
+//   no_smoking          Boolean?
+//   pets_policy         Boolean?
+//   quiet_hours         Boolean?
+//   pool_usage          Boolean?
+//   payment_policy      Boolean?
+
+//   price String
+
+//   hotel_id String?     @db.ObjectId
+//   hotel    hotel_info? @relation(fields: [hotel_id], references: [id])
+
+//   event_topics               event_topics[]
+//   event_images               event_images[]
+//   event_associated_amenities event_associated_amenities[]
+
+//   user_id String @db.ObjectId
+//   user    User   @relation(fields: [user_id], references: [id])
+// }
+
 model nomad_event {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -217,14 +253,14 @@ model nomad_event {
   start_date          String?
   end_date            String?
   // rules
-  check_in            Boolean?
-  cancellation_policy Boolean?
-  check_out           Boolean?
-  no_smoking          Boolean?
-  pets_policy         Boolean?
-  quiet_hours         Boolean?
-  pool_usage          Boolean?
-  payment_policy      Boolean?
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
 
   price String
 
@@ -249,14 +285,14 @@ model hotel_event {
   start_date          String?
   end_date            String?
   // rules
-  check_in            Boolean?
-  cancellation_policy Boolean?
-  check_out           Boolean?
-  no_smoking          Boolean?
-  pets_policy         Boolean?
-  quiet_hours         Boolean?
-  pool_usage          Boolean?
-  payment_policy      Boolean?
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
 
   price String
 
@@ -269,6 +305,37 @@ model hotel_event {
   event_topics               event_topics[]
   event_associated_amenities event_associated_amenities[]
 }
+
+// model hotel_event {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   title               String
+//   description         String
+//   business_category   String
+//   official_name       String
+//   start_date          String?
+//   end_date            String?
+//   // rules
+//   check_in            Boolean?
+//   cancellation_policy Boolean?
+//   check_out           Boolean?
+//   no_smoking          Boolean?
+//   pets_policy         Boolean?
+//   quiet_hours         Boolean?
+//   pool_usage          Boolean?
+//   payment_policy      Boolean?
+
+//   price String
+
+//   nomad_id String @db.ObjectId
+//   nomad    nomad  @relation(fields: [nomad_id], references: [id])
+
+//   user_id String @db.ObjectId
+//   user    User   @relation(fields: [user_id], references: [id])
+
+//   event_topics               event_topics[]
+//   event_associated_amenities event_associated_amenities[]
+// }
 
 model event_topics {
   id String @id @default(auto()) @map("_id") @db.ObjectId

@@ -16,9 +16,16 @@ const SignUpScreen = () => {
       <div
         className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0`}
       >
-        <Typography variant="h3" className="font-bold text-primary">
-          Hotelbuuk
-        </Typography>
+        <div className="flex items-center gap-2">
+          <img
+            src="/assets/images/transperent-logo/transperent/PINK.png"
+            alt="log"
+            className=" w-16"
+          />
+          <Typography variant="h3" className="font-bold text-primary">
+            Hotelbuuk
+          </Typography>
+        </div>
         <div className="flex flex-col justify-center items-center lg:justify-start lg:items-start gap-3">
           <Typography variant="h2" className="font-semibold">
             Sign up

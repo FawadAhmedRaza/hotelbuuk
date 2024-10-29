@@ -60,19 +60,19 @@ const RecentBooking = () => {
                   <div key={hotel.id} className="w-full">
                     <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                       <div className="flex gap-4 w-full">
-                        {!hotel?.hotel_image ? (
+                        {/* {!hotel?.hotel_image ? (
                           <Iconify
                             iconName="carbon:user-avatar-filled"
                             className="!size-16 border-primary border-2  rounded-full  text-gray-500"
                           />
-                        ) : (
+                        ) : ( */}
                           <ProfileAvatar
                             src={hotel?.hotel_image}
                             type={"server"}
                             alt={hotel?.hotel_name}
                             className="border-primary border-2 h-16 w-16 rounded-full object-cover"
                           />
-                        )}
+                        {/* )} */}
                         <div className="flex flex-1 flex-col grow">
                           <div className=" flex grow mr-3  justify-between items-center w-full ">
                             <Typography variant="p" className="font-semibold">

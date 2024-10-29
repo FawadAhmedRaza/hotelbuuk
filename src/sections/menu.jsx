@@ -9,7 +9,7 @@ import { BgIcon } from "../components/bg-icon";
 
 export const Menu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
-  const { authenticated, logout } = useAuthContext();
+  const { authenticated, logout, user } = useAuthContext();
 
   const handleLogout = async () => {
     await logout();
@@ -34,7 +34,7 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
         />
       </div>
       <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
-        {MenuLinks?.map((item) => {
+        {MenuLinks(user)?.map((item) => {
           return (
             <AnchorTag
               key={item?.id}
