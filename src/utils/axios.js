@@ -34,6 +34,7 @@ export const endpoints = {
     resend_verify_user_OTP: "/auth/confirm-signup-otp/resend",
     setup_user_type: "/auth/set-user-type",
     setup_basic_info: "/auth/set-basic-info",
+    complete_profile:"/auth/complete-profile",
     forget_password: {
       request_otp: "/auth/forget-password",
       verify_forget_password_otp: "/auth/forget-password/forget-password-otp",

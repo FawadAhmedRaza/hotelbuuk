@@ -25,7 +25,7 @@ const CreateEditAmenities = ({ isOpen, onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset,resetField } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -36,11 +36,11 @@ const CreateEditAmenities = ({ isOpen, onClose }) => {
         user_id: user?.id,
       };
       await dispatch(createAmenities(updatedData)).unwrap();
-
-      onClose();
-      reset();
+      resetField("amenities");
     } catch (error) {
       console.log(error);
+    } finally {
+      onClose();
     }
   });
 

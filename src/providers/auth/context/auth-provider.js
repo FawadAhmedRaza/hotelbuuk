@@ -403,8 +403,6 @@ export function AuthProvider({ children }) {
   const setupBasicInfo = useCallback(async (type, data) => {
     data.type = type;
     try {
-      console.log(data);
-
       const response = await axiosInstance.post(
         endpoints.AUTH.setup_basic_info,
         data
@@ -424,8 +422,55 @@ export function AuthProvider({ children }) {
 
       enqueueSnackbar("Success", { variant: "success" });
       router.push(
+        user?.user_type === "HOTEL"
+          ? "/setup-extra-info-hotel"
+          : "/setup-extra-info-nomad"
+      );
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  }, []);
+
+  const completeProfile = useCallback(async (type, data) => {
+    data.type = type;
+    try {
+      const formData = new FormData();
+
+      for (const key in data) {
+        if (data[key] !== null && data[key] !== undefined) {
+          if (typeof data[key] === "object" && !(data[key] instanceof File)) {
+            // value is an object
+            formData.append(key, JSON.stringify(data[key]));
+          } else {
+            // otherwise, append as it is
+            formData.append(key, data[key]);
+          }
+        }
+      }
+
+      const response = await axiosInstance.post(
+        endpoints.AUTH.complete_profile,
+        formData
+      );
+
+      const { accessToken, user } = await response.data;
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+      router.push(
         user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
       );
+      enqueueSnackbar("Profile completed", { variant: "success" });
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
@@ -457,6 +502,7 @@ export function AuthProvider({ children }) {
       setUser,
       resendEmails,
       setupBasicInfo,
+      completeProfile,
     }),
     [
       login,
@@ -468,6 +514,7 @@ export function AuthProvider({ children }) {
       setUser,
       resendEmails,
       setupBasicInfo,
+      completeProfile,
     ]
   );
 

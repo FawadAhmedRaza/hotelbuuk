@@ -3,7 +3,6 @@ import { NomadProfileScreen } from "@/src/screens/nomad";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getNomadProfileById } from "@/src/redux/nomad-profile/thunk";
-import { LoadingScreen } from "@/src/components/loading-screen";
 import { useEffect } from "react";
 import NomadProfileSkeleton from "@/src/components/Skeleton/nomad-profile-skeleton";
 

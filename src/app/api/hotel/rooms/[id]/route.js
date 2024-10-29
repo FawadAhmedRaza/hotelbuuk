@@ -170,14 +170,19 @@ export async function DELETE(_, { params }) {
   try {
     console.log(params.id);
 
-    await prisma.hotel_rooms.delete({
-      where: {
-        id: params?.id,
-      },
-      include: {
-        room_images: true,
-      },
-    });
+    await prisma.$transaction([
+      prisma.room_associated_facilities.deleteMany({
+        where: { room_id: params?.id },
+      }),
+
+      prisma.room_images.deleteMany({
+        where: { room_id: params?.id },
+      }),
+
+      prisma.hotel_rooms.delete({
+        where: { id: params?.id },
+      }),
+    ]);
 
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {

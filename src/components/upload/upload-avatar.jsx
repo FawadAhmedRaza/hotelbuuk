@@ -43,7 +43,7 @@ export default function UploadAvatar({
   return (
     <div
       {...getRootProps()}
-      className={`relative   p-1 mx-auto md:w-[175px] md:h-[175px] w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
+      className={`relative p-1 mx-auto md:w-[150px] md:h-[150px] w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
         hasError ? "border-red-500" : "border-[#852169]"
       } ${disabled ? "opacity-50 pointer-events-none" : ""}`}
     >

@@ -50,8 +50,6 @@ const HotelEventsView = React.memo(() => {
     (state) => state.hotelEvent.deleteById
   );
 
-  console.log("hotel events", hotelEvents);
-
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotelEvents?.length / rowsPerPage);
   }, [hotelEvents, rowsPerPage]);
