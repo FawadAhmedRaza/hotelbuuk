@@ -3,7 +3,7 @@ import { Button, Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion } from "@/src/components";
 
 export const GuestLearn = () => {
@@ -41,6 +41,10 @@ export const GuestLearn = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    setTopics(formTopics);
+  }, []);
 
   return (
     <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
