@@ -121,7 +121,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         },
     context: {
       accomodation_type: "bnb",
-      // accomodation_type: watch("business_meeting.accomodation_type"), // Dynamically update based on form state
     },
   });
 
@@ -166,6 +165,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       label: "Upload Images",
       icon: "ph:images",
       value: "images",
+      component: <RHFMultipleImageUploader name="images" />,
       component: <RHFMultipleImageUploader name="images" />,
     },
     {

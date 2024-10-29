@@ -18,23 +18,24 @@ enum UserType {
 }
 
 model User {
-  id                        String     @id @default(auto()) @map("_id") @db.ObjectId
-  first_name                String?
-  last_name                 String?
-  hotel_name                String?
-  user_type                 UserType?
-  email                     String     @unique
-  password                  String
-  profile_img               String?
-  googleId                  String?
-  phone_number              String?
-  terms                     Boolean?
-  confirmation_OTP          String?
-  forget_password_OTP       String?
-  is_verified_user          Boolean?
-  is_user_profile_completed Boolean?
-  is_user_type_completed    Boolean?
-  auth_method               AuthMethod @default(EMAIL)
+  id                           String     @id @default(auto()) @map("_id") @db.ObjectId
+  first_name                   String?
+  last_name                    String?
+  hotel_name                   String?
+  user_type                    UserType?
+  email                        String     @unique
+  password                     String
+  profile_img                  String?
+  googleId                     String?
+  phone_number                 String?
+  terms                        Boolean?
+  confirmation_OTP             String?
+  forget_password_OTP          String?
+  is_verified_user             Boolean?
+  is_user_profile_completed    Boolean?
+  is_user_type_completed       Boolean?
+  is_user_basic_info_completed Boolean?
+  auth_method                  AuthMethod @default(EMAIL)
 
   hotels          hotel_info[]
   nomad           nomad[]
@@ -46,6 +47,7 @@ model User {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   nomad_event nomad_event[]
+  hotel_event hotel_event[]
 }
 
 model facilities {
@@ -124,6 +126,7 @@ model nomad {
   User                  User?                   @relation(fields: [userId], references: [id])
   userId                String?                 @db.ObjectId
   hotel_internal_nomads hotel_internal_nomads[]
+  hotel_event           hotel_event[]
 }
 
 model hotel_rooms {
@@ -234,6 +237,37 @@ model nomad_event {
   user    User   @relation(fields: [user_id], references: [id])
 }
 
+model hotel_event {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title               String
+  description         String
+  business_category   String
+  official_name       String
+  start_date          String?
+  end_date            String?
+  // rules
+  check_in            Boolean?
+  cancellation_policy Boolean?
+  check_out           Boolean?
+  no_smoking          Boolean?
+  pets_policy         Boolean?
+  quiet_hours         Boolean?
+  pool_usage          Boolean?
+  payment_policy      Boolean?
+
+  price String
+
+  nomad_id String @db.ObjectId
+  nomad    nomad  @relation(fields: [nomad_id], references: [id])
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  event_topics               event_topics[]
+  event_associated_amenities event_associated_amenities[]
+}
+
 model event_topics {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -242,6 +276,9 @@ model event_topics {
 
   nomad_event_id String?      @db.ObjectId
   nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+
+  hotel_event_id String?      @db.ObjectId
+  hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
 }
 
 model event_images {
@@ -259,7 +296,9 @@ model event_associated_amenities {
 
   amenities_id   String  @db.ObjectId
   nomad_event_id String? @db.ObjectId
+  hotel_event_id String? @db.ObjectId
 
   nomad_event nomad_event? @relation(fields: [nomad_event_id], references: [id])
   amenities   amenities    @relation(fields: [amenities_id], references: [id])
+  hotel_event hotel_event? @relation(fields: [hotel_event_id], references: [id])
 }

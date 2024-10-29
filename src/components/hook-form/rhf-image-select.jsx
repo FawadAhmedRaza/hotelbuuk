@@ -7,6 +7,7 @@ import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
 import { ProfileAvatar } from "..";
+import { useParams } from "next/navigation";
 
 export const RHFImageSelect = ({
   label,
@@ -23,7 +24,11 @@ export const RHFImageSelect = ({
   const dropDownRef = useRef(null);
   console.log("selected Hotel", selectedHotel);
 
-  const hotelId = watch("business_meeting.hotel_id");
+  const params = useParams();
+
+  console.log(params);
+
+  // const hotelId = watch("business_meeting.hotel_id");
 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
