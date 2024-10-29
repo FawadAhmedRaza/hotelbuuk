@@ -33,6 +33,8 @@ const page = () => {
       maximum_occupancy: room?.maximum_occupancy,
       room_type: room?.room_type,
       price: room?.price,
+      start_date: room?.start_date,
+      end_date: room?.end_date,
     },
     room_facilities: room?.room_facilities,
     room_images: room?.room_images,
@@ -41,6 +43,7 @@ const page = () => {
       end_date: "",
     },
   };
+  console.log("deafdas",defaultValues);
 
   return isLoading ? (
     <Spinner />
