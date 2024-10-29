@@ -39,7 +39,7 @@ export const RoomStepperView = () => {
       end_date: Yup.string().required("end date is required"),
     }),
     room_images: Yup.array()
-      .min(2, "At least ten images are required")
+      .min(2, "At least Two images are required")
       .required("Files are required"),
   });
 
@@ -122,7 +122,7 @@ export const RoomStepperView = () => {
     data.hotel_id = user?.hotels?.[0]?.id;
     const formData = new FormData();
 
-    console.log(formData);
+    console.log("final Data", formData);
 
     for (const key in data) {
       if (

@@ -15,6 +15,7 @@ enum AuthMethod {
 enum UserType {
   NOMAD
   HOTEL
+  GUEST
 }
 
 model User {
@@ -39,6 +40,7 @@ model User {
 
   hotels          hotel_info[]
   nomad           nomad[]
+  guest           guest[]
   facilities      facilities[]
   room_facilities room_facilities[]
   room_types      room_types[]
@@ -84,24 +86,6 @@ model hotel_info {
   nomad_events          nomad_event[]
 }
 
-model hotel_images {
-  id   String  @id @default(auto()) @map("_id") @db.ObjectId
-  img  String
-  name String?
-
-  hotel_id String     @db.ObjectId
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
-}
-
-model hotel_facilities {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  hotel_id    String @db.ObjectId
-  facility_id String @db.ObjectId
-
-  facility facilities @relation(fields: [facility_id], references: [id])
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
-}
-
 model nomad {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
   profile_img   String?
@@ -129,6 +113,39 @@ model nomad {
   hotel_event           hotel_event[]
 }
 
+model guest {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img  String?
+  first_name   String?
+  last_name    String?
+  phone_number Int?
+  email        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+}
+
+model hotel_images {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
+
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+}
+
+model hotel_facilities {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_id    String @db.ObjectId
+  facility_id String @db.ObjectId
+
+  facility facilities @relation(fields: [facility_id], references: [id])
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+}
+
 model hotel_rooms {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -137,8 +154,8 @@ model hotel_rooms {
   maximum_occupancy String
   room_type         String
   price             String
-  start_date        String
-  end_date          String
+  start_date        String?
+  end_date          String?
 
   hotel_id    String        @db.ObjectId
   hotel       hotel_info    @relation(fields: [hotel_id], references: [id])
@@ -203,6 +220,42 @@ model hotel_internal_nomads {
   nomad nomad      @relation(fields: [nomad_id], references: [id])
 }
 
+// model nomad_event {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   title               String
+//   description         String
+//   business_category   String
+//   official_name       String
+//   accomodation_type   String
+//   city                String?
+//   country             String?
+//   address             String?
+//   start_date          String?
+//   end_date            String?
+//   // rules
+//   check_in            Boolean?
+//   cancellation_policy Boolean?
+//   check_out           Boolean?
+//   no_smoking          Boolean?
+//   pets_policy         Boolean?
+//   quiet_hours         Boolean?
+//   pool_usage          Boolean?
+//   payment_policy      Boolean?
+
+//   price String
+
+//   hotel_id String?     @db.ObjectId
+//   hotel    hotel_info? @relation(fields: [hotel_id], references: [id])
+
+//   event_topics               event_topics[]
+//   event_images               event_images[]
+//   event_associated_amenities event_associated_amenities[]
+
+//   user_id String @db.ObjectId
+//   user    User   @relation(fields: [user_id], references: [id])
+// }
+
 model nomad_event {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -217,14 +270,14 @@ model nomad_event {
   start_date          String?
   end_date            String?
   // rules
-  check_in            Boolean?
-  cancellation_policy Boolean?
-  check_out           Boolean?
-  no_smoking          Boolean?
-  pets_policy         Boolean?
-  quiet_hours         Boolean?
-  pool_usage          Boolean?
-  payment_policy      Boolean?
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
 
   price String
 
@@ -249,14 +302,14 @@ model hotel_event {
   start_date          String?
   end_date            String?
   // rules
-  check_in            Boolean?
-  cancellation_policy Boolean?
-  check_out           Boolean?
-  no_smoking          Boolean?
-  pets_policy         Boolean?
-  quiet_hours         Boolean?
-  pool_usage          Boolean?
-  payment_policy      Boolean?
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
 
   price String
 
@@ -269,6 +322,37 @@ model hotel_event {
   event_topics               event_topics[]
   event_associated_amenities event_associated_amenities[]
 }
+
+// model hotel_event {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   title               String
+//   description         String
+//   business_category   String
+//   official_name       String
+//   start_date          String?
+//   end_date            String?
+//   // rules
+//   check_in            Boolean?
+//   cancellation_policy Boolean?
+//   check_out           Boolean?
+//   no_smoking          Boolean?
+//   pets_policy         Boolean?
+//   quiet_hours         Boolean?
+//   pool_usage          Boolean?
+//   payment_policy      Boolean?
+
+//   price String
+
+//   nomad_id String @db.ObjectId
+//   nomad    nomad  @relation(fields: [nomad_id], references: [id])
+
+//   user_id String @db.ObjectId
+//   user    User   @relation(fields: [user_id], references: [id])
+
+//   event_topics               event_topics[]
+//   event_associated_amenities event_associated_amenities[]
+// }
 
 model event_topics {
   id String @id @default(auto()) @map("_id") @db.ObjectId

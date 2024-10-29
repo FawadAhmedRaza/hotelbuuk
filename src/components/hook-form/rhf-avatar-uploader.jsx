@@ -12,7 +12,7 @@ export function RHFUploadAvatar({ name, sx, isEdit, ...other }) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div className="relative">
+        <div className="relative w-full">
           <UploadAvatar
             isEdit={isEdit}
             error={!!error}
@@ -22,7 +22,7 @@ export function RHFUploadAvatar({ name, sx, isEdit, ...other }) {
           />
 
           {!!error && (
-            <span sx={{ px: 2, textAlign: "center", color: "red" }}>
+            <span sx={{ px: 2, textAlign: "center" }} className="text-red-500">
               {error.message}
             </span>
           )}

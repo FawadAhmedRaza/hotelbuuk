@@ -68,19 +68,19 @@ const RecentBooking = () => {
                           alt={person.name}
                         /> */}
 
-                        {!person?.profile_img ? (
+                        {/* {!person?.profile_img ? (
                           <Iconify
                             iconName="carbon:user-avatar-filled"
                             className="!size-16 border-primary border-2 h-16 w-16 rounded-full object-cover text-gray-500"
                           />
-                        ) : (
+                        ) : ( */}
                           <ProfileAvatar
                             src={person?.profile_img}
                             type={"server"}
                             alt={person?.hotel_name}
                             className="border-primary border-2 h-16 w-16 rounded-full object-cover"
                           />
-                        )}
+                        {/* )} */}
                         <div className="flex flex-1 flex-col grow">
                           <div className=" flex grow mr-3  justify-between items-center w-full ">
                             <Typography variant="p" className="font-semibold">

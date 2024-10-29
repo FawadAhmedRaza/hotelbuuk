@@ -7,6 +7,7 @@ export async function POST(req) {
   try {
     const body = await req.formData();
     const data = convertFormData(body);
+    console.log("data", data);
     const imageFiles = body.getAll("room_images");
 
     const { room_info, hotel_id, room_facilities } = data || {};

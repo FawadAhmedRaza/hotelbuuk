@@ -191,42 +191,6 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const setupUserType = useCallback(async (user_type) => {
-    try {
-      const userDetails = JSON.parse(sessionStorage.getItem("user"));
-      let data = { id: userDetails?.id, user_type };
-
-      const response = await axiosInstance.post(
-        endpoints.AUTH.setup_user_type,
-        data
-      );
-
-      const { accessToken, user } = await response.data;
-
-      setSession(accessToken, {
-        ...user,
-      });
-
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
-
-      enqueueSnackbar("Success", { variant: "success" });
-      router.push(
-        user?.user_type === "HOTEL"
-          ? paths.auth.setup_basic_info_hotel
-          : paths.auth.setup_basic_info_nomad
-      );
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
-      console.log(error);
-    }
-  }, []);
-
   const logout = useCallback(async () => {
     setSession(null);
     // router.push(paths.auth.login);
@@ -400,13 +364,16 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const setupBasicInfo = useCallback(async (type, data) => {
-    data.type = type;
+  const setupUserType = useCallback(async (user_type) => {
     try {
+      const userDetails = JSON.parse(sessionStorage.getItem("user"));
+      let data = { id: userDetails?.id, user_type };
+
       const response = await axiosInstance.post(
-        endpoints.AUTH.setup_basic_info,
+        endpoints.AUTH.setup_user_type,
         data
       );
+
       const { accessToken, user } = await response.data;
 
       setSession(accessToken, {
@@ -423,12 +390,83 @@ export function AuthProvider({ children }) {
       enqueueSnackbar("Success", { variant: "success" });
       router.push(
         user?.user_type === "HOTEL"
-          ? "/setup-extra-info-hotel"
-          : "/setup-extra-info-nomad"
+          ? paths.auth.setup_basic_info_hotel
+          : user?.user_type === "NOMAD"
+          ? paths.auth.setup_basic_info_nomad
+          : paths.auth.setup_basic_info_guest
       );
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
+      console.log(error);
+    }
+  }, []);
+
+  const setupBasicInfo = useCallback(async (type, data) => {
+    data.type = type;
+    if (type === "GUEST") {
+      const formData = new FormData();
+
+      for (const key in data) {
+        if (data[key] !== null && data[key] !== undefined) {
+          if (typeof data[key] === "object" && !(data[key] instanceof File)) {
+            formData.append(key, JSON.stringify(data[key]));
+          } else {
+            formData.append(key, data[key]);
+          }
+        }
+      }
+
+      const response = await axiosInstance.put(
+        endpoints.AUTH.setup_basic_info_guest,
+        formData
+      );
+      const { accessToken, user } = await response.data;
+
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+      router.push("/guest-dashboard");
+    } else {
+      try {
+        const response = await axiosInstance.post(
+          endpoints.AUTH.setup_basic_info,
+          data
+        );
+        const { accessToken, user } = await response.data;
+
+        setSession(accessToken, {
+          ...user,
+        });
+
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user,
+          },
+        });
+
+        enqueueSnackbar("Success", { variant: "success" });
+        router.push(
+          user?.user_type === "HOTEL"
+            ? "/setup-extra-info-hotel"
+            : user?.user_type === "NOMAD"
+            ? "/setup-extra-info-nomad"
+            : "/setup-extra-info-nomad"
+        );
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar(error?.message, { variant: "error" });
+      }
     }
   }, []);
 

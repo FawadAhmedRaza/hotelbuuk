@@ -47,7 +47,7 @@ const SetupBasicInfoHotel = () => {
           className="hidden lg:block w-[600px] xl:w-[500px] h-full"
         />
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0">
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <img
               src="/assets/images/transperent-logo/transperent/PINK.png"
               alt="log"
