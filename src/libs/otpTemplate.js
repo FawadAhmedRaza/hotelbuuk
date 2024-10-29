@@ -110,7 +110,7 @@ const generateRegistrationOtpTemplate = (userName, otp) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <h1>Hotelbukk</h1>
+            <h1>Hotelbuuk</h1>
         </div>
         <div class="email-body">
             <p>Hello <strong>${userName}</strong>,</p>
@@ -120,8 +120,8 @@ const generateRegistrationOtpTemplate = (userName, otp) => {
             <p>If you did not request a verification code, please ignore this message or contact our support team.</p>
         </div>
         <div class="email-footer">
-            <p>Visit us at <a href="https://hotelbuuk.vercel.app/">Hotelbukk.com</a></p>
-            <p>Best regards,<br>Hotelbukk Team</p>
+            <p>Visit us at <a href="https://hotelbuuk.vercel.app/">Hotelbuuk.com</a></p>
+            <p>Best regards,<br>Hotelbuuk Team</p>
         </div>
     </div>
 </body>
@@ -136,7 +136,7 @@ const generateResetPasswordOtpTemplate = (userName, otp) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset - Hotelbukk</title>
+    <title>Password Reset - Hotelbuuk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -204,7 +204,7 @@ const generateResetPasswordOtpTemplate = (userName, otp) => {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <h1>Hotelbukk</h1>
+            <h1>Hotelbuuk</h1>
         </div>
         <div class="email-body">
             <p>Hello <strong>${userName}</strong>,</p>
@@ -214,8 +214,8 @@ const generateResetPasswordOtpTemplate = (userName, otp) => {
             <p>If you did not request a password reset, please ignore this message or contact our support team.</p>
         </div>
         <div class="email-footer">
-            <p>Visit us at <a href="https://hotelbuuk.vercel.app/">Hotelbukk.com</a></p>
-            <p>Best regards,<br>Hotelbukk Team</p>
+            <p>Visit us at <a href="https://hotelbuuk.vercel.app/">Hotelbuuk.com</a></p>
+            <p>Best regards,<br>Hotelbuuk Team</p>
         </div>
     </div>
 </body>
