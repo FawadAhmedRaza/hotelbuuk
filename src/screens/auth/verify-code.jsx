@@ -26,7 +26,7 @@ const VerifyCodeScreen = () => {
   const isInvited = serachParamas.get("isInvited");
   const hotel = serachParamas.get("hotel");
 
-  const { otpVerification } = useAuthContext();
+  const { otpVerification, resendEmails } = useAuthContext();
 
   const VerifyCodeSchema = Yup.object().shape({
     code: Yup.string()
@@ -88,7 +88,7 @@ const VerifyCodeScreen = () => {
           <RHFInput
             label="Enter Code"
             type="text"
-            placeholder="7789BM6X"
+            placeholder="569249"
             name="code"
           />
 
@@ -96,7 +96,10 @@ const VerifyCodeScreen = () => {
             variant="p"
             className="font-montserrat font-medium text-sm"
           >
-            Didn't receive a code? <AnchorTag href="#">Resend</AnchorTag>
+            Didn't receive a code?{" "}
+            <AnchorTag href="#" onClick={() => resendEmails(step)}>
+              Resend
+            </AnchorTag>
           </Typography>
 
           <div className="flex flex-col gap-8 mt-5">

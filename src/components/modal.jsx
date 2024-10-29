@@ -35,7 +35,7 @@ const Modal = ({
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-xl border overflow-y-auto shadow-lg transform transition-transform duration-300 ease-in-out w-11/12 md:w-2/3 lg:w-1/2 max-h-[90vh] relative ${
+        className={`bg-white rounded-xl border overflow-y-auto shadow-lg transform transition-transform duration-300 ease-in-out w-11/12 md:w-2/3 lg:w-1/2  max-h-[90vh] relative ${
           isOpen ? "scale-100 translate-y-0" : "scale-90 -translate-y-10"
         } ${className}`}
       >

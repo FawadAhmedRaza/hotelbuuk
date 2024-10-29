@@ -31,10 +31,13 @@ export const endpoints = {
     signup: "/auth/signup",
     login: "/auth/login",
     verify_user_OTP: "/auth/confirm-signup-otp",
+    resend_verify_user_OTP: "/auth/confirm-signup-otp/resend",
     setup_user_type: "/auth/set-user-type",
+    setup_basic_info: "/auth/set-basic-info",
     forget_password: {
       request_otp: "/auth/forget-password",
       verify_forget_password_otp: "/auth/forget-password/forget-password-otp",
+      resend_forget_password_otp: "/auth/forget-password/resend-otp",
       reset_password: "/auth/reset-password",
     },
   },
@@ -63,8 +66,18 @@ export const endpoints = {
       update_room: (id) => `/hotel/rooms/${id}`,
       delete_room: (id) => `/hotel/rooms/${id}`,
     },
+
     inviteNomads: "/hotel/invite-nomad",
+    internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
+    event: {
+      create: "/hotel/events",
+      getAll: (id) => `/hotel/events?user_id=${id}`,
+      getById: (id) => `/hotel/events/${id}`,
+      updateById: (id) => `/hotel/events/${id}`,
+      deleteById: (id) => `/hotel/events/${id}`,
+    },
   },
+
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
@@ -73,6 +86,14 @@ export const endpoints = {
     amenities: {
       create: "/nomad/event-amenities",
       getAll: (id) => `/nomad/event-amenities?userId=${id}`,
+    },
+    event: {
+      create: "/nomad/event",
+      getAllEvents: (id) => `/nomad/event?user_id=${id}`,
+
+      getById: (id) => `/nomad/event/${id}`,
+      delete_by_id: (id) => `/nomad/event/${id}`,
+      updateById: (id) => `/nomad/event/${id}`,
     },
   },
 };

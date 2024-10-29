@@ -26,7 +26,7 @@ const RoomListSkeleton = () => {
               {/* Table Skeleton Rows */}
               <div className="px-4 space-y-4">
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <div className=" py-2 flex justify-between mt-6 gap-7">
+                  <div key={index} className=" py-2 flex justify-between mt-6 gap-7">
                     <div className="h-5 bg-gray-200 rounded-md w-44"></div>
                     <div className="h-5 bg-gray-200 rounded-md w-44"></div>
                     <div className="h-5 bg-gray-200 rounded-md w-44"></div>

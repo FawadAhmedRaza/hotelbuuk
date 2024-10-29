@@ -12,13 +12,6 @@ export async function POST(req) {
 
     const { hotel_id, email, nomad_type, nomad } = data || {};
 
-    // await prisma.hotel_internal_nomads.create({
-    //   data:{
-    //     hotel_id:hotel_id,
-    //     nomad_id:nomad
-    //   }
-    // })
-
     const hotel = await prisma.hotel_info.findUnique({
       where: {
         id: hotel_id,

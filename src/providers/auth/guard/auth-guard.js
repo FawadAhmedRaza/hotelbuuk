@@ -57,6 +57,12 @@ function Container({ children }) {
     return router.push(paths.auth.set_user_type);
   }
 
+  if (!user?.is_user_basic_info_completed) {
+    user?.user_type === "NOMAD"
+      ? router.push(paths.auth.setup_basic_info_nomad)
+      : router.push(paths.auth.setup_basic_info_hotel);
+  }
+
   return <>{children}</>;
 }
 

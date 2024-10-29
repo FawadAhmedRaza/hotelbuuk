@@ -11,6 +11,7 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { getUserById } from "@/src/actions/auth.actions";
+import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 /**
@@ -215,7 +216,9 @@ export function AuthProvider({ children }) {
 
       enqueueSnackbar("Success", { variant: "success" });
       router.push(
-        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+        user?.user_type === "HOTEL"
+          ? paths.auth.setup_basic_info_hotel
+          : paths.auth.setup_basic_info_nomad
       );
     } catch (error) {
       console.log(error);
@@ -245,7 +248,7 @@ export function AuthProvider({ children }) {
           );
           if (response.status === 201) {
             setSession(response?.data?.data?.accessToken);
-            localStorage.removeItem("signupEmail");
+            // localStorage.removeItem("signupEmail");
             sessionStorage.setItem(
               "user",
               JSON.stringify(response?.data?.data?.user)
@@ -355,6 +358,80 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const resendEmails = useCallback(async (step) => {
+    if (step === "signup") {
+      try {
+        const email = localStorage.getItem("signupEmail");
+        let data = {
+          userEmail: email,
+        };
+        const request = await axiosInstance.post(
+          endpoints.AUTH.resend_verify_user_OTP,
+          data
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Email resended successfully", {
+            variant: "success",
+          });
+        }
+      } catch (error) {
+        enqueueSnackbar(err?.message, { variant: "error" });
+        console.log("errror in resend verification otp ", error);
+      }
+    } else {
+      try {
+        const email = localStorage.getItem("forgotEmail");
+        let data = {
+          userEmail: email,
+        };
+        const request = await axiosInstance.post(
+          endpoints.AUTH.forget_password.resend_forget_password_otp,
+          data
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Email resended successfully", {
+            variant: "success",
+          });
+        }
+      } catch (error) {
+        enqueueSnackbar(err?.message, { variant: "error" });
+        console.log("errror in resend verification otp ", error);
+      }
+    }
+  }, []);
+
+  const setupBasicInfo = useCallback(async (type, data) => {
+    data.type = type;
+    try {
+      console.log(data);
+
+      const response = await axiosInstance.post(
+        endpoints.AUTH.setup_basic_info,
+        data
+      );
+      const { accessToken, user } = await response.data;
+
+      setSession(accessToken, {
+        ...user,
+      });
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+
+      enqueueSnackbar("Success", { variant: "success" });
+      router.push(
+        user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
+      );
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  }, []);
+
   // ----------------------------------------------------------------------
 
   const checkAuthenticated = state.user ? "authenticated" : "unauthenticated";
@@ -378,8 +455,20 @@ export function AuthProvider({ children }) {
       setupUserType,
       logout,
       setUser,
+      resendEmails,
+      setupBasicInfo,
     }),
-    [login, logout, register, state.user, status, setupUserType, setUser]
+    [
+      login,
+      logout,
+      register,
+      state.user,
+      status,
+      setupUserType,
+      setUser,
+      resendEmails,
+      setupBasicInfo,
+    ]
   );
 
   return (

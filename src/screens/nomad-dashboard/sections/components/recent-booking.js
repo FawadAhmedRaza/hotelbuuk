@@ -12,13 +12,14 @@ import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-  console.log("list from nomad", hotels);
+  console.log("Hotel List", hotels);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -62,7 +63,7 @@ const RecentBooking = () => {
                         {!hotel?.hotel_image ? (
                           <Iconify
                             iconName="carbon:user-avatar-filled"
-                            className="!size-16 border-primary border-2 h-16 w-16 rounded-full object-cover text-gray-500"
+                            className="!size-16 border-primary border-2  rounded-full  text-gray-500"
                           />
                         ) : (
                           <ProfileAvatar

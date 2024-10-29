@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   createNomadProfile,
+  getInternalNomad,
   getNomadProfileById,
   getNomadsProfile,
   updateNomadProfile,
@@ -29,6 +30,11 @@ const initialState = {
   updateById: {
     isLoading: false,
     error: null,
+  },
+  allInternalNomads: {
+    isLoading: false,
+    error: null,
+    internalNomads: [],
   },
 };
 
@@ -91,6 +97,19 @@ export const nomadProfile = createSlice({
     builder.addCase(updateNomadProfile.rejected, (state, action) => {
       state.updateById.error = action.error;
       state.updateById.isLoading = false;
+    });
+
+    // Get Internal Nomads
+    builder.addCase(getInternalNomad.pending, (state, action) => {
+      state.allInternalNomads.isLoading = true;
+    });
+    builder.addCase(getInternalNomad.fulfilled, (state, action) => {
+      state.allInternalNomads.internalNomads = action.payload.internalNomads;
+      state.allInternalNomads.isLoading = false;
+    });
+    builder.addCase(getInternalNomad.rejected, (state, action) => {
+      state.allInternalNomads.error = action.error;
+      state.allInternalNomads.isLoading = false;
     });
   },
 });

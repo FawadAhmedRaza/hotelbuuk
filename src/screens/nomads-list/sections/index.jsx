@@ -81,7 +81,7 @@ const NomadsListSection = React.memo(() => {
               enableSelection={false}
               renderRow={(row) => (
                 <>
-                  <td className=" px-6 py-4">
+                  <td key={row?.id} className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
                       {/* <img
                         src="/assets/images/hotel-det-1.png"
@@ -107,25 +107,25 @@ const NomadsListSection = React.memo(() => {
                           variant="p"
                           className="  !text-nowrap max-w-56"
                         >
-                          {row.first_name}
+                          {row?.first_name}
                         </Typography>
                         <Typography
                           variant="p"
                           className="  !text-nowrap max-w-56"
                         >
-                          {row.last_name}
+                          {row?.last_name}
                         </Typography>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.email}
+                      {row?.email}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.phone_number}
+                      {row?.phone_number}
                     </Typography>
                   </td>
 
@@ -135,14 +135,14 @@ const NomadsListSection = React.memo(() => {
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {row?.start_date.toString().slice(0, 10)}
+                        {row?.start_date?.toString().slice(0, 10)}
                       </Typography>
                       <span>-</span>
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {row?.end_date.toString().slice(0, 10)}
+                        {row?.end_date?.toString().slice(0, 10)}
                       </Typography>
                     </div>
                     <div className="flex gap-1">
@@ -163,42 +163,42 @@ const NomadsListSection = React.memo(() => {
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.experience}
+                      {row?.experience}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.electronics}
+                      {row?.electronics}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.manufacturing}
+                      {row?.manufacturing}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.fundraising}
+                      {row?.fundraising}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.retails}
+                      {row?.retails}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.projector}
+                      {row?.projector}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.video}
+                      {row?.video}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.sample}
+                      {row?.sample}
                     </Typography>
                   </td>
                 </>
