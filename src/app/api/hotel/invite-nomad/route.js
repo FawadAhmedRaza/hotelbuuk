@@ -25,8 +25,6 @@ export async function POST(req) {
       await sendMail(
         "Hotel Invitation",
         nomad?.email,
-        "",
-        true,
         invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
       );
 

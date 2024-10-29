@@ -32,7 +32,9 @@ export const StepperView = ({ defaultValues, isEdit }) => {
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
     facilities: Yup.array().optional(),
-    images: Yup.array(),
+    images: Yup.array()
+      .min(2, "At least Two images are required")
+      .required("Files are required"),
   });
 
   const [activeStep, setActiveStep] = useState(0);

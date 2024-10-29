@@ -88,19 +88,19 @@ const NomadsListSection = React.memo(() => {
                         alt="avatar"
                         className="h-8 w-8 rounded-full"
                       /> */}
-                      {!row?.profile_img ? (
+                      {/* {!row?.profile_img ? (
                         <Iconify
                           iconName="carbon:user-avatar-filled"
                           className="!size-10   rounded-full object-cover text-gray-500"
                         />
-                      ) : (
+                      ) : ( */}
                         <ProfileAvatar
                           src={row?.profile_img}
                           type={"server"}
                           alt={row?.first_name}
                           className="  h-10 w-10 rounded-full object-cover"
                         />
-                      )}
+                      {/* )} */}
 
                       <div className="flex gap-1">
                         <Typography

@@ -202,18 +202,18 @@ export const RHFImageSelect = ({
                           alt={option.hotel_name}
                           className="w-10 h-10 object-cover rounded-md"
                         /> */}
-                        {!option?.image ? (
+                        {/* {!option?.image ? (
                           <Iconify
                             iconName="carbon:user-avatar-filled"
                             className="!size-10   rounded-full object-cover text-gray-500"
                           />
-                        ) : (
-                          <ProfileAvatar
-                            src={option?.image}
-                            type="server"
-                            className="w-10 h-10 object-cover rounded-md"
-                          />
-                        )}
+                        ) : ( */}
+                        <ProfileAvatar
+                          src={option?.image}
+                          type="server"
+                          className="w-10 h-10 object-cover rounded-md"
+                        />
+                        {/* )} */}
 
                         <div>
                           <Typography variant="p" className="!text-sm">

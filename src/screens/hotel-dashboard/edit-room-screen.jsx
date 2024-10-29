@@ -41,14 +41,11 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
       maximum_occupancy: Yup.string().required("Maximum occupancy is required"),
       room_type: Yup.string().required("Room type is required"),
       price: Yup.string().required("Pricing is required"),
+      start_date: Yup.string().required("start date is required"),
+      end_date: Yup.string().required("end date is required"),
     }),
     room_facilities: Yup.array().optional(),
-    room_images: Yup.array().min(2, "At least ten images is required"),
-
-    availibility: Yup.object().shape({
-      start_date: Yup.string().required("Start date is required"),
-      end_date: Yup.string().required("End date is required"),
-    }),
+    room_images: Yup.array().min(2, "At least Two images is required"),
   });
 
   const methods = useForm({
@@ -100,8 +97,10 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     data.hotel_id = user?.hotels?.[0]?.id;
+
     const formData = new FormData();
 
+    console.log("final Data", data);
     for (const key in data) {
       if (
         data[key] !== null &&

@@ -29,7 +29,9 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
     facilities: Yup.array().optional(),
-    images: Yup.array(),
+    images: Yup.array()
+      .min(2, "At least Two images are required")
+      .required("Files are required"),
   });
 
   const { user, setUser } = useAuthContext();
@@ -156,7 +158,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             setActiveTab={setActiveTabs}
           />
         </div>
-        
+
         {activeTabs === "hotel-images" && (
           <div className="flex justify-end my-5">
             <Button loading={isSubmitting} type="submit">
