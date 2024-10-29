@@ -99,7 +99,7 @@ export const RHFImageSelect = ({
       render={({ field, formState: { errors } }) => (
         <div
           className={cn(
-            "relative flex flex-col gap-1 w-full z-[9999]",
+            "relative flex flex-col gap-1 w-full ",
             className,
             disabled && "cursor-not-allowed"
           )}
@@ -128,7 +128,7 @@ export const RHFImageSelect = ({
                     {!selectedHotel?.image ? (
                       <Iconify
                         iconName="carbon:user-avatar-filled"
-                        className="!size-10   rounded-full object-cover text-gray-500"
+                        className="!size-8   rounded-full object-cover text-gray-500"
                       />
                     ) : (
                       <ProfileAvatar
@@ -202,11 +202,19 @@ export const RHFImageSelect = ({
                           alt={option.hotel_name}
                           className="w-10 h-10 object-cover rounded-md"
                         /> */}
-                        <ProfileAvatar
-                          src={option?.image}
-                          type="server"
-                          className="w-10 h-10 object-cover rounded-md"
-                        />
+                        {!option?.image ? (
+                          <Iconify
+                            iconName="carbon:user-avatar-filled"
+                            className="!size-10   rounded-full object-cover text-gray-500"
+                          />
+                        ) : (
+                          <ProfileAvatar
+                            src={option?.image}
+                            type="server"
+                            className="w-10 h-10 object-cover rounded-md"
+                          />
+                        )}
+
                         <div>
                           <Typography variant="p" className="!text-sm">
                             {option.hotel_name}

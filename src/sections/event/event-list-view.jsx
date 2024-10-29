@@ -100,14 +100,14 @@ const NomadEventsView = React.memo(() => {
   };
 
   useEffect(() => {
-    const fetchRooms = async () => {
+    const fetchNomadEvents = async () => {
       try {
         await dispatch(getAllNomadEvents(user?.id)).unwrap();
       } catch (error) {
         console.log("Error fetching rooms:", error);
       }
     };
-    fetchRooms();
+    fetchNomadEvents();
   }, []);
 
   return (

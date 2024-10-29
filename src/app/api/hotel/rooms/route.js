@@ -13,8 +13,15 @@ export async function POST(req) {
 
     const { room_info, hotel_id, room_facilities } = data || {};
 
-    const { room_name, room_type, price, maximum_occupancy, description } =
-      room_info || {};
+    const {
+      room_name,
+      room_type,
+      price,
+      maximum_occupancy,
+      description,
+      start_date,
+      end_date,
+    } = room_info || {};
 
     if (!room_name || !room_type || !price) {
       return NextResponse.json(
@@ -31,6 +38,8 @@ export async function POST(req) {
         maximum_occupancy,
         description,
         price,
+        start_date,
+        end_date,
       },
     });
 
@@ -110,7 +119,6 @@ export async function GET(req) {
         ),
       };
     });
-
 
     return NextResponse.json(
       { message: "success", hotelRooms: formatedList },

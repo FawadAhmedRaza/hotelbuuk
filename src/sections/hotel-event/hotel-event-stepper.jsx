@@ -39,7 +39,8 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
       amenities.reduce((schema, amenity) => {
-        schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+        // schema[amenity] = Yup.boolean().required(`${amenity} is required`);
+        schema[amenity] = Yup.boolean().optional();
         return schema;
       }, {})
     );

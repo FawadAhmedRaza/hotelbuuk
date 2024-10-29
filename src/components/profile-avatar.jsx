@@ -62,7 +62,7 @@ export const ProfileAvatar = forwardRef(
             const url = await generateSignedUrl(src);
             setSignedUrl(url);
           } catch (err) {
-            console.log("error");
+            console.log("error", err);
           } finally {
             setLoading(false);
           }
@@ -159,5 +159,3 @@ ProfileAvatar.propTypes = {
   wrapperProps: PropTypes.object,
   placeholder: PropTypes.element,
 };
-
-

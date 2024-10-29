@@ -15,13 +15,13 @@ import { paths } from "@/src/contants";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useBoolean } from "@/src/hooks";
 import {
   deleteEventById,
   getAllHotelEvents,
 } from "@/src/redux/hotel-event/thunk";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Title" },
@@ -45,12 +45,12 @@ const HotelEventsView = React.memo(() => {
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { hotelEvents } = useSelector((state) => state.hotelEvent);
+  const { isLoading, hotelEvents } = useSelector((state) => state.hotelEvent);
   const { isLoading: deleteLoading } = useSelector(
     (state) => state.hotelEvent.deleteById
   );
 
-  console.log("hotel events", hotelEvents);
+  console.log("hotel events", deleteLoading);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotelEvents?.length / rowsPerPage);
@@ -72,8 +72,12 @@ const HotelEventsView = React.memo(() => {
 
   const handleDelete = async () => {
     try {
-      await dispatch(deleteEventById(eventId)).unwrap();
-      router.refresh();
+      const res = await dispatch(deleteEventById(eventId)).unwrap();
+
+      if (res.message === "success") {
+        console.log("Event deleted successfully");
+        // No need for router.refresh(), Redux state should trigger re-render
+      }
     } catch (error) {
       console.error("Error deleting room:", error);
     } finally {
@@ -82,6 +86,7 @@ const HotelEventsView = React.memo(() => {
   };
 
   const openDeleteModal = (id, name) => {
+    console.log(id);
     setIsOpen(!isOpen);
     setEventId(id);
     setEventName(name);

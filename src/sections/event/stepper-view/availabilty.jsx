@@ -64,13 +64,15 @@ export const SetAvailability = () => {
   }, []);
 
   useEffect(() => {
-    setDate([
-      {
-        startDate: startDate,
-        endDate: endDate,
-        key: "selection",
-      },
-    ]);
+    if (startDate && endDate) {
+      setDate([
+        {
+          startDate: startDate,
+          endDate: endDate,
+          key: "selection",
+        },
+      ]);
+    }
   }, []);
 
   return (

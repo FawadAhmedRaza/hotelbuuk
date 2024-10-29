@@ -137,6 +137,8 @@ model hotel_rooms {
   maximum_occupancy String
   room_type         String
   price             String
+  start_date        String
+  end_date          String
 
   hotel_id    String        @db.ObjectId
   hotel       hotel_info    @relation(fields: [hotel_id], references: [id])

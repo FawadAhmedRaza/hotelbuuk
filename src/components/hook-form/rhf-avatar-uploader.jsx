@@ -22,7 +22,9 @@ export function RHFUploadAvatar({ name, sx, isEdit, ...other }) {
           />
 
           {!!error && (
-            <span sx={{ px: 2, textAlign: "center" }}>{error.message}</span>
+            <span sx={{ px: 2, textAlign: "center", color: "red" }}>
+              {error.message}
+            </span>
           )}
         </div>
       )}
