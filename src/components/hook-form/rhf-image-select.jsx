@@ -99,7 +99,7 @@ export const RHFImageSelect = ({
       render={({ field, formState: { errors } }) => (
         <div
           className={cn(
-            "relative flex flex-col gap-1 w-full z-[9999]",
+            "relative flex flex-col gap-1 w-full z-10",
             className,
             disabled && "cursor-not-allowed"
           )}

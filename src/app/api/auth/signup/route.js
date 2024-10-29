@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { generateOTP, saltAndHashPassword } from "@/src/libs/helper";
 import { prisma } from "@/src/db";
 import { sendMail } from "@/src/service/mailService";
-import { otpTemplate } from "@/src/libs/otpTemplate";
+import { generateRegistrationOtpTemplate, otpTemplate } from "@/src/libs/otpTemplate";
 import { room_facilities } from "@/src/_mock/_room";
 import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 
@@ -71,7 +71,7 @@ export async function POST(req) {
     await sendMail(
       "Account verification OTP",
       newUser.email,
-      otpTemplate(newUser.email, OTP)
+      generateRegistrationOtpTemplate(newUser.email, OTP)
     );
 
     const facilities = initialFacilities?.map((item) => {
