@@ -7,6 +7,8 @@ export const paths = {
     signUp: "/sign-up",
     OTPCode: "verify-code",
     set_user_type: "/setup-user-profile",
+    setup_basic_info_nomad: "/setup-basic-info-nomad",
+    setup_basic_info_hotel: "/setup-basic-info-hotel",
     forgotPassword: "/forgot-password",
     changePassword: "/change-password",
   },

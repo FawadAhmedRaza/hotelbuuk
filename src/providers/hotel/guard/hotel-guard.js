@@ -11,8 +11,6 @@ import { LoadingScreen } from "@/src/components/loading-screen";
 export function HotelDashboardGuard({ children }) {
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("isLoading",isLoading)
-
   return (
     <>
       {isLoading ? (
