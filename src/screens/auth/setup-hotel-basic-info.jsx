@@ -42,7 +42,7 @@ const SetupBasicInfoHotel = () => {
     <RHFFormProvider methods={methods} onSubmit={onSubmit}>
       <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-20 md:!py-10 !px-5 lg:!px-14 xl:!px-20 w-full h-full">
         <img
-          src="/assets/images/account-type-img.jpg"
+          src="/assets/images/set-basic-info-img.png"
           alt="img"
           className="hidden lg:block w-[600px] xl:w-[500px] h-full"
         />
