@@ -2,13 +2,12 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/src/db";
 import { generateOTP } from "@/src/libs/helper";
-import { otpTemplate } from "@/src/libs/otpTemplate";
+import { forgotPasswordTemplate } from "@/src/libs/otpTemplate";
 import { sendMail } from "@/src/service/mailService";
 
 export async function POST(req) {
   try {
     const data = await req.json();
-    console.log("data", data);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -39,7 +38,7 @@ export async function POST(req) {
     await sendMail(
       "Forget Password OTP",
       user.email,
-      otpTemplate(user?.first_name || user?.hotel_name, OTP)
+      forgotPasswordTemplate(user?.email, OTP)
     );
 
     return NextResponse.json(

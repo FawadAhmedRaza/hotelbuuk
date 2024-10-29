@@ -20,7 +20,6 @@ const RecentBooking = () => {
 
   const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
 
-  console.log("recommened Nomads", nomads);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);

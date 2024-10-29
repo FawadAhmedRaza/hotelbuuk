@@ -53,11 +53,13 @@ export const updateRoom = createAsyncThunk(
 );
 
 export const deleteRoom = createAsyncThunk("deleteRoom", async (id) => {
+  console.log(id);
+
   const request = await axiosInstance.delete(
     endpoints.hotel.rooms.delete_room(id) // Only pass the URL
   );
   console.log("Request Data:", request.data); // Debug logging
-  return request?.data?.room; // Assuming this is where the deleted room info is returned
+  return request?.data; // Assuming this is where the deleted room info is returned
 });
 
 export const createRoom = createAsyncThunk("createRoom", async (data) => {

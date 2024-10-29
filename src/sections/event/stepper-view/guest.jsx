@@ -22,6 +22,7 @@ export const GuestLearn = () => {
   console.log("Learning Info", learningInfo);
 
   const formTopics = watch("topics");
+
   console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
@@ -37,21 +38,18 @@ export const GuestLearn = () => {
   };
 
   const handleDelete = (id) => {
-  
-    const newTopics = topics.filter((topic) => topic.id !== id);
+    const newTopics = topics.filter((topic) => topic.id !== id); // Filter topics by id
+    setTopics(newTopics); // Update state
 
-    const currentTopics = getValues("topics") || []; // Get current topics
-    const updatedTopics = currentTopics.filter((_, index) => index !== id); // Remove the topic
-    setValue("topics", updatedTopics, { shouldValidate: true }); // Update the fo
-    setTopics(newTopics);
+    // Update form topics
+    setValue("topics", newTopics, { shouldValidate: true });
   };
 
   const handleChange = (e) => {
-    console.log(e);
     setTopicInfo((prev) => ({
       ...prev,
-      id: uuidv4(),
       [e.target.name]: e.target.value,
+      id: prev.id || uuidv4(),
     }));
   };
 
@@ -62,15 +60,6 @@ export const GuestLearn = () => {
       </Typography>
 
       <div className="flex flex-col gap-3 w-full">
-        {/* <RHFInput
-          // name="learning_info.title"
-          name="title"
-          label="Title"
-          placeholder="Title of your Topic"
-          value={topicInfo.title}
-          onChange={handleChange}
-        /> */}
-
         {/* Input */}
         <div className={"relative flex flex-col gap-1 w-full"}>
           <Typography
@@ -94,15 +83,6 @@ export const GuestLearn = () => {
             />
           </div>
         </div>
-
-        {/* <RHFTextArea
-          // name="learning_info.description"
-          name="description"
-          label="Description"
-          placeholder="Description of your Topic"
-          value={topicInfo.description}
-          onChange={handleChange}
-        /> */}
 
         {/* TextArea */}
         <div className={" relative flex flex-col gap-1 w-full"}>
@@ -130,22 +110,8 @@ export const GuestLearn = () => {
 
       {/* Conditionally render the Accordion only when visible */}
 
-      {/* {isAccordionVisible &&
-        topics?.map((topic, index) => (
-          <div key={index} className="w-full">
-            <Accordion
-              id={topic.id}
-              title={topic?.title}
-              className=""
-              deleteTopic={handleDelete}
-            >
-              <Typography variant="p">{topic?.description}</Typography>
-            </Accordion>
-          </div>
-        ))} */}
-
-      {topics &&
-        topics?.map((topic) => (
+      {formTopics &&
+        formTopics?.map((topic) => (
           <div key={topic.id} className="w-full">
             <Accordion
               id={topic.id}

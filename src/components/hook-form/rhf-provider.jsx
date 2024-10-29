@@ -7,9 +7,13 @@ export const RHFFormProvider = React.memo(
       <FormProvider {...methods}>
         <form
           onSubmit={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            onSubmit(event);
+            try {
+              event.preventDefault();
+              event.stopPropagation();
+              onSubmit(event);
+            } catch (error) {
+              console.log(error);
+            }
           }}
           autoComplete="off"
           className={`w-full  ${className}`}
