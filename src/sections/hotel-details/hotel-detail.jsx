@@ -28,16 +28,16 @@ export const HotelDetail = () => {
           <div className="flex flex-col gap-3">
             {event.event_topics?.map((item, index) => (
               <Accordion
-                key={item.id} // Make sure to include a unique key for each accordion
+                key={item.id}
                 title={item?.title}
-                isOpen={index === 0} // Open the first accordion by default
+                isOpen={index === 0}
               >
                 <Typography variant="p">{item?.description}</Typography>
               </Accordion>
             ))}
 
             <div className=" mt-5">
-              <Typography variant="h3" className="font-semibold text-primary ">
+              <Typography variant="h3" className="font-semibold text-primary">
                 Hotel Bio
               </Typography>
               <Typography variant="p" className="!text-sm text-secondary mt-2">

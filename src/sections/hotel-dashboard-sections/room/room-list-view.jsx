@@ -54,8 +54,6 @@ const RoomsListView = React.memo(() => {
     (state) => state.rooms.deleteById
   );
 
-  console.log("Rooms", rooms);
-
   const totalPages = React.useMemo(() => {
     return Math.ceil(rooms?.length / rowsPerPage);
   }, [rooms, rowsPerPage]);

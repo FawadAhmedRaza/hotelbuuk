@@ -105,4 +105,9 @@ export const endpoints = {
     root: "/all-events",
     getById: (id, type) => `/all-events/${id}?type=${type}`,
   },
+  booking: {
+    book_event: "/bookings",
+    get_all_bookings: (id, type) => `/bookings?user_id=${id}&type=${type}`,
+    update_accepted_booking: (id) => `/bookings/${id}`,
+  },
 };

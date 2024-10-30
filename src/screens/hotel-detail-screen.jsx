@@ -52,18 +52,6 @@ const HotelDetailScreen = React.memo(({type}) => {
         <Itinerary />
         <AvailabilityCalender />
         <PopularAmenities />
-
-        {/* <Pannel className=" !px-20">
-          <DateRange
-            onChange={handleDateChange}
-            months={2}
-            ranges={dateRange}
-            direction={isMobile ? "vertical" : "horizontal"}
-            rangeColors={["#000000"]}
-            className="w-full custom-calendar" // Apply a custom class for extra control
-            style={{ width: "100%" }} // Ensure full width
-          />
-        </Pannel> */}
         <BusinessFacts className="bg-white " />
         <ThingsKnow />
         <GuestReviews />
