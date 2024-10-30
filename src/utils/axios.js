@@ -79,7 +79,10 @@ export const endpoints = {
       deleteById: (id) => `/hotel/events/${id}`,
     },
   },
-
+  guest: {
+    get_profile: (id) => `/guest/profile/${id}`,
+    update_profile: (id) => `/guest/profile/${id}`,
+  },
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",

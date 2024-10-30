@@ -17,6 +17,7 @@ export async function GET(_, { params }) {
         userId: id,
       },
     });
+    console.log("is GUest ",isGuestExist);
 
     if (!isGuestExist) {
       return NextResponse.json({ message: "Guest not found" }, { status: 404 });
@@ -27,7 +28,7 @@ export async function GET(_, { params }) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
+    console.log("error while fetching guest",error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
@@ -70,6 +71,8 @@ export async function PUT(req, { params }) {
         first_name: data?.first_name,
         last_name: data?.last_name,
         phone_number: String(data?.phone_number),
+        is_user_basic_info_completed: true,
+        is_user_profile_completed: true,
       },
     });
 

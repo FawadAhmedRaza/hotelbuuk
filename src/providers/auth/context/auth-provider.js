@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "./auth-context";
 
 import { jwtDecode } from "jwt-decode";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { enqueueSnackbar, SnackbarProvider } from "notistack";
 
 import { setSession, isValidToken } from "./utils";
@@ -35,14 +35,12 @@ const initialState = {
 
 const reducer = (state, action) => {
   if (action.type === Types.INITIAL) {
-    console.log("user action", action.payload);
     return {
       loading: false,
       user: action.payload.user,
     };
   }
   if (action.type === Types.LOGIN) {
-    console.log("action payload", action.payload);
     return {
       ...state,
       user: action.payload.user,
@@ -192,10 +190,14 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     setSession(null);
-    router.push("/");
     dispatch({
       type: Types.LOGOUT,
     });
+
+    if (session) {
+      signOut()
+    }
+    router.push("/");
   }, []);
 
   const otpVerification = useCallback(

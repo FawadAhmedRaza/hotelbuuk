@@ -35,8 +35,6 @@ export const {
       return token;
     },
     async session({ session, token }) {
-      console.log("Session",session)
-      console.log("token",token)
       // Attach token data (e.g., id, email, name) to session
       if (token) {
         session.user.id = token.id;
@@ -46,7 +44,7 @@ export const {
       }
       return session;
     },
-    async signIn({ user,account, profile }) {
+    async signIn({ user, account, profile }) {
       try {
         const checkUser = await prisma?.user?.findUnique({
           where: { email: profile.email },

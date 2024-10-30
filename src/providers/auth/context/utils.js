@@ -3,7 +3,6 @@ import { jwtDecode } from "jwt-decode";
 // ----------------------------------------------------------------------
 
 export const isValidToken = (accessToken) => {
-  console.log("access token",accessToken)
   if (!accessToken) {
     return false;
   }

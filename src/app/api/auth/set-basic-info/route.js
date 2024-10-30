@@ -132,6 +132,7 @@ export async function POST(req) {
   }
 }
 
+// for guest profile
 export async function PUT(req) {
   try {
     const body = await req.formData();
