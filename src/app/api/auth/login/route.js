@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 
 import { prisma } from "@/src/db";
 import { generateToken } from "@/src/service/tokenGenerator";
-import { generateSignedUrl } from "@/src/utils/upload-images";
 
 export async function POST(req) {
   try {
@@ -27,6 +26,11 @@ export async function POST(req) {
       },
       include: {
         hotels: {
+          select: {
+            id: true,
+          },
+        },
+        guest: {
           select: {
             id: true,
           },

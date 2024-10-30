@@ -11,6 +11,7 @@ import eventAmenities from "./amenities/reducer";
 import nomadEvents from "./events/reducer";
 import hotelEvent from "./hotel-event/reducer";
 import allEvents from "./all-events/reducer";
+import bookings from "./bookings/reducer";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     hotelEvent,
     nomadEvents,
     allEvents,
+    bookings,
   },
 });
 

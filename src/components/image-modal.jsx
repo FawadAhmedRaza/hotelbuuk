@@ -7,7 +7,7 @@ import ImageRender from "./ImageRenderer";
 export const ImageModal = ({ images, isOpen, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!isOpen) return null; // If modal is not open, don't render anything
+  if (!isOpen || images.length === 0) return null; // Avoid rendering if no images
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -40,11 +40,16 @@ export const ImageModal = ({ images, isOpen, onClose }) => {
             className="max-w-full max-h-full w-4/5 h-[75vh] object-cover"
           /> */}
           <ImageRender
+            key={images[currentIndex]?.img} // Force re-render when src changes
             src={images[currentIndex]?.img}
             type={"server"}
-            alt={`Uploaded Image `}
-            className="max-w-full max-h-full w-4/5 !h-[75vh] object-cover"
-            ratio="4/5"
+            alt="Lazy Loaded Image"
+            wrapperProps={{
+              style: { transitionDelay: "0.5s" }, // Adjust fade delay
+            }}
+            // className="!max-w-full !max-h-full !w-4/5 !h-[75vh] object-cover"
+            className="!w-4/5 !h-[75vh] object-cover "
+            wrapperClassName="flex justify-center items-center object-cover  w-full h-full" // Full width & 75% viewport height
           />
         </div>
 

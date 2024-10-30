@@ -6,6 +6,7 @@ import { Slider } from ".";
 import { useBoolean } from "@/src/hooks";
 import { useSelector } from "react-redux";
 import ImageRender from "@/src/components/ImageRenderer";
+import ImageGallerySkeleton from "@/src/components/Skeleton/image-gallery-skeleton";
 
 const images = [
   "/assets/images/hotel-det-1.png",
@@ -25,7 +26,7 @@ const socialMedia = [
 export const HotelOverview = ({ type }) => {
   const { isOpen, toggleDrawer } = useBoolean();
 
-  const { event } = useSelector((state) => state.allEvents.getById);
+  const { event, isLoading } = useSelector((state) => state.allEvents.getById);
 
   console.log("Single evetn", event);
   const eventImages =
@@ -84,64 +85,55 @@ export const HotelOverview = ({ type }) => {
       </div>
       <Slider images={eventImages} />
 
-      <div className="relative hidden sm:flex flex-row gap-2  w-full  h-[55vh]  xl:h-[63vh]">
-        <span
-          onClick={toggleDrawer}
-          className="absolute right-5 z-20 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
-        >
-          <Typography variant="p" className="text-white">
-            Show all Photos
-          </Typography>
-        </span>
-        {/* <img
-          src="/assets/images/hotel-det-1.png"
-          alt="hotel-1"
-          className="w-full h-full"
-        /> */}
+      {isLoading ? (
+        <ImageGallerySkeleton />
+      ) : (
+        <div className="relative hidden sm:flex flex-row gap-2  w-full  h-[55vh]  xl:h-[63vh]">
+          <span
+            onClick={toggleDrawer}
+            className="absolute right-5 z-20 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
+          >
+            <Typography variant="p" className="text-white">
+              Show all Photos
+            </Typography>
+          </span>
 
-        <ImageRender
-          src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
-          type={"server"}
-          alt={`Uploaded Image `}
-          className="h-full w-full rounded-l-2xl rounded-bl-2xl "
-        />
-        <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-full">
-          {eventImages?.slice(0, 4).map((img, index) => (
-            <div key={img.id} className="relative w-full h-full">
-              <ImageRender
-                src={img.img}
-                type="server"
-                alt="Uploaded Image"
-                className={`h-full w-full object-cover ${
-                  index === 1 && "rounded-tr-2xl"
-                } ${index === 3 && "rounded-br-2xl"}`}
-              />
-            </div>
-          ))}
-
-          {/* <div className="w-full h-full">
-            <img
-              src="/assets/images/hotel-det-3.png"
-              alt="hotel-1"
-              className="w-full h-full object-cover rounded-tr-xl"
-            />
+          <ImageRender
+            src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
+            type={"server"}
+            alt="Lazy Loaded Image"
+            ratio="4/3" // Aspect ratio
+            delayTime={300} // Add slight delay to improve UX
+            threshold={200} // Start loading when 200px away from the viewport
+            effect="blur"
+            wrapperProps={{
+              style: { transitionDelay: "0.5s" }, // Adjust fade delay
+            }}
+            className="h-full w-full rounded-l-2xl rounded-bl-2xl "
+          />
+          <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-full">
+            {eventImages?.slice(0, 4).map((img, index) => (
+              <div key={img.id} className="relative w-full h-full">
+                <ImageRender
+                  src={img.img}
+                  type="server"
+                  alt="Uploaded Image"
+                  ratio="4/3" // Aspect ratio
+                  delayTime={300} // Add slight delay to improve UX
+                  threshold={200} // Start loading when 200px away from the viewport
+                  effect="blur"
+                  wrapperProps={{
+                    style: { transitionDelay: "0.5s" }, // Adjust fade delay
+                  }}
+                  className={`h-full w-full object-cover ${
+                    index === 1 && "rounded-tr-2xl"
+                  } ${index === 3 && "rounded-br-2xl"}`}
+                />
+              </div>
+            ))}
           </div>
-          <div className="w-full h-full">
-            <img
-              src="/assets/images/hotel-det-4.png"
-              alt="hotel-1"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="w-full h-full">
-            <img
-              src="/assets/images/hotel-det-5.png"
-              alt="hotel-1"
-              className="w-full h-full object-cover rounded-br-xl "
-            />
-          </div> */}
         </div>
-      </div>
+      )}
     </Pannel>
   );
 };
