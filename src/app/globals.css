@@ -48,6 +48,13 @@ input::-webkit-inner-spin-button {
   scrollbar-color: #852169 rgba(0, 74, 95, 0); /* Custom colors for thumb and track */
 }
 
+.event-card-shadow {
+  box-shadow: 0px 8px 21px -3px rgba(0, 0, 0, 0.66);
+  -webkit-box-shadow: 0px 8px 21px -3px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 0px 8px 21px -3px rgba(0, 0, 0, 0.66);
+  border-radius: 1.5rem;
+}
+
 @layer utilities {
   * {
     margin: 0;
@@ -71,7 +78,6 @@ input::-webkit-inner-spin-button {
     text-shadow: none !important;
   }
 }
-
 
 @layer base {
   :root {
@@ -135,20 +141,16 @@ input::-webkit-inner-spin-button {
   overflow: hidden;
 }
 
-
-
 /* SWiper */
-
-
 
 .swiper-button-prev,
 .swiper-button-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px; 
-  height: 40px; 
-  background-color: #852169; 
+  width: 40px;
+  height: 40px;
+  background-color: #852169;
   color: #ffffff; /* Text/icon color */
   border-radius: 50%;
   display: flex;
@@ -160,22 +162,20 @@ input::-webkit-inner-spin-button {
 }
 
 .swiper-button-prev {
-  left: -10px; 
+  left: -10px;
 }
 
 .swiper-button-next {
   right: -10px;
 }
 
-
-.swiper-button-prev .iconify, 
+.swiper-button-prev .iconify,
 .swiper-button-next .iconify {
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
 }
 
 /* DateRangeStyles.css */
-
 
 /* Main container */
 .calendar-container {
@@ -220,7 +220,7 @@ input::-webkit-inner-spin-button {
   background-color: #000000 !important; /* Dark color for start and end dates */
   color: #fff !important;
   border-radius: 50%;
-   /* Rounded selection */
+  /* Rounded selection */
 }
 
 .custom-calendar .rdrInRange {
@@ -241,8 +241,3 @@ input::-webkit-inner-spin-button {
 .clear-dates-button:hover {
   text-decoration: underline;
 }
-
-
-
-
-
