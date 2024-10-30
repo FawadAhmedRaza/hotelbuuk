@@ -10,6 +10,7 @@ import roomFacilities from "./room-facilities/reducer";
 import eventAmenities from "./amenities/reducer";
 import nomadEvents from "./events/reducer";
 import hotelEvent from "./hotel-event/reducer";
+import allEvents from "./all-events/reducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     eventAmenities,
     hotelEvent,
     nomadEvents,
+    allEvents,
   },
 });
 

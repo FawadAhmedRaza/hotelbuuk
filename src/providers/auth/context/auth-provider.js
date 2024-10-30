@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "./auth-context";
 
 import { jwtDecode } from "jwt-decode";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { enqueueSnackbar, SnackbarProvider } from "notistack";
 
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { getUserById } from "@/src/actions/auth.actions";
 import { paths } from "@/src/contants";
+import { getUserByGoogleId, getUserById } from "@/src/actions/auth.actions";
 
 // ----------------------------------------------------------------------
 /**
@@ -35,14 +35,12 @@ const initialState = {
 
 const reducer = (state, action) => {
   if (action.type === Types.INITIAL) {
-    console.log("user action", action.payload);
     return {
       loading: false,
       user: action.payload.user,
     };
   }
   if (action.type === Types.LOGIN) {
-    console.log("action payload", action.payload);
     return {
       ...state,
       user: action.payload.user,
@@ -73,27 +71,27 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
 
-  // const fetchData = async () => {
-  //   try {
-  //     const user = await getUserById(session?.user?.id);
-  //     console.log("user profile", user);
-  //     dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
-  //   } catch (err) {
-  //     console.log("Error Fetching detail", err);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const user = await getUserByGoogleId(session?.user?.id);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+      }
+    } catch (err) {
+      console.log("Error Fetching detail", err);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (session?.user?.id) {
-  //     fetchData();
-  //   }
-  //   console.log("session", session);
-  // }, [session?.user?.id]);
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchData();
+    }
+  }, [session?.user?.id]);
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(STORAGE_KEY);
-
+      const accessToken = localStorage.getItem(STORAGE_KEY);
       if (accessToken && isValidToken(accessToken)) {
         const user = jwtDecode(accessToken);
         setSession(accessToken, user);
@@ -142,9 +140,8 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log("state useeffect", state);
     initialize();
-  }, [initialize]);
+  }, []);
 
   const login = useCallback(async (data) => {
     try {
@@ -193,11 +190,14 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     setSession(null);
-    // router.push(paths.auth.login);
-    router.push("/");
     dispatch({
       type: Types.LOGOUT,
     });
+
+    if (session) {
+      signOut()
+    }
+    router.push("/");
   }, []);
 
   const otpVerification = useCallback(
@@ -213,7 +213,7 @@ export function AuthProvider({ children }) {
           if (response.status === 201) {
             setSession(response?.data?.data?.accessToken);
             // localStorage.removeItem("signupEmail");
-            sessionStorage.setItem(
+            localStorage.setItem(
               "user",
               JSON.stringify(response?.data?.data?.user)
             );
@@ -366,7 +366,7 @@ export function AuthProvider({ children }) {
 
   const setupUserType = useCallback(async (user_type) => {
     try {
-      const userDetails = JSON.parse(sessionStorage.getItem("user"));
+      const userDetails = JSON.parse(localStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
 
       const response = await axiosInstance.post(

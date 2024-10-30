@@ -12,11 +12,10 @@ import {
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalender from "../sections/hotel-details/availability-calender";
-import { RHFDatePicker } from "../components/hook-form";
 import { DateRange } from "react-date-range";
 import { Pannel } from "../components";
 
-const HotelDetailScreen = React.memo(() => {
+const HotelDetailScreen = React.memo(({type}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   // Initialize dateRange as an array with a single selection object
@@ -48,13 +47,13 @@ const HotelDetailScreen = React.memo(() => {
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <HotelOverview />
+        <HotelOverview type={type} />
         <HotelDetail />
         <Itinerary />
         <AvailabilityCalender />
         <PopularAmenities />
 
-        <Pannel className=" !px-20">
+        {/* <Pannel className=" !px-20">
           <DateRange
             onChange={handleDateChange}
             months={2}
@@ -64,7 +63,7 @@ const HotelDetailScreen = React.memo(() => {
             className="w-full custom-calendar" // Apply a custom class for extra control
             style={{ width: "100%" }} // Ensure full width
           />
-        </Pannel>
+        </Pannel> */}
         <BusinessFacts className="bg-white " />
         <ThingsKnow />
         <GuestReviews />

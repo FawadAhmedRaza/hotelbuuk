@@ -6,7 +6,7 @@ export const getAllNomadEvents = createAsyncThunk(
   "getAllNomadEvents",
   async (id) => {
     const request = await axiosInstance.get(
-      endpoints.nomad.event.getAllEvents(id)
+      endpoints.nomad.event.getEvents(id)
     );
     console.log("room thunk", request.data);
     return request?.data?.nomadEvents;

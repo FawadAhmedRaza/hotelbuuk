@@ -1,20 +1,31 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Components and Others...
 import { hotels } from "../_mock/_hotels";
-import { HotelCard, Iconify } from "../components";
+import {
+  AnchorTag,
+  BgIcon,
+  Typography,
+} from "../components";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../app/globals.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllNomadEvents } from "../redux/events/thunk";
+import { getAllEvents } from "../redux/all-events/thunk";
 
 export const PreviewHotels = () => {
   const swiperRef = React.useRef(null);
-  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
-  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
+
+  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const dispatch = useDispatch();
+
+  const { events, isLoading } = useSelector((state) => state.allEvents);
 
   const updateNavigation = () => {
     if (swiperRef.current) {
@@ -25,39 +36,48 @@ export const PreviewHotels = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (swiperRef.current) {
       swiperRef?.current?.navigation?.update();
     }
   }, [swiperRef]);
 
+  useEffect(() => {
+    async function fetchEvents() {
+      await dispatch(getAllEvents()).unwrap();
+    }
+
+    fetchEvents();
+  }, []);
 
   return (
     <div className="w-full relative px-10">
-       {/* Left Arrow Button */}
-       <span
-          className={`swiper-button-prev custom-prev ${isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""}`}
-          onClick={() => {
-            swiperRef.current?.swiper?.slidePrev();
-            updateNavigation();
-          }}
-          aria-disabled={isPrevDisabled}
-        >
-          <Iconify iconName="cuida:arrow-left-outline" />
-        </span>
+      {/* Left Arrow Button */}
+      <span
+        className={`swiper-button-prev custom-prev ${
+          isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""
+        }`}
+        onClick={() => {
+          swiperRef.current?.swiper?.slidePrev();
+          updateNavigation();
+        }}
+        aria-disabled={isPrevDisabled}
+      >
+        <Iconify iconName="cuida:arrow-left-outline" />
+      </span>
 
-        {/* Right Arrow Button */}
-        <span
-          className={`swiper-button-next custom-next ${
-            isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={() => {
-            swiperRef.current?.swiper?.slideNext();
-            updateNavigation(); 
-          }}
-        >
-          <Iconify iconName="cuida:arrow-right-outline" />
-        </span>
+      {/* Right Arrow Button */}
+      <span
+        className={`swiper-button-next custom-next ${
+          isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        onClick={() => {
+          swiperRef.current?.swiper?.slideNext();
+          updateNavigation();
+        }}
+      >
+        <Iconify iconName="cuida:arrow-right-outline" />
+      </span>
 
       <Swiper
         ref={swiperRef}
@@ -83,12 +103,14 @@ export const PreviewHotels = () => {
           },
         }}
       >
-        {hotels?.map((item) => (
-          <SwiperSlide key={item.id} className="flex flex-col">
-            <HotelCard hotel={item} />
-          </SwiperSlide>
-        ))}
+        {!isLoading &&
+          events?.map((event) => (
+            <SwiperSlide key={event.id} className="flex flex-col">
+              <HotelCard event={event} className="" />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );
 };
+

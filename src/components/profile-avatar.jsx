@@ -108,11 +108,11 @@ export const ProfileAvatar = forwardRef(
       />
     );
 
-    if (!src) {
+    if (!src || src.error) {
       return (
         <Iconify
           iconName="carbon:user-avatar-filled"
-          className="!size-10  rounded-full object-cover text-gray-500"
+          className="!size-16  rounded-full object-cover text-gray-500"
         />
       );
     }

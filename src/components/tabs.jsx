@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card } from ".";
 
-const Tabs = ({ TABS, activeTab, setActiveTab }) => {
+const Tabs = ({ TABS, activeTab, setActiveTab, className }) => {
   return (
     <div className=" flex flex-col gap-5 md:gap-0 w-full">
       <Card className=" p-2 w-full bg-tertiary shadow-md rounded-lg">
@@ -19,7 +19,9 @@ const Tabs = ({ TABS, activeTab, setActiveTab }) => {
               aria-controls={tab?.value}
               aria-selected={activeTab === tab?.value}
             >
-              <Button className="!bg-transparent !py-0 text-sm !text-primary font-medium ">
+              <Button
+                className={`!bg-transparent !py-0 text-sm !text-primary font-medium${className}`}
+              >
                 {tab?.label}
               </Button>
             </div>

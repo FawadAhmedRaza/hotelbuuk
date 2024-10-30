@@ -79,7 +79,10 @@ export const endpoints = {
       deleteById: (id) => `/hotel/events/${id}`,
     },
   },
-
+  guest: {
+    get_profile: (id) => `/guest/profile/${id}`,
+    update_profile: (id) => `/guest/profile/${id}`,
+  },
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
@@ -91,16 +94,15 @@ export const endpoints = {
     },
     event: {
       create: "/nomad/event",
-      getAllEvents: (id) => `/nomad/event?user_id=${id}`,
+      getEvents: (id) => `/nomad/event?user_id=${id}`,
 
       getById: (id) => `/nomad/event/${id}`,
       delete_by_id: (id) => `/nomad/event/${id}`,
       updateById: (id) => `/nomad/event/${id}`,
     },
   },
-
-  guest: {
-    get_profile: (id) => `/guest/profile/${id}`,
-    update_profile: (id) => `/guest/profile/${id}`,
+  events: {
+    root: "/all-events",
+    getById: (id, type) => `/all-events/${id}?type=${type}`,
   },
 };

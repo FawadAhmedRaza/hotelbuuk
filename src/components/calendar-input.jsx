@@ -1,76 +1,93 @@
 "use client";
 import React from "react";
-
+import { Controller, useFormContext } from "react-hook-form";
 import { Iconify } from "./iconify";
 import { Typography } from "./typography";
 import { cn } from "@/src/libs/cn";
 
-export const CalendarInput = React.memo(
+export const RHFCalendarInput = React.memo(
   ({
-    label,
-    disabled = false,
-    startDate = "00-00-000",
-    endDate = "00-00-000",
-    className,
-    startIcon,
+    nameStart = "startDate",
+    nameEnd = "endDate",
+    labelStart = "Check-in",
+    labelEnd = "Check-out",
+    InputBoxClass,
     startIconClass,
     inputClass,
     endIconClass,
     endIcon,
-    ...rests
+    onOpenPopover,
+    className,
   }) => {
+    const {
+      control,
+      formState: { errors },
+    } = useFormContext();
+
     return (
       <div
         className={cn(
-          "relative flex flex-col gap-1 cursor-pointer",
-          className,
-          disabled && "cursor-not-allowed"
+          "flex items-center  rounded gap-2  cursor-pointer",
+          className
         )}
-        {...rests}
+        onClick={onOpenPopover}
       >
-        {label && (
-          <Typography
-            variant="p"
-            className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 ${
-              disabled ? "opacity-50" : ""
-            }`}
-          >
-            {label}
-          </Typography>
-        )}
-        <div
-          className={cn(
-            "flex items-center rounded bg-white h-12 px-4 gap-2 border border-custom-neutral ",
-            inputClass,
-            disabled && "!bg-gray-100 cursor-not-allowed"
-          )}
-        >
-          {startIcon && (
-            <Iconify
-              iconName={startIcon}
-              className={`${startIconClass} !w-5 !h-5`}
-            />
-          )}
-          <div className="flex items-center  gap-2.5 sm:gap-4 md:gap-6">
-            <span className="flex items-center gap-2 flex-nowrap">
-              <Typography variant="p" className="font-medium text-nowrap">
-                From :
-              </Typography>
-              <Typography variant="p" className="!text-sm text-nowrap">
-                {startDate}
-              </Typography>
-            </span>
-            <span className="flex items-center gap-2 flex-nowrap">
-              <Typography variant="p" className="font-medium text-nowrap">
-                To :
-              </Typography>
-              <Typography variant="p" className="!text-sm text-nowrap">
-                {endDate}
-              </Typography>
-            </span>
-          </div>
+        <div className="flex items-center gap-5  ">
+          {/* Start Date */}
+          <Controller
+            name={nameStart}
+            control={control}
+            render={({ field }) => (
+              <div
+                className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+              >
+                <div className="flex gap-3">
+                  <Iconify iconName="uil:calender" className="text-primary" />
+                  <Typography variant="p" className="text-sm">
+                    {labelStart}
+                  </Typography>
+                </div>
+                <input
+                  {...field}
+                  className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
+                  readOnly
+                />
+                {/* {errors[nameStart] && (
+                  <Typography variant="p" className="!text-xs text-red-400">
+                    {errors[nameStart]?.message}
+                  </Typography>
+                )} */}
+              </div>
+            )}
+          />
 
-          {endIcon && <Iconify iconName={endIcon} className={endIconClass} />}
+          {/* End Date */}
+          <Controller
+            name={nameEnd}
+            control={control}
+            render={({ field }) => (
+              <div
+                className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+              >
+                <div className="flex gap-3 items-center">
+                  <Iconify iconName="uil:calender" className="text-primary" />
+                  <Typography variant="p" className="text-sm">
+                    {labelEnd}
+                  </Typography>
+                </div>
+                <input
+                  {...field}
+                  className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
+                  readOnly
+                />
+                {/* {errors[nameEnd] && (
+                  <Typography variant="p" className="!text-xs text-red-400">
+                    {errors[nameEnd]?.message}
+                  </Typography>
+                )} */}
+              </div>
+            )}
+          />
         </div>
       </div>
     );

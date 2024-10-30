@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { deleteEvent, getAllNomadEvents, getEventById } from "./thunk";
+import {
+  deleteEvent,
+  getAllNomadEvents,
+  getEventById,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -15,6 +19,7 @@ const initialState = {
     error: null,
     event: {},
   },
+
   deleteById: {
     isLoading: false,
     error: null,

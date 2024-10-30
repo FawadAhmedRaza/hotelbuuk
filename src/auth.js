@@ -9,7 +9,6 @@ export const {
   signOut,
   auth,
 } = NextAuth({
-  adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   providers: [
     Google({
@@ -39,32 +38,33 @@ export const {
       // Attach token data (e.g., id, email, name) to session
       if (token) {
         session.user.id = token.id;
+        session.user.sub = token.sub;
         session.user.email = token.email;
         session.user.name = token.name;
       }
       return session;
     },
-    async signIn({ account, profile }) {
+    async signIn({ user, account, profile }) {
       try {
-        const checkUser = await prisma.user.findUnique({
+        const checkUser = await prisma?.user?.findUnique({
           where: { email: profile.email },
         });
 
         if (!checkUser) {
-          await prisma.user.create({
+          await prisma?.user?.create({
             data: {
               email: profile?.email,
               first_name: profile?.name?.split(" ")[0] || profile?.given_name,
               last_name: profile?.name?.split(" ")[1] || profile?.family_name,
               phone_number: profile?.phone_number || "",
               terms: true,
-              googleId: profile?.sub,
+              googleId: user?.id,
             },
           });
         } else {
           await prisma.user.update({
             where: { id: checkUser.id },
-            data: { googleId: profile?.sub },
+            data: { googleId: user?.id },
           });
         }
 
