@@ -363,7 +363,7 @@ export function AuthProvider({ children }) {
 
   const setupUserType = useCallback(async (user_type) => {
     try {
-      const userDetails = JSON.parse(sessionStorage.getItem("user"));
+      const userDetails = JSON.parse(localStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
 
       const response = await axiosInstance.post(

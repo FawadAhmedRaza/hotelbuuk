@@ -45,12 +45,10 @@ const HotelEventsView = React.memo(() => {
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { isLoading, hotelEvents } = useSelector((state) => state.hotelEvent);
+  const { hotelEvents } = useSelector((state) => state.hotelEvent);
   const { isLoading: deleteLoading } = useSelector(
     (state) => state.hotelEvent.deleteById
   );
-
-  console.log("hotel events", deleteLoading);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotelEvents?.length / rowsPerPage);
@@ -75,8 +73,6 @@ const HotelEventsView = React.memo(() => {
       const res = await dispatch(deleteEventById(eventId)).unwrap();
 
       if (res.message === "success") {
-        console.log("Event deleted successfully");
-        // No need for router.refresh(), Redux state should trigger re-render
       }
     } catch (error) {
       console.error("Error deleting room:", error);
@@ -86,7 +82,6 @@ const HotelEventsView = React.memo(() => {
   };
 
   const openDeleteModal = (id, name) => {
-    console.log(id);
     setIsOpen(!isOpen);
     setEventId(id);
     setEventName(name);
@@ -117,8 +112,13 @@ const HotelEventsView = React.memo(() => {
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="!text-nowrap max-w-56">
-                      {row.description}
+                    <Typography
+                      variant="p"
+                      className="!text-nowrap !text-clip w-full"
+                    >
+                      {row?.description?.length > 40
+                        ? `${row?.description?.slice(0, 40)}...`
+                        : row?.description}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">

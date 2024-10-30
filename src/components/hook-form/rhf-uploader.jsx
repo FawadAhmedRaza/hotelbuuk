@@ -46,11 +46,6 @@ export const RHFUploader = forwardRef(({ name, onFileUpload }, ref) => {
       control={control}
       render={({ field }) => (
         <div className="relative flex flex-col gap-2 w-full cursor-pointer">
-          {errors[name] && (
-            <Typography variant="p" className="text-red-400">
-              {errors[name]?.message}
-            </Typography>
-          )}
           <div
             {...getRootProps()}
             className="w-full border-2 border-dashed rounded-xl"
@@ -60,6 +55,11 @@ export const RHFUploader = forwardRef(({ name, onFileUpload }, ref) => {
               <input {...getInputProps()} />
             </div>
           </div>
+          {errors[name] && (
+            <Typography variant="span" className="text-red-500 !text-sm">
+              {errors[name]?.message}
+            </Typography>
+          )}
         </div>
       )}
     />

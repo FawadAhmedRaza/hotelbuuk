@@ -184,6 +184,7 @@ export async function PUT(req, { params }) {
         hotel_name: hotel_name,
         profile_img: hotelImage,
         phone_number: hotel_contact_no?.toString(),
+        is_user_profile_completed: true,
       },
     });
 
