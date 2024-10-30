@@ -23,8 +23,6 @@ export const PreviewHotels = () => {
 
   const { events, isLoading } = useSelector((state) => state.allEvents);
 
-  console.log("All Events", events);
-
   const updateNavigation = () => {
     if (swiperRef.current) {
       const { isBeginning, isEnd } = swiperRef.current.swiper;
