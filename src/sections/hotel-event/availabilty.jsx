@@ -63,13 +63,15 @@ export const SetAvailability = () => {
   }, []);
 
   useEffect(() => {
-    setDate([
-      {
-        startDate: startDate,
-        endDate: endDate,
-        key: "selection",
-      },
-    ]);
+    if (startDate && endDate) {
+      setDate([
+        {
+          startDate: startDate,
+          endDate: endDate,
+          key: "selection",
+        },
+      ]);
+    }
   }, []);
 
   return (
@@ -129,9 +131,9 @@ export const SetAvailability = () => {
           What Rules must your Guest observe?
         </Typography>
 
-        {hotelRules.map((rule, index) => (
+        {hotelRules.map((rule) => (
           <RHFCheckbox
-            key={index}
+            key={rule.ruleId}
             name={`availibility.rules.${rule.name}`}
             label={rule.title}
           />

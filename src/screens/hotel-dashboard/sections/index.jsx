@@ -19,9 +19,9 @@ const HotelDashboardSections = () => {
 
   return (
     <Pannel>
-      {/* {!user?.is_user_profile_completed && ( */}
+      {!user?.is_user_profile_completed && (
         <ProfileAlert setShowAlert={setShowAlert} />
-      {/* )} */}
+      )}
       <HotelCards />
       <RecentBooking />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

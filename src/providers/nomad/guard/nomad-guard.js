@@ -5,7 +5,6 @@ import { useAuthContext } from "../../auth/context/auth-context";
 
 import PropTypes from "prop-types";
 import { LoadingScreen } from "@/src/components/loading-screen";
-import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
 

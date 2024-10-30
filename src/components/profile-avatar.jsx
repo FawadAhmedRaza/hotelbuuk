@@ -63,7 +63,7 @@ export const ProfileAvatar = forwardRef(
             const url = await generateSignedUrl(src);
             setSignedUrl(url);
           } catch (err) {
-            console.log("error");
+            console.log("error", err);
           } finally {
             setLoading(false);
           }
@@ -112,7 +112,7 @@ export const ProfileAvatar = forwardRef(
       return (
         <Iconify
           iconName="carbon:user-avatar-filled"
-          className="!size-8 md:!size-10 text-gray-500"
+          className="!size-10  rounded-full object-cover text-gray-500"
         />
       );
     }

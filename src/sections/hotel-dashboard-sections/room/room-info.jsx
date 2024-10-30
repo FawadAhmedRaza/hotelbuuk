@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
@@ -37,12 +37,18 @@ export const RoomInfo = () => {
     },
   ]);
 
-  const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
+  const toggleDateCalender = () => {
+    setIsDateOpen(!isDateOpen);
+    setValue("room_info.start_date", date[0].startDate.toString());
+    setValue("room_info.end_date", date[0].endDate.toString());
+  };
 
   const { roomTypes } = useSelector((state) => state.rooms);
   const { roomFacilities } = useSelector((state) => state.roomFacilities);
 
   const selectedFacilities = watch("room_facilities") || [];
+  const startDate = watch("room_info.start_date");
+  const endDate = watch("room_info.end_date");
 
   const handleCheckboxChange = (facility, checked) => {
     setValue(
@@ -54,6 +60,23 @@ export const RoomInfo = () => {
           ) // remove if unchecked
     );
   };
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      setDate([
+        {
+          startDate: startDate,
+          endDate: endDate,
+          key: "selection",
+        },
+      ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    setValue("room_info.start_date", date[0].startDate.toString());
+    setValue("room_info.end_date", date[0].endDate.toString());
+  }, []);
 
   return (
     <div className="flex flex-col gap-10">

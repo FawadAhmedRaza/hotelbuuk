@@ -7,12 +7,20 @@ export async function POST(req) {
   try {
     const body = await req.formData();
     const data = convertFormData(body);
+    console.log("data", data);
     const imageFiles = body.getAll("room_images");
 
     const { room_info, hotel_id, room_facilities } = data || {};
 
-    const { room_name, room_type, price, maximum_occupancy, description } =
-      room_info || {};
+    const {
+      room_name,
+      room_type,
+      price,
+      maximum_occupancy,
+      description,
+      start_date,
+      end_date,
+    } = room_info || {};
 
     if (!room_name || !room_type || !price) {
       return NextResponse.json(
@@ -29,6 +37,8 @@ export async function POST(req) {
         maximum_occupancy,
         description,
         price,
+        start_date,
+        end_date,
       },
     });
 

@@ -53,6 +53,10 @@ export const GuestLearn = () => {
     }));
   };
 
+  useEffect(() => {
+    setTopics(formTopics);
+  }, []);
+
   return (
     <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
       <Typography variant="h4" className="font-semibold">

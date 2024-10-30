@@ -17,7 +17,7 @@ const ProfileAlert = ({ setShowAlert }) => {
       <div className="flex-1 md:mr-4 font-montserrat">
         <Link
           href={paths.hotelInfo.edit(user?.id)}
-          className={`font-medium text-md text-white hover:underline font-montserrat`}
+          className={`font-medium text-md text-primary hover:underline font-montserrat`}
           rel="noopener noreferrer"
         >
           Your profile is incomplete. complete now
