@@ -87,6 +87,7 @@ export const BussinessMeeting = () => {
               {amenities?.map((amenity, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <input
+                    id={amenity?.name}
                     type="checkbox"
                     checked={selectedAmenities?.some(
                       (selected) => selected?.name === amenity?.name

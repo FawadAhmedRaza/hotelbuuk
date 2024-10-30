@@ -16,7 +16,7 @@ export const Stepper = ({
       <div className="relative flex justify-between items-center">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
-            <div className="flex flex-col items-center z-20">
+            <div className="flex flex-col items-center -z-20">
               <div
                 className={`size-8 sm:size-14 flex items-center cursor-pointer justify-center rounded-full border-2 relative ${
                   index <= activeStep
