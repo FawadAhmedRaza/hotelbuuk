@@ -1,6 +1,10 @@
+"use client";
+
 import React from "react";
 import { Button, Iconify, Pannel, Typography } from "@/src/components";
 import Built from "@/src/components/built";
+import { useSelector } from "react-redux";
+import { calculateDaysBetweenDates } from "@/src/libs/helper";
 
 // Mock data for hotel details
 const hotelData = {
@@ -33,6 +37,13 @@ const hotelData = {
 };
 
 export const HotelBio = () => {
+  const { event } = useSelector((state) => state.allEvents.getById);
+
+  const stayNights = calculateDaysBetweenDates(
+    event?.start_date,
+    event?.end_date
+  );
+
   return (
     <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
       {/* Left Panel - Image and Time */}
@@ -44,7 +55,11 @@ export const HotelBio = () => {
           </span>
           <Button className="bg-white text-primary ">Flexible</Button>
         </div>
-        <img src={hotelData?.image} alt="Hotel Room" className="mt-4 mx-auto " />
+        <img
+          src={hotelData?.image}
+          alt="Hotel Room"
+          className="mt-4 mx-auto "
+        />
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
@@ -54,8 +69,9 @@ export const HotelBio = () => {
               Teaching Tool
             </Typography>
             <div className=" mt-3">
-              <Built>Video</Built>
-              <Built>Samples</Built>
+              <Built>{event?.nomad?.video}</Built>
+              <Built>{event?.nomad?.sample}</Built>
+              <Built>{event?.nomad?.projector}</Built>
             </div>
           </div>
           <div className=" ">
@@ -73,10 +89,10 @@ export const HotelBio = () => {
       <div className="w-full lg:w-2/3  py-4 px-5  flex flex-col justify-between lg:border-l-2 border-neutral-400">
         <div className="flex flex-col gap-1">
           <Typography variant="h6" className=" font-semibold">
-            ${hotelData.pricePerNight} Per Night
+            ${event?.price} Per Night
           </Typography>
           <Typography variant="h6" className="font-semibold text-start ">
-            {hotelData.tourName}
+            {event?.title}
           </Typography>
           <Typography variant="h5" className="font-semibold text-center">
             {hotelData.marketTour}
@@ -92,7 +108,7 @@ export const HotelBio = () => {
                 Check-In
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
-                {hotelData.checkInDate}
+                {event?.start_date?.toString().slice(0, 10)}
               </Typography>
             </div>
             <div className="flex flex-col justify-center  items-center sm:items-start sm:p-5 lg:px-2">
@@ -103,7 +119,7 @@ export const HotelBio = () => {
                 Checkout
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
-                {hotelData.checkOutDate}
+                {event?.end_date?.toString().slice(0, 10)}
               </Typography>
             </div>
             <div className="flex justify-between  p-5 lg:px-2">
@@ -111,7 +127,7 @@ export const HotelBio = () => {
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
               >
-                {hotelData.nights} Night
+                {stayNights} Night
               </Typography>
             </div>
           </div>
@@ -139,26 +155,31 @@ export const HotelBio = () => {
             </Typography>
             <div className=" flex flex-col gap-2 ">
               <div className=" flex flex-col gap-2 border-b w-full pb-2 border-neutral-500">
-                {hotelData.priceDetails.map((detail, index) => (
-                  <span
-                    className="flex justify-between items-center "
-                    key={index}
-                  >
-                    <Typography variant="p" className="font-medium">
-                      {detail.description}
-                    </Typography>
-                    <Typography variant="p" className="font-medium">
-                      ${detail.amount}
-                    </Typography>
-                  </span>
-                ))}
+                <span className="flex justify-between items-center ">
+                  <Typography variant="p" className="font-medium">
+                    ${event?.price} x {stayNights} Nights
+                  </Typography>
+                  <Typography variant="p" className="font-medium">
+                    ${event?.price * stayNights}
+                  </Typography>
+                </span>
+                <span className="flex justify-between items-center ">
+                  <Typography variant="p" className="font-medium">
+                    HotelBuuk Service Fee
+                  </Typography>
+                  <Typography variant="p" className="font-medium">
+                    ${((event?.price * stayNights) / 100) * 20}
+                  </Typography>
+                </span>
               </div>
               <span className="flex justify-between items-center mt-2 mb-3">
                 <Typography variant="h6" className="font-semibold">
                   Total
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
-                  ${hotelData.total}
+                  $
+                  {((event?.price * stayNights) / 100) * 20 +
+                    event?.price * stayNights}
                 </Typography>
               </span>
             </div>

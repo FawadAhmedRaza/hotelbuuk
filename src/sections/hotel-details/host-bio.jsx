@@ -1,13 +1,21 @@
+"use client";
+
 import React from "react";
 import {
   AnchorTag,
   Avatar,
   Button,
   Iconify,
+  ProfileAvatar,
   Typography,
 } from "@/src/components";
+import { useSelector } from "react-redux";
 
 export const HostBio = React.memo(() => {
+  const { event } = useSelector((state) => state.allEvents.getById);
+
+  // const profileImg = event?.nomad?.profile_img ||
+
   return (
     <div className="flex flex-col gap-3 w-full md:w-[550px]">
       <Typography variant="h4" className="font-medium text-xl md:text-3xl">
@@ -17,13 +25,19 @@ export const HostBio = React.memo(() => {
       <div className="flex flex-col  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
         <div className="flex flex-col  gap-5 bg-white rounded-b-lg w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start lg:gap-16 ">
-            <Avatar
+            {/* <Avatar
               src="/assets/images/host.png"
               className=" size-24 lg:!size-32"
+            /> */}
+            <ProfileAvatar
+              src={event?.nomad?.profile_img}
+              type={"server"}
+              alt={event?.nomad?.first_name}
+              className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-full"
             />
             <div className="flex flex-col gap-3 mr-3 ">
               <Typography variant="h4" className="font-semibold ">
-                John
+                {event?.nomad?.first_name}
               </Typography>
               <Typography variant="p" className="font-medium ">
                 Paris, france
@@ -53,7 +67,9 @@ export const HostBio = React.memo(() => {
                 Specialty
               </Typography>
               <Typography variant="p" className="font-medium text-secondary">
-                Electronics <br /> Manufacturing <br /> Fundrasing
+                {event?.nomad?.electronics} <br /> {event?.nomad?.manufacturing}{" "}
+                <br /> {event?.nomad?.fundraising}
+                <br /> {event?.nomad?.retails}
               </Typography>
             </div>
           </div>
