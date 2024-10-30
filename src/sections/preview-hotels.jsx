@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 
 // Components and Others...
 import { hotels } from "../_mock/_hotels";
-import { HotelCard, Iconify } from "../components";
+import {
+  AnchorTag,
+  BgIcon,
+  Typography,
+} from "../components";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -109,3 +113,4 @@ export const PreviewHotels = () => {
     </div>
   );
 };
+

@@ -53,7 +53,7 @@ const HotelDetailScreen = React.memo(({type}) => {
         <AvailabilityCalender />
         <PopularAmenities />
 
-        <Pannel className="!px-20">
+        {/* <Pannel className=" !px-20">
           <DateRange
             onChange={handleDateChange}
             months={2}
@@ -63,7 +63,7 @@ const HotelDetailScreen = React.memo(({type}) => {
             className="w-full custom-calendar" // Apply a custom class for extra control
             style={{ width: "100%" }} // Ensure full width
           />
-        </Pannel>
+        </Pannel> */}
         <BusinessFacts className="bg-white " />
         <ThingsKnow />
         <GuestReviews />

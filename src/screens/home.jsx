@@ -10,7 +10,7 @@ import {
   PreviewHotelsSection,
 } from "../sections";
 import { Pannel } from "../components";
-
+import { ShadCnCarousel } from "../components/ui/shadcn-carousal";
 
 const HomeScreen = React.memo(() => {
   return (
@@ -24,6 +24,9 @@ const HomeScreen = React.memo(() => {
         <Banner />
         <BusinessFacts />
         <BookingSteps />
+        <Pannel className="">
+          {/* <ShadCnCarousel /> */}
+        </Pannel>
         <MeetOurPatners />
       </Layout>
     </main>
