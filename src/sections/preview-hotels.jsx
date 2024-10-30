@@ -6,6 +6,8 @@ import { hotels } from "../_mock/_hotels";
 import {
   AnchorTag,
   BgIcon,
+  HotelCard,
+  Iconify,
   Typography,
 } from "../components";
 

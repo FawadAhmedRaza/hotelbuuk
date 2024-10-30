@@ -15,7 +15,7 @@ import AvailabilityCalender from "../sections/hotel-details/availability-calende
 import { DateRange } from "react-date-range";
 import { Pannel } from "../components";
 
-const HotelDetailScreen = React.memo(({type}) => {
+const HotelDetailScreen = React.memo(({ type }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   // Initialize dateRange as an array with a single selection object
@@ -53,17 +53,6 @@ const HotelDetailScreen = React.memo(({type}) => {
         <AvailabilityCalender />
         <PopularAmenities />
 
-        {/* <Pannel className=" !px-20">
-          <DateRange
-            onChange={handleDateChange}
-            months={2}
-            ranges={dateRange}
-            direction={isMobile ? "vertical" : "horizontal"}
-            rangeColors={["#000000"]}
-            className="w-full custom-calendar" // Apply a custom class for extra control
-            style={{ width: "100%" }} // Ensure full width
-          />
-        </Pannel> */}
         <BusinessFacts className="bg-white " />
         <ThingsKnow />
         <GuestReviews />
