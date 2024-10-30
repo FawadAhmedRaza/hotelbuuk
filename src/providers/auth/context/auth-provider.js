@@ -73,12 +73,13 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
 
-  console.log("session?.user",session?.user)
   const fetchData = async () => {
     try {
       const user = await getUserByGoogleId(session?.user?.id);
-      console.log("user profile", user);
-      dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+      }
     } catch (err) {
       console.log("Error Fetching detail", err);
     }
@@ -93,7 +94,6 @@ export function AuthProvider({ children }) {
   const initialize = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem(STORAGE_KEY);
-      console.log("Token And Validity",accessToken ,isValidToken(accessToken))
       if (accessToken && isValidToken(accessToken)) {
         const user = jwtDecode(accessToken);
         setSession(accessToken, user);
@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  },[]);
+  }, []);
 
   const setUser = (updatedUser, accessToken) => {
     dispatch({

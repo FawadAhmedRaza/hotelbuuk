@@ -54,7 +54,7 @@ const HotelDetailScreen = React.memo(() => {
         <AvailabilityCalender />
         <PopularAmenities />
 
-        <Pannel className=" !px-20">
+        <Pannel className="!px-20">
           <DateRange
             onChange={handleDateChange}
             months={2}

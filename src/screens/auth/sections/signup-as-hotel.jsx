@@ -22,6 +22,7 @@ import {
 } from "@/src/components";
 import { paths } from "@/src/contants";
 import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const SignUpAsHotel = () => {
   const { register } = useAuthContext();
@@ -130,7 +131,7 @@ const SignUpAsHotel = () => {
             <Line>Or Sign up with</Line>
 
             <ImgButton
-              // onClick={() => signIn("google")}
+              onClick={() => signIn("google")}
               src="/assets/images/google.png"
             />
           </div>
