@@ -41,14 +41,21 @@ const SetupUserType = () => {
         <img
           src="/assets/images/account-type-img.jpg"
           alt="img"
-          className="hidden lg:block w-[600px] xl:w-[500px] h-full"
+          className="hidden xl:block w-[400px] xl:w-[500px] h-full"
         />
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0">
-          <Typography variant="h3" className="font-bold text-primary">
-            Hotelbuuk
-          </Typography>
+          <div className="flex items-center gap-2">
+            <img
+              src="/assets/images/transperent-logo/transperent/PINK.png"
+              alt="log"
+              className=" w-16"
+            />
+            <Typography variant="h3" className="font-bold text-primary">
+              Hotelbuuk
+            </Typography>
+          </div>
           <div className="flex flex-col justify-center items-center lg:justify-start lg:items-start gap-3">
-            <Typography variant="h2" className="font-semibold">
+            <Typography variant="h3" className="font-semibold">
               Account type
             </Typography>
             <Typography
@@ -59,7 +66,7 @@ const SetupUserType = () => {
             </Typography>
           </div>
 
-          <div className="w-full grid md:grid-cols-2 lg:grid-cols-2 grid-cols-1 gap-4 mt-2">
+          <div className="w-full grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 gap-4 mt-2">
             {userTypes?.map((item, index) => (
               <Card
                 onClick={() => handleCardClick(item?.value)}
@@ -75,7 +82,7 @@ const SetupUserType = () => {
                   iconName={item.icon}
                   className="!text-primary size-16"
                 />
-                <Typography variant="h4" className="!font-semibold">
+                <Typography variant="h5" className="!font-semibold">
                   {item.label}
                 </Typography>
               </Card>
@@ -102,4 +109,5 @@ export default SetupUserType;
 let userTypes = [
   { label: "Signup as Hotel", icon: "fa-solid:hotel", value: "HOTEL" },
   { label: "Signup as Nomad", icon: "fa6-solid:building-user", value: "NOMAD" },
+  { label: "Signup as Guest", icon: "fluent:guest-12-filled", value: "GUEST" },
 ];

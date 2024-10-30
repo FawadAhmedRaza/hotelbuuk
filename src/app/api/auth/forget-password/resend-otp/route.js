@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { generateOTP } from "@/src/libs/helper";
-import { forgotPasswordTemplate } from "@/src/libs/otpTemplate";
+import { forgotPasswordTemplate, generateResetPasswordOtpTemplate } from "@/src/libs/otpTemplate";
 import { sendMail } from "@/src/service/mailService";
 import { prisma } from "@/src/db";
 
@@ -28,7 +28,7 @@ export async function POST(req) {
     await sendMail(
       "New OTP for Password Reset Request",
       user.email,
-      forgotPasswordTemplate(userEmail, OTP)
+      generateResetPasswordOtpTemplate(userEmail, OTP)
     );
 
     return NextResponse.json(

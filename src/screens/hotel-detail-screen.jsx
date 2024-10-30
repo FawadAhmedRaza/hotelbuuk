@@ -12,11 +12,10 @@ import {
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalender from "../sections/hotel-details/availability-calender";
-import { RHFDatePicker } from "../components/hook-form";
 import { DateRange } from "react-date-range";
 import { Pannel } from "../components";
 
-const HotelDetailScreen = React.memo(() => {
+const HotelDetailScreen = React.memo(({type}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   // Initialize dateRange as an array with a single selection object
@@ -48,7 +47,7 @@ const HotelDetailScreen = React.memo(() => {
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <HotelOverview />
+        <HotelOverview type={type} />
         <HotelDetail />
         <Itinerary />
         <AvailabilityCalender />

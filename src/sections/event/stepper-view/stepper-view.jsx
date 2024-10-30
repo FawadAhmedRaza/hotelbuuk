@@ -77,9 +77,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         is: "hotel",
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
-      })
-      // .min(4, "At least 4 images are required")
-      .required("Files are required"),
+      }),
+      // .min(2, "At least Two images are required")
+      // .required("Files are required"),
 
     topics: Yup.array()
       .min(1, "At least one topic is required")

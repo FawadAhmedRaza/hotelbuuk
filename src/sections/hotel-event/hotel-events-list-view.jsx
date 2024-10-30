@@ -15,13 +15,13 @@ import { paths } from "@/src/contants";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useBoolean } from "@/src/hooks";
 import {
   deleteEventById,
   getAllHotelEvents,
 } from "@/src/redux/hotel-event/thunk";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Title" },
@@ -50,8 +50,6 @@ const HotelEventsView = React.memo(() => {
     (state) => state.hotelEvent.deleteById
   );
 
-  console.log("hotel events", hotelEvents);
-
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotelEvents?.length / rowsPerPage);
   }, [hotelEvents, rowsPerPage]);
@@ -72,8 +70,10 @@ const HotelEventsView = React.memo(() => {
 
   const handleDelete = async () => {
     try {
-      await dispatch(deleteEventById(eventId)).unwrap();
-      router.refresh();
+      const res = await dispatch(deleteEventById(eventId)).unwrap();
+
+      if (res.message === "success") {
+      }
     } catch (error) {
       console.error("Error deleting room:", error);
     } finally {
@@ -107,13 +107,18 @@ const HotelEventsView = React.memo(() => {
               return (
                 <>
                   <td className=" px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                    <Typography variant="p" className="  !text-nowrap ">
                       {row?.title}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="!text-nowrap max-w-56">
-                      {row.description}
+                    <Typography
+                      variant="p"
+                      className="!text-nowrap !text-clip w-full"
+                    >
+                      {row?.description?.length > 40
+                        ? `${row?.description?.slice(0, 40)}...`
+                        : row?.description}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
@@ -122,7 +127,7 @@ const HotelEventsView = React.memo(() => {
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                    <Typography variant="p" className="  !text-nowrap   ">
                       {row?.official_name}
                     </Typography>
                   </td>

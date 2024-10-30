@@ -33,6 +33,12 @@ export async function POST(req) {
       );
     }
 
+    const nomad = await prisma.nomad.findFirst({
+      where: {
+        userId: user_id,
+      },
+    });
+
     let event;
     if (accomodation_type === "bnb") {
       event = await prisma.nomad_event.create({
@@ -57,6 +63,7 @@ export async function POST(req) {
           payment_policy: rules?.payment_policy,
           price: String(data?.price),
           user_id: user_id,
+          nomad_id: nomad?.id,
         },
       });
     } else {
@@ -80,6 +87,7 @@ export async function POST(req) {
           payment_policy: rules?.payment_policy,
           price: String(data?.price),
           user_id: user_id,
+          nomad_id: nomad?.id,
         },
       });
     }
@@ -185,3 +193,4 @@ export async function GET(req) {
     );
   }
 }
+

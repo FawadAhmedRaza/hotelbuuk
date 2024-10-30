@@ -9,6 +9,7 @@ export const paths = {
     set_user_type: "/setup-user-profile",
     setup_basic_info_nomad: "/setup-basic-info-nomad",
     setup_basic_info_hotel: "/setup-basic-info-hotel",
+    setup_basic_info_guest: "/setup-basic-info-guest",
     forgotPassword: "/forgot-password",
     changePassword: "/change-password",
   },
@@ -18,7 +19,7 @@ export const paths = {
   privacyPolicy: "/privacy-policy",
   hotels: {
     root: "/hotels",
-    getHotelById: (id) => `/hotels/${id}`,
+    getHotelById: (id, type) => `/hotels/${id}?type=${type}`,
   },
   nomad: {
     root: "/nomad",
@@ -55,5 +56,9 @@ export const paths = {
   hotelInfo: {
     root: "/hotel-info",
     edit: (id) => `/hotel-info/${id}`,
+  },
+  guestDashboard: {
+    root: "/guest-dashboard",
+    update_profile: (id) => `/profile/${id}`,
   },
 };

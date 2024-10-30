@@ -77,19 +77,19 @@ const HotelsListSection = React.memo(() => {
                 <>
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
-                      {!row?.hotel_image ? (
+                      {/* {!row?.hotel_image ? (
                         <Iconify
                           iconName="carbon:user-avatar-filled"
                           className="!size-10  rounded-full object-cover text-gray-500"
                         />
-                      ) : (
-                        <ProfileAvatar
-                          src={row?.hotel_image}
-                          type={"server"}
-                          alt={row?.hotel_name}
-                          className="  h-10 w-10 rounded-full object-cover"
-                        />
-                      )}
+                      ) : ( */}
+                      <ProfileAvatar
+                        src={row?.hotel_image}
+                        type={"server"}
+                        alt={row?.hotel_name}
+                        className="  h-10 w-10 rounded-full object-cover"
+                      />
+                      {/* )} */}
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"

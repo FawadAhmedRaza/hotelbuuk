@@ -38,7 +38,6 @@ import {
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
   const router = useRouter();
-  console.log("ise Edit", isEdit);
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);

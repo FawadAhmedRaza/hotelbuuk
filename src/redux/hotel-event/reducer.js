@@ -93,6 +93,9 @@ export const hotelEvent = createSlice({
       state.deleteById.isLoading = true;
     });
     builder.addCase(deleteEventById.fulfilled, (state, action) => {
+      state.hotelEvents = state.hotelEvents.filter(
+        (event) => event.id !== action.meta.arg
+      );
       state.deleteById.isLoading = false;
     });
     builder.addCase(deleteEventById.rejected, (state, action) => {

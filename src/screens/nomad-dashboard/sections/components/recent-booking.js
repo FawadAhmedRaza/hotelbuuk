@@ -12,11 +12,13 @@ import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { useRouter } from "next/navigation";
 
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
   console.log("Hotel List", hotels);
@@ -60,31 +62,43 @@ const RecentBooking = () => {
                   <div key={hotel.id} className="w-full">
                     <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                       <div className="flex gap-4 w-full">
-                        {!hotel?.hotel_image ? (
+                        {/* {!hotel?.hotel_image ? (
                           <Iconify
                             iconName="carbon:user-avatar-filled"
                             className="!size-16 border-primary border-2  rounded-full  text-gray-500"
                           />
-                        ) : (
-                          <ProfileAvatar
-                            src={hotel?.hotel_image}
-                            type={"server"}
-                            alt={hotel?.hotel_name}
-                            className="border-primary border-2 h-16 w-16 rounded-full object-cover"
-                          />
-                        )}
+                        ) : ( */}
+                        <ProfileAvatar
+                          src={hotel?.hotel_image}
+                          type={hotel?.hotel_image ? "normal" : "server"}
+                          alt={hotel?.hotel_name}
+                          className="border-primary border-2 h-16 w-16 rounded-full object-cover"
+                        />
+                        {/* )} */}
                         <div className="flex flex-1 flex-col grow">
                           <div className=" flex grow mr-3  justify-between items-center w-full ">
                             <Typography variant="p" className="font-semibold">
                               {hotel.hotel_name}
                             </Typography>
-                            <Button
-                              className={
-                                "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
-                              }
-                            >
-                              Create List
-                            </Button>
+                            <div className="flex flex-col items-end ">
+                              <Button
+                                className={
+                                  "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                }
+                              >
+                                Create List
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  router.push(`/chat/${hotel?.user_id}`)
+                                }
+                                className={
+                                  "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                }
+                              >
+                                Contact
+                              </Button>
+                            </div>
                           </div>
                           <Typography variant="p" className="!text-xs">
                             {hotel.description}

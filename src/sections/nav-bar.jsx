@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // Components and Others..
 import { AnchorTag, Iconify, Typography } from "../components";
@@ -7,19 +7,12 @@ import { LangaugeTranslator } from ".";
 import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
 import { cn } from "../libs/cn";
-import Image from "next/image";
+import { useAuthContext } from "../providers/auth/context/auth-context";
 
 export const NavBar = React.memo(({ className }) => {
-  const [user, setUser] = useState({});
+  const { user } = useAuthContext();
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    setUser(user);
-  }, []);
-
-  console.log("user", user);
 
   return (
     <div
