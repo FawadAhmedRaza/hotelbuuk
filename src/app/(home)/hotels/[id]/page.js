@@ -1,12 +1,11 @@
-import React from 'react'
-import { HotelDetailScreen } from '@/src/screens'
+import HotelDetail from "@/src/screens/hote-detail";
 
 export const metadata = {
-    title: "Hotel Detail",
-    description: ""
-}
+  title: "Hotel Detail",
+  description: "",
+};
 const page = () => {
-    return <HotelDetailScreen />
-}
+  return <HotelDetail />;
+};
 
-export default page
+export default page;

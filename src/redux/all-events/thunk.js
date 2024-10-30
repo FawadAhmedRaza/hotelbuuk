@@ -7,3 +7,11 @@ export const getAllEvents = createAsyncThunk("getAllEvents", async () => {
   console.log("room thunk", request.data);
   return request?.data?.Events;
 });
+
+export const getEventById = createAsyncThunk(
+  "getEventById",
+  async ({ id, type }) => {
+    const request = await axiosInstance.get(endpoints.events.getById(id, type));
+    return request?.data.event;
+  }
+);

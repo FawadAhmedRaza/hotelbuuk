@@ -100,5 +100,6 @@ export const endpoints = {
   },
   events: {
     root: "/all-events",
+    getById: (id, type) => `/all-events/${id}?type=${type}`,
   },
 };

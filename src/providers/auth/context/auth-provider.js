@@ -11,6 +11,7 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { paths } from "@/src/contants";
+import { getUserByGoogleId, getUserById } from "@/src/actions/auth.actions";
 
 // ----------------------------------------------------------------------
 /**
@@ -72,27 +73,27 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   const { data: session, status: authStatus } = useSession();
 
-  // const fetchData = async () => {
-  //   try {
-  //     const user = await getUserById(session?.user?.id);
-  //     console.log("user profile", user);
-  //     dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
-  //   } catch (err) {
-  //     console.log("Error Fetching detail", err);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const user = await getUserByGoogleId(session?.user?.id);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({ type: Types.INITIAL, payload: { user: { ...user } } });
+      }
+    } catch (err) {
+      console.log("Error Fetching detail", err);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (session?.user?.id) {
-  //     fetchData();
-  //   }
-  //   console.log("session", session);
-  // }, [session?.user?.id]);
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchData();
+    }
+  }, [session?.user?.id]);
 
   const initialize = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem(STORAGE_KEY);
-      console.log("Token And Validity",accessToken ,isValidToken(accessToken))
       if (accessToken && isValidToken(accessToken)) {
         const user = jwtDecode(accessToken);
         setSession(accessToken, user);
@@ -122,7 +123,7 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  },[]);
+  }, []);
 
   const setUser = (updatedUser, accessToken) => {
     dispatch({
