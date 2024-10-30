@@ -14,7 +14,7 @@ import { LoadingScreen } from "@/src/components/loading-screen";
 
 const socket = io("http://localhost:5000");
 
-const ChatMainSection = ({ id }) => {
+const ChatMainSection = ({ id, onBack }) => {
   const [room, setRoom] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(0);
@@ -22,7 +22,7 @@ const ChatMainSection = ({ id }) => {
   const [newMessage, setNewMessage] = useState("");
   const { user } = useAuthContext();
 
-  const messagesEndRef = useRef(null); // Ref for the messages end
+  const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -31,13 +31,9 @@ const ChatMainSection = ({ id }) => {
   const fetchRoom = React.useCallback(async () => {
     try {
       setRoomLoading(true);
-      const userIds = {
-        userId1: user?.id,
-        userId2: id,
-      };
+      const userIds = { userId1: user?.id, userId2: id };
       const roomResponse = await getChatRoom(userIds);
-      const roomData = roomResponse?.data;
-      setRoom(roomData);
+      setRoom(roomResponse?.data);
     } catch (error) {
       console.log("Error", error);
     } finally {
@@ -62,7 +58,6 @@ const ChatMainSection = ({ id }) => {
     if (id) {
       fetchRoom();
     }
-    // Listen for new messages from the server
     socket.on("newMessage", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
@@ -85,7 +80,7 @@ const ChatMainSection = ({ id }) => {
   }, [room]);
 
   useEffect(() => {
-    scrollToBottom(); // Scroll to the bottom when messages update
+    scrollToBottom();
   }, [messages]);
 
   const handleSendMessage = (e) => {
@@ -124,6 +119,11 @@ const ChatMainSection = ({ id }) => {
     <div className="w-full h-full flex flex-col relative">
       <div className="h-16 border-b flex justify-between items-center w-full px-5 py-2 shadow-sm">
         <div className="flex items-center">
+          <Iconify
+            iconName="gg:arrow-left"
+            onClick={onBack}
+            className="md:hidden flex text-gray-400 cursor-pointer"
+          />
           <ProfileAvatar
             type="server"
             src={selectedUser?.profile_img}
@@ -133,7 +133,7 @@ const ChatMainSection = ({ id }) => {
           <p className="font-semibold ml-3 text-slate-600">{userName}</p>
         </div>
       </div>
-      {loading == 0 ? (
+      {loading === 0 ? (
         <h6>Loading....</h6>
       ) : (
         <div className="px-5 pt-4 pb-24 overflow-y-scroll">
@@ -164,7 +164,7 @@ const ChatMainSection = ({ id }) => {
                 <div
                   className={`mt-3 p-4 rounded-xl ${
                     msg.senderId === user?.id
-                      ? "bg-blue-500 text-white"
+                      ? "bg-purple-500 text-white"
                       : "bg-slate-50 text-slate-500"
                   }`}
                 >
@@ -173,30 +173,27 @@ const ChatMainSection = ({ id }) => {
               </div>
             </div>
           ))}
-          <div ref={messagesEndRef} /> {/* Scroll target */}
+          <div ref={messagesEndRef} />
         </div>
       )}
-
-      <div className="w-full px-5 py-3 border-t absolute bottom-0 left-0 bg-white">
-        <form onSubmit={handleSendMessage}>
-          <div className="h-12 flex justify-between px-3 items-center border border-transparent bg-slate-50 focus-within:border-slate-300 rounded-lg">
-            <input
-              type="text"
-              className="w-full px-3 bg-transparent outline-none placeholder:text-slate-400"
-              placeholder="Type your message"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <Button
-              className={"px-2.5 bg-blue-600"}
-              type="submit"
-              onClick={handleSendMessage}
-            >
-              <Iconify iconName="mingcute:send-plane-fill" />
-            </Button>
-          </div>
-        </form>
-      </div>
+      <form
+        onSubmit={handleSendMessage}
+        className="absolute bottom-0 w-full px-5 py-3 flex items-center"
+      >
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Type a message"
+          className="w-full p-2 border rounded-lg"
+        />
+        <button
+          type="submit"
+          className="ml-3 bg-purple-500 text-white px-4 py-2 rounded-lg"
+        >
+          Send
+        </button>
+      </form>
     </div>
   );
 };

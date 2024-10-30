@@ -1,15 +1,16 @@
 "use client";
 import { getUserRooms } from "@/src/api/chat";
-import { Avatar, ProfileAvatar } from "@/src/components";
+import { ProfileAvatar, Iconify } from "@/src/components";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ChatSidebar = () => {
   const [chats, setChats] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const { user } = useAuthContext();
-  const { id } = useParams();
   const router = useRouter();
+
   const fetchChats = async () => {
     try {
       const response = await getUserRooms(user.id);
@@ -28,40 +29,46 @@ const ChatSidebar = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [id]);
+  }, []);
+
+  // Filtered chats based on the search term
+  const filteredChats = chats.filter((chatRoom) => {
+    const otherUser =
+      chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
+    const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
+    return userName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
-    <div className="w-[500px] bg-slate-50 border-r flex flex-col h-screen">
+    <div className="w-full bg-slate-50 border-r flex flex-col h-screen">
       {/* Search input */}
       <div className="h-16 border-b px-4 flex items-center justify-center space-x-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full border border-zinc-400 bg-transparent rounded-xl py-1 px-3 outline-none"
-        />
+        <div className="border border-zinc-300 bg-transparent flex gap-2 w-full rounded-md px-3 items-center">
+          <Iconify iconName="ic:baseline-search" className="size-7 text-zinc-300" />
+          <input
+            className="w-full py-1 bg-transparent outline-none"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* Chat rooms list */}
       <div className="h-full overflow-y-scroll">
-        {chats.map((chatRoom) => {
+        {filteredChats.map((chatRoom) => {
           const otherUser =
-            chatRoom?.userAData?.id === user.id
-              ? chatRoom?.userBData
-              : chatRoom?.userAData;
+            chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
           const latestMessage =
-            chatRoom?.messages && chatRoom?.messages?.length > 0
-              ? chatRoom?.messages[0]?.content
+            chatRoom?.messages && chatRoom?.messages.length > 0
+              ? chatRoom.messages[0].content
               : "";
 
-          const nomadName = otherUser?.first_name
-            ? `${otherUser?.first_name} ${otherUser?.last_name}`
-            : "";
-          console.log("namadName", nomadName);
-          const userName = otherUser?.hotel_name || nomadName;
-          console.log("userName", userName);
+          const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
           if (!userName) {
             return null;
           }
+
           return (
             <div
               key={chatRoom.id}
@@ -78,7 +85,7 @@ const ChatSidebar = () => {
                 <p className="text-md font-semibold text-slate-600 m-0 p-0">
                   {userName}
                 </p>
-                <p className="text-xs text-slate-400 -mt-0.5 font-semibold">
+                <p className="text-xs text-slate-400 font-semibold">
                   {latestMessage}
                 </p>
               </div>
