@@ -16,11 +16,14 @@ import { getAllEvents } from "../redux/all-events/thunk";
 
 export const PreviewHotels = () => {
   const swiperRef = React.useRef(null);
+
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const dispatch = useDispatch();
 
   const { events, isLoading } = useSelector((state) => state.allEvents);
+
+  console.log("All Events", events);
 
   const updateNavigation = () => {
     if (swiperRef.current) {
@@ -98,11 +101,12 @@ export const PreviewHotels = () => {
           },
         }}
       >
-        {events?.map((item) => (
-          <SwiperSlide key={item.id} className="flex flex-col">
-            <HotelCard hotel={item} className="" />
-          </SwiperSlide>
-        ))}
+        {!isLoading &&
+          events?.map((event) => (
+            <SwiperSlide key={event.id} className="flex flex-col">
+              <HotelCard event={event} className="" />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );

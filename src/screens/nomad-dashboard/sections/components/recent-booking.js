@@ -12,11 +12,13 @@ import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
+import { useRouter } from "next/navigation";
 
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
   console.log("Hotel List", hotels);
@@ -78,13 +80,25 @@ const RecentBooking = () => {
                             <Typography variant="p" className="font-semibold">
                               {hotel.hotel_name}
                             </Typography>
-                            <Button
-                              className={
-                                "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
-                              }
-                            >
-                              Create List
-                            </Button>
+                            <div className="flex flex-col items-end ">
+                              <Button
+                                className={
+                                  "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                }
+                              >
+                                Create List
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  router.push(`/chat/${hotel?.user_id}`)
+                                }
+                                className={
+                                  "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                }
+                              >
+                                Contact
+                              </Button>
+                            </div>
                           </div>
                           <Typography variant="p" className="!text-xs">
                             {hotel.description}

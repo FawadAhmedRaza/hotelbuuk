@@ -9,7 +9,7 @@ import { cn } from "@/src/libs/cn";
 // Components and Others..
 
 export const HotelNavbar = React.memo(({ className }) => {
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 

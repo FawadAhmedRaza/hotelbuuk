@@ -16,6 +16,11 @@ export async function GET() {
       },
     });
 
+    const modifiedNomadEvents = nomadEvents.map((event) => ({
+      ...event,
+      type: "NOMAD",
+    }));
+
     const hotelEvents = await prisma.hotel_event.findMany({
       include: {
         event_topics: true,
@@ -29,7 +34,12 @@ export async function GET() {
       },
     });
 
-    const allEvents = [...nomadEvents, ...hotelEvents];
+    const modifiedHotelEvents = hotelEvents.map((event) => ({
+      ...event,
+      type: "HOTEL",
+    }));
+
+    const allEvents = [...modifiedNomadEvents, ...modifiedHotelEvents];
 
     return NextResponse.json(
       { message: "success", Events: allEvents },

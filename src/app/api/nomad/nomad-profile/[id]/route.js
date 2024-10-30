@@ -59,8 +59,10 @@ export async function PUT(req, { params }) {
 
     // update file
     let profileImage;
-    if (typeof profile !== "string") {
+    if (typeof profile_img !== "string") {
       profileImage = await uploadFileToGoogleCloud(profile_img);
+    } else {
+      profileImage = profile_img;
     }
 
     await prisma.nomad.update({
@@ -98,6 +100,7 @@ export async function PUT(req, { params }) {
         last_name,
         profile_img: profileImage,
         phone_number: String(phone_number),
+        is_user_profile_completed: true,
       },
     });
 

@@ -10,7 +10,6 @@ import { enqueueSnackbar, SnackbarProvider } from "notistack";
 
 import { setSession, isValidToken } from "./utils";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { getUserById } from "@/src/actions/auth.actions";
 import { paths } from "@/src/contants";
 
 // ----------------------------------------------------------------------
@@ -92,8 +91,8 @@ export function AuthProvider({ children }) {
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(STORAGE_KEY);
-
+      const accessToken = localStorage.getItem(STORAGE_KEY);
+      console.log("Token And Validity",accessToken ,isValidToken(accessToken))
       if (accessToken && isValidToken(accessToken)) {
         const user = jwtDecode(accessToken);
         setSession(accessToken, user);
@@ -123,7 +122,7 @@ export function AuthProvider({ children }) {
         },
       });
     }
-  }, []);
+  },[]);
 
   const setUser = (updatedUser, accessToken) => {
     dispatch({
@@ -142,9 +141,8 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log("state useeffect", state);
     initialize();
-  }, [initialize]);
+  }, []);
 
   const login = useCallback(async (data) => {
     try {
@@ -193,7 +191,6 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     setSession(null);
-    // router.push(paths.auth.login);
     router.push("/");
     dispatch({
       type: Types.LOGOUT,
@@ -213,7 +210,7 @@ export function AuthProvider({ children }) {
           if (response.status === 201) {
             setSession(response?.data?.data?.accessToken);
             // localStorage.removeItem("signupEmail");
-            sessionStorage.setItem(
+            localStorage.setItem(
               "user",
               JSON.stringify(response?.data?.data?.user)
             );
@@ -366,7 +363,7 @@ export function AuthProvider({ children }) {
 
   const setupUserType = useCallback(async (user_type) => {
     try {
-      const userDetails = JSON.parse(sessionStorage.getItem("user"));
+      const userDetails = JSON.parse(localStorage.getItem("user"));
       let data = { id: userDetails?.id, user_type };
 
       const response = await axiosInstance.post(

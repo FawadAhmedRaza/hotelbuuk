@@ -1,12 +1,12 @@
-import Chat from "@/src/sections/chat-Section/chat";
-import React from "react";
+
+import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      <Chat />
-    </div>
-  );
-};
+        <div className="w-full h-full flex justify-center items-center text-slate-400">
+          Select a chat to start messaging
+        </div>
+  )
+}
 
-export default page;
+export default page
