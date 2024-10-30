@@ -43,7 +43,7 @@ export async function POST(req) {
           user_id: user?.id,
         },
       });
-    } else {
+    } else if (user_type === "NOMAD") {
       // for user type nomad
       await prisma.nomad.create({
         data: {
@@ -51,36 +51,28 @@ export async function POST(req) {
           userId: user?.id,
         },
       });
+    } else {
+      await prisma.guest.create({
+        data: {
+          email: user?.email,
+          userId: user?.id,
+        },
+      });
     }
 
-    let updatedUserWithProfile;
-    if (user_type === "HOTEL") {
-      updatedUserWithProfile = await prisma.user.findFirst({
-        where: {
-          id: id,
-        },
-        include: {
-          hotels: {
-            select: {
-              id: true,
-            },
-          },
-        },
-      });
-    } else {
-      updatedUserWithProfile = await prisma.user.findFirst({
-        where: {
-          id: id,
-        },
-        include: {
-          nomad: {
-            select: {
-              id: true,
-            },
-          },
-        },
-      });
-    }
+    const includeProfile =
+      user_type === "HOTEL"
+        ? { hotels: { select: { id: true } } }
+        : user_type === "NOMAD"
+        ? { nomad: { select: { id: true } } }
+        : { guest: { select: { id: true } } };
+
+    let updatedUserWithProfile = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      include: includeProfile,
+    });
 
     const accessToken = await generateToken(updatedUserWithProfile);
 

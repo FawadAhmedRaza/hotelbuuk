@@ -4,7 +4,6 @@ import {
   deleteEvent,
   getAllNomadEvents,
   getEventById,
-  getNomadEvents,
 } from "./thunk";
 
 const initialState = {
@@ -38,15 +37,15 @@ const nomadEvents = createSlice({
   initialState: initialState,
   extraReducers: (builder) => {
     // get all nomad Events
-    builder.addCase(getNomadEvents.pending, (state, action) => {
+    builder.addCase(getAllNomadEvents.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(getNomadEvents.fulfilled, (state, action) => {
+    builder.addCase(getAllNomadEvents.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.events = action.payload;
       state.isLoading = false;
     });
-    builder.addCase(getNomadEvents.rejected, (state, action) => {
+    builder.addCase(getAllNomadEvents.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     });

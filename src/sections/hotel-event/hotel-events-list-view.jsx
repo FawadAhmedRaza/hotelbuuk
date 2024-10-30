@@ -112,13 +112,15 @@ const HotelEventsView = React.memo(() => {
               return (
                 <>
                   <td className=" px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                    <Typography variant="p" className="  !text-nowrap ">
                       {row?.title}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="!text-nowrap max-w-56">
-                      {row.description}
+                    <Typography variant="p" className="!text-nowrap ">
+                      {row?.description?.length > 40
+                        ? `${row?.description?.slice(0, 40)}...`
+                        : row?.description}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
@@ -127,7 +129,7 @@ const HotelEventsView = React.memo(() => {
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                    <Typography variant="p" className="  !text-nowrap   ">
                       {row?.official_name}
                     </Typography>
                   </td>

@@ -12,7 +12,7 @@ export function RHFUploadAvatar({ name, sx, isEdit, ...other }) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <div className="relative">
+        <div className="relative w-full">
           <UploadAvatar
             isEdit={isEdit}
             error={!!error}

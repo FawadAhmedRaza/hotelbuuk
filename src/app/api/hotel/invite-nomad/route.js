@@ -21,27 +21,17 @@ export async function POST(req) {
     const profileImage = await generateSignedUrl(hotel?.hotel_image);
 
     if (nomad_type === "registered") {
-      let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+      let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
       await sendMail(
         "Hotel Invitation",
         nomad?.email,
         invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
       );
-
-      // create internal nomad
-      await prisma.hotel_internal_nomads.create({
-        data: {
-          hotel_id: hotel_id,
-          nomad_id: nomad?.id,
-        },
-      });
     } else {
       let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
       await sendMail(
         "Hotel Invitation",
         email,
-        "",
-        true,
         invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
       );
     }
@@ -76,6 +66,64 @@ export async function GET(req) {
     );
   } catch (error) {
     console.log("internal nomads error");
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+// responsible for adding nomad in list
+// when the email is accepted
+export async function PUT(req) {
+  try {
+    const data = await req.json();
+
+    const { nomadId, hotelId } = data;
+
+    if (!nomadId || !hotelId) {
+      return NextResponse.json(
+        { message: "All fields are required" },
+        { status: 404 }
+      );
+    }
+
+    const isHotelExist = await prisma.hotel_info.findUnique({
+      where: {
+        id: hotelId,
+      },
+    });
+
+    const isNomadExist = await prisma.hotel_info.findUnique({
+      where: {
+        id: hotelId,
+      },
+    });
+
+    if (!isHotelExist) {
+      return NextResponse.json(
+        { message: "Hotel with the given id not exist" },
+        { status: 404 }
+      );
+    }
+
+    if (!isNomadExist) {
+      return NextResponse.json(
+        { message: "Nomad with the given id not exist" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.hotel_internal_nomads.create({
+      data: {
+        hotel_id: hotelId,
+        nomad_id: nomadId,
+      },
+    });
+
+    return NextResponse.json({ message: "Nomad added" }, { status: 200 });
+  } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

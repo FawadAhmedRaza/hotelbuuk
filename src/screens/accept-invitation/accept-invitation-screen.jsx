@@ -1,9 +1,11 @@
 "use client";
 
-import { Button, Pannel, Typography } from "@/src/components";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
+import { useRouter } from "next/navigation";
+
 import Confetti from "react-confetti";
+import { Button, Pannel, Typography } from "@/src/components";
 
 const AcceptInvitationScreen = ({ hotelName }) => {
   const router = useRouter();

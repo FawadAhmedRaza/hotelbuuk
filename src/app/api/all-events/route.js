@@ -8,6 +8,11 @@ export async function GET() {
         event_images: true,
         event_topics: true,
         event_associated_amenities: true,
+        hotel: {
+          include: {
+            hotelImages: true,
+          },
+        },
       },
     });
 
@@ -15,13 +20,10 @@ export async function GET() {
       include: {
         event_topics: true,
         event_associated_amenities: true,
-        user: {
+        nomad: true,
+        hotel: {
           include: {
-            hotels: {
-              include: {
-                hotelImages: true,
-              },
-            },
+            hotelImages: true,
           },
         },
       },
