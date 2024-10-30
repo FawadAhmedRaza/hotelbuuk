@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { deleteEvent, getAllNomadEvents, getEventById } from "./thunk";
+import {
+  deleteEvent,
+  getAllNomadEvents,
+  getEventById,
+  getNomadEvents,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -15,6 +20,7 @@ const initialState = {
     error: null,
     event: {},
   },
+
   deleteById: {
     isLoading: false,
     error: null,
@@ -32,15 +38,15 @@ const nomadEvents = createSlice({
   initialState: initialState,
   extraReducers: (builder) => {
     // get all nomad Events
-    builder.addCase(getAllNomadEvents.pending, (state, action) => {
+    builder.addCase(getNomadEvents.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(getAllNomadEvents.fulfilled, (state, action) => {
+    builder.addCase(getNomadEvents.fulfilled, (state, action) => {
       console.log("paylod", action.payload);
       state.events = action.payload;
       state.isLoading = false;
     });
-    builder.addCase(getAllNomadEvents.rejected, (state, action) => {
+    builder.addCase(getNomadEvents.rejected, (state, action) => {
       state.error = action.error;
       state.isLoading = false;
     });

@@ -2,16 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 
-export const getAllNomadEvents = createAsyncThunk(
-  "getAllNomadEvents",
-  async (id) => {
-    const request = await axiosInstance.get(
-      endpoints.nomad.event.getAllEvents(id)
-    );
-    console.log("room thunk", request.data);
-    return request?.data?.nomadEvents;
-  }
-);
+export const getNomadEvents = createAsyncThunk("getNomadEvents", async (id) => {
+  const request = await axiosInstance.get(endpoints.nomad.event.getEvents(id));
+  console.log("room thunk", request.data);
+  return request?.data?.nomadEvents;
+});
 
 export const getEventById = createAsyncThunk("getEventById", async (id) => {
   const request = await axiosInstance.get(endpoints.nomad.event.getById(id));
