@@ -64,9 +64,7 @@ const CardContent = React.forwardRef(function CardContent(
   { className, ...props },
   ref
 ) {
-  return (
-    <div ref={ref} className={cn(" bg-red-500 pt-0", className)} {...props} />
-  );
+  return <div ref={ref} className={cn("  pt-0", className)} {...props} />;
 });
 
 const CardFooter = React.forwardRef(function CardFooter(
