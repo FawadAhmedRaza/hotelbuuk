@@ -67,23 +67,20 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
             <Link
               href={item?.path || "#"}
               onClick={() => handleDropdownToggle(item.label)}
-              className={`flex justify-between items-center ${
-                isActive(item?.path)
+              className={`flex justify-between items-center ${isActive(item?.path)
                   ? "bg-tertiary hover:bg-tertiary "
                   : "hover:bg-tertiary"
-              } rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
-                isActive(item?.path)
+                } rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${isActive(item?.path)
                   ? "bg-tertiary shadow-custom-shadow"
                   : "hover:bg-tertiary"
-              }`}
+                }`}
             >
               <span className="text-lg">{item?.label}</span>
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
-                  className={`transition-all duration-300 text-primary size-7 ${
-                    isDropdownOpen === item.label ? "rotate-90" : ""
-                  }`}
+                  className={`transition-all duration-300 text-primary size-7 ${isDropdownOpen === item.label ? "rotate-90" : ""
+                    }`}
                 />
               )}
             </Link>
@@ -105,11 +102,10 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                     <Link
                       key={child.id}
                       href={child.path}
-                      className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
-                        isActive(child?.path)
+                      className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${isActive(child?.path)
                           ? "bg-[#feccf4]-2 shadow-custom-shadow"
                           : "hover:bg-[#feccf4]-2"
-                      }`}
+                        }`}
                     >
                       <span className="text-lg pl-4">{child.title}</span>
                     </Link>
@@ -127,11 +123,10 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
             <AnchorTag
               key={item?.id}
               href={item?.path}
-              className={`!text-lg ${
-                isActive(item?.path)
+              className={`!text-lg ${isActive(item?.path)
                   ? "!text-primary underline"
                   : "!text-black hover:!text-primary"
-              }`}
+                }`}
             >
               {item?.label}
             </AnchorTag>
@@ -157,7 +152,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 3,
       label: "Bookings",
-      path: "",
+      path: paths.guestDashboard.bookings,
     },
     {
       id: 4,

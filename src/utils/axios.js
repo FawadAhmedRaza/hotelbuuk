@@ -82,6 +82,9 @@ export const endpoints = {
   guest: {
     get_profile: (id) => `/guest/profile/${id}`,
     update_profile: (id) => `/guest/profile/${id}`,
+    bookings: {
+      get_all: (id) => `/guest/bookings?user_id=${id}`
+    }
   },
   nomad: {
     root: "/nomad",

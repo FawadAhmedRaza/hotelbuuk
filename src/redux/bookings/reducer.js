@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllBookings,
+  getGuestBookingsList,
   updateBookingStatus,
 } from "./thunk";
 
 const initialState = {
   isLoading: false,
   allBookings: [],
+  guestBookings: [],
   error: null,
   getById: {
     isLoading: false,
@@ -16,6 +18,10 @@ const initialState = {
   updateStatus: {
     isLoading: false,
     error: null,
+  },
+  getGuestBookings: {
+    isLoading: false,
+    error: null
   },
   rejectBooking: {
     isLoading: false,
@@ -52,6 +58,19 @@ export const bookings = createSlice({
     builder.addCase(updateBookingStatus.rejected, (state, action) => {
       state.updateStatus.error = action.error;
       state.updateStatus.isLoading = false;
+    });
+
+    // guest bookings
+    builder.addCase(getGuestBookingsList.pending, (state, action) => {
+      state.getGuestBookings.isLoading = true;
+    });
+    builder.addCase(getGuestBookingsList.fulfilled, (state, action) => {
+      state.guestBookings = action.payload;
+      state.getGuestBookings.isLoading = false;
+    });
+    builder.addCase(getGuestBookingsList.rejected, (state, action) => {
+      state.getGuestBookings.error = action.error;
+      state.getGuestBookings.isLoading = false;
     });
   },
 });

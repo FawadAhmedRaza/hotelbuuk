@@ -21,3 +21,8 @@ export const updateBookingStatus = createAsyncThunk(
     return request?.data?.bookings;
   }
 );
+
+export const getGuestBookingsList = createAsyncThunk("getGuestBookingsList", async (id) => {
+  const request = await axiosInstance.get(endpoints.guest.bookings.get_all(id));
+  return request?.data?.bookings;
+})

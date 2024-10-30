@@ -66,5 +66,6 @@ export const paths = {
   guestDashboard: {
     root: "/guest-dashboard",
     update_profile: (id) => `/profile/${id}`,
+    bookings: "/guest-dashboard/bookings"
   },
 };
