@@ -21,13 +21,20 @@ export const HotelCard = React.memo(({ event, className }) => {
       <div className="w-full h-full relative">
         {/* <img src={hotel.imageUrl} alt={hotel.title} className="w-full h-auto" /> */}
 
-        <div className="h-80 relative">
-          <div className="absolute rounded-3xl w-full inset-0 bg-black  opacity-45" />
+        <div className="h-80 relative overflow-hidden rounded-3xl">
+          <div className="absolute rounded-3xl w-full h-full inset-0 bg-black   opacity-45" />
           <ImageRender
             src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
             type={"server"}
             alt={`Uploaded Image `}
-            className="h-full w-full object-cover rounded-3xl "
+            ratio="4/3" // Aspect ratio
+            delayTime={300} // Add slight delay to improve UX
+            threshold={200} // Start loading when 200px away from the viewport
+            effect="opacity"
+            wrapperProps={{
+              style: { transitionDelay: "0.5s" }, // Adjust fade delay
+            }}
+            className="h-full w-full object-cover rounded-3xl  !event-card-shadow"
           />
         </div>
         {/* <img

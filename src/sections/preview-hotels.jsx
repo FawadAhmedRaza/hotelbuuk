@@ -19,6 +19,7 @@ import "../app/globals.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllNomadEvents } from "../redux/events/thunk";
 import { getAllEvents } from "../redux/all-events/thunk";
+import HotelCardSkeleton from "../components/Skeleton/hotel-card-skeleton";
 
 export const PreviewHotels = () => {
   const swiperRef = React.useRef(null);
@@ -105,14 +106,33 @@ export const PreviewHotels = () => {
           },
         }}
       >
-        {!isLoading &&
-          events?.map((event) => (
-            <SwiperSlide key={event.id} className="flex flex-col">
+        {/* {events?.map((event) => (
+          <SwiperSlide key={event.id} className="flex flex-col">
+            {isLoading ? (
+              <HotelCardSkeleton />
+            ) : (
               <HotelCard event={event} className="" />
-            </SwiperSlide>
-          ))}
+            )}
+          </SwiperSlide>
+        ))} */}
+
+        {isLoading
+          ? [...Array(4)].map(
+              (
+                _,
+                index // Show 4 skeletons if loading
+              ) => (
+                <SwiperSlide key={index} className="flex flex-col">
+                  <HotelCardSkeleton />
+                </SwiperSlide>
+              )
+            )
+          : events?.map((event) => (
+              <SwiperSlide key={event.id} className="flex flex-col">
+                <HotelCard event={event} />
+              </SwiperSlide>
+            ))}
       </Swiper>
     </div>
   );
 };
-
