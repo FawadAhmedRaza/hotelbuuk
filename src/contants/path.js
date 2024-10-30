@@ -19,7 +19,7 @@ export const paths = {
   privacyPolicy: "/privacy-policy",
   hotels: {
     root: "/hotels",
-    getHotelById: (id) => `/hotels/${id}`,
+    getHotelById: (id, type) => `/hotels/${id}?type=${type}`,
   },
   nomad: {
     root: "/nomad",
