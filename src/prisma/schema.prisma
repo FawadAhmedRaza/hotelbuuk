@@ -25,7 +25,7 @@ model User {
   hotel_name                   String?
   user_type                    UserType?
   email                        String     @unique
-  password                     String
+  password                     String?
   profile_img                  String?
   googleId                     String?
   phone_number                 String?

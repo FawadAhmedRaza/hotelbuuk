@@ -123,6 +123,18 @@ export const getUserById = async (id) => {
     return null;
   }
 };
+export const getUserByGoogleId = async (googleId) => {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        googleId,
+      },
+    });
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const loginWithCreds = async (data) => {
   try {
