@@ -22,7 +22,7 @@ export const HotelCard = React.memo(({ event, className }) => {
         {/* <img src={hotel.imageUrl} alt={hotel.title} className="w-full h-auto" /> */}
 
         <div className="h-80 relative">
-          <div className="absolute rounded-3xl w-full inset-0 bg-gradient-to-t from-black to-transparent  opacity-75" />
+          <div className="absolute rounded-3xl w-full inset-0 bg-gradient-to-t from-black to-transparent  opacity-80" />
           <ImageRender
             src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
             type={"server"}
