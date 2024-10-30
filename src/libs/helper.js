@@ -70,3 +70,14 @@ export const getCities = async (country) => {
     return [];
   }
 };
+
+export function calculateDaysBetweenDates(date1, date2) {
+  const date1Ms = new Date(date1).getTime();
+  const date2Ms = new Date(date2).getTime();
+
+  const diffMs = Math.abs(date2Ms - date1Ms);
+
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  return diffDays;
+}
