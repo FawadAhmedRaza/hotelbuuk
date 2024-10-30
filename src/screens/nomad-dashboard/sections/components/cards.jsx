@@ -42,14 +42,12 @@ const cardsData = [
     title: "Rooms ",
     value: "25",
     btnTitle: "Create Room",
-    // path: paths.createRooms.root,
     path: "#",
   },
 ];
 
 const HotelCards = () => {
   return (
-    // grid grid-cols-12 gap-6
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
       {cardsData.map((data) => (
         <div key={data.id} className="">
@@ -62,12 +60,6 @@ const HotelCards = () => {
           />
         </div>
       ))}
-
-      {/* <Card className="md:col-span-3 col-span-12">
-        <Typography variant="h4" className="">
-           Bookings
-        </Typography>
-      </Card> */}
     </div>
   );
 };

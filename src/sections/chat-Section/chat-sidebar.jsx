@@ -1,68 +1,97 @@
-import { Iconify } from "@/src/components";
-import React from "react";
+"use client";
+import { getUserRooms } from "@/src/api/chat";
+import { ProfileAvatar, Iconify } from "@/src/components";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const mockUsers = [
-  {
-    id: 1,
-    name: "Yaroslav Zubkp",
-    message: "Is this long ipsum available...",
-    avatar:
-      "https://images.unsplash.com/photo-1628157588553-5eeea00af15c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHVzZXJzfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500",
-  },
-  {
-    id: 2,
-    name: "Alison Alison",
-    message: "Hello",
-    avatar:
-      "https://images.unsplash.com/photo-1499887142886-791eca5918cd?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHVzZXJzfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500",
-  },
-  {
-    id: 3,
-    name: "Mircel Jones",
-    message: "Ok, Thanks.",
-    avatar:
-      "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnN8ZW58MHwyfDB8fA%3D%3D&auto=format&fit=crop&w=500",
-  },
-];
+const ChatSidebar = () => {
+  const [chats, setChats] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { user } = useAuthContext();
+  const router = useRouter();
 
-const ChatSidebar = ({ setSelectedUser }) => {
+  const fetchChats = async () => {
+    try {
+      const response = await getUserRooms(user.id);
+      console.log("Response", response);
+      setChats(response.data);
+    } catch (err) {
+      console.error("Error fetching chat rooms:", err);
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchChats();
+    }, 3000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  // Filtered chats based on the search term
+  const filteredChats = chats.filter((chatRoom) => {
+    const otherUser =
+      chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
+    const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
+    return userName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   return (
     <div className="w-full bg-slate-50 border-r flex flex-col h-screen">
+      {/* Search input */}
       <div className="h-16 border-b px-4 flex items-center justify-center space-x-4">
-        <div className="border border-zinc-300 bg-transparent flex gap-2  w-full rounded-md px-3 items-center">
-          <Iconify
-            iconName="ic:baseline-search"
-            className="size-7  text-zinc-300"
-          />
+        <div className="border border-zinc-300 bg-transparent flex gap-2 w-full rounded-md px-3 items-center">
+          <Iconify iconName="ic:baseline-search" className="size-7 text-zinc-300" />
           <input
-            className=" w-full   py-1  bg-transparent outline-none"
+            className="w-full py-1 bg-transparent outline-none"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
+      {/* Chat rooms list */}
       <div className="h-full overflow-y-scroll">
-        {mockUsers.map((user) => (
-          <div
-            key={user.id}
-            onClick={() => setSelectedUser(user)}
-            className=" px-2 md:px-5 py-4 flex items-center cursor-pointer border-l-4 border-l-transparent hover:bg-slate-100"
-          >
-            <img
-              src={user.avatar}
-              className="h-12 w-12 border-2 border-white rounded-full"
-              alt={`${user.name} avatar`}
-            />
-            <div className="ml-4">
-              <p className="text-md font-semibold text-slate-600 m-0 p-0">
-                {user.name}
-              </p>
-              <p className="text-xs text-slate-400  font-semibold">
-                {user.message}
-              </p>
+        {filteredChats.map((chatRoom) => {
+          const otherUser =
+            chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
+          const latestMessage =
+            chatRoom?.messages && chatRoom?.messages.length > 0
+              ? chatRoom.messages[0].content
+              : "";
+
+          const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
+          if (!userName) {
+            return null;
+          }
+
+          return (
+            <div
+              key={chatRoom.id}
+              onClick={() => router.push(`/chat/${otherUser.id}`)}
+              className="px-5 py-4 flex items-center cursor-pointer border-l-4 border-l-transparent hover:bg-slate-100"
+            >
+              <ProfileAvatar
+                type="server"
+                src={otherUser?.profile_img}
+                alt={userName}
+                className="h-12 w-12 border-2 border-white rounded-full"
+              />
+              <div className="ml-4">
+                <p className="text-md font-semibold text-slate-600 m-0 p-0">
+                  {userName}
+                </p>
+                <p className="text-xs text-slate-400 font-semibold">
+                  {latestMessage}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
