@@ -1,0 +1,44 @@
+/* QAContent.module.css */
+
+.content {
+    /* Styles for the wrapper */
+}
+
+.content p {
+    margin-bottom: 20px; /* Tailwind's mb-20 */
+    color: #1f2937; /* Tailwind's text-gray-900 */
+    font-size: 1rem; /* Tailwind's text-base */
+    line-height: 2.5; /* Tailwind's leading-10 */
+}
+
+.content h1 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+    font-weight: 600; /* Tailwind's font-semibold */
+    color: #4f46e5; /* Replace with your primary color */
+}
+
+.content h2 {
+    font-size: 2rem; /* Tailwind's text-3xl */
+    margin-bottom: 2.5rem; /* Tailwind's mb-10 */
+    font-weight: 600; /* Tailwind's font-semibold */
+}
+
+.content h3 {
+    font-size: 1.625rem; /* Tailwind's text-26fs */
+    margin: 1.25rem 0; /* Tailwind's my-5 */
+    font-weight: 600; /* Tailwind's font-semibold */
+}
+
+.content h4 {
+    font-size: 1.25rem; /* Tailwind's text-xl */
+    font-weight: 400; /* Tailwind's font-normal */
+}
+
+.content h5 {
+    font-size: 1.125rem; /* Tailwind's text-lg */
+    font-weight: 400; /* Tailwind's font-normal */
+}
+
+.content h6 {
+    font-size: 0.875rem; /* Tailwind's text-sm */
+}

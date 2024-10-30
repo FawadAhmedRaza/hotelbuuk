@@ -30,9 +30,11 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
+    "react-tailwindcss-datepicker": "^1.7.2",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.3",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "dayjs": "^1.11.6"
   },
   "devDependencies": {
     "postcss": "^8",

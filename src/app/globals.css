@@ -1,25 +1,9 @@
+/* global.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Custom Navigation Buttons */
-/* .custom-next,
-.custom-prev {
-  display: none;
-  background-color: #852169;
-  color: hsl(0, 0%, 100%);
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  z-index: 10;
-  cursor: pointer;
-  transform: translateY(-50%);
-} */
 
+/* Custom Navigation Buttons */
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 0px;
@@ -39,9 +23,79 @@
   }
 
   .heading-bg {
-    background: linear-gradient(to right, #ffc300 0%, #ffd60a  100%);
+    background: linear-gradient(to right, #ffc300 0%, #ffd60a 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; 
+    -webkit-text-fill-color: transparent;
     text-shadow: none !important;
   }
+
+  .text-17fs {
+    font-size: 17px; /* Custom font size */
+  }
+  .text-42fs {
+    font-size: 42px; /* Custom font size */
+  }
+  .text-26fs {
+    font-size: 26px; /* Custom font size */
+  }
+  .text-20fs {
+    font-size: 20px; /* Custom font size */
+  }
+  .leading-40fs {
+    line-height: 40px; /* Custom line Height */
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* global.css */
+
+/* Paragraph Styles */
+.custom-html > p {
+  @apply text-base sm:text-lg md:text-xl !leading-10 mb-20 text-gray-900;
+}
+
+/* Heading Styles */
+.custom-html > h2 {
+  @apply text-3xl md:text-42fs mb-10 font-semibold;
+}
+
+.custom-html > h1 {
+  @apply text-3xl sm:text-4xl md:text-5xl font-semibold text-primary;
+}
+
+.custom-html > h3 {
+  @apply text-26fs sm:text-3xl md:text-2xl font-semibold my-5;
+}
+
+.custom-html > h4 {
+  @apply text-xl md:text-2xl font-normal;
+}
+
+.custom-html > h5 {
+  @apply text-lg md:text-xl font-normal;
+}
+
+.custom-html > h6 {
+  @apply text-sm md:text-base;
+}
+
+/* List Styles */
+.custom-html > ul {
+  padding-left: 20px;
+  list-style: decimal;
+}
+
+.custom-html  > li {
+  list-style: circle;
+  position: relative;
+  padding-left: 0.5rem;
+  font-size: 16px;
 }

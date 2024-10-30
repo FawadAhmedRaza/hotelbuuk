@@ -4,17 +4,17 @@ import React from "react";
 // Components and Others..
 import { AnchorTag, Iconify, Typography } from "../components";
 import { LangaugeTranslator } from ".";
-import { useBoolean } from "../hooks/use=boolean";
+import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
 import { cn } from "../libs/cn";
-import { useAuthContext } from "../auth/jwt/auth-context";
 
-export const NavBar = React.memo(({ className, isLogo }) => {
+export const NavBar = React.memo(({ className }) => {
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-5 py-5 absolute top-0 z-20 px-5 sm:px-8",
+        "w-full flex justify-between items-center gap-5 py-5 absolute top-0 z-20 px-5 sm:px-8 lg:px-14 xl:px-20 ",
         className
       )}
     >
@@ -33,18 +33,21 @@ export const NavBar = React.memo(({ className, isLogo }) => {
         <LangaugeTranslator />
         {/* Login  */}
 
-        <div
-          className="flex items-center gap-2 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
-          onClick={toggleDrawer}
-        >
+        <div className="flex items-center gap-2 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20">
           <Iconify
             iconName="material-symbols:menu"
             className="size-6 sm:size-8"
+            onClick={toggleDrawer}
           />
-          <Iconify
-            iconName="fluent:person-circle-12-filled"
-            className="size-6 sm:size-8"
-          />
+          <span className="flex items-center gap-2">
+            <Iconify
+              iconName="fluent:person-circle-12-filled"
+              className="size-6 sm:size-8"
+            />
+            <Typography variant="h6" className="font-medium text-white text-nowrap  ">
+              Hi, Fawad
+            </Typography>
+          </span>
         </div>
       </div>
     </div>

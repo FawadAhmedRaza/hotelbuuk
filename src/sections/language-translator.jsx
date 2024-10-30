@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { CustomPopover, Iconify, Typography } from "../components";
-import { useBoolean } from "../hooks/use=boolean";
+import { useBoolean } from "../hooks";
 
 const allLangs = [
   {
@@ -16,7 +16,7 @@ const allLangs = [
   },
 ];
 
-export const LangaugeTranslator = () => {
+export const LangaugeTranslator = React.memo(() => {
   const { isOpen, toggleDrawer } = useBoolean();
   const popoverRef = useRef(null);
 
@@ -32,11 +32,20 @@ export const LangaugeTranslator = () => {
         className={`flex items-center gap-2 sm:gap-3 cursor-pointer  px-2 py-1 sm:px-4 sm:py-2  rounded-lg ${"hover:bg-primary "}`}
         onClick={toggleDrawer}
       >
-        <Iconify iconName="et:global" className=" size-4 sm:size-8" />
-        <Typography variant="p" className="text-sm text-white ">
+        <Iconify
+          iconName="et:global"
+          className=" hidden sm:block size-4 sm:size-8"
+        />
+        <Typography variant="p" className="text-sm text-white  hidden sm:block">
           {activeLang?.label}
         </Typography>
-        <Iconify iconName="iconamoon:arrow-down-2" className="size-6 -ml-1" />
+        <Iconify
+          iconName="iconamoon:arrow-down-2"
+          className="size-6 -ml-1  hidden sm:block"
+        />
+        <span className=" flex sm:hidden justify-center items-center size-9 border border-white rounded-full">
+          <Iconify iconName={activeLang?.icon} className="size-5  " />
+        </span>
       </div>
       <CustomPopover
         popoverRef={popoverRef}
@@ -64,4 +73,4 @@ export const LangaugeTranslator = () => {
       </CustomPopover>
     </div>
   );
-};
+});
