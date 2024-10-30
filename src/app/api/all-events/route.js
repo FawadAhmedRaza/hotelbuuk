@@ -13,6 +13,7 @@ export async function GET() {
             hotelImages: true,
           },
         },
+        nomad: true,
       },
     });
 

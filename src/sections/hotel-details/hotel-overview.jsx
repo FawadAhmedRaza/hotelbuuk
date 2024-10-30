@@ -5,6 +5,7 @@ import React from "react";
 import { Slider } from ".";
 import { useBoolean } from "@/src/hooks";
 import { useSelector } from "react-redux";
+import ImageRender from "@/src/components/ImageRenderer";
 
 const images = [
   "/assets/images/hotel-det-1.png",
@@ -26,9 +27,19 @@ export const HotelOverview = ({ type }) => {
 
   const { event } = useSelector((state) => state.allEvents.getById);
 
+  console.log("Single evetn", event);
+  const eventImages =
+    Array.isArray(event?.event_images) && event?.event_images.length > 0
+      ? event.event_images
+      : [{ img: event?.hotel?.hotel_image }];
+
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
-      <ImageModal images={images} isOpen={isOpen} onClose={toggleDrawer} />
+      <ImageModal
+        images={eventImages || []}
+        isOpen={isOpen}
+        onClose={toggleDrawer}
+      />
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
         <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 grow">
           <Typography variant="h3">
@@ -71,31 +82,44 @@ export const HotelOverview = ({ type }) => {
           ))}
         </div>
       </div>
-      <Slider images={images} />
+      <Slider images={eventImages} />
 
       <div className="relative hidden sm:flex flex-row gap-2  w-full  h-[55vh]  xl:h-[63vh]">
         <span
           onClick={toggleDrawer}
-          className="absolute right-5 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
+          className="absolute right-5 z-20 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
         >
           <Typography variant="p" className="text-white">
             Show all Photos
           </Typography>
         </span>
-        <img
+        {/* <img
           src="/assets/images/hotel-det-1.png"
           alt="hotel-1"
           className="w-full h-full"
+        /> */}
+
+        <ImageRender
+          src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
+          type={"server"}
+          alt={`Uploaded Image `}
+          className="h-full w-full rounded-l-2xl rounded-bl-2xl "
         />
         <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-full">
-          <div className="w-full h-full">
-            <img
-              src="/assets/images/hotel-det-2.png"
-              alt="hotel-1"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="w-full h-full">
+          {eventImages?.slice(0, 4).map((img, index) => (
+            <div key={img.id} className="relative w-full h-full">
+              <ImageRender
+                src={img.img}
+                type="server"
+                alt="Uploaded Image"
+                className={`h-full w-full object-cover ${
+                  index === 1 && "rounded-tr-2xl"
+                } ${index === 3 && "rounded-br-2xl"}`}
+              />
+            </div>
+          ))}
+
+          {/* <div className="w-full h-full">
             <img
               src="/assets/images/hotel-det-3.png"
               alt="hotel-1"
@@ -115,7 +139,7 @@ export const HotelOverview = ({ type }) => {
               alt="hotel-1"
               className="w-full h-full object-cover rounded-br-xl "
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </Pannel>

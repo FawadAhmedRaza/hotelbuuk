@@ -35,7 +35,7 @@ const HotelDetail = () => {
     fetchEventById();
   }, []);
 
-  return isLoading ? <Spinner /> : <HotelDetailScreen type={type} />;
+  return isLoading ? <Spinner /> : <HotelDetailScreen  type={type} />;
 };
 
 export default HotelDetail;

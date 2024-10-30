@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Iconify } from ".";
+import ImageRender from "./ImageRenderer";
 
 export const ImageModal = ({ images, isOpen, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,10 +34,17 @@ export const ImageModal = ({ images, isOpen, onClose }) => {
 
         {/* Image Display */}
         <div className="flex items-center justify-center h-full w-full">
-          <img
+          {/* <img
             src={images[currentIndex]}
             alt={`Slide ${currentIndex}`}
             className="max-w-full max-h-full w-4/5 h-[75vh] object-cover"
+          /> */}
+          <ImageRender
+            src={images[currentIndex]?.img}
+            type={"server"}
+            alt={`Uploaded Image `}
+            className="max-w-full max-h-full w-4/5 !h-[75vh] object-cover"
+            ratio="4/5"
           />
         </div>
 
