@@ -41,6 +41,12 @@ export async function POST(req) {
       );
     }
 
+    const hotel = await prisma.hotel_info.findFirst({
+      where: {
+        user_id: user_id,
+      },
+    });
+
     const event = await prisma.hotel_event.create({
       data: {
         title,
@@ -60,6 +66,7 @@ export async function POST(req) {
         payment_policy: rules?.payment_policy,
         price: String(data?.price),
         user_id: user_id,
+        hotel_id: hotel?.id,
       },
     });
 
