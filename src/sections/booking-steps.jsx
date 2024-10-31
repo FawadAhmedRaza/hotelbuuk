@@ -21,7 +21,7 @@ export const BookingSteps = () => {
           <div className="relative ">
             {/* SVG Background Image */}
             <Image
-              src={"/assets/images/stepBack.png"}
+              src={"/assets/images/StepBack.png"}
               height={100}
               width={130}
               className="absolute -top-3 -left-1 md:-left-3 "
@@ -53,7 +53,7 @@ export const BookingSteps = () => {
           <div className="relative ">
             {/* SVG Background Image */}
             <Image
-              src={"/assets/images/stepBack.png"}
+              src={"/assets/images/StepBack.png"}
               height={100}
               width={130}
               className="absolute -top-3 md:left-3 md:-right-3 "
@@ -85,7 +85,7 @@ export const BookingSteps = () => {
           <div className="relative ">
             {/* SVG Background Image */}
             <Image
-              src={"/assets/images/stepBack.png"}
+              src={"/assets/images/StepBack.png"}
               height={100}
               width={130}
               className="absolute -top-3 -left-1 md:-left-3 " // Lower z-index for background

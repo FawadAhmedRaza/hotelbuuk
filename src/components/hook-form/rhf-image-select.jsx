@@ -133,7 +133,9 @@ export const RHFImageSelect = ({
                     ) : (
                       <ProfileAvatar
                         src={selectedHotel?.image}
-                        type="server"
+                        effect="blur"
+                        iconSize="!size-8"
+                        type={"server"}
                         className="w-7 h-7 object-cover rounded-md"
                       />
                     )}
@@ -210,7 +212,9 @@ export const RHFImageSelect = ({
                         ) : ( */}
                         <ProfileAvatar
                           src={option?.image}
-                          type="server"
+                          effect="blur"
+                          iconSize="!size-10"
+                          type={"server"}
                           className="w-10 h-10 object-cover rounded-md"
                         />
                         {/* )} */}

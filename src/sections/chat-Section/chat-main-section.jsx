@@ -127,6 +127,8 @@ const ChatMainSection = ({ id, onBack }) => {
           <ProfileAvatar
             type="server"
             src={selectedUser?.profile_img}
+            effect="blur"
+
             className="h-10 w-10 overflow-hidden rounded-full"
             alt={userName}
           />

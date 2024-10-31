@@ -44,7 +44,11 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const isActive = (path) => pathname === path;
 
   return (
-    <Drawer isDrawerOpen={isOpen} setIsDrawerOpen={setIsOpen}>
+    <Drawer
+      isDrawerOpen={isOpen}
+      setIsDrawerOpen={setIsOpen}
+      className="h-auto"
+    >
       <div className="flex justify-between items-center">
         <Typography
           variant="h3"
@@ -61,12 +65,17 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
         />
       </div>
 
-      <div className="flex flex-col h-full justify-center sm:justify-start items-center overflow-y-scroll custom-scrollbar sm:items-start gap-5 mt-10 w-full mb-10">
+      <div className="flex flex-col h-full justify-center sm:justify-start items-center overflow-y-scroll hide-scrollbar sm:items-start gap-5 mt-10 w-full mb-10 pb-12">
         {MenuLinks(UserId)?.map((item) => (
           <div key={item.id} className="w-full">
             <Link
               href={item?.path || "#"}
-              onClick={() => handleDropdownToggle(item.label)}
+              onClick={() => {
+                handleDropdownToggle(item?.label);
+                if (item?.path) {
+                  onClick();
+                }
+              }}
               className={`flex justify-between items-center ${
                 isActive(item?.path)
                   ? "bg-tertiary hover:bg-tertiary "
@@ -105,6 +114,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                     <Link
                       key={child.id}
                       href={child.path}
+                      onClick={onClick}
                       className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                         isActive(child?.path)
                           ? "bg-[#feccf4]-2 shadow-custom-shadow"
@@ -120,22 +130,10 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
           </div>
         ))}
 
-        {authenticated ? (
-          <Button onClick={handleLogout}>Logout</Button>
-        ) : (
-          AuthLinks?.map((item) => (
-            <AnchorTag
-              key={item?.id}
-              href={item?.path}
-              className={`!text-lg ${
-                isActive(item?.path)
-                  ? "!text-primary underline"
-                  : "!text-black hover:!text-primary"
-              }`}
-            >
-              {item?.label}
-            </AnchorTag>
-          ))
+        {authenticated && (
+          <Button className="mb-12" onClick={handleLogout}>
+            Logout
+          </Button>
         )}
       </div>
     </Drawer>
@@ -169,8 +167,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 6,
       label: "Nomads",
-      // path: paths.hotelDashboard.nomads.root,
-      // path: "",
+
       children: [
         { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
         {
@@ -193,7 +190,6 @@ export const MenuLinks = (UserId) => {
     {
       id: 10,
       label: "Settings",
-      path: "",
       children: [
         {
           id: 1,

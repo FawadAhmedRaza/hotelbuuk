@@ -32,6 +32,8 @@ export const HostBio = React.memo(() => {
             <ProfileAvatar
               src={event?.nomad?.profile_img}
               type={"server"}
+              effect="blur"
+
               alt={event?.nomad?.first_name}
               className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-full"
             />

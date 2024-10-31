@@ -13,7 +13,7 @@ import {
 } from "@/src/components";
 import Link from "next/link";
 import { paths } from "@/src/contants";
-import { CustomTable, Pagination } from "@/src/components/custom-table";
+// import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelById, getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { StarRating } from "@/src/components/star-rating";
@@ -26,7 +26,8 @@ import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useBoolean } from "@/src/hooks";
-import { useModal } from "@/src/hooks/use-modal";
+import { CustomTable, Pagination } from "@/src/components/custom-table";
+// import { useBoolean } from "@/src/hooks";
 
 const header = [
   { id: 1, label: "Room Name" },

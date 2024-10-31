@@ -55,6 +55,7 @@ export const paths = {
       root: "/hotel-dashboard/bookings",
     },
   },
+
   createRooms: {
     root: "/create-room",
     edit: (id) => `/create-room/${id}`,

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Components and Others..
-import { AnchorTag, Iconify, Typography } from "../components";
+import { AnchorTag, Iconify, ProfileAvatar, Typography } from "../components";
 import { LangaugeTranslator } from ".";
 import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
@@ -13,6 +13,8 @@ export const NavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
 
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+
+  console.log("User", user);
 
   return (
     <div
@@ -53,10 +55,18 @@ export const NavBar = React.memo(({ className }) => {
             className="size-5 sm:size-8"
           />
           <span className="flex items-center gap-1">
-            <Iconify
+            {/* <Iconify
               iconName="fluent:person-circle-12-filled"
               className="size-5 sm:size-8"
+            /> */}
+            <ProfileAvatar
+              src={user?.profile_img}
+              type={"server"}
+              effect="blur"
+              alt={user?.hotel_name}
+              className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
             />
+
             <Typography
               variant="p"
               className=" font-medium !text-xs text-white text-nowrap"

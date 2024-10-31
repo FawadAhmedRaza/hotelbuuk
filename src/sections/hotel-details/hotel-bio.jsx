@@ -213,7 +213,7 @@ export const HotelBio = () => {
                     ${event?.price} x {stayNights} Nights
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${event?.price * stayNights * guestCount}
+                    ${(event?.price * stayNights * guestCount).toFixed(2)}
                   </Typography>
                 </span>
                 <span className="flex justify-between items-center ">
@@ -221,7 +221,12 @@ export const HotelBio = () => {
                     HotelBuuk Service Fee
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${((event?.price * stayNights * guestCount) / 100) * 20}
+                    $
+                    {(
+                      ((event?.price * stayNights * guestCount) / 100) *
+                      20
+                    ).toFixed(2)}
+                    {/* {((event?.price * stayNights * guestCount) / 100) * 20} */}
                   </Typography>
                 </span>
               </div>
@@ -231,8 +236,10 @@ export const HotelBio = () => {
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
-                  {event?.price * stayNights * guestCount +
-                    ((event?.price * stayNights * guestCount) / 100) * 20}
+                  {(
+                    event?.price * stayNights * guestCount +
+                    ((event?.price * stayNights * guestCount) / 100) * 20
+                  ).toFixed(2)}
                 </Typography>
               </span>
             </div>

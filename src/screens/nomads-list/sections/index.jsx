@@ -96,6 +96,7 @@ const NomadsListSection = React.memo(() => {
                       <ProfileAvatar
                         src={row?.profile_img}
                         type={"server"}
+                        effect="blur"
                         alt={row?.first_name}
                         className="  h-10 w-10 rounded-full object-cover"
                       />

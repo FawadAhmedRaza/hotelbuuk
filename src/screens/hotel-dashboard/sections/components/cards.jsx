@@ -12,6 +12,7 @@ import {
 } from "@/src/actions/hotel-dashboard-actions";
 
 import DashboardCard from "@/src/components/dashboard-card";
+import SummaryCardSkeleton from "@/src/components/Skeleton/summary-card-skeleton";
 import { paths } from "@/src/contants";
 
 const HotelCards = () => {
@@ -85,7 +86,12 @@ const HotelCards = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+    // grid grid-cols-12 gap-6
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+      {/* {[1, 2, 3, 4, 5].map(() => (
+        <SummaryCardSkeleton />
+      ))} */}
+
       {cardsData.map((data) => (
         <div key={data.id}>
           <DashboardCard

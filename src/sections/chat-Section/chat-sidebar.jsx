@@ -34,8 +34,12 @@ const ChatSidebar = () => {
   // Filtered chats based on the search term
   const filteredChats = chats.filter((chatRoom) => {
     const otherUser =
-      chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
-    const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
+      chatRoom?.userAData?.id === user.id
+        ? chatRoom?.userBData
+        : chatRoom?.userAData;
+    const userName =
+      otherUser?.hotel_name ||
+      `${otherUser?.first_name} ${otherUser?.last_name}`;
     return userName.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
@@ -44,7 +48,10 @@ const ChatSidebar = () => {
       {/* Search input */}
       <div className="h-16 border-b px-4 flex items-center justify-center space-x-4">
         <div className="border border-zinc-300 bg-transparent flex gap-2 w-full rounded-md px-3 items-center">
-          <Iconify iconName="ic:baseline-search" className="size-7 text-zinc-300" />
+          <Iconify
+            iconName="ic:baseline-search"
+            className="size-7 text-zinc-300"
+          />
           <input
             className="w-full py-1 bg-transparent outline-none"
             placeholder="Search"
@@ -58,13 +65,17 @@ const ChatSidebar = () => {
       <div className="h-full overflow-y-scroll">
         {filteredChats.map((chatRoom) => {
           const otherUser =
-            chatRoom?.userAData?.id === user.id ? chatRoom?.userBData : chatRoom?.userAData;
+            chatRoom?.userAData?.id === user.id
+              ? chatRoom?.userBData
+              : chatRoom?.userAData;
           const latestMessage =
             chatRoom?.messages && chatRoom?.messages.length > 0
               ? chatRoom.messages[0].content
               : "";
 
-          const userName = otherUser?.hotel_name || `${otherUser?.first_name} ${otherUser?.last_name}`;
+          const userName =
+            otherUser?.hotel_name ||
+            `${otherUser?.first_name} ${otherUser?.last_name}`;
           if (!userName) {
             return null;
           }
@@ -79,6 +90,7 @@ const ChatSidebar = () => {
                 type="server"
                 src={otherUser?.profile_img}
                 alt={userName}
+                effect="blur"
                 className="h-12 w-12 border-2 border-white rounded-full"
               />
               <div className="ml-4">

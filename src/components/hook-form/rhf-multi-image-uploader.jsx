@@ -33,7 +33,7 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
     setValue(name, updatedImages);
   };
 
-  const handleDeleteImage = (id) => {
+  const handleDeleteImage = (id) => { 
     const imageToRemove = uploadedImages.find((img) => img.id === id);
 
     if (imageToRemove?.url) {
@@ -82,6 +82,7 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
                   src={imageSrc}
                   type={image.file ? "normal" : "server"}
                   alt={`Uploaded Image ${index}`}
+                  effect="blur"
                   className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
                 />
                 <div

@@ -75,6 +75,8 @@ const RecentBooking = () => {
                           <ProfileAvatar
                             src={person?.profile_img}
                             type={"server"}
+                            effect="blur"
+                            iconSize="!size-16"
                             alt={person?.hotel_name}
                             className="border-primary border-2 h-16 w-16 rounded-full object-cover"
                           />
