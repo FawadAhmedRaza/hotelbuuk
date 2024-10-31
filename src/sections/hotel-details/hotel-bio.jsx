@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Iconify, Typography } from "@/src/components";
+import { Button, Iconify, Typography, Card } from "@/src/components";
 import Built from "@/src/components/built";
 import { useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
@@ -101,9 +101,9 @@ export const HotelBio = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
+    <div className="flex flex-col lg:flex-row bg-white  gap-10 mt-5 ">
       {/* Left Panel - Image and Time */}
-      <div className="flex flex-col items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-l-xl p-4">
+      {/* <div className="flex flex-col h-fit items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-l-xl p-4">
         <div className="flex items-center justify-between w-full">
           <span className="text-lg font-medium flex items-center gap-2">
             <Iconify iconName="noto-v1:alarm-clock" />
@@ -111,51 +111,52 @@ export const HotelBio = () => {
           </span>
           <Button className="bg-white text-primary ">Flexible</Button>
         </div>
-        <img
-          src={hotelData?.image}
-          alt="Hotel Room"
-          className="mt-4 mx-auto "
-        />
-      </div>
-      <div className=" flex flex-col justify-start  items-start w-full   p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
-          <div className="">
-            <Typography variant="h4" className=" font-semibold text-primary">
-              Teaching Tool
-            </Typography>
-            <div className=" mt-3">
-              <Built>{event?.nomad?.video}</Built>
-              <Built>{event?.nomad?.sample}</Built>
-              <Built>{event?.nomad?.projector}</Built>
+      </div> */}
+      <div className=" w-full lg:w-[65%] ">
+        <div className=" flex flex-col mt-5 justify-start  items-start w-full  ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
+            <div className="">
+              <Typography variant="h4" className=" font-semibold text-primary">
+                Teaching Tool
+              </Typography>
+              <div className=" mt-3">
+                <Built>{event?.nomad?.video}</Built>
+                <Built>{event?.nomad?.sample}</Built>
+                <Built>{event?.nomad?.projector}</Built>
+              </div>
             </div>
-          </div>
-          <div className=" ">
-            <Typography variant="h4" className=" font-semibold text-primary">
-              Competence
-            </Typography>
-            <div className=" mt-3">
-              <Built>Market Research</Built>
-              <Built>Negotiation</Built>
+            <div className=" ">
+              <Typography variant="h4" className=" font-semibold text-primary">
+                Competence
+              </Typography>
+              <div className=" mt-3">
+                <Built>Market Research</Built>
+                <Built>Negotiation</Built>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      {/* Right Panel - Hotel Details and Booking Information */}
+
       {/* Booking Information */}
-      <div className="w-full lg:w-2/3  py-4 px-5  flex flex-col justify-between lg:border-l-2 border-neutral-400">
-        <div className="flex flex-col gap-1">
-          <Typography variant="h6" className=" font-semibold">
-            ${event?.price} Per Night
-          </Typography>
-          <Typography variant="h6" className="font-semibold text-start ">
-            {event?.title}
-          </Typography>
-          <Typography variant="h5" className="font-semibold text-center">
-            {hotelData.marketTour}
-          </Typography>
+      <div className="w-full lg:w-[35%]  py-4   flex flex-col justify-between border-neutral-400">
+        <Card className="flex flex-col gap-1 w-full">
+          <div className="w-full">
+            <Typography variant="h6" className=" font-semibold">
+              ${event?.price} Per / Night
+            </Typography>
+            <Typography variant="h6" className="font-semibold text-start ">
+              {event?.title}
+            </Typography>
+            <Typography variant="h5" className="font-semibold text-center mt-2">
+              {hotelData.marketTour}
+            </Typography>
+          </div>
 
           {/* Dates and Guests */}
-          <div className="grid grid-cols-3 bg-neutral-100 rounded-xl shadow-lg  items-center mt-4 divide-x divide-neutral-400 ">
-            <div className="flex flex-col justify-center  items-center sm:items-start  sm:p-5 lg:px-2">
+          <div className="grid grid-cols-3 bg-neutral-100 w-full rounded-xl shadow-lg  items-center mt-2 divide-x divide-neutral-400 ">
+            <div className="flex flex-col justify-center  items-center sm:items-start  sm:p-5 lg:px-3">
               <Typography
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
@@ -213,7 +214,7 @@ export const HotelBio = () => {
                     ${event?.price} x {stayNights} Nights
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${event?.price * stayNights * guestCount}
+                    ${(event?.price * stayNights * guestCount).toFixed(2)}
                   </Typography>
                 </span>
                 <span className="flex justify-between items-center ">
@@ -221,7 +222,12 @@ export const HotelBio = () => {
                     HotelBuuk Service Fee
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${((event?.price * stayNights * guestCount) / 100) * 20}
+                    $
+                    {(
+                      ((event?.price * stayNights * guestCount) / 100) *
+                      20
+                    ).toFixed(2)}
+                    {/* {((event?.price * stayNights * guestCount) / 100) * 20} */}
                   </Typography>
                 </span>
               </div>
@@ -231,21 +237,22 @@ export const HotelBio = () => {
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
-                  {event?.price * stayNights * guestCount +
-                    ((event?.price * stayNights * guestCount) / 100) * 20}
+                  {(
+                    event?.price * stayNights * guestCount +
+                    ((event?.price * stayNights * guestCount) / 100) * 20
+                  ).toFixed(2)}
                 </Typography>
               </span>
             </div>
           </div>
-        </div>
-        <Button
-          loading={loading}
-          className="!w-full"
-          onClick={handleEventReserve}
-          type="button"
-        >
-          {user ? "Reserve" : "Login to Reserve"}
-        </Button>
+        </Card>
+        {/* Reserve Button */}
+        {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
+          <Iconify iconName="mynaui:flag-solid" className="text-black" />
+          <Typography variant="p" className=" font-medium">
+            Report This Listing
+          </Typography>
+        </span> */}
       </div>
     </div>
   );

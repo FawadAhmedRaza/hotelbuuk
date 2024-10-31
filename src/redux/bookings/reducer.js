@@ -3,12 +3,14 @@ import {
   getAllBookings,
   getGuestBookingsList,
   updateBookingStatus,
+  getRecentBookings,
 } from "./thunk";
 
 const initialState = {
   isLoading: false,
   allBookings: [],
   guestBookings: [],
+  recentBookingsList: [],
   error: null,
   getById: {
     isLoading: false,
@@ -21,7 +23,11 @@ const initialState = {
   },
   getGuestBookings: {
     isLoading: false,
-    error: null
+    error: null,
+  },
+  recentBookings: {
+    isLoading: false,
+    error: null,
   },
   rejectBooking: {
     isLoading: false,
@@ -71,6 +77,19 @@ export const bookings = createSlice({
     builder.addCase(getGuestBookingsList.rejected, (state, action) => {
       state.getGuestBookings.error = action.error;
       state.getGuestBookings.isLoading = false;
+    });
+
+    // get recent bookings
+    builder.addCase(getRecentBookings.pending, (state, action) => {
+      state.recentBookings.isLoading = true;
+    });
+    builder.addCase(getRecentBookings.fulfilled, (state, action) => {
+      state.recentBookingsList = action.payload;
+      state.recentBookings.isLoading = false;
+    });
+    builder.addCase(getRecentBookings.rejected, (state, action) => {
+      state.recentBookings.error = action.error;
+      state.recentBookings.isLoading = false;
     });
   },
 });

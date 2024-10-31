@@ -16,7 +16,7 @@ export async function GET(req) {
 
     const hotelList =  await Promise.all(hotels?.map(async(hotel) => ({
       ...hotel,
-      hotel_image:await generateSignedUrl(hotel.hotel_image),
+      // hotel_image:await generateSignedUrl(hotel.hotel_image),
       hotelFacilites: hotel?.hotelFacilites?.map(
         (facilityEntry) => facilityEntry?.facility
       ),

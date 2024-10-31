@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../components/ui/popover";
-import { RHFCalendarInput } from "../components/calendar-input";
+import { BookingCalender } from "../components/booking-calendar";
 // import { RHFCalendarInput } from "../components/RHFCalendarInput";
 
 export const Booking = React.memo(() => {
@@ -60,7 +60,7 @@ export const Booking = React.memo(() => {
       onSubmit={methods.handleSubmit(handleSubmit)}
       className=""
     >
-      <div className="flex items-center !w-fit pl-0 pr-3 py-0 m-0 rounded-full shadow-none md:shadow-lg backdrop-blur-sm bg-white mx-auto">
+      <div className="flex items-center !w-fit pl-0 pr-3 py-0 m-0 rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm bg-white mx-auto">
         <div className="flex   md:flex-row flex-col w-full  gap-3 md:items-center ">
           {/* Destination Input */}
           <div className="py-2 md:pl-5 xl:pl-10 pr-10 md:hover:bg-gray-100 rounded-full">
@@ -88,7 +88,7 @@ export const Booking = React.memo(() => {
           <div className=" ">
             <Popover>
               <PopoverTrigger>
-                <RHFCalendarInput
+                <BookingCalender
                   nameStart="startDate"
                   nameEnd="endDate"
                   labelStart="Check-in"

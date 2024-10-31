@@ -1,18 +1,23 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
-import { useRef } from "react";
 import { Typography } from "@/src/components";
 
-const MountChart = () => {
+const MountChart = ({ revenue }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
+    const currentDate = new Date();
+    const currentMonthIndex = currentDate.getMonth();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const orderedMonthNames = [...monthNames.slice(currentMonthIndex), ...monthNames.slice(0, currentMonthIndex)];
+
     const chartConfig = {
       series: [
         {
           name: "Sales",
-          data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+          data: revenue || [],
         },
       ],
       chart: {
@@ -51,17 +56,7 @@ const MountChart = () => {
             fontWeight: 400,
           },
         },
-        categories: [
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
+        categories: orderedMonthNames, // Use reordered month names
       },
       yaxis: {
         labels: {
@@ -75,8 +70,8 @@ const MountChart = () => {
       },
       grid: {
         show: true,
-        borderColor: "#dcdadd",
-        strokeDashArray: 4,
+        borderColor: "#79747E",
+        strokeDashArray: 5,
         xaxis: {
           lines: {
             show: true,
@@ -98,16 +93,15 @@ const MountChart = () => {
     const chart = new ApexCharts(chartRef.current, chartConfig);
     chart.render();
 
-    // Cleanup on component unmount
     return () => {
       chart.destroy();
     };
-  }, []);
+  }, [revenue]);
 
   return (
     <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
       <div className="pt-6 px-2 pb-0">
-        <div className=" px-3">
+        <div className="px-3">
           <Typography variant="h4" className="font-semibold">
             This Month Revenue
           </Typography>

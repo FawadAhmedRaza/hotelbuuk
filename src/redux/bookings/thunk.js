@@ -22,7 +22,22 @@ export const updateBookingStatus = createAsyncThunk(
   }
 );
 
-export const getGuestBookingsList = createAsyncThunk("getGuestBookingsList", async (id) => {
-  const request = await axiosInstance.get(endpoints.guest.bookings.get_all(id));
-  return request?.data?.bookings;
-})
+export const getGuestBookingsList = createAsyncThunk(
+  "getGuestBookingsList",
+  async (id) => {
+    const request = await axiosInstance.get(
+      endpoints.guest.bookings.get_all(id)
+    );
+    return request?.data?.bookings;
+  }
+);
+
+export const getRecentBookings = createAsyncThunk(
+  "getRecentBookings",
+  async ({ id, type }) => {
+    const request = await axiosInstance.get(
+      endpoints.booking.get_recent_bookings(id, type)
+    );
+    return request?.data?.recentBookings;
+  }
+);

@@ -17,9 +17,9 @@ import {
   Iconify,
   Typography,
 } from "@/src/components";
+import { addDays } from "date-fns";
 import { RoomTypeModal } from ".";
 import CreateNewRoomFacilites from "./modals/create-new-room-facilities";
-import { addDays } from "date-fns";
 
 export const RoomInfo = () => {
   const { watch, setValue } = useFormContext();

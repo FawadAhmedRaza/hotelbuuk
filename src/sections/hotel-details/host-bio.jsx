@@ -18,11 +18,15 @@ export const HostBio = React.memo(() => {
 
   return (
     <div className="flex flex-col gap-3 w-full md:w-[550px]">
-      <Typography variant="h4" className="font-medium text-xl md:text-3xl">
-        Meet Your Host
-      </Typography>
-      <Typography variant="h6">in-house</Typography>
-      <div className="flex flex-col  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
+      <div className="flex justify-between">
+        <Typography variant="h4" className="font-medium text-xl md:text-2xl">
+          Meet Your Host
+        </Typography>
+        <Typography variant="h6" className="text-gray-400">
+          in-house
+        </Typography>
+      </div>
+      <div className="flex flex-col mt-2  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
         <div className="flex flex-col  gap-5 bg-white rounded-b-lg w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start lg:gap-16 ">
             {/* <Avatar
@@ -32,6 +36,8 @@ export const HostBio = React.memo(() => {
             <ProfileAvatar
               src={event?.nomad?.profile_img}
               type={"server"}
+              effect="blur"
+
               alt={event?.nomad?.first_name}
               className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-full"
             />

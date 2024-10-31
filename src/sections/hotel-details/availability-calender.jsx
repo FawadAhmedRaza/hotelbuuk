@@ -1,38 +1,90 @@
-"use client";
-import { Typography } from "@/src/components";
-import { ShadCnCalendar } from "@/src/components/shadcn-calander";
-import React, { useState } from "react";
+import React from "react";
+import { DateRange } from "react-date-range";
+import format from "date-fns/format";
+import { differenceInDays } from "date-fns"; // Import differenceInDays
+import { Pannel, Typography } from "@/src/components";
 
-const AvailabilityCalender = () => {
-  const [date, setDate] = useState(new Date());
+const AvailabilityCalendar = ({
+  dateRange,
+  handleDateChange,
+  isMobile,
+  clearDateRange,
+}) => {
+  const startDate = dateRange[0]?.startDate;
+  const endDate = dateRange[0]?.endDate;
+
+  // Calculate the number of nights
+  const nights =
+    startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <div>
-      <div className=" flex gap-5 w-full my-10  px-3 sm:px-10 md:flex-row flex-col  justify-between items-start">
-        <div className="  space-y-5 mt-4 ">
-          <Typography variant="h1">Select Booking Date</Typography>
-          <Typography variant="p" className=" md:pe-6">
-            Select your preferred check-in date to explore available rooms and
-            rates for your stay. We offer a wide range of options to suit both
-            short-term and extended stays, ensuring comfort and flexibility.
-            Booking early helps secure the best prices and guarantees your spot
-            during busy seasons. Whether you're traveling for leisure or
-            business, our hotel provides top-tier amenities to enhance your
-            experience. Select your dates and begin planning the perfect stay
-            with us today
-          </Typography>
-        </div>
-        <div className="flex justify-end items-center   md:pe-10">
-          <ShadCnCalendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            className="rounded-xl  border  border-gray-200 shadow-xl"
-          />
+    <Pannel className="flex flex-col md:flex-row gap-5 md:gap-10 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+      <div className="text-center md:text-left">
+        <Typography variant="h1" className="text-black">
+          Availability
+        </Typography>
+        <div className="mt-5">
+          {startDate && endDate && nights > 0 ? (
+            <div>
+              <Typography
+                variant="h3"
+                className="text-lg md:text-[] font-medium"
+              >
+                {nights} nights in Sohna
+              </Typography>
+              <Typography
+                variant="h5"
+                className="text-gray-400 text-sm md:text-base"
+              >
+                {format(startDate, "MMM d, yyyy")} -{" "}
+                {format(endDate, "MMM d, yyyy")}
+              </Typography>
+            </div>
+          ) : (
+            <span>No dates selected</span>
+          )}
         </div>
       </div>
-    </div>
+
+      <div className="w-full md:w-auto">
+        <div className="border border-gray-300 rounded-lg shadow-md p-4 bg-white mx-auto max-w-xs md:max-w-none">
+          <DateRange
+            onChange={handleDateChange}
+            months={2}
+            ranges={dateRange}
+            direction={isMobile ? "vertical" : "horizontal"}
+            rangeColors={["#000000"]}
+            showDateDisplay={false}
+            minDate={new Date()}
+            color="#000000"
+            weekdayDisplayFormat="EEE"
+            monthDisplayFormat="MMMM yyyy"
+            className=" text-[9px] sm:text-[10px] md:text-sm   text-gray-800 "
+          />
+
+          {/* Date Display Section */}
+          <div className="text-center mt-4 text-gray-800">
+            {startDate && endDate ? (
+              <div className="text-sm">
+                Selected Range: {format(startDate, "MMM d, yyyy")} -{" "}
+                {format(endDate, "MMM d, yyyy")}
+              </div>
+            ) : (
+              <span>No dates selected</span>
+            )}
+          </div>
+
+          {/* Clear Dates Button */}
+          <div
+            className="text-center mt-4 text-blue-600 cursor-pointer hover:underline"
+            onClick={clearDateRange} // Call clearDateRange on click
+          >
+            Clear dates
+          </div>
+        </div>
+      </div>
+    </Pannel>
   );
 };
 
-export default AvailabilityCalender;
+export default AvailabilityCalendar;

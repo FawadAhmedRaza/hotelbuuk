@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import {
-  Button,
-  Iconify,
-  Pannel,
-  Typography,
-} from "../../components";
+import { Button, Iconify, Pannel, Typography } from "../../components";
 import * as Yup from "yup";
 import {
   RHFDatePicker,
@@ -19,6 +14,7 @@ import { addDays } from "date-fns";
 import { Popover, PopoverTrigger } from "@/src/components/ui/popover";
 import { RHFCalendarInput } from "@/src/components/calendar-input";
 import { PopoverContent } from "@radix-ui/react-popover";
+import { BookingCalender } from "@/src/components/booking-calendar";
 
 export const BookNow = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -55,7 +51,10 @@ export const BookNow = React.memo(() => {
     },
   });
 
-  const { reset, formState: { errors } } = methods;
+  const {
+    reset,
+    formState: { errors },
+  } = methods;
 
   console.log(errors); // Display validation errors in the console
 
@@ -83,8 +82,14 @@ export const BookNow = React.memo(() => {
             {/* Destination Field */}
             <div className="flex flex-col gap-2 items-start w-full sm:w-fit min-900:min-w-40 lg:min-w-48 min-1100:min-w-56">
               <span className="flex items-center gap-3">
-                <Iconify iconName="carbon:location-filled" className="text-primary mt-0.5" />
-                <Typography variant="p" className="text-sm text-start text-custom-neutral w-full">
+                <Iconify
+                  iconName="carbon:location-filled"
+                  className="text-primary mt-0.5"
+                />
+                <Typography
+                  variant="p"
+                  className="text-sm text-start text-custom-neutral w-full"
+                >
                   Destination
                 </Typography>
               </span>
@@ -100,17 +105,26 @@ export const BookNow = React.memo(() => {
             <span className="hidden sm:flex h-16 w-[2px] bg-primary mr-8 min-900:mr-0" />
 
             {/* Calendar Fields */}
-            <div ref={datePopoverRef} className="relative flex flex-col gap-2 items-start w-full sm:w-fit">
+            <div
+              ref={datePopoverRef}
+              className="relative flex flex-col gap-2 items-start w-full sm:w-fit"
+            >
               <span className="flex items-center gap-3">
-                <Iconify iconName="octicon:checklist-16" className="text-primary mt-0.5" />
-                <Typography variant="p" className="text-sm text-start text-custom-neutral w-full">
+                <Iconify
+                  iconName="octicon:checklist-16"
+                  className="text-primary mt-0.5"
+                />
+                <Typography
+                  variant="p"
+                  className="text-sm text-start text-custom-neutral w-full"
+                >
                   Night
                 </Typography>
               </span>
               <div className="bg-transparent">
                 <Popover>
                   <PopoverTrigger>
-                    <RHFCalendarInput
+                    <BookingCalender
                       nameStart="startDate"
                       nameEnd="endDate"
                       labelStart="From :"

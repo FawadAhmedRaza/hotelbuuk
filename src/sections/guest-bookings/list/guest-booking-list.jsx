@@ -4,13 +4,21 @@ import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { Button, Iconify, ProfileAvatar, Typography } from "@/src/components";
 import { useDispatch, useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
+import { formatDate } from "@/src/utils/formate-date";
 
 const header = [
-  { id: 1, label: "Event" },
-  { id: 2, label: "Location" },
-  { id: 3, label: "Booking Status" },
-  { id: 4, label: "Guests" },
-  { id: 4, label: "Total" },
+  { id: 1, label: "Booking id" },
+  { id: 2, label: "Event" },
+  { id: 3, label: "Location" },
+  { id: 4, label: "Status" },
+  { id: 5, label: "Nomad" },
+  { id: 6, label: "Check-in" },
+  { id: 7, label: "Check-out" },
+  { id: 8, label: "Total guests" },
+  { id: 9, label: "Total days" },
+  { id: 10, label: "Event price" },
+  { id: 11, label: "Service fee" },
+  { id: 12, label: "Total price" },
 ];
 
 const GuestBookingList = () => {
@@ -40,11 +48,23 @@ const GuestBookingList = () => {
         TABLE_HEADER={header}
         enableSelection={false}
         renderRow={(row) => {
+          let user =
+            row?.hotel_event?.nomad ||
+            (row?.nomad_event?.accomodation_type === "bnb"
+              ? row?.user
+              : row?.user);
           return (
             <>
               <td className=" px-6 py-4">
                 <Typography variant="body1" className="!text-nowrap max-w-56">
-                  {row?.nomad_event?.title || row?.hotel_event?.title}
+                  #
+                  {row?.hotel_event?.id?.slice(0, 6)?.toUpperCase() ||
+                    row?.nomad_event?.id?.slice(0, 6)?.toUpperCase()}
+                </Typography>
+              </td>
+              <td className=" px-6 py-4">
+                <Typography variant="body1" className="!text-nowrap max-w-56">
+                  {row?.hotel_event?.title || row?.nomad_event?.title}
                 </Typography>
               </td>
               <td className="px-6 py-4">
@@ -72,12 +92,67 @@ const GuestBookingList = () => {
                 </Typography>
               </td>
               <td className=" px-6 py-4">
-                <Typography variant="body1" className="!text-nowrap max-w-56">
+                <div className="flex gap-2 max-w-60 md:w-52">
+                  <ProfileAvatar
+                    src={user?.profile_img}
+                    type={"server"}
+                    alt={user?.first_name || user?.hotel_name}
+                    className="  h-10 w-10 rounded-full object-cover"
+                  />
+                  <div className="">
+                    <Typography variant="p" className="!text-nowrap max-w-56">
+                      {user?.first_name + "" + user?.last_name ||
+                        user?.hotel_name}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="!text-xs !text-nowrap max-w-56"
+                    >
+                      {user?.email}
+                    </Typography>
+                  </div>
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="!text-nowrap max-w-56">
+                  {formatDate(
+                    row?.hotel_event?.start_date || row?.nomad_event?.start_date
+                  )}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="!text-nowrap max-w-56">
+                  {formatDate(
+                    row?.hotel_event?.end_date || row?.nomad_event?.end_date
+                  )}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
                   {row?.no_of_guests}
                 </Typography>
               </td>
-              <td className=" px-6 py-4">
-                <Typography variant="body1" className="!text-nowrap max-w-56">
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
+                  {calculateDaysBetweenDates(
+                    row?.hotel_event?.start_date ||
+                      row?.nomad_event?.start_date,
+                    row?.hotel_event?.end_date || row?.nomad_event?.end_date
+                  )}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
+                  $ {row?.hotel_event?.price || row?.nomad_event?.price}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
+                  20 %
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
                   $ {row?.total_price}
                 </Typography>
               </td>

@@ -2,116 +2,95 @@ import React from "react";
 import { Card, Pannel, Typography } from "../components";
 import Image from "next/image";
 
+const bookingStepsData = [
+  {
+    id: 1,
+    title: "Seamless Booking Experience",
+    description:
+      "Our Connect team specializes in making your life easier after you're matched with your new apartment. Get hooked up with the best rates on utilities, insurance, and all the services you need for a stress-free move.",
+
+    image: "/assets/images/bedroom.png",
+    reverse: false, // Controls layout direction
+  },
+  {
+    id: 2,
+    title: "Choose your room!",
+    description:
+      "During tours, guests get personalized itinerary and in-depth insights on key industry trends, consumer behavior and the relevant local markets.",
+
+    descriptionTwo:
+      "Guests can access market overviews and industry analysis to prepare for valuable engagements.",
+    image: "/assets/images/bedroom.png",
+    reverse: true,
+  },
+  {
+    id: 3,
+    title: "Effortless Check-In and Tour Assistance ",
+    description:
+      "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
+    image: "/assets/images/checkIn.jpg",
+    reverse: false,
+  },
+];
+
 export const BookingSteps = () => {
   return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center ">
-      <div>
-        <Typography variant="h2" className="font-semibold text-center">
-          Book in 3 Simple Steps
+    <Pannel className="flex flex-col gap-10">
+      <div className="px-8">
+        <Typography variant="h2" className="font-semibold text-start">
+          What to expect
         </Typography>
         <Typography
           variant="h6"
-          className="font-normal text-center mt-2 text-neutral-400"
+          className="font-normal text-start mt-2 text-neutral-400"
         >
-          Easily secure your stay with our quick 3-step booking process.
+          we'll exceed your high expectations
         </Typography>
       </div>
-      <div className=" xl:px-10 md:space-y-0 space-y-5  w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
-        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%] ">
-          <div className="relative ">
-            {/* SVG Background Image */}
-            <Image
-              src={"/assets/images/stepBack.png"}
-              height={100}
-              width={130}
-              className="absolute -top-3 -left-1 md:-left-3 "
-            />
-
-            {/* Foreground Content */}
-            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
-              <img
-                src={"/assets/images/bedroom.png"}
-                className="h-full w-full object-fill"
+      <div className="xl:px-10 md:space-y-0 space-y-5 w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
+        {bookingStepsData.map((step, index) => (
+          <div
+            key={step.id}
+            className={`flex flex-col justify-center items-center min-900:flex-row gap-10 w-full md:w-full ${
+              step.reverse ? "min-900:flex-row-reverse" : ""
+            }`}
+          >
+            {/* Background SVG Image */}
+            <div className="relative">
+              <Image
+                src={"/assets/images/stepBack.png"}
+                height={100}
+                width={130}
+                className={`absolute -top-3 ${
+                  step.reverse ? "md:right-3 md:-left-3" : "md:-left-3"
+                }`}
               />
+
+              {/* Foreground Content */}
+              <div className="custom-border-shape overflow-hidden h-full md:h-56 w-full md:w-96 relative z-10">
+                <img
+                  src={step.image}
+                  className="h-full w-full object-cover"
+                  alt={step.title}
+                />
+              </div>
+            </div>
+
+            <div>
+              <Typography variant="h3" className="font-medium">
+                {step.title}
+              </Typography>
+              <Typography variant="p" className="mt-2">
+                {step.description}
+              </Typography>
+              {step.descriptionTwo && (
+                <Typography variant="p" className="mt-3">
+                  {step.descriptionTwo}
+                </Typography>
+              )}
             </div>
           </div>
-
-          <div>
-            <Typography variant="h3" className="font-medium">
-              Free internet and utility setup!
-            </Typography>
-            <Typography variant="p" className=" mt-2">
-              Our Connect team specializes in making your life easier after
-              you're matched with your new apartment. Get hooked up with the
-              best rates on utilities, insurance, and all the services you need
-              for a stress-free move.
-            </Typography>
-          </div>
-        </div>
-
-        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row-reverse gap-10 w-full  md:w-[90%]">
-          <div className="relative ">
-            {/* SVG Background Image */}
-            <Image
-              src={"/assets/images/stepBack.png"}
-              height={100}
-              width={130}
-              className="absolute -top-3 md:left-3 md:-right-3 "
-            />
-
-            {/* Foreground Content */}
-            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
-              <img
-                src={"/assets/images/bedroom.png"}
-                className="h-full w-full object-fill"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Typography variant="h3" className="font-medium">
-              Free internet and utility setup!
-            </Typography>
-            <Typography variant="p" className=" mt-2">
-              Our Connect team specializes in making your life easier after
-              you're matched with your new apartment. Get hooked up with the
-              best rates on utilities, insurance, and all the services you need
-              for a stress-free move.
-            </Typography>
-          </div>
-        </div>
-
-        <div className=" flex  flex-col justify-center min-900:justify-start items-center  min-900:flex-row gap-10 w-full  md:w-[90%]">
-          <div className="relative ">
-            {/* SVG Background Image */}
-            <Image
-              src={"/assets/images/stepBack.png"}
-              height={100}
-              width={130}
-              className="absolute -top-3 -left-1 md:-left-3 " // Lower z-index for background
-            />
-
-            {/* Foreground Content */}
-            <div className="custom-border-shape overflow-hidden h-full md:h-56  w-full md:w-96 relative z-10">
-              <img
-                src={"/assets/images/bedroom.png"}
-                className="h-full w-full object-fill"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Typography variant="h3" className="font-medium">
-              Free internet and utility setup!
-            </Typography>
-            <Typography variant="p" className=" mt-2">
-              Our Connect team specializes in making your life easier after
-              you're matched with your new apartment. Get hooked up with the
-              best rates on utilities, insurance, and all the services you need
-              for a stress-free move.
-            </Typography>
-          </div>
-        </div>
+        ))}
       </div>
     </Pannel>
   );

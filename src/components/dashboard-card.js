@@ -2,11 +2,8 @@
 
 import React from "react";
 import { AnchorTag, Card, Iconify, Typography } from ".";
-import { BgIcon } from "./bg-icon";
 
 const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
-  console.log(path);
-
   return (
     <div>
       <Card className="md:col-span-3 col-span-12 flex-col flex gap-1 py-5 px-4 ">
@@ -27,7 +24,7 @@ const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
               </p>
             </div>
             <Typography variant="h4" className="!text-black   !font-semibold">
-              {value}
+              {title === "Revenue" && "$"} {value}
             </Typography>
           </div>
         </div>
