@@ -82,6 +82,8 @@ const HotelBookingList = () => {
                   <ProfileAvatar
                     src={row?.guest?.profile_img}
                     type={"server"}
+                    effect="blur"
+
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
                   />

@@ -33,6 +33,7 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
           direction={isMobile ? "vertical" : "horizontal"}
           rangeColors={rangeColors}
           className="w-fit "
+          calendarWrapper="mb-10"
         />
       )}
     />

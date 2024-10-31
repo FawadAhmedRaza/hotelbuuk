@@ -43,6 +43,7 @@ export const ImageModal = ({ images, isOpen, onClose }) => {
             key={images[currentIndex]?.img} // Force re-render when src changes
             src={images[currentIndex]?.img}
             type={"server"}
+            effect="blur"
             alt="Lazy Loaded Image"
             wrapperProps={{
               style: { transitionDelay: "0.5s" }, // Adjust fade delay

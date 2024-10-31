@@ -33,7 +33,7 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
     setValue(name, updatedImages);
   };
 
-  const handleDeleteImage = (id) => {
+  const handleDeleteImage = (id) => { 
     const imageToRemove = uploadedImages.find((img) => img.id === id);
 
     if (imageToRemove?.url) {

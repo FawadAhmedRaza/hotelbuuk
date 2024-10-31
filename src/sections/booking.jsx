@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../components/ui/popover";
-import { RHFCalendarInput } from "../components/calendar-input";
+import { BookingCalender } from "../components/booking-calendar";
 // import { RHFCalendarInput } from "../components/RHFCalendarInput";
 
 export const Booking = React.memo(() => {
@@ -88,7 +88,7 @@ export const Booking = React.memo(() => {
           <div className=" ">
             <Popover>
               <PopoverTrigger>
-                <RHFCalendarInput
+                <BookingCalender
                   nameStart="startDate"
                   nameEnd="endDate"
                   labelStart="Check-in"

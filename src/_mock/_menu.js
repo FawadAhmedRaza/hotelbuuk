@@ -18,6 +18,8 @@ export const MenuLinks = (user) => {
         path:
           userType === "HOTEL"
             ? paths.hotelDashboard.root
+            : userType === "GUEST"
+            ? paths.guestDashboard.root
             : paths.nomadDashboard.root,
       },
       {

@@ -39,6 +39,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
   const router = useRouter();
 
+  console.log(defaultValues);
+
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
 
@@ -97,6 +99,16 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     setValue("availability.date.start_date", date[0].startDate.toString());
     setValue("availability.date.end_date", date[0].endDate.toString());
   }, [date]);
+
+  useEffect(() => {
+    setDate([
+      {
+        startDate: defaultValues.start_date,
+        endDate: defaultValues.end_date,
+        key: "selection",
+      },
+    ]);
+  }, []);
 
   const onSubmit = handleSubmit(async (data) => {
     if (!defaultValues) {

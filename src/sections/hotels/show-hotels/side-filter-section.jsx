@@ -1,15 +1,20 @@
 "use client";
-import { Typography } from "@/src/components";
-import { RHFRadio, RHFSelect } from "@/src/components/hook-form";
+import { Iconify, Typography } from "@/src/components";
+import { RHFInput, RHFRadio, RHFSelect } from "@/src/components/hook-form";
 import { CheckBoxButton } from "@/src/components/ui/check-box-button";
 import React, { useState } from "react";
 
 const SideFilterSection = () => {
+  const [searchEvent, setSearchEvent] = useState("");
+
   const [rangeValue, setRangeValue] = useState(40); // Initialize with 40
 
   const handleChange = (event) => {
     setRangeValue(event.target.value); // Update state with slider value
   };
+
+  console.log(rangeValue, searchEvent);
+
   return (
     <div className=" ">
       <div className="flex flex-col items-center space-y-4 ">
@@ -18,6 +23,19 @@ const SideFilterSection = () => {
             <Typography variant="h6" className="font-semibold">
               Filter
             </Typography>
+            <div className="flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral">
+              <Iconify
+                iconName="lucide:search"
+                className="!size-5 text-gray-500"
+              />
+              <input
+                type="text"
+                value={searchEvent}
+                onChange={(e) => setSearchEvent(e.target.value)}
+                className="w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent"
+                placeholder="Search Event"
+              />
+            </div>
             <div className=" mt-4">
               <Typography variant="p">Price Range</Typography>
               <div className="relative w-full">

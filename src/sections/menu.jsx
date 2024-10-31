@@ -39,6 +39,7 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
             <AnchorTag
               key={item?.id}
               href={item?.path}
+              onClick={onClick}
               className={` !text-lg  ${
                 location?.pathname == item?.path
                   ? "!text-primary underline"
@@ -57,6 +58,7 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
               <AnchorTag
                 key={item?.id}
                 href={item?.path}
+                onClick={onClick}
                 className={` !text-lg  ${
                   location?.pathname == item?.path
                     ? "!text-primary underline"

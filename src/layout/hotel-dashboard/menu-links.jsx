@@ -70,7 +70,12 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
           <div key={item.id} className="w-full">
             <Link
               href={item?.path || "#"}
-              onClick={() => handleDropdownToggle(item.label)}
+              onClick={() => {
+                handleDropdownToggle(item?.label);
+                if (item?.path) {
+                  onClick();
+                }
+              }}
               className={`flex justify-between items-center ${
                 isActive(item?.path)
                   ? "bg-tertiary hover:bg-tertiary "
@@ -109,6 +114,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                     <Link
                       key={child.id}
                       href={child.path}
+                      onClick={onClick}
                       className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                         isActive(child?.path)
                           ? "bg-[#feccf4]-2 shadow-custom-shadow"
@@ -124,7 +130,11 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
           </div>
         ))}
 
-        {authenticated && <Button className="mb-10" onClick={handleLogout}>Logout</Button>}
+        {authenticated && (
+          <Button className="mb-12" onClick={handleLogout}>
+            Logout
+          </Button>
+        )}
       </div>
     </Drawer>
   );
@@ -157,8 +167,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 6,
       label: "Nomads",
-      // path: paths.hotelDashboard.nomads.root,
-      // path: "",
+
       children: [
         { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
         {
@@ -181,7 +190,6 @@ export const MenuLinks = (UserId) => {
     {
       id: 10,
       label: "Settings",
-      path: "",
       children: [
         {
           id: 1,

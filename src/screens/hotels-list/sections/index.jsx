@@ -86,6 +86,7 @@ const HotelsListSection = React.memo(() => {
                       <ProfileAvatar
                         src={row?.hotel_image}
                         type={"server"}
+                        effect="blur"
                         alt={row?.hotel_name}
                         className="  h-10 w-10 rounded-full object-cover"
                       />
@@ -129,8 +130,10 @@ const HotelsListSection = React.memo(() => {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row.description}
+                    <Typography variant="p" className="  !text-nowrap ">
+                      {row?.description?.length > 40
+                        ? `${row?.description?.slice(0, 40)}...`
+                        : row?.description}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">

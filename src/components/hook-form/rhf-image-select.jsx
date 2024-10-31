@@ -135,7 +135,7 @@ export const RHFImageSelect = ({
                         src={selectedHotel?.image}
                         effect="blur"
                         iconSize="!size-8"
-                        type={selectedHotel?.image ? "normal" : "server"}
+                        type={"server"}
                         className="w-7 h-7 object-cover rounded-md"
                       />
                     )}
@@ -214,7 +214,7 @@ export const RHFImageSelect = ({
                           src={option?.image}
                           effect="blur"
                           iconSize="!size-10"
-                          type={option?.image ? "normal" : "server"}
+                          type={"server"}
                           className="w-10 h-10 object-cover rounded-md"
                         />
                         {/* )} */}
