@@ -133,8 +133,6 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
 // Helper function to generate menu links with dynamic paths
 
 export const MenuLinks = (UserId) => {
-  const { user } = useAuthContext();
-
   return [
     {
       id: 1,
@@ -149,7 +147,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 3,
       label: "Bookings",
-      path: "",
+      path: paths.hotelDashboard.bookings.root,
     },
     {
       id: 4,

@@ -1,12 +1,15 @@
 "use client";
 
-import React from "react";
-import { Button, Iconify, Pannel, Typography } from "@/src/components";
+import React, { useState } from "react";
+import { Button, Iconify, Typography } from "@/src/components";
 import Built from "@/src/components/built";
 import { useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useSearchParams } from "next/navigation";
+import { enqueueSnackbar } from "notistack";
+import axiosInstance, { endpoints } from "@/src/utils/axios";
 
-// Mock data for hotel details
 const hotelData = {
   time: "10am - 4pm",
   flexible: true,
@@ -37,12 +40,65 @@ const hotelData = {
 };
 
 export const HotelBio = () => {
+  const { user } = useAuthContext();
+  const params = useSearchParams();
+
+  let event_type = params.get("type");
+  const [loading, setLoading] = useState(false);
+
   const { event } = useSelector((state) => state.allEvents.getById);
 
   const stayNights = calculateDaysBetweenDates(
     event?.start_date,
     event?.end_date
   );
+
+  const [guestCount, setGuestCount] = useState(1);
+
+  const handleCalculation = (number) => {
+    setGuestCount(number);
+  };
+
+  const handleEventReserve = async () => {
+    setLoading(true);
+    try {
+      if (user?.user_type === "GUEST") {
+        let data = {
+          no_of_guests: guestCount,
+          event_type: event_type,
+          total_price:
+            event?.price * stayNights * guestCount +
+            ((event?.price * stayNights * guestCount) / 100) * 20,
+          guest_id: user?.guest?.[0].id,
+          user_id: event?.user_id,
+        };
+        if (event_type === "NOMAD") {
+          data.nomad_event_id = event?.id;
+        } else {
+          data.hotel_event_id = event?.id;
+        }
+        const request = await axiosInstance.post(
+          endpoints.booking.book_event,
+          data
+        );
+        if (request?.status === 201) {
+          enqueueSnackbar("Your booking request has been sent successfully", {
+            variant: "success",
+          });
+        }
+      } else {
+        console.log("triggred without guest");
+        enqueueSnackbar("Only guest users can book this event", {
+          variant: "warning",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-custom-shadow-sm mt-20 ">
@@ -61,7 +117,6 @@ export const HotelBio = () => {
           className="mt-4 mx-auto "
         />
       </div>
-      {/* Right Panel - Hotel Details and Booking Information */}
       <div className=" flex flex-col justify-start  items-start w-full   p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
           <div className="">
@@ -140,15 +195,13 @@ export const HotelBio = () => {
               >
                 Guests
               </Typography>
-              <span className="flex   items-center gap-3 cursor-pointer">
-                <Typography variant="p" className=" font-medium">
-                  1 guest
-                </Typography>
-                <Iconify
-                  iconName="mdi:arrow-down-drop"
-                  className="text-black"
-                />
-              </span>
+              <input
+                type="number"
+                className="!outline-none !border-none !text-[16px]"
+                placeholder="5"
+                onChange={(e) => handleCalculation(e.target.value)}
+                value={guestCount}
+              />
             </div>
             <Typography variant="p" className="text-secondary text-center">
               price includes business room & meetings
@@ -160,7 +213,7 @@ export const HotelBio = () => {
                     ${event?.price} x {stayNights} Nights
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${event?.price * stayNights}
+                    ${event?.price * stayNights * guestCount}
                   </Typography>
                 </span>
                 <span className="flex justify-between items-center ">
@@ -168,7 +221,7 @@ export const HotelBio = () => {
                     HotelBuuk Service Fee
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${((event?.price * stayNights) / 100) * 20}
+                    ${((event?.price * stayNights * guestCount) / 100) * 20}
                   </Typography>
                 </span>
               </div>
@@ -178,21 +231,21 @@ export const HotelBio = () => {
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
-                  {((event?.price * stayNights) / 100) * 20 +
-                    event?.price * stayNights}
+                  {event?.price * stayNights * guestCount +
+                    ((event?.price * stayNights * guestCount) / 100) * 20}
                 </Typography>
               </span>
             </div>
           </div>
         </div>
-        {/* Reserve Button */}
-        <Button className="!w-full">Reserve</Button>
-        {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
-          <Iconify iconName="mynaui:flag-solid" className="text-black" />
-          <Typography variant="p" className=" font-medium">
-            Report This Listing
-          </Typography>
-        </span> */}
+        <Button
+          loading={loading}
+          className="!w-full"
+          onClick={handleEventReserve}
+          type="button"
+        >
+          {user ? "Reserve" : "Login to Reserve"}
+        </Button>
       </div>
     </div>
   );
