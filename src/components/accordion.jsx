@@ -15,9 +15,9 @@ export const Accordion = React.memo(
     }, [isOpen, setIsOpen]);
 
     return (
-      <div className={`!max-w-full object-contain bg-white flex flex-col justify-center drop-shadow-md px-2 py-4 rounded-2xl ${className}`}>
-        <div className="flex items-center justify-between cursor-pointer px-5 py-3" onClick={toggleDrawer}>
-          <Typography variant="h6" className="text-primary font-semibold">
+      <div className={` w-full object-contain  flex flex-col justify-center  px-0 py-1  ${className}`}>
+        <div className="flex items-center justify-between cursor-pointer px-2 py-2" onClick={toggleDrawer}>
+          <Typography variant="h6" className="text-black font-medium">
             {title}
           </Typography>
 
@@ -25,14 +25,14 @@ export const Accordion = React.memo(
             {deleteTopic && (
               <Iconify
                 iconName="system-uicons:cross"
-                className="size-6 text-primary font-bold"
+                className="size-6 text-black font-bold"
                 onClick={() => deleteTopic(id)}
               />
             )}
 
             <Iconify
               iconName="iconamoon:arrow-down-2-bold"
-              className="size-6 text-primary"
+              className="size-6 text-black"
             />
           </div>
         </div>

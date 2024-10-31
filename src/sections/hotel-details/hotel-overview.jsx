@@ -40,9 +40,9 @@ export const HotelOverview = ({ type }) => {
         isOpen={isOpen}
         onClose={toggleDrawer}
       />
-      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3 ">
         <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 grow">
-          <Typography variant="h3">
+          <Typography variant="h4" className="25px font-medium">
             {type === "NOMAD"
               ? event?.accomodation_type === "bnb"
                 ? `${event?.city}`
@@ -53,9 +53,9 @@ export const HotelOverview = ({ type }) => {
             <span className="flex items-center gap-3">
               <Iconify
                 iconName="mdi:location"
-                className="text-black size-3.5"
+                className="text-gray-400 size-3.5"
               />
-              <Typography className=" font-medium" variant="p">
+              <Typography className=" font-medium text-gray-400" variant="p">
                 {type === "NOMAD"
                   ? event?.accomodation_type === "bnb"
                     ? `${event?.address} ${event?.city} ${event?.country}`
@@ -63,8 +63,8 @@ export const HotelOverview = ({ type }) => {
                   : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`}
               </Typography>
             </span>
-            <span className="flex items-center gap-3">
-              <Iconify iconName="gg:phone" className="text-black size-3.5" />
+            <span className="flex items-center gap-3 text-gray-400">
+              <Iconify iconName="gg:phone" className=" size-3.5 text-gray-400" />
               <Typography className=" text-nowrap font-medium" variant="p">
                 {event?.hotel?.hotel_contact_no}
               </Typography>

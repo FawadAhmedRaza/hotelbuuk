@@ -11,14 +11,11 @@ import {
   HotelDetail,
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
-import AvailabilityCalender from "../sections/hotel-details/availability-calender";
-import { DateRange } from "react-date-range";
-import { Pannel } from "../components";
+import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
 const HotelDetailScreen = React.memo(({ type }) => {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Initialize dateRange as an array with a single selection object
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -28,8 +25,17 @@ const HotelDetailScreen = React.memo(({ type }) => {
   ]);
 
   const handleDateChange = (ranges) => {
-    // Update dateRange state as an array containing the selection
     setDateRange([ranges.selection]);
+  };
+
+  const clearDateRange = () => {
+    setDateRange([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection",
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -38,24 +44,28 @@ const HotelDetailScreen = React.memo(({ type }) => {
     };
 
     handleResize();
-
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <HotelOverview type={type} />
-        <HotelDetail />
-        <Itinerary />
-        <AvailabilityCalender />
-        <PopularAmenities />
-
-        <BusinessFacts className="bg-white " />
-        <ThingsKnow />
-        <GuestReviews />
+        <div className=" px-10">
+          <HotelOverview type={type} />
+          <HotelDetail />
+          <Itinerary />
+          <AvailabilityCalendar
+            dateRange={dateRange}
+            handleDateChange={handleDateChange}
+            isMobile={isMobile}
+            clearDateRange={clearDateRange} // Pass clearDateRange as prop
+          />
+          <PopularAmenities />
+          <BusinessFacts className="bg-white" />
+          <ThingsKnow />
+          <GuestReviews />
+        </div>
       </Layout>
     </div>
   );

@@ -24,9 +24,7 @@ const HomeScreen = React.memo(() => {
         <Banner />
         <BusinessFacts />
         <BookingSteps />
-        <Pannel className="">
-          {/* <ShadCnCarousel /> */}
-        </Pannel>
+
         <MeetOurPatners />
       </Layout>
     </main>

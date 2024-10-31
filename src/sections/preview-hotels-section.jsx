@@ -6,15 +6,15 @@ import Link from "next/link";
 
 export const PreviewHotelsSection = React.memo(() => {
   return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg ">
-      <div>
+    <Pannel className="flex flex-col gap-10   ">
+      <div className="flex justify-start  flex-col mt-5">
         <Typography
           variant="h2"
-          className="font-semibold text-center !text-black"
+          className="font-semibold text-start !text-black"
         >
           Stay For Business Meetings
         </Typography>
-        <Typography variant="h6" className="font-normal text-center mt-2 text-neutral-400">
+        <Typography variant="h6" className="font-normal text-start mt-2 text-neutral-400">
           Find Business Hotels with Local Market Insights.
         </Typography>
       </div>
