@@ -8,7 +8,6 @@ import {
   RHFMultipleImageUploader,
 } from "@/src/components/hook-form";
 import { Breadcrumb, Pannel, Stepper, Typography } from "@/src/components";
-import { RoomInfo } from "./room-info";
 import ImageUploader from "../../event/stepper-view/image-uploader";
 import { useDispatch } from "react-redux";
 import { createRoom, getAllRoomTypes } from "@/src/redux/hotel-rooms/thunk";
@@ -18,6 +17,7 @@ import { enqueueSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
 import { getAllRoomFacilities } from "@/src/redux/room-facilities/thunk";
+import { RoomInfo } from ".";
 
 export const RoomStepperView = () => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { generateSignedUrl } from "../utils/upload-images";
 import { Iconify } from ".";
@@ -22,119 +22,124 @@ function getRatio(ratio = "1/1") {
   }[ratio];
 }
 
-export const ProfileAvatar = forwardRef(
-  (
-    {
-      ratio,
-      overlay,
-      disabledEffect = false,
-      alt,
-      src,
-      afterLoad,
-      delayTime,
-      threshold,
-      beforeLoad,
-      type,
-      delayMethod,
-      placeholder,
-      wrapperProps,
-      scrollPosition,
-      effect = "opacity", // Change this to "opacity" or remove for a sharper image
-      visibleByDefault,
-      wrapperClassName,
-      useIntersectionObserver,
-      sx,
-      ...other
-    },
-    ref
-  ) => {
-    const [signedUrl, setSignedUrl] = useState(null);
+export const ProfileAvatar = React.memo(
+  forwardRef(
+    (
+      {
+        ratio,
+        overlay,
+        disabledEffect = false,
+        alt,
+        src,
+        afterLoad,
+        delayTime,
+        threshold,
+        beforeLoad,
+        type,
+        delayMethod,
+        placeholder,
+        wrapperProps,
+        scrollPosition,
+        effect = "opacity", // Change this to "opacity" or remove for a sharper image
+        visibleByDefault,
+        wrapperClassName,
+        useIntersectionObserver,
+        sx,
+        iconSize,
+        ...other
+      },
+      ref
+    ) => {
+      const [signedUrl, setSignedUrl] = useState(null);
 
-    const [loading, setLoading] = useState(false);
-    const overlayStyles = overlay
-      ? `absolute inset-0 z-10 bg-opacity-50 ${overlay}`
-      : "";
+      const [loading, setLoading] = useState(false);
+      const overlayStyles = overlay
+        ? `absolute inset-0 z-10 bg-opacity-50 ${overlay}`
+        : "";
 
-    useEffect(() => {
-      (async () => {
-        if (type === "server") {
-          setLoading(true);
-          try {
-            const url = await generateSignedUrl(src);
-            setSignedUrl(url);
-          } catch (err) {
-            console.log("error", err);
-          } finally {
-            setLoading(false);
+      useEffect(() => {
+        (async () => {
+          if (type === "server") {
+            setLoading(true);
+            try {
+              const url = await generateSignedUrl(src);
+              setSignedUrl(url);
+            } catch (err) {
+              console.log("error", err);
+            } finally {
+              setLoading(false);
+            }
           }
-        }
-      })();
-    }, [src]);
+        })();
+      }, [src]);
 
-    const content = (
-      <LazyLoadImage
-        alt={alt}
-        width={"100%"}
-        height={"100%"}
-        style={{
-          objectFit: "cover",
-        }}
-        src={
-          loading
-            ? "/assets/placeholder.svg"
-            : type == "server"
-            ? signedUrl
-            : src
-        }
-        afterLoad={afterLoad}
-        delayTime={delayTime}
-        threshold={threshold}
-        beforeLoad={beforeLoad}
-        delayMethod={delayMethod}
-        placeholder={placeholder}
-        wrapperProps={wrapperProps}
-        scrollPosition={scrollPosition}
-        visibleByDefault={visibleByDefault}
-        effect={disabledEffect ? undefined : effect}
-        useIntersectionObserver={useIntersectionObserver}
-        wrapperClassName={wrapperClassName || "component-image-wrapper"}
-        placeholderSrc={
-          disabledEffect ? "/assets/transparent.png" : "/assets/placeholder.svg"
-        }
-        className={`w-full h-full object-cover ${
-          ratio ? "absolute top-0 left-0" : ""
-        }`}
-        {...other}
-      />
-    );
-
-    if (!src || src.error) {
-      return (
-        <Iconify
-          iconName="carbon:user-avatar-filled"
-          className="!size-16  rounded-full object-cover text-gray-500"
+      const content = (
+        <LazyLoadImage
+          alt={alt}
+          width={"100%"}
+          height={"100%"}
+          style={{
+            objectFit: "cover",
+          }}
+          src={
+            loading
+              ? "/assets/placeholder.svg"
+              : type == "server"
+              ? signedUrl
+              : src
+          }
+          afterLoad={afterLoad}
+          delayTime={delayTime}
+          threshold={threshold}
+          beforeLoad={beforeLoad}
+          delayMethod={delayMethod}
+          placeholder={placeholder}
+          wrapperProps={wrapperProps}
+          scrollPosition={scrollPosition}
+          visibleByDefault={visibleByDefault}
+          effect={disabledEffect ? undefined : effect}
+          useIntersectionObserver={useIntersectionObserver}
+          wrapperClassName={wrapperClassName || "component-image-wrapper"}
+          placeholderSrc={
+            disabledEffect
+              ? "/assets/transparent.png"
+              : "/assets/placeholder.svg"
+          }
+          className={`w-full h-full object-cover ${
+            ratio ? "absolute top-0 left-0" : ""
+          }`}
+          {...other}
         />
       );
-    }
 
-    return (
-      <span
-        ref={ref}
-        className={`relative inline-block align-bottom overflow-hidden ${
-          ratio ? "w-full" : ""
-        } ${sx || ""}`}
-        {...other}
-      >
-        {overlay && <div className={overlayStyles} />}
-        {content}
+      if (!src || src.error) {
+        return (
+          <Iconify
+            iconName="carbon:user-avatar-filled"
+            className={`size-10  rounded-full object-cover text-gray-500 ${iconSize}`}
+          />
+        );
+      }
+
+      return (
         <span
-          className={`component-image-wrapper w-full h-full align-bottom bg-cover ${
-            ratio ? `pt-[${getRatio(ratio)}]` : ""
-          }`}
-        />
-      </span>
-    );
-  }
+          ref={ref}
+          className={`relative inline-block align-bottom overflow-hidden ${
+            ratio ? "w-full" : ""
+          } ${sx || ""}`}
+          {...other}
+        >
+          {overlay && <div className={overlayStyles} />}
+          {content}
+          <span
+            className={`component-image-wrapper w-full h-full align-bottom bg-cover ${
+              ratio ? `pt-[${getRatio(ratio)}]` : ""
+            }`}
+          />
+        </span>
+      );
+    }
+  )
 );
 
 ProfileAvatar.displayName = "ImageRenderComponent";

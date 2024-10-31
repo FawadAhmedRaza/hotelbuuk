@@ -82,7 +82,9 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
               <ProfileAvatar
                 src={user?.profile_img}
                 type={"server"}
+                effect="blur"
                 alt={user?.first_name}
+                iconSize="!size-8"
                 className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
               />
             ) : (
