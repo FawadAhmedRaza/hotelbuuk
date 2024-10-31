@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
@@ -11,11 +11,31 @@ import ThisMonthBooking from "./components/chart/this-mount-bookin";
 import { CheckInChart } from "./components/chart/check-In";
 import { CheckOutChart } from "./components/chart/check-out";
 import ProfileAlert from "./components/profile-alert";
+import { useDispatch } from "react-redux";
+import { getRecentBookings } from "@/src/redux/bookings/thunk";
+import { enqueueSnackbar } from "notistack";
 
 const HotelDashboardSections = () => {
   const { user } = useAuthContext();
 
   const [showAlert, setShowAlert] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const fetchRecentBookings = async () => {
+    try {
+      await dispatch(
+        getRecentBookings({ id: user?.id, type: "HOTEL" })
+      ).unwrap();
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
+
+  useEffect(() => {
+    fetchRecentBookings();
+  }, []);
 
   return (
     <Pannel>

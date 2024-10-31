@@ -13,13 +13,14 @@ import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
+import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
 
-  const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
-
+  const { nomads } = useSelector((state) => state.nomadProfile);
+  const { isLoading } = useSelector((state) => state.bookings.recentBookings);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -41,8 +42,14 @@ const RecentBooking = () => {
     <div className=" my-10">
       <div className="lg:grid grid-cols-12 gap-4  ">
         <div className="grid-cols-12 md:col-span-8">
-          <Typography variant="h4">Recent Booking</Typography>
-          <RecentBookingListView />
+          {isLoading ? (
+            <RoomListSkeleton />
+          ) : (
+            <>
+              <Typography variant="h4">Recent Booking</Typography>
+              <RecentBookingListView />
+            </>
+          )}
         </div>
 
         <div className="grid-cols-12 md:col-span-4 ">
@@ -74,12 +81,12 @@ const RecentBooking = () => {
                             className="!size-16 border-primary border-2 h-16 w-16 rounded-full object-cover text-gray-500"
                           />
                         ) : ( */}
-                          <ProfileAvatar
-                            src={person?.profile_img}
-                            type={"server"}
-                            alt={person?.hotel_name}
-                            className="border-primary border-2 h-16 w-16 rounded-full object-cover"
-                          />
+                        <ProfileAvatar
+                          src={person?.profile_img}
+                          type={"server"}
+                          alt={person?.hotel_name}
+                          className="border-primary border-2 h-16 w-16 rounded-full object-cover"
+                        />
                         {/* )} */}
                         <div className="flex flex-1 flex-col grow">
                           <div className=" flex grow mr-3  justify-between items-center w-full ">

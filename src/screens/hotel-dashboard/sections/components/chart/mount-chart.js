@@ -1,18 +1,34 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ApexCharts from "apexcharts";
 import { useRef } from "react";
 import { Typography } from "@/src/components";
+import { getHotelMonthlyRevenue } from "@/src/actions/hotel-dashboard-actions";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
 const MountChart = () => {
   const chartRef = useRef(null);
+  const { user } = useAuthContext();
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const revenue = await getHotelMonthlyRevenue(user?.id);
+
+      // Round the revenue to two decimal places
+      const roundedRevenue = parseFloat(revenue.toFixed(2));
+      console.log("Rounded Revenue:", roundedRevenue);
+
+      setMonthlyRevenue([roundedRevenue]); // Ensure it's in an array for the chart data
+    };
+
+    fetchData();
+
     const chartConfig = {
       series: [
         {
           name: "Sales",
-          data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+          data: monthlyRevenue,
         },
       ],
       chart: {
@@ -98,11 +114,10 @@ const MountChart = () => {
     const chart = new ApexCharts(chartRef.current, chartConfig);
     chart.render();
 
-    // Cleanup on component unmount
     return () => {
       chart.destroy();
     };
-  }, []);
+  }, [monthlyRevenue]);
 
   return (
     <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">

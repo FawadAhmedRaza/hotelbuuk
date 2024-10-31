@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 
-import { CustomTable, Pagination } from "@/src/components/custom-table";
-import { Button, Iconify, ProfileAvatar, Typography } from "@/src/components";
 import { useDispatch, useSelector } from "react-redux";
-import { calculateDaysBetweenDates } from "@/src/libs/helper";
-import { enqueueSnackbar } from "notistack";
-import { updateBookingStatus } from "@/src/redux/bookings/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
+import { updateBookingStatus } from "@/src/redux/bookings/thunk";
+import { enqueueSnackbar } from "notistack";
+
+import { CustomTable, Pagination } from "@/src/components/custom-table";
+import { Button, ProfileAvatar, Typography } from "@/src/components";
+
+import { calculateDaysBetweenDates } from "@/src/libs/helper";
+import { formatDate } from "@/src/utils/formate-date";
 
 const header = [
   { id: 1, label: "Guest" },
-  { id: 2, label: "E-mail" },
-  { id: 3, label: "Total guests" },
-  { id: 4, label: "Event days" },
-  { id: 5, label: "Event price" },
-  { id: 6, label: "Service fee" },
-  { id: 7, label: "Total price" },
-  { id: 8, label: "Event" },
-  { id: 9, label: "Status" },
+  { id: 2, label: "Booking id" },
+  { id: 3, label: "Event" },
+  { id: 4, label: "Check-in" },
+  { id: 5, label: "Check-out" },
+  { id: 6, label: "Nomad" },
+  { id: 7, label: "Total guests" },
+  { id: 8, label: "Total days" },
+  { id: 9, label: "Event price" },
+  { id: 10, label: "Service fee" },
+  { id: 11, label: "Total price" },
+  { id: 12, label: "Status" },
 ];
 
 const HotelBookingList = () => {
@@ -30,9 +37,6 @@ const HotelBookingList = () => {
   const { allBookings } = useSelector((state) => state.bookings);
 
   const { isLoading } = useSelector((state) => state.bookings.updateStatus);
-  const { isLoading: deleteLoading } = useSelector(
-    (state) => state.bookings.rejectBooking
-  );
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(allBookings?.length / rowsPerPage);
@@ -55,12 +59,15 @@ const HotelBookingList = () => {
         organizer: user,
         eventTitle: row?.hotel_event?.title,
         event_type: "HOTEL",
-        status
+        status,
       };
-      await dispatch(
-        updateBookingStatus({ id: row?.id, data: data })
-      ).unwrap();
-      enqueueSnackbar(`Booking ${status === "ACCEPTED" ? "accepted" : "rejected"} successfully`, { variant: "success" });
+      await dispatch(updateBookingStatus({ id: row?.id, data: data })).unwrap();
+      enqueueSnackbar(
+        `Booking ${
+          status === "ACCEPTED" ? "accepted" : "rejected"
+        } successfully`,
+        { variant: "success" }
+      );
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
@@ -74,31 +81,71 @@ const HotelBookingList = () => {
         TABLE_HEADER={header}
         enableSelection={false}
         renderRow={(row) => {
-          console.log("row", row);
           return (
             <>
               <td className=" px-6 py-4">
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 max-w-60 md:w-52">
                   <ProfileAvatar
                     src={row?.guest?.profile_img}
                     type={"server"}
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
                   />
-                  <div className="flex gap-1">
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row?.guest?.first_name}
+                  <div className="">
+                    <Typography variant="p" className="!text-nowrap max-w-56">
+                      {row?.guest?.first_name + "" + row?.guest?.last_name}
                     </Typography>
-                    <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row?.guest?.last_name}
+                    <Typography
+                      variant="p"
+                      className="!text-xs !text-nowrap max-w-56"
+                    >
+                      {row?.guest?.email}
                     </Typography>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4">
                 <Typography variant="p" className="!text-nowrap max-w-56">
-                  {row?.guest?.email}
+                  #{row?.hotel_event?.id?.slice(0, 6)?.toUpperCase()}
                 </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="  !text-nowrap max-w-56">
+                  {row?.hotel_event?.title}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="!text-nowrap max-w-56">
+                  {formatDate(row?.hotel_event?.start_date)}
+                </Typography>
+              </td>
+              <td className="px-6 py-4">
+                <Typography variant="p" className="!text-nowrap max-w-56">
+                  {formatDate(row?.hotel_event?.end_date)}
+                </Typography>
+              </td>
+              <td className=" px-6 py-4">
+                <div className="flex gap-2 max-w-60 md:w-52">
+                  <ProfileAvatar
+                    src={row?.hotel_event?.nomad?.profile_img}
+                    type={"server"}
+                    alt={row?.hotel_event?.nomad?.first_name}
+                    className="  h-10 w-10 rounded-full object-cover"
+                  />
+                  <div className="">
+                    <Typography variant="p" className="!text-nowrap max-w-56">
+                      {row?.hotel_event?.nomad?.first_name +
+                        "" +
+                        row?.hotel_event?.nomad?.last_name}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="!text-xs !text-nowrap max-w-56"
+                    >
+                      {row?.hotel_event?.nomad?.email}
+                    </Typography>
+                  </div>
+                </div>
               </td>
               <td className="px-6 py-4">
                 <Typography variant="p" className="  !text-nowrap max-w-56">
@@ -126,11 +173,6 @@ const HotelBookingList = () => {
               <td className="px-6 py-4">
                 <Typography variant="p" className="  !text-nowrap max-w-56">
                   $ {row?.total_price}
-                </Typography>
-              </td>
-              <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row?.hotel_event?.title}
                 </Typography>
               </td>
               <td className=" px-6 py-4">

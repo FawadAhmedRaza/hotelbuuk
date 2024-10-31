@@ -1,60 +1,93 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
+import {
+  getTotalBookings,
+  getTotalHotelRevenue,
+  getTotalNomads,
+  getTotalRooms,
+} from "@/src/actions/hotel-dashboard-actions";
+
 import DashboardCard from "@/src/components/dashboard-card";
 import { paths } from "@/src/contants";
-import { useRouter } from "next/navigation";
 
 const HotelCards = () => {
-  const router = useRouter();
+  const { user } = useAuthContext();
+
+  const [bookingsCount, setBookingsCount] = useState(0);
+  const [nomadsCount, setNomadsCount] = useState(0);
+  const [roomsCount, setRoomsCount] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+
+  const fetchBookings = async () => {
+    const totalBookings = await getTotalBookings(user?.id);
+    setBookingsCount(totalBookings?.length || 0);
+  };
+
+  const fetchNomads = async () => {
+    const totalNomads = await getTotalNomads();
+    setNomadsCount(totalNomads?.length || 0);
+  };
+
+  const fetchRooms = async () => {
+    const totalRooms = await getTotalRooms(user?.id);
+    setRoomsCount(totalRooms?.length || 0);
+  };
+
+  const fetchTotalRevenue = async () => {
+    const total = await getTotalHotelRevenue(user?.id);
+    setTotalRevenue(total.toFixed(0, 2) || 0);
+  };
+
+  useEffect(() => {
+    fetchBookings();
+    fetchNomads();
+    fetchRooms();
+    fetchTotalRevenue();
+  }, [user?.id]);
 
   const cardsData = [
     {
       id: 1,
       icon: "mdi:shop-complete",
       title: "Booking",
-      value: "40",
+      value: bookingsCount,
       btnTitle: "View Details",
-      path: "#",
-    },
-    {
-      id: 2,
-      icon: "mingcute:invite-line",
-      title: "Listing",
-      value: "41",
-      btnTitle: "View Details",
-      path: "#",
+      path: paths.hotelDashboard.bookings.root,
     },
     {
       id: 3,
       icon: "ic:outline-card-membership",
       title: "Nomad ",
-      value: "33",
+      value: nomadsCount,
       btnTitle: "View Details",
-      path: paths.hotelDashboard.internalNomads,
+      path: paths.hotelDashboard.nomads.root,
     },
     {
       id: 4,
       icon: "mingcute:invite-line",
       title: "Revenue ",
-      value: "41",
+      value: `$ ${totalRevenue}`,
       btnTitle: "View Details",
-      path: "#",
+      path: paths.hotelDashboard.bookings.root,
     },
     {
       id: 5,
       icon: "material-symbols:meeting-room",
       title: "Rooms ",
-      value: "25",
+      value: roomsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.rooms,
     },
   ];
 
   return (
-    // grid grid-cols-12 gap-6
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
       {cardsData.map((data) => (
-        <div key={data.id} className="">
+        <div key={data.id}>
           <DashboardCard
             IconName={data.icon}
             title={data.title}

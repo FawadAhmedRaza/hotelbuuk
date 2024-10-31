@@ -36,6 +36,8 @@ export async function GET(req) {
             hotel: true,
           },
         },
+        guest: true,
+        user: true,
       },
     });
 

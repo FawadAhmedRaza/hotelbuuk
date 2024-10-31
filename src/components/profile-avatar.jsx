@@ -112,7 +112,7 @@ export const ProfileAvatar = forwardRef(
       return (
         <Iconify
           iconName="carbon:user-avatar-filled"
-          className="!size-16  rounded-full object-cover text-gray-500"
+          className="h-10 w-10 rounded-full object-cover text-gray-500"
         />
       );
     }
