@@ -20,7 +20,7 @@ const GuestDashboardSection = () => {
       {!user?.is_user_profile_completed && (
         <GuestProfileAlert setShowAlert={setShowAlert} />
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
           <MountChart />
         </div>
@@ -33,7 +33,7 @@ const GuestDashboardSection = () => {
         <div>
           <CheckOutChart />
         </div>
-      </div>
+      </div> */}
     </Pannel>
   );
 };

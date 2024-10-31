@@ -1,6 +1,8 @@
 "use server";
 import { prisma } from "../db";
 
+import { endOfMonth, startOfMonth } from "date-fns";
+
 export async function getTotalBookings(userId) {
   return await prisma.booking.findMany({
     where: {
@@ -51,14 +53,59 @@ export async function getHotelMonthlyRevenue(user_id) {
         lt: new Date(currentYear, currentMonth + 1, 1),
       },
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
 
-  const totalRevenue = totalBookings.reduce(
-    (acc, item) => acc + (item.total_price || 0),
-    0
-  );
+  let cumulativeRevenue = 0;
+  const revenueArray = totalBookings?.map((item) => {
+    cumulativeRevenue += item.total_price || 0;
+    return cumulativeRevenue;
+  });
 
-  const twentyPercent = totalRevenue * 0.2;
+  const revenuePercentageArray = revenueArray?.map((value) => value * 0.2);
+  return revenuePercentageArray;
+}
 
-  return twentyPercent;
+export async function getHotelTotalCheckIns(user_id) {
+  const now = new Date();
+  const startOfCurrentMonth = startOfMonth(now).toUTCString();
+  const endOfCurrentMonth = endOfMonth(now).toUTCString();
+
+  const bookings = await prisma.booking.count({
+    where: {
+      user_id,
+      booking_status: "ACCEPTED",
+      hotel_event: {
+        start_date: {
+          gte: startOfCurrentMonth,
+          lte: endOfCurrentMonth,
+        },
+      },
+    },
+  });
+
+  return bookings;
+}
+
+export async function getHotelTotalCheckOuts(user_id) {
+  const now = new Date();
+  const startOfCurrentMonth = startOfMonth(now).toUTCString();
+  const endOfCurrentMonth = endOfMonth(now).toUTCString();
+
+  const bookings = await prisma.booking.count({
+    where: {
+      user_id,
+      booking_status: "ACCEPTED",
+      hotel_event: {
+        end_date: {
+          gte: startOfCurrentMonth,
+          lte: endOfCurrentMonth,
+        },
+      },
+    },
+  });
+
+  return bookings;
 }

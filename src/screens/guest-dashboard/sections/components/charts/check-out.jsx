@@ -30,21 +30,33 @@ const chartConfig = {
   },
 };
 
-export const CheckInChart = ({ totalCheckIns }) => {
+export const CheckOutChart = ({ totalCheckOuts }) => {
   const now = new Date();
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
-  const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
-  
-  const chartData = [{ month: currentMonthName, desktop: totalCheckIns, mobile: 0 }];
+  const currentMonthName = monthNames[now.getMonth()];
+
+  const chartData = [
+    { month: currentMonthName, desktop: totalCheckOuts, mobile: 0 },
+  ];
 
   return (
     <ShadcnCard className="">
       <CardHeader>
         <Typography variant="h4" className="font-semibold mb-3">
-          Check-In
+          Check-Out
         </Typography>
       </CardHeader>
       <ChartContainer config={chartConfig}>

@@ -36,7 +36,7 @@ export const CheckInChart = ({ totalCheckIns }) => {
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
-  const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
+  const currentMonthName = monthNames[now.getMonth()];
   
   const chartData = [{ month: currentMonthName, desktop: totalCheckIns, mobile: 0 }];
 

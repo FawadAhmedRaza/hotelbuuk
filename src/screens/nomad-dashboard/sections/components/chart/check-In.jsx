@@ -9,14 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import {
-  ShadcnCard,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../../../../components/ui/card";
+import { ShadcnCard, CardHeader } from "../../../../../components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -25,18 +18,6 @@ import {
 import { Typography } from "@/src/components";
 
 export const description = "A line chart with a label";
-
-const chartData = [
-  { month: "Apr", desktop: 186, mobile: 80 },
-  { month: "May", desktop: 305, mobile: 200 },
-  { month: "Jan", desktop: 237, mobile: 120 },
-  { month: "jul", desktop: 73, mobile: 190 },
-  { month: "Aug", desktop: 209, mobile: 130 },
-  { month: "Sep", desktop: 214, mobile: 140 },
-  { month: "Oct", desktop: 64, mobile: 140 },
-  { month: "Nov", desktop: 214, mobile: 140 },
-  { month: "Dec", desktop: 314, mobile: 140 },
-];
 
 const chartConfig = {
   desktop: {
@@ -49,7 +30,16 @@ const chartConfig = {
   },
 };
 
-export const CheckInChart = () => {
+export const CheckInChart = ({ totalCheckIns }) => {
+  const now = new Date();
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
+  
+  const chartData = [{ month: currentMonthName, desktop: totalCheckIns, mobile: 0 }];
+
   return (
     <ShadcnCard className="">
       <CardHeader>
@@ -59,7 +49,6 @@ export const CheckInChart = () => {
       </CardHeader>
       <ChartContainer config={chartConfig}>
         <LineChart
-          accessibilityLayer
           data={chartData}
           margin={{
             top: 20,
@@ -67,12 +56,7 @@ export const CheckInChart = () => {
             right: 12,
           }}
         >
-          <CartesianGrid
-            // stroke="#852169"
-            strokeDasharray="5 5"
-            vertical
-            horizontal
-          />
+          <CartesianGrid strokeDasharray="5 5" />
           <XAxis
             dataKey="month"
             tickLine={false}
@@ -93,7 +77,7 @@ export const CheckInChart = () => {
           />
           <Line
             dataKey="desktop"
-            type="natural"
+            type="monotone" // Change to "monotone" for a wavy line
             stroke="hsl(var(--chart-1))"
             strokeWidth={3}
             dot={{

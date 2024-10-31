@@ -1,34 +1,23 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
-import { useRef } from "react";
 import { Typography } from "@/src/components";
-import { getHotelMonthlyRevenue } from "@/src/actions/hotel-dashboard-actions";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-const MountChart = () => {
+const MountChart = ({ revenue }) => {
   const chartRef = useRef(null);
-  const { user } = useAuthContext();
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const revenue = await getHotelMonthlyRevenue(user?.id);
+    const currentDate = new Date();
+    const currentMonthIndex = currentDate.getMonth();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-      // Round the revenue to two decimal places
-      const roundedRevenue = parseFloat(revenue.toFixed(2));
-      console.log("Rounded Revenue:", roundedRevenue);
-
-      setMonthlyRevenue([roundedRevenue]); // Ensure it's in an array for the chart data
-    };
-
-    fetchData();
+    const orderedMonthNames = [...monthNames.slice(currentMonthIndex), ...monthNames.slice(0, currentMonthIndex)];
 
     const chartConfig = {
       series: [
         {
           name: "Sales",
-          data: monthlyRevenue,
+          data: revenue || [],
         },
       ],
       chart: {
@@ -67,17 +56,7 @@ const MountChart = () => {
             fontWeight: 400,
           },
         },
-        categories: [
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
+        categories: orderedMonthNames, // Use reordered month names
       },
       yaxis: {
         labels: {
@@ -117,12 +96,12 @@ const MountChart = () => {
     return () => {
       chart.destroy();
     };
-  }, [monthlyRevenue]);
+  }, [revenue]);
 
   return (
     <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
       <div className="pt-6 px-2 pb-0">
-        <div className=" px-3">
+        <div className="px-3">
           <Typography variant="h4" className="font-semibold">
             This Month Revenue
           </Typography>

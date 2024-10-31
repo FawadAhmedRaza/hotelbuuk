@@ -78,7 +78,7 @@ export const RecentBookingListView = React.memo(() => {
               </td>
               <td className="px-6 py-4">
                 <Typography variant="p" className="!text-nowrap max-w-56">
-                  #{row?.nomad_event?.id?.slice(0, 6)?.toUpperCase()}
+                  #{row?.id?.slice(0, 6)?.toUpperCase()}
                 </Typography>
               </td>
               <td className="px-6 py-4">

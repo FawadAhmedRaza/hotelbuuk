@@ -14,6 +14,12 @@ import ProfileAlert from "./components/profile-alert";
 import { useDispatch } from "react-redux";
 import { getRecentBookings } from "@/src/redux/bookings/thunk";
 import { enqueueSnackbar } from "notistack";
+import {
+  getHotelMonthlyRevenue,
+  getHotelTotalCheckIns,
+  getHotelTotalCheckOuts,
+  getTotalBookings,
+} from "@/src/actions/hotel-dashboard-actions";
 
 const HotelDashboardSections = () => {
   const { user } = useAuthContext();
@@ -21,6 +27,11 @@ const HotelDashboardSections = () => {
   const [showAlert, setShowAlert] = useState(true);
 
   const dispatch = useDispatch();
+
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [totalBookings, setTotalBookings] = useState([]);
+  const [totalCheckIns, setTotalCheckIns] = useState([]);
+  const [totalCheckOuts, setTotalCheckOuts] = useState([]);
 
   const fetchRecentBookings = async () => {
     try {
@@ -33,8 +44,32 @@ const HotelDashboardSections = () => {
     }
   };
 
+  const fetchMonthlyRevenue = async () => {
+    const revenue = await getHotelMonthlyRevenue(user?.id);
+    setMonthlyRevenue(revenue);
+  };
+
+  const fetchTotalBookings = async () => {
+    const totalBookings = await getTotalBookings(user?.id);
+    setTotalBookings(totalBookings || []);
+  };
+
+  const fetchTotalCheckIns = async () => {
+    let total = await getHotelTotalCheckIns(user?.id);
+    setTotalCheckIns(total);
+  };
+
+  const fetchTotalCheckOuts = async () => {
+    let total = await getHotelTotalCheckOuts(user?.id);
+    setTotalCheckOuts(total);
+  };
+
   useEffect(() => {
     fetchRecentBookings();
+    fetchMonthlyRevenue();
+    fetchTotalBookings();
+    fetchTotalCheckIns();
+    fetchTotalCheckOuts();
   }, []);
 
   return (
@@ -46,16 +81,16 @@ const HotelDashboardSections = () => {
       <RecentBooking />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <MountChart />
+          <MountChart revenue={monthlyRevenue} />
         </div>
         <div>
-          <ThisMonthBooking />
+          <ThisMonthBooking bookingsArr={totalBookings} />
         </div>
         <div>
-          <CheckInChart />
+          <CheckInChart totalCheckIns={totalCheckIns} />
         </div>
         <div>
-          <CheckOutChart />
+          <CheckOutChart totalCheckOuts={totalCheckOuts} />
         </div>
       </div>
     </Pannel>
