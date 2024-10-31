@@ -66,8 +66,6 @@ const GuestBookingListOverview = () => {
     },
   ];
 
-  console.log("guest bokkings", guestBookings);
-
   useEffect(() => {
     fetchAllBookings();
   }, []);

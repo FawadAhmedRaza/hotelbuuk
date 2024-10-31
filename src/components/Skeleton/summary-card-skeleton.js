@@ -8,8 +8,7 @@ const SummaryCardSkeleton = ({ className }) => {
       <Card className="md:col-span-3 col-span-12 flex-col flex gap-1 py-5 px-4">
         {/* Icon and Title Section */}
         <div className="flex gap-4 items-center w-full flex-auto md:flex-initial">
-          <div className="rounded-full border-2 w-min h-min p-1.5 border-primary">
-            {/* Icon Placeholder */}
+          <div className="rounded-full w-min h-min p-1.5">
             <div className="bg-gray-300 rounded-full w-8 h-8"></div>
           </div>
           <div className="flex gap-7 items-center">

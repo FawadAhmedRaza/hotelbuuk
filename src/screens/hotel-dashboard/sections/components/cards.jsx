@@ -18,10 +18,10 @@ import { paths } from "@/src/contants";
 const HotelCards = () => {
   const { user } = useAuthContext();
 
-  const [bookingsCount, setBookingsCount] = useState(0);
-  const [nomadsCount, setNomadsCount] = useState(0);
-  const [roomsCount, setRoomsCount] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [bookingsCount, setBookingsCount] = useState(null);
+  const [nomadsCount, setNomadsCount] = useState(null);
+  const [roomsCount, setRoomsCount] = useState(null);
+  const [totalRevenue, setTotalRevenue] = useState(null);
 
   const fetchBookings = async () => {
     const totalBookings = await getTotalBookings(user?.id);
@@ -35,6 +35,7 @@ const HotelCards = () => {
 
   const fetchRooms = async () => {
     const totalRooms = await getTotalRooms(user?.id);
+    console.log("totalrooms", totalRooms);
     setRoomsCount(totalRooms?.length || 0);
   };
 
@@ -60,25 +61,25 @@ const HotelCards = () => {
       path: paths.hotelDashboard.bookings.root,
     },
     {
-      id: 3,
+      id: 2,
       icon: "ic:outline-card-membership",
-      title: "Nomad ",
+      title: "Nomad",
       value: nomadsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.nomads.root,
     },
     {
-      id: 4,
+      id: 3,
       icon: "mingcute:invite-line",
-      title: "Revenue ",
-      value: `$ ${totalRevenue}`,
+      title: "Revenue",
+      value: totalRevenue,
       btnTitle: "View Details",
       path: paths.hotelDashboard.bookings.root,
     },
     {
-      id: 5,
+      id: 4,
       icon: "material-symbols:meeting-room",
-      title: "Rooms ",
+      title: "Rooms",
       value: roomsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.rooms,
@@ -86,21 +87,20 @@ const HotelCards = () => {
   ];
 
   return (
-    // grid grid-cols-12 gap-6
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
-      {/* {[1, 2, 3, 4, 5].map(() => (
-        <SummaryCardSkeleton />
-      ))} */}
-
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
       {cardsData.map((data) => (
-        <div key={data.id}>
-          <DashboardCard
-            IconName={data.icon}
-            title={data.title}
-            value={data.value}
-            btnTitle={data.btnTitle}
-            path={data.path}
-          />
+        <div key={data.id} className="">
+          {data.value === undefined || data?.value === null ? (
+            <SummaryCardSkeleton />
+          ) : (
+            <DashboardCard
+              IconName={data.icon}
+              title={data.title}
+              value={data.value}
+              btnTitle={data.btnTitle}
+              path={data.path}
+            />
+          )}
         </div>
       ))}
     </div>

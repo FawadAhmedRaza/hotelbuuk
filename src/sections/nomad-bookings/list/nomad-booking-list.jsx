@@ -29,23 +29,14 @@ const header = [
 const NomadBookingList = () => {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
-  const dispatch = useDispatch();
-  const { user } = useAuthContext();
 
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const { allBookings } = useSelector((state) => state.bookings);
-  const { allBookings } = useSelector((state) => state.bookings);
 
   const { isLoading } = useSelector((state) => state.bookings.updateStatus);
-  const { isLoading } = useSelector((state) => state.bookings.updateStatus);
 
-  const totalPages = React.useMemo(() => {
-    return Math.ceil(allBookings?.length / rowsPerPage);
-  }, [allBookings, rowsPerPage]);
   const totalPages = React.useMemo(() => {
     return Math.ceil(allBookings?.length / rowsPerPage);
   }, [allBookings, rowsPerPage]);
@@ -55,40 +46,11 @@ const NomadBookingList = () => {
     const end = start + rowsPerPage;
     return allBookings?.slice(start, end);
   }, [page, allBookings, rowsPerPage]);
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return allBookings?.slice(start, end);
-  }, [page, allBookings, rowsPerPage]);
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
 
-  const updateStatus = async (row, status) => {
-    try {
-      let data = {
-        guest: row?.guest,
-        organizer: user,
-        eventTitle: row?.nomad_event?.title,
-        event_type: "NOMAD",
-        status,
-      };
-      await dispatch(updateBookingStatus({ id: row?.id, data: data })).unwrap();
-      enqueueSnackbar(
-        `Booking ${
-          status === "ACCEPTED" ? "accepted" : "rejected"
-        } successfully`,
-        { variant: "success" }
-      );
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
-    }
-  };
   const updateStatus = async (row, status) => {
     try {
       let data = {

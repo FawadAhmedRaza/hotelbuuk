@@ -24,7 +24,7 @@ const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
               </p>
             </div>
             <Typography variant="h4" className="!text-black   !font-semibold">
-              {value}
+              {title === "Revenue" && "$"} {value}
             </Typography>
           </div>
         </div>

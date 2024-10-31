@@ -4,68 +4,66 @@ import { useEffect, useState } from "react";
 
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-import {
-  getTotalBookingsNomad,
-  getTotalHotels,
-  getTotalNomadRevenue,
-} from "@/src/actions/nomad-dashboard-actions";
+import { getTotalHotels } from "@/src/actions/nomad-dashboard-actions";
+import { getTotalNomads } from "@/src/actions/hotel-dashboard-actions";
+import { getGuestTotalBookings } from "@/src/actions/guest-dashboard-action";
 
 import DashboardCard from "@/src/components/dashboard-card";
 import SummaryCardSkeleton from "@/src/components/Skeleton/summary-card-skeleton";
 import { paths } from "@/src/contants";
 
-const HotelCards = () => {
+const GuestCards = () => {
   const { user } = useAuthContext();
 
   const [bookingsCount, setBookingsCount] = useState(null);
   const [hotelCount, setHotelsCount] = useState(null);
-  const [totalRevenue, setTotalRevenue] = useState(null);
+  const [nomadsCount, setNomadsCount] = useState(null);
 
-  const fetchBookings = async () => {
-    const totalBookings = await getTotalBookingsNomad(user?.id);
-    setBookingsCount(totalBookings?.length || 0);
+  const fetchHotels = async () => {
+    const totalHotels = await getTotalHotels();
+    setHotelsCount(totalHotels?.length || 0);
   };
 
   const fetchNomads = async () => {
-    const totalNomads = await getTotalHotels();
-    setHotelsCount(totalNomads?.length || 0);
+    const totalNomads = await getTotalNomads();
+    setNomadsCount(totalNomads?.length || 0);
   };
 
-  const fetchTotalRevenue = async () => {
-    const total = await getTotalNomadRevenue(user?.id);
-    setTotalRevenue(total.toFixed(0, 2) || 0);
+  const fetchTotalBookings = async () => {
+    const total = await getGuestTotalBookings(user?.guest?.[0]?.id);
+    setBookingsCount(total?.length || 0);
   };
 
   useEffect(() => {
-    fetchBookings();
+    fetchHotels();
     fetchNomads();
-    fetchTotalRevenue();
+    fetchTotalBookings();
   }, [user?.id]);
 
   const cardsData = [
-    {
-      id: 1,
-      icon: "mdi:shop-complete",
-      title: "Booking",
-      value: bookingsCount ?? null,
-      btnTitle: "View Details",
-      path: paths.nomadDashboard.bookings.root,
-    },
     {
       id: 2,
       icon: "ic:outline-card-membership",
       title: "Hotel",
       value: hotelCount ?? null,
       btnTitle: "View Details",
-      path: paths.nomadDashboard.hotels,
+      path: paths.guestDashboard.hotels,
     },
     {
-      id: 3,
-      icon: "mingcute:invite-line",
-      title: "Revenue",
-      value: totalRevenue ?? null,
+      id: 2,
+      icon: "ic:outline-card-membership",
+      title: "Nomad",
+      value: nomadsCount,
       btnTitle: "View Details",
-      path: paths.nomadDashboard.bookings.root,
+      path: paths.guestDashboard.nomads,
+    },
+    {
+      id: 1,
+      icon: "mdi:shop-complete",
+      title: "Booking",
+      value: bookingsCount,
+      btnTitle: "View Details",
+      path: paths.guestDashboard.bookings,
     },
   ];
 
@@ -90,4 +88,4 @@ const HotelCards = () => {
   );
 };
 
-export default HotelCards;
+export default GuestCards;

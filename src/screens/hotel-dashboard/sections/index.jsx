@@ -2,6 +2,17 @@
 import React, { useEffect, useState } from "react";
 
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch } from "react-redux";
+
+import { getRecentBookings } from "@/src/redux/bookings/thunk";
+import {
+  getHotelMonthlyRevenue,
+  getHotelTotalCheckIns,
+  getHotelTotalCheckOuts,
+  getTotalBookings,
+} from "@/src/actions/hotel-dashboard-actions";
+
+import { enqueueSnackbar } from "notistack";
 
 import { Pannel } from "@/src/components";
 import HotelCards from "./components/cards";
@@ -11,15 +22,6 @@ import ThisMonthBooking from "./components/chart/this-mount-bookin";
 import { CheckInChart } from "./components/chart/check-In";
 import { CheckOutChart } from "./components/chart/check-out";
 import ProfileAlert from "./components/profile-alert";
-import { useDispatch } from "react-redux";
-import { getRecentBookings } from "@/src/redux/bookings/thunk";
-import { enqueueSnackbar } from "notistack";
-import {
-  getHotelMonthlyRevenue,
-  getHotelTotalCheckIns,
-  getHotelTotalCheckOuts,
-  getTotalBookings,
-} from "@/src/actions/hotel-dashboard-actions";
 
 const HotelDashboardSections = () => {
   const { user } = useAuthContext();
