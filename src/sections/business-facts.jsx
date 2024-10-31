@@ -22,20 +22,20 @@ export const BusinessFacts = React.memo(({ className }) => {
   return (
     <Pannel
       className={cn(
-        "w-full flex flex-col gap-10 bg-section-bg  px-0 sm:px-3 lg:px-9 xl:px-5",
+        "w-full flex flex-col gap-10 bg-white  px-0 sm:px-3 lg:px-9 xl:px-5",
         className
       )}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 px-8">
         <Typography
           variant="h2"
-          className="font-semibold text-center !text-black"
+          className="font-semibold text-start !text-black"
         >
           Business Facts
         </Typography>
         <Typography
           variant="h6"
-          className="font-normal text-center  text-neutral-400"
+          className="font-normal text-start  text-neutral-400"
         >
           Our journey in numbers and highlights.
         </Typography>

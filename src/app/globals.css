@@ -176,6 +176,14 @@ input::-webkit-inner-spin-button {
 }
 
 /* DateRangeStyles.css */
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 
 /* Main container */
 .calendar-container {
@@ -241,3 +249,8 @@ input::-webkit-inner-spin-button {
 .clear-dates-button:hover {
   text-decoration: underline;
 }
+.animate-slide-down {
+  animation: slide-down 0.3s ease forwards;
+}
+
+/* Main container */

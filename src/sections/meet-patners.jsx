@@ -40,14 +40,14 @@ export const MeetOurPatners = React.memo(() => {
   }, [swiperRef]);
 
   return (
-    <Pannel className="flex flex-col gap-10  justify-center items-center bg-section-bg p-10 w-full">
+    <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
       <div>
-        <Typography variant="h2" className="text-center font-semibold w-full">
+        <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
         </Typography>
         <Typography
           variant="h6"
-          className="font-normal text-center mt-2 text-neutral-400"
+          className="font-normal text-start mt-2 text-neutral-400"
         >
           Introducing the partners who help us elevate your stay
         </Typography>
