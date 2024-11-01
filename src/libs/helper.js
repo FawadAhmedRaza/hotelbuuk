@@ -81,3 +81,40 @@ export function calculateDaysBetweenDates(date1, date2) {
 
   return diffDays;
 }
+
+// EVENTS FILTER
+export function eventsFilter(events, filters) {
+  const filteredResults = events.filter((event) => {
+    const titleMatches = event.title
+      .toLowerCase()
+      .includes(filters.event_name.toLowerCase());
+    console.log(`Title matches (${event.title}):`, titleMatches);
+
+    // Price validation
+    const priceValid =
+      filters.price !== null ? parseFloat(event.price) <= filters.price : true;
+
+    // Rating validation
+    const eventRating = (event?.hotel && event.hotel?.stars) || 0; // Default to 0 if no rating
+    const ratingValid =
+      filters.rating.length > 0 ? filters.rating.includes(eventRating) : true;
+
+    // Location validation
+    const eventLocation = event.city || event.hotel?.city;
+    const locationValid =
+      filters.location.length > 0
+        ? filters.location.includes(eventLocation)
+        : true;
+
+    // Nomad validation
+    const nomadValid =
+      filters.nomad.length > 0 ? filters.nomad.includes(event.nomad_id) : true;
+
+    // Return true if all conditions are met
+    return (
+      titleMatches && priceValid && ratingValid && locationValid && nomadValid
+    );
+  });
+
+  return filteredResults;
+}
