@@ -22,7 +22,7 @@ export const Map = () => {
 
       <div className="w-full h-full flex items-center justify-center">
         <LoadScript
-          googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+          googleMapsApiKey={process.env.GOOGLE_CLOUD_MAP_API_KEY}
         >
           <GoogleMap
             mapContainerStyle={containerStyle}

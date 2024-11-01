@@ -48,7 +48,7 @@ export const NavBar = React.memo(({ className }) => {
         {/* Login  */}
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5  rounded-full px-2 py-1 sm:px-4 sm:py-1 border border-gray-600 cursor-pointer hover:bg-gray-100 "
+          className="flex items-center gap-1 sm:gap-5  rounded-full px-2 py- sm:px-4 sm:py-0 border border-gray-600 cursor-pointer hover:bg-gray-100 "
         >
           <Iconify
             iconName="mynaui:menu"
@@ -64,7 +64,8 @@ export const NavBar = React.memo(({ className }) => {
               type={"server"}
               effect="blur"
               alt={user?.hotel_name}
-              className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
+              iconSize=" size-8 border-none "
+              className="  object-cover rounded-full bg-red-200"
             />
 
             <Typography

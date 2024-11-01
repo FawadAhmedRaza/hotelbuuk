@@ -5,30 +5,30 @@ import Image from "next/image";
 const bookingStepsData = [
   {
     id: 1,
-    title: "Seamless Booking Experience",
+    title: "Effortless Check-In and Tour Assistance ",
     description:
-      "Our Connect team specializes in making your life easier after you're matched with your new apartment. Get hooked up with the best rates on utilities, insurance, and all the services you need for a stress-free move.",
+      "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
 
-    image: "/assets/images/bedroom.png",
+    image: "/assets/images/imgone.jpg",
     reverse: false, // Controls layout direction
   },
   {
     id: 2,
-    title: "Choose your room!",
+    title: "Personalized Itinerary and Pre-Tour Insights",
     description:
-      "During tours, guests get personalized itinerary and in-depth insights on key industry trends, consumer behavior and the relevant local markets.",
+      "During tours, guests get personalized itinerary and in-depth insights on key industry trends, consumer behavior, and the relevant local markets.",
 
     descriptionTwo:
-      "Guests can access market overviews and industry analysis to prepare for valuable engagements.",
-    image: "/assets/images/bedroom.png",
+      "Guests can access market overviews and industry analysis to prepare for valuable engagements.",
+    image: "/assets/images/imgtwo.jpg",
     reverse: true,
   },
   {
     id: 3,
-    title: "Effortless Check-In and Tour Assistance ",
+    title: "Seamless Booking Experience  ",
     description:
-      "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
-    image: "/assets/images/checkIn.jpg",
+      "Guests receive curated options for business tours relevant to their industry with detailed insights on local industries, tour agendas, and networking opportunities.",
+    image: "/assets/images/imgthree.jpg",
     reverse: false,
   },
 ];

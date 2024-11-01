@@ -113,26 +113,24 @@ export const HotelBio = () => {
         </div>
       </div> */}
       <div className=" w-full lg:w-[65%] ">
-        <div className=" flex flex-col mt-5 justify-start  items-start w-full  ">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-10 mt-1">
-            <div className="">
-              <Typography variant="h4" className=" font-semibold text-primary">
-                Teaching Tool
-              </Typography>
-              <div className=" mt-3">
-                <Built>{event?.nomad?.video}</Built>
-                <Built>{event?.nomad?.sample}</Built>
-                <Built>{event?.nomad?.projector}</Built>
-              </div>
+        <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
+          <div className="">
+            <Typography variant="h4" className=" font-semibold text-primary">
+              Teaching Tool
+            </Typography>
+            <div className=" mt-3">
+              <Built>{event?.nomad?.video}</Built>
+              <Built>{event?.nomad?.sample}</Built>
+              <Built>{event?.nomad?.projector}</Built>
             </div>
-            <div className=" ">
-              <Typography variant="h4" className=" font-semibold text-primary">
-                Competence
-              </Typography>
-              <div className=" mt-3">
-                <Built>Market Research</Built>
-                <Built>Negotiation</Built>
-              </div>
+          </div>
+          <div className=" ">
+            <Typography variant="h4" className=" font-semibold text-primary">
+              Competence
+            </Typography>
+            <div className=" mt-3">
+              <Built>Market Research</Built>
+              <Built>Negotiation</Built>
             </div>
           </div>
         </div>
