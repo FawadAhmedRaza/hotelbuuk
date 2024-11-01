@@ -5,7 +5,7 @@ import { Iconify } from "../iconify";
 import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
 import { useState } from "react";
-import get from "lodash/get"; // Import lodash's get method
+import get from "lodash/get";
 
 export const RHFInput = React.memo(
   ({

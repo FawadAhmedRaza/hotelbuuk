@@ -55,31 +55,30 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       }),
 
       location: Yup.object().shape({
-        country: Yup.string().when("business_meeting.accomodation_type", {
+        country: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("Country is required for BnB"),
           otherwise: (schema) => schema.notRequired(), // Optional for hotel
         }),
-        city: Yup.string().when("business_meeting.accomodation_type", {
+        city: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("City is required for BnB"),
           otherwise: (schema) => schema.notRequired(),
         }),
-        address: Yup.string().when("business_meeting.accomodation_type", {
+        address: Yup.string().when("$accomodation_type", {
           is: "bnb",
           then: (schema) => schema.required("Address is required for BnB"),
           otherwise: (schema) => schema.notRequired(),
         }),
       }),
     }),
-    images: Yup.array()
-      .when("accomodation_type", {
-        is: "hotel",
-        then: (schema) => schema.required("hotel is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      // .min(2, "At least Two images are required")
-      // .required("Files are required"),
+    images: Yup.array().when("accomodation_type", {
+      is: "hotel",
+      then: (schema) => schema.required("At least Two images are required"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    // .min(2, "At least Two images are required")
+    // .required("Files are required"),
 
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -118,6 +117,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             end_date: "",
             rules: {},
           },
+          price: "",
         },
     context: {
       accomodation_type: "bnb",
@@ -166,7 +166,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       icon: "ph:images",
       value: "images",
       component: <RHFMultipleImageUploader name="images" />,
-      component: <RHFMultipleImageUploader name="images" />,
     },
     {
       label: "What Guest will Learn",
@@ -190,14 +189,58 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
 
   const accomodationType = watch("business_meeting.accomodation_type");
 
+  console.log("ACCOMODATION:", accomodationType);
+
   useEffect(() => {
     if (accomodationType === "bnb") {
       setCurrentSteps(steps);
     } else {
       const newSteps = steps.filter((step) => step.value !== "images");
+
       setCurrentSteps(newSteps);
     }
   }, [accomodationType]);
+
+  // const handleNext = async () => {
+  //   const fieldsToValidate = [];
+
+  //   if (activeStep === 0) {
+  //     fieldsToValidate.push(
+  //       "business_meeting.title",
+  //       "business_meeting.description",
+  //       "business_meeting.official_name",
+  //       "business_meeting.business_category",
+  //       "business_meeting.accomodation_type", // Ensure it’s present
+  //       "business_meeting.amenities",
+  //       "business_meeting.hotel_id"
+  //     );
+
+  //     if (accomodationType === "hotel") {
+  //       fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
+  //     } else if (accomodationType === "bnb") {
+  //       fieldsToValidate.push(
+  //         "business_meeting.location.country",
+  //         "business_meeting.location.city",
+  //         "business_meeting.location.address"
+  //       );
+  //     }
+  //   } else if (activeStep === 1) {
+  //     if (accomodationType === "bnb") {
+  //       fieldsToValidate.push("images");
+  //     }
+  //   } else if (activeStep === 2) {
+  //     fieldsToValidate.push("topics");
+  //   } else if (activeStep === 3) {
+  //     fieldsToValidate.push("availibility.start_date", "availibility.end_date");
+  //   }
+
+  //   const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
+  //   console.log(isStepValid);
+
+  //   if (isStepValid) {
+  //     setActiveStep((prev) => prev + 1);
+  //   }
+  // };
 
   const handleNext = async () => {
     const fieldsToValidate = [];
@@ -208,30 +251,29 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         "business_meeting.description",
         "business_meeting.official_name",
         "business_meeting.business_category",
-        "business_meeting.accomodation_type", // Ensure it’s present
+        "business_meeting.accomodation_type",
         "business_meeting.amenities"
       );
 
       if (accomodationType === "hotel") {
-        fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
+        fieldsToValidate.push("business_meeting.hotel_id");
       } else if (accomodationType === "bnb") {
         fieldsToValidate.push(
           "business_meeting.location.country",
           "business_meeting.location.city",
-          "business_meeting.location.street_name"
+          "business_meeting.location.address"
         );
       }
-    } else if (activeStep === 1) {
-      if (accomodationType === "bnb") {
-        fieldsToValidate.push("images");
-      }
+    } else if (activeStep === 1 && accomodationType === "bnb") {
+      fieldsToValidate.push("images");
     } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
     } else if (activeStep === 3) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
-    const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
+    const isStepValid = await trigger(fieldsToValidate);
+    console.log("Step valid:", isStepValid);
 
     if (isStepValid) {
       setActiveStep((prev) => prev + 1);

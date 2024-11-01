@@ -166,7 +166,7 @@ const SideFilterSection = ({ setFilters }) => {
             <Typography variant="h6" className="font-semibold">
               Filter by Rating
             </Typography>
-            <div className="space-y-3 mt-4">
+            <div className="space-y-3 mt-4 ">
               {[5, 4, 3, 2, 1].map((rate) => (
                 <CheckBoxButton
                   key={rate}
