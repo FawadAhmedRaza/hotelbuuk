@@ -70,16 +70,20 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           then: (schema) => schema.required("Address is required for BnB"),
           otherwise: (schema) => schema.notRequired(),
         }),
+        about_bnb: Yup.string().when("business_meeting.accomodation_type", {
+          is: "bnb",
+          then: (schema) => schema.required("Bnb bio is required"),
+          otherwise: (schema) => schema.notRequired(),
+        }),
       }),
     }),
-    images: Yup.array()
-      .when("accomodation_type", {
-        is: "hotel",
-        then: (schema) => schema.required("hotel is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      // .min(2, "At least Two images are required")
-      // .required("Files are required"),
+    images: Yup.array().when("accomodation_type", {
+      is: "hotel",
+      then: (schema) => schema.required("hotel images are required"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    // .min(2, "At least Two images are required")
+    // .required("Files are required"),
 
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -218,7 +222,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         fieldsToValidate.push(
           "business_meeting.location.country",
           "business_meeting.location.city",
-          "business_meeting.location.street_name"
+          "business_meeting.location.street_name",
+          "business_meeting.location.about_bnb"
         );
       }
     } else if (activeStep === 1) {

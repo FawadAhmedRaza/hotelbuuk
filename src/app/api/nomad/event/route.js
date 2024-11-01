@@ -64,6 +64,7 @@ export async function POST(req) {
           price: String(data?.price),
           user_id: user_id,
           nomad_id: nomad?.id,
+          about_bnb: location?.about_bnb,
         },
       });
     } else {
@@ -193,4 +194,3 @@ export async function GET(req) {
     );
   }
 }
-

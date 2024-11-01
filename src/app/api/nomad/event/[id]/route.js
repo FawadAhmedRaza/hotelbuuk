@@ -131,6 +131,7 @@ export async function PUT(req, { params }) {
           city: location?.city,
           country: location?.country,
           address: location?.address,
+          about_bnb: location?.about_bnb,
           start_date,
           end_date,
           // rules

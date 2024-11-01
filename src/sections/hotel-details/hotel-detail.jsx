@@ -43,10 +43,12 @@ export const HotelDetail = () => {
             </Card>
             <div className=" mt-5">
               <Typography variant="h3" className="font-semibold text-primary">
-                Hotel Bio
+                About the Hotel
               </Typography>
               <Typography variant="p" className="!text-sm text-secondary mt-2">
-                {event?.description}
+                {event?.accomodation_type === "bnb"
+                  ? event?.about_bnb
+                  : event?.hotel?.description}
               </Typography>
             </div>
           </div>

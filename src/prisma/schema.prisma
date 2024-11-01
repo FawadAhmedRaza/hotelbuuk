@@ -248,6 +248,7 @@ model nomad_event {
   address             String?
   start_date          String?
   end_date            String?
+  about_bnb           String?
   // rules
   check_in            Boolean? @default(false)
   cancellation_policy Boolean? @default(false)
