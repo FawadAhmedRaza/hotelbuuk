@@ -141,3 +141,41 @@ export async function PUT(req, { params }) {
     );
   }
 }
+
+export async function DELETE(_, { params }) {
+  try {
+    if (!params?.id) {
+      return NextResponse.json({ message: "Id is required" }, { status: 400 });
+    }
+
+    const isUserExist = await prisma.user?.findUnique({
+      where: {
+        id: params?.id,
+      },
+    });
+
+    if (!isUserExist) {
+      return NextResponse.json(
+        { message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.user.update({
+      where: {
+        id: params?.id,
+      },
+      data: {
+        is_profile_active: false,
+      },
+    });
+
+    return NextResponse.json({ message: "success" }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}

@@ -43,6 +43,7 @@ model User {
   is_user_type_completed       Boolean?
   is_user_basic_info_completed Boolean?
   auth_method                  AuthMethod @default(EMAIL)
+  is_profile_active            Boolean    @default(true)
 
   hotels          hotel_info[]
   nomad           nomad[]

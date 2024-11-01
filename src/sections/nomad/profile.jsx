@@ -2,12 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 
-// Components and Others...
 import {
   Breadcrumb,
   Button,
   CalendarInput,
   CustomPopover,
+  DeleteModal,
   Pannel,
   Typography,
 } from "@/src/components";
@@ -19,12 +19,10 @@ import {
   RHFDatePicker,
   RHFFormProvider,
   RHFInput,
-  RHFProfileImgUploader,
   RHFSelect,
   RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
@@ -35,12 +33,18 @@ import {
   manufacturing,
   retails,
 } from "@/src/_mock/_speciality";
-import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 import { getCities, getCountries } from "@/src/libs/helper";
+import { useBoolean } from "@/src/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
-  const { user, setUser } = useAuthContext();
+  const { user, setUser, logout } = useAuthContext();
+  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.nomadProfile.deleteById);
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
@@ -107,8 +111,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const city = watch("city");
 
   useEffect(() => {
-    setValue("availability.date.start_date", date[0].startDate.toString());
-    setValue("availability.date.end_date", date[0].endDate.toString());
+    setValue("availability.date.start_date", date?.[0]?.startDate?.toString());
+    setValue("availability.date.end_date", date?.[0]?.endDate?.toString());
   }, [date]);
 
   useEffect(() => {
@@ -153,6 +157,17 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   useEffect(() => {
     fetchCountries();
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteNomadProfile(user?.id)).unwrap();
+      logout();
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
 
   const onSubmit = handleSubmit(async (data) => {
     if (!defaultValues) {
@@ -386,8 +401,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               >
                 <CalendarInput
                   label="Date"
-                  startDate={date[0].startDate.toString().slice(0, 10)}
-                  endDate={date[0].endDate.toString().slice(0, 10)}
+                  startDate={date?.[0]?.startDate?.toString()?.slice(0, 10)}
+                  endDate={date?.[0]?.endDate?.toString()?.slice(0, 10)}
                   onClick={toggleDateCalender}
                 />
                 <CustomPopover
@@ -406,31 +421,37 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                   />
                 </CustomPopover>
               </div>
-
-              {/* Time Picker */}
-              {/* <div className="flex flex-col md:flex-row gap-5 w-full">
-                <RHFInput
-                  name="availability.time.start_time"
-                  placeholder="Start Time"
-                  label="Start Time"
-                  type="time"
-                />
-                <RHFInput
-                  name="availability.time.end_time"
-                  placeholder="End Time"
-                  label="End Time"
-                  type="time"
-                />
-              </div> */}
             </div>
           </div>
         </div>
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full gap-3">
+          <Button
+            type="button"
+            className="!bg-red-600"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Delete profile
+          </Button>
           <Button type="submit" loading={isSubmitting}>
             {isEdit ? "Save" : "Submit"}
           </Button>
         </div>
       </RHFFormProvider>
+
+      {isOpen && (
+        <DeleteModal
+          isLoading={isLoading}
+          title="Delete Room"
+          isOpen={isOpen}
+          onClose={toggleDrawer}
+          handleDelete={handleDelete}
+        >
+          <Typography variant="p">
+            Are you sure you want to delete your profile ? this action will
+            delete all of your data?
+          </Typography>
+        </DeleteModal>
+      )}
     </Pannel>
   );
 });

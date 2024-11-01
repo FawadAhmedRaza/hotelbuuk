@@ -8,7 +8,6 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
-    console.log("daata", data);
     const { email, password } = data || {};
 
     if (!email || !password) {
@@ -45,6 +44,11 @@ export async function POST(req) {
         },
         { status: 400 }
       );
+    }
+
+    // if the profile was deleted
+    if(!user?.is_profile_active){
+      return NextResponse.json({message:"User not found"},{status:404});
     }
 
     const isMatch = bcrypt.compareSync(password, user.password);
