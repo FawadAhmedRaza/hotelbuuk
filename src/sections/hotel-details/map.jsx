@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Pannel, Typography } from "@/src/components";
+import { Pannel } from "@/src/components";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const containerStyle = {

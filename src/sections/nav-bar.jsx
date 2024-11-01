@@ -65,7 +65,7 @@ export const NavBar = React.memo(({ className }) => {
               effect="blur"
               alt={user?.hotel_name}
               iconSize=" size-8 border-none "
-              className="  object-cover rounded-full bg-red-200"
+              className="  object-cover rounded-full  md:h-10 md:w-10 h-5 w-5"
             />
 
             <Typography
