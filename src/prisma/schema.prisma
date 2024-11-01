@@ -363,3 +363,31 @@ model booking {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model business_amenities {
+  id                       String                     @id @default(auto()) @map("_id") @db.ObjectId
+  name                     String
+  business_facts_amenities business_facts_amenities[]
+}
+
+model business_facts_amenities {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  business_facts_id     String @db.ObjectId
+  business_amenities_id String @db.ObjectId
+
+  business_facts     business_facts     @relation(fields: [business_facts_id], references: [id])
+  business_amenities business_amenities @relation(fields: [business_amenities_id], references: [id])
+}
+
+model business_facts {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  start_date  String
+  end_date    String
+  price       Int
+  cover_img   String
+
+  business_facts_amenities business_facts_amenities[]
+}

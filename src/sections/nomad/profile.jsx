@@ -34,6 +34,7 @@ import {
   manufacturing,
   retails,
 } from "@/src/_mock/_speciality";
+import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
@@ -114,7 +115,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     if (!defaultValues) {
       // create handling
       try {
-        console.log("create triggered");
         let updatedData = {
           ...data,
           user_id: user?.id,
@@ -153,8 +153,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     // update handling
     else {
       try {
-        console.log("truggred", data);
-
         const formData = new FormData();
 
         for (const key in data) {
@@ -234,6 +232,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               label="Email"
             />
             {/* </div> */}
+            {/* <RHFLocationSelect name={""} /> */}
             <RHFSelect
               name="experience"
               label="Experience"
