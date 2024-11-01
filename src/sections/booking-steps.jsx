@@ -58,8 +58,9 @@ export const BookingSteps = () => {
             {/* Background SVG Image */}
             <div className="relative">
               <Image
-                src={"/assets/images/stepBack.png"}
+                src="/assets/images/stepBack.png"
                 height={100}
+                overrideSrc="/assets/images/stepBack.png"
                 width={130}
                 className={`absolute -top-3 ${
                   step.reverse ? "md:right-3 md:-left-3" : "md:-left-3"
