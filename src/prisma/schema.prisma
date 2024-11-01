@@ -111,6 +111,11 @@ model nomad {
   sample        String?
   end_date      String?
   start_date    String?
+  linkedin      String?
+  city          String?
+  country       String?
+  address       String?
+  bio           String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

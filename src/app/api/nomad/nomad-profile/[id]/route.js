@@ -46,6 +46,11 @@ export async function PUT(req, { params }) {
       sample,
       video,
       experience,
+      linkedin,
+      city,
+      country,
+      address,
+      bio,
       availability,
       userId,
     } = data || {};
@@ -88,6 +93,11 @@ export async function PUT(req, { params }) {
         start_time: availability?.time?.start_time,
         end_time: availability?.time?.end_time,
         userId: userId,
+        linkedin,
+        city,
+        country,
+        address,
+        bio,
       },
     });
 

@@ -21,6 +21,7 @@ import {
   RHFInput,
   RHFProfileImgUploader,
   RHFSelect,
+  RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,16 +36,17 @@ import {
   retails,
 } from "@/src/_mock/_speciality";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
+import { getCities, getCountries } from "@/src/libs/helper";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser } = useAuthContext();
   const router = useRouter();
 
-  console.log(defaultValues);
-
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
 
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   // Handle date state
   const [date, setDate] = useState([
     {
@@ -59,10 +61,17 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().optional("Last name is required"),
     phone_number: Yup.string().required("Phone number is required"),
-    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"), // Example regex for a 10-digit phone number
+    bio: Yup.string().required("bio is required"),
+    linkedin: Yup.string()
+      .url("Please provide a valid URL")
+      .required("linked profile is required"),
+    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
     email: Yup.string()
       .required("Email is required")
       .email("Invalid email format"),
+    city: Yup.string().required("city is required"),
+    country: Yup.string().required("country is required"),
+    address: Yup.string().required("address is required"),
     experience: Yup.string().required("Experience is required"),
     electronics: Yup.string().required("Electronics field is required"),
     manufacturing: Yup.string().required("Manufacturing field is required"),
@@ -94,7 +103,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     formState: { isSubmitting, errors },
   } = methods;
 
-  console.log("errors", errors);
+  const country = watch("country");
+  const city = watch("city");
 
   useEffect(() => {
     setValue("availability.date.start_date", date[0].startDate.toString());
@@ -109,6 +119,39 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         key: "selection",
       },
     ]);
+  }, []);
+
+  const fetchCountries = async () => {
+    try {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    } catch (error) {
+      console.error("Failed to fetch countries:", error);
+    }
+  };
+
+  const fetchCitiesForCountry = async (selectedCountry) => {
+    try {
+      const allCities = await getCities(selectedCountry);
+      setCities(allCities);
+      if (!city && allCities.length > 0) {
+        setValue("city", allCities[0].value);
+      }
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+    }
+  };
+
+  // Fetch cities when the country changes.
+  useEffect(() => {
+    if (country) {
+      fetchCitiesForCountry(country);
+    }
+  }, [country]);
+
+  // Fetch countries on initial render.
+  useEffect(() => {
+    fetchCountries();
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -218,8 +261,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Last Name"
               label="Last Name"
             />
-            {/* </div> */}
-            {/* <div className="flex flex-col sm:flex-row gap-5 w-full"> */}
             <RHFInput
               name="phone_number"
               type="number"
@@ -231,8 +272,24 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Email"
               label="Email"
             />
-            {/* </div> */}
-            {/* <RHFLocationSelect name={""} /> */}
+            <RHFSelect
+              name="country"
+              placeholder="Select your Country"
+              label="Country"
+              options={countries}
+            />
+            <RHFSelect
+              name="city"
+              label="City"
+              options={cities}
+              value={city || ""}
+              onChange={(e) => setValue("city", e.target.value)}
+            />
+            <RHFInput
+              name="address"
+              label="Address"
+              placeholder="Enter full address"
+            />
             <RHFSelect
               name="experience"
               label="Experience"
@@ -242,6 +299,16 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                 { label: "Option 2", value: "option2" },
                 { label: "Option 3", value: "option3" },
               ]}
+            />
+            <RHFTextArea
+              name="bio"
+              label="Bio"
+              placeholder="Enter short bio about yourself"
+            />
+            <RHFInput
+              name="linkedin"
+              label="Linkedin"
+              placeholder="https://www.linkedin.com/"
             />
           </div>
 
@@ -307,7 +374,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
           </div>
 
           {/* AVAILABILITY  */}
-
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
               Availability

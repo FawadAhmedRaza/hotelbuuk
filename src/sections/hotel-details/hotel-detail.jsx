@@ -1,12 +1,12 @@
 "use client";
 
-import { HotelQNA } from "@/src/_mock/_hotel-qna";
-import { Accordion, Card, Typography } from "@/src/components";
 import React from "react";
+
+import { useSelector } from "react-redux";
+
+import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
-import { useSelector } from "react-redux";
-import Built from "@/src/components/built";
 
 export const HotelDetail = () => {
   const { event } = useSelector((state) => state.allEvents.getById);
@@ -31,11 +31,11 @@ export const HotelDetail = () => {
           </div>
           <div className="flex flex-col gap-3 w-full">
             <Card className="flex flex-col gap-3  w-full p-5">
-              {event.event_topics?.map((item, index) => (
+              {event?.event_topics?.map((item, index) => (
                 <Accordion
-                  key={item.id} // Make sure to include a unique key for each accordion
+                  key={item.id}
                   title={item?.title}
-                  isOpen={index === 0} // Open the first accordion by default
+                  isOpen={index === 0}
                 >
                   <Typography variant="p">{item?.description}</Typography>
                 </Accordion>
@@ -79,7 +79,7 @@ export const HotelDetail = () => {
           </div>
         </div>
 
-        <div className=" sticky top-5 w-[400px] ">
+        <div className="sticky top-5 w-[400px] ">
           <HostBio />
         </div>
       </div>
