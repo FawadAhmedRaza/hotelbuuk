@@ -37,15 +37,16 @@ export const LangaugeTranslator = React.memo(() => {
           iconName="et:global"
           className="hidden sm:block size-4 sm:size-5 text-gray-600"
         />
-        <Typography variant="p" className="text-sm hidden sm:block">
-          {activeLang?.label}
-        </Typography>
+        <h2 className="text-sm hidden sm:block">{activeLang?.label}</h2>
         <Iconify
           iconName="iconamoon:arrow-down-2"
           className="size-5 -ml-1 hidden sm:block text-gray-600"
         />
         <span className="flex sm:hidden justify-center items-center size-9 border border-black rounded-full">
-          <Iconify iconName={activeLang?.icon} className="size-5 text-gray-600" />
+          <Iconify
+            iconName={activeLang?.icon}
+            className="size-5 text-gray-600"
+          />
         </span>
       </div>
 

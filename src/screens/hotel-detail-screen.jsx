@@ -54,7 +54,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
         <div className=" px-10">
           <HotelOverview type={type} />
           <HotelDetail />
-          <Itinerary />
+          <BusinessFacts className="bg-white" />
           <AvailabilityCalendar
             dateRange={dateRange}
             handleDateChange={handleDateChange}
@@ -62,7 +62,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
             clearDateRange={clearDateRange} // Pass clearDateRange as prop
           />
           <PopularAmenities />
-          <BusinessFacts className="bg-white" />
+          <Itinerary />
           <ThingsKnow />
           <GuestReviews />
         </div>

@@ -37,7 +37,7 @@ export const HotelOverview = ({ type }) => {
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
-      <ImageModal
+      <ImageModal 
         images={eventImages || []}
         isOpen={isOpen}
         onClose={toggleDrawer}
@@ -48,20 +48,20 @@ export const HotelOverview = ({ type }) => {
       ) : (
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
           <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 grow">
-            <Typography variant="h3">
+            <Typography variant="h3" className="md:text-[27px]  font-medium">
               {type === "NOMAD"
                 ? event?.accomodation_type === "bnb"
                   ? `${event?.city}`
                   : `${event?.hotel?.hotel_name}, ${event?.hotel?.city}`
                 : event?.hotel?.hotel_name + "," + event?.hotel?.city}
             </Typography>
-            <div className=" flex gap-5 md:flex-row flex-col text-start flex-wrap items-center w-full ">
-              <span className="flex items-center gap-3">
+            <div className=" flex gap-5 md:flex-row flex-col text-start flex-wrap -mt-1  items-center w-full ">
+              <span className="flex items-center gap-2">
                 <Iconify
                   iconName="mdi:location"
-                  className="text-black size-3.5"
+                  className="text-gray-500 size-3.5 "
                 />
-                <Typography className=" font-medium" variant="p">
+                <Typography className=" font-medium text-gray-500" variant="p">
                   {type === "NOMAD"
                     ? event?.accomodation_type === "bnb"
                       ? `${event?.address} ${event?.city} ${event?.country}`

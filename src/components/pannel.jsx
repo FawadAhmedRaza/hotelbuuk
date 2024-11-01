@@ -11,5 +11,5 @@ export const Pannel = React.memo(({ className, children }) => {
     >
       {children}
     </div>
-  );Nomad
+  );
 });
