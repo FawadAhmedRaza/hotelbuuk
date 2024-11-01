@@ -50,7 +50,7 @@ export const BookingSteps = () => {
           variant="h6"
           className="font-normal text-start mt-2 text-neutral-400"
         >
-          we'll exceed your high expectations
+          we'll exceed your high expectations
         </Typography>
       </div>
       <div className="xl:px-24 md:space-y-2 space-y-5 w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">

@@ -101,18 +101,8 @@ export const HotelBio = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white  gap-10 mt-5 px-2 md:px-10 ">
-      {/* Left Panel - Image and Time */}
-      {/* <div className="flex flex-col h-fit items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-l-xl p-4">
-        <div className="flex items-center justify-between w-full">
-          <span className="text-lg font-medium flex items-center gap-2">
-            <Iconify iconName="noto-v1:alarm-clock" />
-            {hotelData?.time}
-          </span>
-          <Button className="bg-white text-primary ">Flexible</Button>
-        </div>
-      </div> */}
-      <div className="  flex-grow  ">
+    <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
+      <div className="  w-full  lg:w-[70%] ">
         <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
@@ -135,10 +125,8 @@ export const HotelBio = () => {
           </div>
         </div>
       </div>
-      {/* Right Panel - Hotel Details and Booking Information */}
 
-      {/* Booking Information */}
-      <div className="w-full lg:w-[400px]  py-4   flex flex-col justify-between border-neutral-400">
+      <div className="w-full lg:w-[30%]  py-4   flex flex-col justify-between border-neutral-400">
         <Card className="flex  flex-col gap-1 w-full">
           <div className="w-full">
             <Typography variant="h6" className=" font-semibold">
