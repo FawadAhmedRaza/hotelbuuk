@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Button, Pannel, Typography } from "../components";
 import { BusinessFactsData } from "../_mock/_business-facts";
 import { cn } from "@/lib/utils";
-import { Collapsible } from "../components/ui/collapsible";
 import { CustomCollapsible } from "../components/custom-collapsible";
 
 export const BusinessFacts = React.memo(({ className }) => {

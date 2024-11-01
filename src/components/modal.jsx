@@ -11,6 +11,7 @@ const Modal = ({
   title,
   handleSubmit,
   isLoading,
+  disableActions,
 }) => {
   const modalRef = useRef(null);
 
@@ -59,23 +60,26 @@ const Modal = ({
         <div className="p-4 overflow-visible">{children}</div>
 
         {/* Modal Footer */}
-        <div className="sticky bottom-0 w-full p-4 bg-white flex justify-end gap-2 border-t">
-          <Button
-            className="text-tertiary !px-4 !py-2"
-            type="button"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="text-tertiary !px-4 !py-2"
-            type="button"
-            onClick={handleSubmit}
-            loading={isLoading}
-          >
-            Submit
-          </Button>
-        </div>
+
+        {!disableActions && (
+          <div className="sticky bottom-0 w-full p-4 bg-white flex justify-end gap-2 border-t">
+            <Button
+              className="text-tertiary !px-4 !py-2"
+              type="button"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="text-tertiary !px-4 !py-2"
+              type="button"
+              onClick={handleSubmit}
+              loading={isLoading}
+            >
+              Submit
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

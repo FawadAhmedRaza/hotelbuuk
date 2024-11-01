@@ -13,9 +13,6 @@ import { useSelector } from "react-redux";
 
 export const HostBio = React.memo(() => {
   const { event } = useSelector((state) => state.allEvents.getById);
-
-  // const profileImg = event?.nomad?.profile_img ||
-
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="flex justify-between">
@@ -29,10 +26,6 @@ export const HostBio = React.memo(() => {
       <div className="flex flex-col mt-2  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
         <div className="flex flex-col  gap-5 bg-white rounded-b-lg w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start lg:gap-16 ">
-            {/* <Avatar
-              src="/assets/images/host.png"
-              className=" size-24 lg:!size-32"
-            /> */}
             <ProfileAvatar
               src={event?.nomad?.profile_img}
               type={"server"}
@@ -87,7 +80,6 @@ export const HostBio = React.memo(() => {
             I graduated with first class degree in pharmacy. i completed my
             masters in IVN nanomediacations.
           </Typography>
-          <Button className="w-full mt-2">Reserve</Button>
         </div>
       </div>
     </div>

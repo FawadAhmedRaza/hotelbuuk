@@ -1,15 +1,18 @@
 "use client";
-
-import { HotelQNA } from "@/src/_mock/_hotel-qna";
 import { Accordion, Card, Typography } from "@/src/components";
 import React from "react";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
 import { useSelector } from "react-redux";
-import Built from "@/src/components/built";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-export const HotelDetail = () => {
+export const HotelDetail = ({ clientSecret, type, id, secretLoading }) => {
   const { event } = useSelector((state) => state.allEvents.getById);
+  const options = {
+    clientSecret,
+  };
 
   return (
     <div className="flex flex-col justify-between md:py-10 !pt-4  px-5 sm:px-8 lg:px-14 xl:px-10 ">
@@ -83,7 +86,14 @@ export const HotelDetail = () => {
           <HostBio />
         </div>
       </div>
-      <HotelBio />
+      <Elements stripe={stripePromise} options={options}>
+        <HotelBio
+          clientSecret={clientSecret}
+          type={type}
+          id={id}
+          secretLoading={secretLoading}
+        />
+      </Elements>
     </div>
   );
 };

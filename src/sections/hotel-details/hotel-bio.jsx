@@ -1,14 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Iconify, Typography, Card } from "@/src/components";
 import Built from "@/src/components/built";
 import { useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useSearchParams } from "next/navigation";
-import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
+import Modal from "@/src/components/modal";
+import { useModal } from "@/src/hooks/use-modal";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+import { FUNDING, PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { paypalCaptureOrder } from "@/src/actions/payment.action";
+
 
 const hotelData = {
   time: "10am - 4pm",
@@ -39,15 +49,35 @@ const hotelData = {
   total: 100,
 };
 
-export const HotelBio = () => {
+export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
   const { user } = useAuthContext();
   const params = useSearchParams();
 
+  // Stripes
+  const stripe = useStripe();
+  const elements = useElements();
+  const payment_intent = params.get("payment_intent");
+  const redirect_status = params.get("redirect_status");
+
+  // Create An order after stripe payment succeeded
+  useEffect(() => {
+    if (redirect_status == "succeeded" && payment_intent && !loading) {
+      const orderData = localStorage.getItem("orderData");
+      if (orderData) {
+        (async () => {
+          createReservation();
+        })();
+      }
+    }
+  }, [payment_intent, redirect_status]);
+
+  const [paymentMethod, setPaymentMethod] = useState("card");
   let event_type = params.get("type");
   const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const { event } = useSelector((state) => state.allEvents.getById);
-
+  const { onFalse, onTrue,  value } = useModal();
   const stayNights = calculateDaysBetweenDates(
     event?.start_date,
     event?.end_date
@@ -57,6 +87,26 @@ export const HotelBio = () => {
 
   const handleCalculation = (number) => {
     setGuestCount(number);
+  };
+
+  const createReservation = async () => {
+    try {
+      const request = await axiosInstance.post(
+        endpoints.booking.book_event,
+        data
+      );
+      if (request?.status === 201) {
+        localStorage.removeItem("orderData");
+        enqueueSnackbar("Your booking request has been sent successfully", {
+          variant: "success",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEventReserve = async () => {
@@ -77,15 +127,8 @@ export const HotelBio = () => {
         } else {
           data.hotel_event_id = event?.id;
         }
-        const request = await axiosInstance.post(
-          endpoints.booking.book_event,
-          data
-        );
-        if (request?.status === 201) {
-          enqueueSnackbar("Your booking request has been sent successfully", {
-            variant: "success",
-          });
-        }
+        localStorage.setItem("orderData", JSON.stringify(data));
+        onTrue();
       } else {
         console.log("triggred without guest");
         enqueueSnackbar("Only guest users can book this event", {
@@ -100,6 +143,109 @@ export const HotelBio = () => {
     }
   };
 
+  const stripePayment = async () => {
+    if (paymentMethod === "card") {
+      if (!stripe || !elements) {
+        return;
+      }
+      try {
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `http://localhost:3000/hotels/${id}?type=${type}`,
+            payment_method_data: {
+              billing_details: {
+                address: {
+                  country: "US",
+                },
+              },
+            },
+          },
+        });
+        if (error) {
+          console.log("error", error);
+          enqueueSnackbar(error.message, { variant: "error" });
+        } else {
+        }
+      } catch (err) {
+        console.log("error");
+        enqueueSnackbar("Opps! something went wrong", { variant: "error" });
+      }
+    }
+  };
+
+
+  const stripeElement = (
+    <div className="mt-10 ">
+      <PaymentElement
+        options={{
+          fields: {
+            billingDetails: {
+              address: {
+                country: "never",
+              },
+            },
+          },
+        }}
+      />
+      <Button onClick={stripePayment} className="mt-5">
+        Pay Now
+      </Button>
+    </div>
+
+  );
+
+  const paypalButtons = (
+    <div className="my-10">
+      <PayPalScriptProvider
+        options={{
+          "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+          currency: "USD",
+          intent: "capture",
+          components: "buttons",
+          environment: "production",
+        }}
+      >
+        <PayPalButtons
+          style={{
+            color: "gold",
+            shape: "rect",
+            label: "pay",
+            height: 50,
+            minWidht: 200,
+            maxWidth: 250,
+          }}
+          fundingSource={FUNDING.PAYPAL}
+          onCancel={async () => {
+            setValue("paymentMethod", "card");
+            setStep(1);
+          }}
+          createOrder={async (data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: (
+                      event?.price * stayNights * guestCount +
+                      ((event?.price * stayNights * guestCount) / 100) * 20
+                    ).toFixed(2),
+                  },
+                },
+              ],
+            });
+          }}
+          onApprove={async (data, actions) => {
+            console.log("Data in approve", data);
+            let response = await paypalCaptureOrder(data.orderID);
+            if (response) {
+              await createReservation();
+              return true;
+            }
+          }}
+        />
+      </PayPalScriptProvider>
+    </div>
+  );
   return (
     <div className="flex flex-col lg:flex-row bg-white  gap-10 mt-5 ">
       {/* Left Panel - Image and Time */}
@@ -136,6 +282,40 @@ export const HotelBio = () => {
         </div>
       </div>
       {/* Right Panel - Hotel Details and Booking Information */}
+      <Modal
+        title="Payment Method"
+        disableActions={true}
+        isOpen={value}
+        onClose={onFalse}
+      >
+        <div className="flex gap-5 h-12 ">
+          <Card
+            onClick={() => setPaymentMethod("card")}
+            className={`gap-4 cursor-pointer ${
+              paymentMethod === "card" && `border-primary border`
+            }`}
+          >
+            <Iconify iconName="ion:card" className="text-black size-7" />
+            Card
+          </Card>
+          <Card
+            onClick={() => setPaymentMethod("paypal")}
+            className={`gap-4 cursor-pointer ${
+              paymentMethod === "paypal" && `border-primary border`
+            }`}
+          >
+            <Iconify
+              iconName="lineicons:paypal"
+              className="text-black size-7"
+            />
+            Paypal
+          </Card>
+        </div>
+        <div className="mt-2">
+          {paymentMethod === "card" && stripeElement}
+          {paymentMethod === "paypal" && paypalButtons}
+        </div>
+      </Modal>
 
       {/* Booking Information */}
       <div className="w-full lg:w-[35%]  py-4   flex flex-col justify-between border-neutral-400">
@@ -209,10 +389,10 @@ export const HotelBio = () => {
               <div className=" flex flex-col gap-2 border-b w-full pb-2 border-neutral-500">
                 <span className="flex justify-between items-center ">
                   <Typography variant="p" className="font-medium">
-                    ${event?.price} x {stayNights} Nights
+                    $ {event?.price} x {stayNights} Nights
                   </Typography>
                   <Typography variant="p" className="font-medium">
-                    ${(event?.price * stayNights * guestCount).toFixed(2)}
+                    $ {(event?.price * stayNights * guestCount).toFixed(2)}
                   </Typography>
                 </span>
                 <span className="flex justify-between items-center ">
@@ -241,9 +421,13 @@ export const HotelBio = () => {
                   ).toFixed(2)}
                 </Typography>
               </span>
+              <Button className="w-full mt-2" onClick={handleEventReserve}>
+                Reserve
+              </Button>
             </div>
           </div>
         </Card>
+
         {/* Reserve Button */}
         {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
           <Iconify iconName="mynaui:flag-solid" className="text-black" />
