@@ -18,9 +18,7 @@ const HotelDetail = () => {
 
   const dispatch = useDispatch();
 
-  const { event, isLoading } = useSelector((state) => state.allEvents.getById);
-
-  console.log("event", event);
+  const { isLoading } = useSelector((state) => state.allEvents.getById);
 
   const fetchEventById = async () => {
     try {
@@ -35,7 +33,7 @@ const HotelDetail = () => {
     fetchEventById();
   }, []);
 
-  return isLoading ? <Spinner /> : <HotelDetailScreen  type={type} />;
+  return isLoading ? <Spinner /> : <HotelDetailScreen type={type} />;
 };
 
 export default HotelDetail;
