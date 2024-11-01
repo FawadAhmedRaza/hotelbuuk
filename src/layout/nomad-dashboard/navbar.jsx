@@ -91,7 +91,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
                 effect="blur"
                 alt={user?.first_name}
                 iconSize="!size-8"
-                className="w-7 h-7 md:w-8 border border-white md:h-8  object-cover rounded-full"
+                className="w-7 h-7 md:w-8 md:h-8  object-cover rounded-full"
               />
             ) : (
               <Iconify

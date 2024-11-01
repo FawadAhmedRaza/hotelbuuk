@@ -83,7 +83,6 @@ export const HotelDetail = () => {
           <HostBio />
         </div>
       </div>
-      <HotelBio />
     </div>
   );
 };

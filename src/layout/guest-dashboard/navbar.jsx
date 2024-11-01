@@ -81,7 +81,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
             ) : (
               <Iconify
                 iconName="carbon:user-avatar-filled"
-                className="!size-8 md:!size-10 text-white"
+                className="!size-8 md:!size-8 text-white"
               />
             )}
           </span>
