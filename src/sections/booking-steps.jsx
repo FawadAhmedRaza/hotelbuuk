@@ -10,7 +10,7 @@ const bookingStepsData = [
       "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
 
     image: "/assets/images/imgone.jpg",
-    reverse: false, // Controls layout direction
+    reverse: false, 
   },
   {
     id: 2,
@@ -32,6 +32,10 @@ const bookingStepsData = [
     reverse: false,
   },
 ];
+
+const loaderProp =({ src }) => {
+  return src;
+}
 
 export const BookingSteps = () => {
   return (
@@ -57,10 +61,9 @@ export const BookingSteps = () => {
           >
             {/* Background SVG Image */}
             <div className="relative">
-              <Image
-                src="/assets/images/stepBack.png"
+              <img
+                src="/assets/images/StepBack.png"
                 height={100}
-                overrideSrc="/assets/images/stepBack.png"
                 width={130}
                 className={`absolute -top-3 ${
                   step.reverse ? "md:right-3 md:-left-3" : "md:-left-3"
