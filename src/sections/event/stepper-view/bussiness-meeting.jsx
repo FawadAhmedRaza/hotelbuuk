@@ -48,8 +48,6 @@ export const BussinessMeeting = () => {
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
 
-  console.log(type);
-
   const handleCheckboxChange = (amenity, checked) => {
     setValue(
       "business_meeting.amenities",
@@ -62,8 +60,6 @@ export const BussinessMeeting = () => {
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
-
-  // console.log(hotelId);
 
   useEffect(() => {
     async function fetchCountries() {

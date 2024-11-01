@@ -21,6 +21,12 @@ import {
 } from "@/src/redux/hotel-event/thunk";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
+import { ThingsToKnow } from "./things-to-know";
+import {
+  getAllCancellationPolicy,
+  getAllEventRules,
+  getAllEventSafetyAndProperty,
+} from "@/src/redux/event-things-to-know/thunk";
 
 export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -29,9 +35,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const { user } = useAuthContext();
   const router = useRouter();
 
-  const { isLoading, error: createErr } = useSelector(
-    (state) => state.hotelEvent.create
-  );
+  const { isLoading } = useSelector((state) => state.hotelEvent.create);
   const { isLoading: updateLoading } = useSelector(
     (state) => state.hotelEvent.updateById
   );
@@ -55,6 +59,9 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       amenities: Yup.array().optional(),
       nomad_id: Yup.string().required("Please select nomad"),
     }),
+    rules: Yup.array().optional(),
+    safeties: Yup.array().optional(),
+    cancelPolicies: Yup.array().optional(),
     topics: Yup.array()
       .min(1, "At least one topic is required")
       .required("Files are required"),
@@ -105,9 +112,36 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     }
   };
 
+  const fetchEventRules = async () => {
+    try {
+      await dispatch(getAllEventRules(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventSafetyProperty = async () => {
+    try {
+      await dispatch(getAllEventSafetyAndProperty(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventPolicies = async () => {
+    try {
+      await dispatch(getAllCancellationPolicy(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchNomads();
     fetchAmenities();
+    fetchEventRules();
+    fetchEventPolicies();
+    fetchEventSafetyProperty();
   }, []);
 
   const steps = [
@@ -122,6 +156,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       icon: "octicon:person-16",
       value: "guest",
       component: <GuestLearn />,
+    },
+    {
+      label: "Things to know",
+      icon: "octicon:person-16",
+      value: "thingsToKnow",
+      component: <ThingsToKnow />,
     },
     {
       label: "Set Availability",
@@ -150,7 +190,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       );
     } else if (activeStep === 1) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 2) {
+    } else if (activeStep === 3) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
@@ -168,12 +208,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     };
     if (!isEdit) {
       try {
+        console.log("create data", finalData);
         await dispatch(createHotelEvent(finalData)).unwrap();
         enqueueSnackbar("hotel event created", { variant: "success" });
         router.push(paths.hotelDashboard.events.root);
       } catch (error) {
         console.log(error);
-        console.log(createErr);
         enqueueSnackbar(error?.message, { variant: "error" });
       }
     } else {
