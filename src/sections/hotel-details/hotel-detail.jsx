@@ -48,33 +48,6 @@ export const HotelDetail = () => {
               <Typography variant="p" className="!text-sm text-secondary mt-2">
                 {event?.description}
               </Typography>
-              <Typography variant="p" className="mt-5">
-                Welcome to [Hotel Name], where comfort and elegance await you in
-                the heart of [City Name]. Our hotel provides a luxurious escape
-                for travelers with spacious rooms, modern amenities, and
-                exceptional service tailored to make your stay unforgettable.
-              </Typography>
-
-              <Typography variant="p" className="mt-5">
-                Indulge in a world of flavors at our dining venues, where
-                gourmet dishes and locally inspired cuisine come together to
-                offer a unique culinary experience. Enjoy your meal with a view
-                at our rooftop restaurant, or relax with a cocktail by the pool.
-              </Typography>
-
-              <Typography variant="p" className="mt-5">
-                Relax and rejuvenate at our wellness center, featuring a spa,
-                fitness area, and refreshing pool. Whether you’re unwinding
-                after a long day or energizing yourself for new adventures, our
-                facilities are designed to enhance your well-being.
-              </Typography>
-
-              <Typography variant="p" className="mt-5">
-                From personalized services to elegant spaces, [Hotel Name] is
-                dedicated to making your stay exceptional. Join us to experience
-                the perfect blend of luxury and hospitality, right in the heart
-                of [City Name].
-              </Typography>
             </div>
           </div>
         </div>
@@ -83,7 +56,6 @@ export const HotelDetail = () => {
           <HostBio />
         </div>
       </div>
-      <HotelBio />
     </div>
   );
 };

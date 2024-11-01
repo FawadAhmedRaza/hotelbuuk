@@ -4,14 +4,14 @@ import Image from "next/image";
 
 const bookingStepsData = [
   {
-    id: 1,
-    title: "Effortless Check-In and Tour Assistance ",
+    id: 3,
+    title: "Seamless Booking Experience  ",
     description:
-      "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
-
-    image: "/assets/images/imgone.jpg",
-    reverse: false, 
+      "Guests receive curated options for business tours relevant to their industry with detailed insights on local industries, tour agendas, and networking opportunities.",
+    image: "/assets/images/imgthree.jpg",
+    reverse: false,
   },
+
   {
     id: 2,
     title: "Personalized Itinerary and Pre-Tour Insights",
@@ -23,19 +23,21 @@ const bookingStepsData = [
     image: "/assets/images/imgtwo.jpg",
     reverse: true,
   },
+
   {
-    id: 3,
-    title: "Seamless Booking Experience  ",
+    id: 1,
+    title: "Effortless Check-In and Tour Assistance ",
     description:
-      "Guests receive curated options for business tours relevant to their industry with detailed insights on local industries, tour agendas, and networking opportunities.",
-    image: "/assets/images/imgthree.jpg",
+      "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
+
+    image: "/assets/images/imgone.jpg",
     reverse: false,
   },
 ];
 
-const loaderProp =({ src }) => {
+const loaderProp = ({ src }) => {
   return src;
-}
+};
 
 export const BookingSteps = () => {
   return (
@@ -51,7 +53,7 @@ export const BookingSteps = () => {
           we'll exceed your high expectations
         </Typography>
       </div>
-      <div className="xl:px-10 md:space-y-0 space-y-5 w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
+      <div className="xl:px-24 md:space-y-2 space-y-5 w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
         {bookingStepsData.map((step, index) => (
           <div
             key={step.id}
@@ -65,13 +67,13 @@ export const BookingSteps = () => {
                 src="/assets/images/StepBack.png"
                 height={100}
                 width={130}
-                className={`absolute -top-3 ${
-                  step.reverse ? "md:right-3 md:-left-3" : "md:-left-3"
+                className={`absolute -top-2 ${
+                  step.reverse ? "md:right-2 md:-left-2" : "md:-left-3"
                 }`}
               />
 
               {/* Foreground Content */}
-              <div className="custom-border-shape overflow-hidden h-full md:h-56 w-full md:w-96 relative z-10">
+              <div className="custom-border-shape overflow-hidden h-full md:h-64 w-full md:w-[400px] relative z-10">
                 <img
                   src={step.image}
                   className="h-full w-full object-cover"
@@ -81,14 +83,17 @@ export const BookingSteps = () => {
             </div>
 
             <div>
-              <Typography variant="h3" className="font-medium">
+              <Typography
+                variant="h2"
+                className="  leading-tight font-semibold"
+              >
                 {step.title}
               </Typography>
-              <Typography variant="p" className="mt-2">
+              <Typography variant="h6" className="mt-5 text-gray-600 ">
                 {step.description}
               </Typography>
               {step.descriptionTwo && (
-                <Typography variant="p" className="mt-3">
+                <Typography variant="h6" className="mt-5 text-gray-600">
                   {step.descriptionTwo}
                 </Typography>
               )}

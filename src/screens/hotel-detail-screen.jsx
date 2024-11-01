@@ -9,6 +9,7 @@ import {
   ThingsKnow,
   PopularAmenities,
   HotelDetail,
+  HotelBio,
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
@@ -51,9 +52,12 @@ const HotelDetailScreen = React.memo(({ type }) => {
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <div className=" px-10">
+        <div className="  md:px-4">
           <HotelOverview type={type} />
+
           <HotelDetail />
+          <HotelBio />
+
           <BusinessFacts className="bg-white" />
           <AvailabilityCalendar
             dateRange={dateRange}
