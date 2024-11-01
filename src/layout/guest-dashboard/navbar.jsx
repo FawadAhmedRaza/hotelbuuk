@@ -28,12 +28,18 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
       )}
     >
       <AnchorTag href={"/"}>
-        <Typography
-          variant="h3"
-          className="sm:!text-xl md:!text-2xl !text-[14px] font-bold text-white text-start text-nowrap"
-        >
-          Hotelbuuk Dashboard
-        </Typography>
+        <div className=" flex gap-3 items-center">
+          <img
+            src="/assets/images/transperent-logo/transperent/White.png"
+            className="w-12"
+          />
+          <Typography
+            variant="h3"
+            className="sm:!text-xl md:flex hidden md:!text-[1.6rem] !text-[14px] font-bold text-white text-start text-nowrap"
+          >
+            Hotelbuuk Dashboard
+          </Typography>
+        </div>
       </AnchorTag>
 
       {isOpen && (
@@ -49,7 +55,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
 
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-3 lg:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
+          className="flex items-center gap-3 sm:gap-3 lg:gap-5 border border-white rounded-full px-3 md:px-2 py-1 sm:px-7 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
         >
           <Iconify
             iconName="material-symbols:menu"
@@ -70,7 +76,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
                 type={"server"}
                 effect="blur"
                 alt={user?.first_name}
-                className="w-8 h-8 md:w-10 md:h-10 object-cover rounded-full"
+                className="w-7 h-7 md:w-7 md:h-7 object-cover rounded-full"
               />
             ) : (
               <Iconify
