@@ -83,8 +83,8 @@ export const endpoints = {
     get_profile: (id) => `/guest/profile/${id}`,
     update_profile: (id) => `/guest/profile/${id}`,
     bookings: {
-      get_all: (id) => `/guest/bookings?user_id=${id}`
-    }
+      get_all: (id) => `/guest/bookings?user_id=${id}`,
+    },
   },
   nomad: {
     root: "/nomad",
@@ -111,6 +111,8 @@ export const endpoints = {
   booking: {
     book_event: "/bookings",
     get_all_bookings: (id, type) => `/bookings?user_id=${id}&type=${type}`,
+    get_recent_bookings: (id, type) =>
+      `/bookings/recent-bookings?user_id=${id}&type=${type}`,
     update_accepted_booking: (id) => `/bookings/${id}`,
   },
 };

@@ -41,12 +41,18 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       )}
     >
       <AnchorTag href={"/"}>
-        <Typography
-          variant="h3"
-          className="sm:!text-xl md:!text-2xl !text-[14px] font-bold text-white text-start text-nowrap"
-        >
-          Hotelbuuk Dashboard
-        </Typography>
+      <div className=" flex gap-3 items-center">
+          <img
+            src="/assets/images/transperent-logo/transperent/White.png"
+            className="w-12"
+          />
+          <Typography
+            variant="h3"
+            className="sm:!text-xl md:flex hidden md:!text-[1.6rem] !text-[14px] font-bold text-white text-start text-nowrap"
+          >
+            Hotelbuuk Dashboard
+          </Typography>
+        </div>
       </AnchorTag>
 
       {isOpen && (
@@ -62,17 +68,17 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
 
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
+          className="flex items-center gap-1 sm:gap-3 border border-white rounded-full px-3 py-1 sm:px-2 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
         >
           <Iconify
             iconName="material-symbols:menu"
-            className="size-5 sm:size-8"
+            className="size-5 sm:size-8 "
           />
-          <span className="flex items-center gap-1">
+          <div className="flex items-center gap-5 sm:gap-1">
             {user?.first_name && (
               <Typography
                 variant="p"
-                className="hidden md:block font-medium !text-xs text-white text-nowrap"
+                className="hidden md:block font-medium mr-3  !text-xs text-white text-nowrap"
               >
                 {`Hi, ${user?.first_name}`}
               </Typography>
@@ -85,7 +91,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
                 effect="blur"
                 alt={user?.first_name}
                 iconSize="!size-8"
-                className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
+                className="w-7 h-7 md:w-8 md:h-8  object-cover rounded-full"
               />
             ) : (
               <Iconify
@@ -93,7 +99,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
                 className="!size-8 md:!size-10 text-white"
               />
             )}
-          </span>
+          </div>
         </div>
       </div>
     </div>

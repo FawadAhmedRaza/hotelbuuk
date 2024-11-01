@@ -105,6 +105,15 @@ export const RHFInput = React.memo(
               )}
             </div>
 
+            {/* Display errors dynamically using lodash get
+            {errors && (
+              <Typography
+                variant="p"
+                className="!text-xs text-red-400 transition-all duration-500"
+              >
+                {get(errors, name)?.message}
+              </Typography>
+            )} */}
             {/* Display errors dynamically using lodash get */}
             {errors && (
               <Typography

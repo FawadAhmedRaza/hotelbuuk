@@ -1,9 +1,7 @@
-import NomadBookingsListOverview from '@/src/sections/nomad-bookings'
+import NomadBookingsListOverview from "@/src/sections/nomad-bookings";
 
 const page = () => {
-    return (
-        <NomadBookingsListOverview />
-    )
-}
+  return <NomadBookingsListOverview />;
+};
 
-export default page
+export default page;

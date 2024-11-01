@@ -68,5 +68,7 @@ export const paths = {
     root: "/guest-dashboard",
     update_profile: (id) => `/profile/${id}`,
     bookings: "/guest-dashboard/bookings",
+    nomads: "/guest-dashboard/nomads",
+    hotels: "/guest-dashboard/hotels",
   },
 };

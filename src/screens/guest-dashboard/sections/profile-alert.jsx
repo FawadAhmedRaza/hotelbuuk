@@ -27,7 +27,7 @@ const GuestProfileAlert = ({ setShowAlert }) => {
       <button
         className="flex items-center justify-center transition-all w-8 h-8 rounded-md text-primary hover:bg-white/10 active:bg-white/10 absolute top-auto right-2"
         type="button"
-        onClick={() => setShowAlert(false)}
+        // onClick={() => setShowAlert(false)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

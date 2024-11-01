@@ -41,7 +41,6 @@ const NomadsListSection = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
-  console.log("nomads list", nomads);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(nomads?.length / rowsPerPage);

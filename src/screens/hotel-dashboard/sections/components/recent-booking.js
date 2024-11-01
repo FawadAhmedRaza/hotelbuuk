@@ -13,13 +13,17 @@ import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
-import RecommendedNomadSkeleton from "@/src/components/Skeleton/recommended-nomad-skeleton";
+import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import RecommendedNomadSkeleton from "@/src/components/Skeleton/recomended-skeleton";
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
 
-  const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
+  const { nomads, isLoading: nomadsLoading } = useSelector(
+    (state) => state.nomadProfile
+  );
+  const { isLoading } = useSelector((state) => state.bookings.recentBookings);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -41,20 +45,26 @@ const RecentBooking = () => {
     <div className=" my-10">
       <div className="lg:grid grid-cols-12 gap-4  ">
         <div className="grid-cols-12 md:col-span-8">
-          <Typography variant="h4">Recent Booking</Typography>
-          <RecentBookingListView />
+          {isLoading ? (
+            <RoomListSkeleton />
+          ) : (
+            <>
+              <Typography variant="h4">Recent Booking</Typography>
+              <RecentBookingListView />
+            </>
+          )}
         </div>
-        {isLoading ? (
+
+        {nomadsLoading ? (
           <RecommendedNomadSkeleton />
         ) : (
           <div className="grid-cols-12 md:col-span-4 ">
             <Typography variant="h4">Recommended Nomad</Typography>
             <Card className=" p-2.5 md:p-5 flex flex-col gap-5 mt-5">
-              {/* Container with fixed height and scrollable content */}
               <div
                 className={`space-y-4 custom-scrollbar w-full ${
                   showMore ? "overflow-y-auto" : ""
-                } h-[27rem]  sm:h-[10rem] md:h-[25rem] overflow-hidden`}
+                } max-h-[27rem] sm:max-h-[10rem] md:max-h-[25rem] overflow-hidden`}
               >
                 {nomads
                   .slice(0, showMore ? recommended_nomad.length : 4)

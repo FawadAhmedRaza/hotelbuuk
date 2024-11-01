@@ -8,12 +8,12 @@ import {
 } from "@/src/components";
 import React, { useEffect, useState } from "react";
 import { RecentBookingListView } from "./recent-booking-list-view";
-import Image from "next/image";
 import { recommended_nomad } from "@/src/_mock/_recommended_nomad";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { useRouter } from "next/navigation";
-import RecommendedHotelsSkeleton from "@/src/components/Skeleton/recommended-hotels-skeleton";
+import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import RecommendedNomadSkeleton from "@/src/components/Skeleton/recomended-skeleton";
 
 recommended_nomad;
 const RecentBooking = () => {
@@ -21,8 +21,10 @@ const RecentBooking = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-  console.log("Hotel List", hotels);
+  const { hotels, isLoading: hotelsLoading } = useSelector(
+    (state) => state.hotelInfo
+  );
+  const { isLoading } = useSelector((state) => state.bookings.recentBookings);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -41,14 +43,20 @@ const RecentBooking = () => {
   }, []);
 
   return (
-    <div className=" my-10">
-      <div className="lg:grid grid-cols-12 gap-4  ">
+    <div className="my-10">
+      <div className="lg:grid grid-cols-12 gap-4">
         <div className="grid-cols-12 md:col-span-8">
-          <Typography variant="h4">Recent Booking</Typography>
-          <RecentBookingListView />
+          {isLoading ? (
+            <RoomListSkeleton />
+          ) : (
+            <>
+              <Typography variant="h4">Recent Booking</Typography>
+              <RecentBookingListView />
+            </>
+          )}
         </div>
         {isLoading ? (
-          <RecommendedHotelsSkeleton />
+          <RecommendedNomadSkeleton />
         ) : (
           <div className="grid-cols-12 md:col-span-4 ">
             <Typography variant="h4">Recommended Hotels</Typography>
@@ -65,12 +73,6 @@ const RecentBooking = () => {
                     <div key={hotel.id} className="w-full">
                       <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                         <div className="flex gap-4 w-full">
-                          {/* {!hotel?.hotel_image ? (
-                  <Iconify
-                    iconName="carbon:user-avatar-filled"
-                    className="!size-16 border-primary border-2  rounded-full  text-gray-500"
-                  />
-                ) : ( */}
                           <ProfileAvatar
                             src={hotel?.hotel_image}
                             type={"server"}

@@ -167,16 +167,21 @@ export const MenuLinks = (UserId) => {
     },
     {
       id: 4,
-      label: "Events",
-      // path: paths.hotelDashboard.events.root,
+      label: "Hotels",
+      path: paths.guestDashboard.hotels
     },
     {
-      id: 9,
+      id: 5,
+      label: "Nomads",
+      path: paths.guestDashboard.nomads,
+    },
+    {
+      id: 6,
       label: "Messages",
       path: "",
     },
     {
-      id: 10,
+      id: 7,
       label: "Settings",
       path: "",
       children: [

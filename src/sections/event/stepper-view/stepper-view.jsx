@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -43,7 +43,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
-      description: Yup.string().required("required"),
+      description: Yup.string().required("Description is required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
@@ -54,22 +54,20 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         otherwise: (schema) => schema.notRequired(),
       }),
 
-      location: Yup.object().shape({
-        country: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("Country is required for BnB"),
-          otherwise: (schema) => schema.notRequired(), // Optional for hotel
-        }),
-        city: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("City is required for BnB"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
-        address: Yup.string().when("$accomodation_type", {
-          is: "bnb",
-          then: (schema) => schema.required("Address is required for BnB"),
-          otherwise: (schema) => schema.notRequired(),
-        }),
+      country: Yup.string().when("accomodation_type", {
+        is: "bnb",
+        then: (schema) => schema.required("Country is required for BnB"),
+        otherwise: (schema) => schema.notRequired(), // Optional for hotel
+      }),
+      city: Yup.string().when("accomodation_type", {
+        is: "bnb",
+        then: (schema) => schema.required("City is required for BnB"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+      address: Yup.string().when("accomodation_type", {
+        is: "bnb",
+        then: (schema) => schema.required("Address is required for BnB"),
+        otherwise: (schema) => schema.notRequired(),
       }),
     }),
     images: Yup.array().when("accomodation_type", {
@@ -103,11 +101,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             business_category: "",
             accomodation_type: "bnb",
             hotel_id: "",
-            location: {
-              country: "",
-              city: "",
-              address: "",
-            },
+            country: "",
+            city: "",
+            address: "",
             amenities: [],
           },
           images: [],
@@ -119,9 +115,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           },
           price: "",
         },
-    context: {
-      accomodation_type: "bnb",
-    },
   });
 
   const {
@@ -243,7 +236,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   // };
 
   const handleNext = async () => {
-    const fieldsToValidate = [];
+    let fieldsToValidate = [];
 
     if (activeStep === 0) {
       fieldsToValidate.push(
@@ -259,9 +252,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         fieldsToValidate.push("business_meeting.hotel_id");
       } else if (accomodationType === "bnb") {
         fieldsToValidate.push(
-          "business_meeting.location.country",
-          "business_meeting.location.city",
-          "business_meeting.location.address"
+          "business_meeting.country",
+          "business_meeting.city",
+          "business_meeting.address"
         );
       }
     } else if (activeStep === 1 && accomodationType === "bnb") {

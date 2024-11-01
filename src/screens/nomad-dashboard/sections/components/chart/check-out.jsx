@@ -9,14 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import {
-  ShadcnCard,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../../../../components/ui/card";
+import { ShadcnCard, CardHeader } from "../../../../../components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -26,41 +19,48 @@ import { Typography } from "@/src/components";
 
 export const description = "A line chart with a label";
 
-const chartData = [
-  { month: "Apr", desktop: 136, mobile: 80 },
-  { month: "May", desktop: 75, mobile: 200 },
-  { month: "Jan", desktop: 231, mobile: 120 },
-  { month: "jul", desktop: 93, mobile: 190 },
-  { month: "Aug", desktop: 189, mobile: 130 },
-  { month: "Sep", desktop: 204, mobile: 140 },
-  { month: "Oct", desktop: 54, mobile: 140 },
-  { month: "Nov", desktop: 219, mobile: 140 },
-  { month: "Dec", desktop: 304, mobile: 140 },
-];
-
 const chartConfig = {
   desktop: {
-    label: "CheckOut",
+    label: "CheckIn",
     color: "hsl(var(--chart-1))",
   },
   mobile: {
-    label: "Hotel",
+    label: "Mobile",
     color: "hsl(var(--chart-2))",
   },
 };
 
-export const CheckOutChart = () => {
+export const CheckOutChart = ({ totalCheckOuts }) => {
+  const now = new Date();
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
+
+  const chartData = [
+    { month: currentMonthName, desktop: totalCheckOuts, mobile: 0 },
+  ];
+
   return (
     <ShadcnCard className="">
       <CardHeader>
-  
-        <Typography variant="h4" className="font-semibold mb-3">                                                                    
+        <Typography variant="h4" className="font-semibold mb-3">
           Check-Out
         </Typography>
       </CardHeader>
       <ChartContainer config={chartConfig}>
         <LineChart
-          accessibilityLayer
           data={chartData}
           margin={{
             top: 20,
@@ -68,12 +68,7 @@ export const CheckOutChart = () => {
             right: 12,
           }}
         >
-          <CartesianGrid
-            // stroke="#852169"
-            strokeDasharray="5 5"
-            vertical
-            horizontal
-          />
+          <CartesianGrid strokeDasharray="5 5" />
           <XAxis
             dataKey="month"
             tickLine={false}
@@ -94,7 +89,7 @@ export const CheckOutChart = () => {
           />
           <Line
             dataKey="desktop"
-            type="natural"
+            type="monotone" // Change to "monotone" for a wavy line
             stroke="hsl(var(--chart-1))"
             strokeWidth={3}
             dot={{

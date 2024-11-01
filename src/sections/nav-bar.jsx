@@ -19,7 +19,7 @@ export const NavBar = React.memo(({ className }) => {
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-20 px-2 sm:px-8 lg:px-14 xl:px-10 ",
+        "w-full flex justify-between items-center gap-1 py-4 absolute top-0 z-[999] px-2 sm:px-8 lg:px-14 xl:px-12  bg-white",
         className
       )}
     >
@@ -28,12 +28,12 @@ export const NavBar = React.memo(({ className }) => {
         className="flex hover:no-underline items-center gap-2"
       >
         <img
-          src="/assets/images/transperent-logo/transperent/WHITE.png"
-          className="w-16"
+          src="/assets/images/transperent-logo/transperent/PINK.png"
+          className="w-12"
         />
         <Typography
           variant="h3"
-          className=" !text-xl sm:!text-3xl md:!text-4xl font-semibold !text-white text-start font-poppins  "
+          className=" !text-md sm:!text-3xl md:!text-3xl font-semibold !text-primary text-start font-poppins  "
         >
           Hotelbuuk
         </Typography>
@@ -48,11 +48,11 @@ export const NavBar = React.memo(({ className }) => {
         {/* Login  */}
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5 border border-white rounded-lg px-2 py-1 sm:px-4 sm:py-2 cursor-pointer hover:bg-black hover:bg-opacity-20"
+          className="flex items-center gap-1 sm:gap-5  rounded-full px-2 py- sm:px-4 sm:py-0 border border-gray-600 cursor-pointer hover:bg-gray-100 "
         >
           <Iconify
-            iconName="material-symbols:menu"
-            className="size-5 sm:size-8"
+            iconName="mynaui:menu"
+            className="size-5 sm:size-8 text-gray-600"
           />
           <span className="flex items-center gap-1">
             {/* <Iconify
@@ -64,12 +64,13 @@ export const NavBar = React.memo(({ className }) => {
               type={"server"}
               effect="blur"
               alt={user?.hotel_name}
-              className="w-8 h-8 md:w-10 md:h-10  object-cover rounded-full"
+              iconSize=" size-8 border-none "
+              className="  object-cover rounded-full  md:h-10 md:w-10 h-5 w-5"
             />
 
             <Typography
               variant="p"
-              className=" font-medium !text-xs text-white text-nowrap"
+              className=" font-medium !text-xs text-gray-600 text-nowrap"
             >
               {user ? user?.first_name : ""}
             </Typography>

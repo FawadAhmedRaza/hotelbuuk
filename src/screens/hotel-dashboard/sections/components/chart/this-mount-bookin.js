@@ -2,15 +2,46 @@ import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
 import { Typography } from "@/src/components";
 
-const ThisMonthBooking = () => {
+const ThisMonthBooking = ({ bookingsArr }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const currentMonthName = monthNames[currentMonth];
+
+    const currentMonthHotelBookings = bookingsArr.filter((booking) => {
+      const bookingDate = new Date(booking.createdAt);
+      return (
+        booking.event_type === "HOTEL" &&
+        bookingDate.getMonth() === currentMonth &&
+        bookingDate.getFullYear() === currentYear
+      );
+    });
+
+    const hotelBookingCount = currentMonthHotelBookings.length;
+
     const chartConfig = {
       series: [
         {
-          name: "Sales",
-          data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+          name: "Hotel Bookings",
+          data: [hotelBookingCount],
         },
       ],
       chart: {
@@ -19,9 +50,6 @@ const ThisMonthBooking = () => {
         toolbar: {
           show: false,
         },
-      },
-      title: {
-        show: false,
       },
       dataLabels: {
         enabled: false,
@@ -34,12 +62,7 @@ const ThisMonthBooking = () => {
         },
       },
       xaxis: {
-        axisTicks: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
+        categories: [currentMonthName], // Use the actual month name
         labels: {
           style: {
             colors: "#852169",
@@ -48,17 +71,6 @@ const ThisMonthBooking = () => {
             fontWeight: 400,
           },
         },
-        categories: [
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
       },
       yaxis: {
         labels: {
@@ -74,18 +86,6 @@ const ThisMonthBooking = () => {
         show: true,
         borderColor: "#79747E",
         strokeDashArray: 5,
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-        padding: {
-          top: 5,
-          right: 20,
-        },
-      },
-      fill: {
-        opacity: 0.8,
       },
       tooltip: {
         theme: "light",
@@ -95,18 +95,17 @@ const ThisMonthBooking = () => {
     const chart = new ApexCharts(chartRef.current, chartConfig);
     chart.render();
 
-    // Cleanup on component unmount
     return () => {
       chart.destroy();
     };
-  }, []);
+  }, [bookingsArr]);
 
   return (
     <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
       <div className="pt-6 px-2 pb-0">
-        <div className=" px-3">
+        <div className="px-3">
           <Typography variant="h4" className="font-semibold">
-            This Month Booking
+            This Month Bookings
           </Typography>
         </div>
         <div id="bar-chart" ref={chartRef}></div>
