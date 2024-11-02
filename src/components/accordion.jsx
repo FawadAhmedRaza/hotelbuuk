@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useRef, useEffect } from "react";
 import { useBoolean } from "../hooks";
 import { Typography } from "./typography";
@@ -15,9 +15,14 @@ export const Accordion = React.memo(
     }, [isOpen, setIsOpen]);
 
     return (
-      <div className={` w-full object-contain  flex flex-col justify-center  px-0 py-1  ${className}`}>
-        <div className="flex items-center justify-between cursor-pointer px-2 py-2" onClick={toggleDrawer}>
-          <Typography variant="h6" className="text-black font-medium">
+      <div
+        className={` w-full object-contain  flex flex-col justify-center  px-0 py-1  ${className}`}
+      >
+        <div
+          className="flex items-center justify-between cursor-pointer px-2 py-2"
+          onClick={toggleDrawer}
+        >
+          <Typography variant="h6" className="text-black font-normal">
             {title}
           </Typography>
 
@@ -39,7 +44,9 @@ export const Accordion = React.memo(
 
         <div
           ref={accordionRef}
-          className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? "max-h-full overscroll-x-auto" : "max-h-0"} px-5`}
+          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+            open ? "max-h-full overscroll-x-auto" : "max-h-0"
+          } px-5`}
           style={{
             maxHeight: open ? `${accordionRef.current?.scrollHeight}px` : "0px",
           }}

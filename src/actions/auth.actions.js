@@ -129,6 +129,18 @@ export const getUserByGoogleId = async (googleId) => {
       where: {
         googleId,
       },
+      include:{
+        hotels: {
+          select: {
+            id: true,
+          },
+        },
+        guest: {
+          select: {
+            id: true,
+          },
+        },
+      }
     });
     return user;
   } catch (error) {

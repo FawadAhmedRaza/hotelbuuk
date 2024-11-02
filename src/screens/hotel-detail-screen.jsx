@@ -14,7 +14,7 @@ import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
 const HotelDetailScreen = React.memo(
-  ({ type,id, secretLoading, clientSecret }) => {
+  ({ type,id }) => {
     const [isMobile, setIsMobile] = useState(false);
 
     const [dateRange, setDateRange] = useState([
@@ -56,7 +56,7 @@ const HotelDetailScreen = React.memo(
         <Layout isNavBg={true}>
           <div className=" px-10">
             <HotelOverview type={type} />
-            <HotelDetail type={type} id={id} clientSecret={clientSecret} secretLoading={secretLoading}/>
+            <HotelDetail type={type} id={id} />
             <BusinessFacts className="bg-white" />
             <AvailabilityCalendar
               dateRange={dateRange}

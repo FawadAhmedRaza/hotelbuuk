@@ -6,19 +6,18 @@ import Built from "@/src/components/built";
 import { useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import Modal from "@/src/components/modal";
 import { useModal } from "@/src/hooks/use-modal";
 import {
-  useStripe,
-  useElements,
-  PaymentElement,
-} from "@stripe/react-stripe-js";
-import { FUNDING, PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+  FUNDING,
+  PayPalButtons,
+  PayPalScriptProvider,
+} from "@paypal/react-paypal-js";
 import { paypalCaptureOrder } from "@/src/actions/payment.action";
-
+import StripePayment from "../stripe-payment";
 
 const hotelData = {
   time: "10am - 4pm",
@@ -49,48 +48,39 @@ const hotelData = {
   total: 100,
 };
 
-export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
-  const { user } = useAuthContext();
-  const params = useSearchParams();
+export const HotelBio = ({ type, id }) => {
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [guestCount, setGuestCount] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  // Stripes
-  const stripe = useStripe();
-  const elements = useElements();
+  const router = useRouter();
+
+  const params = useSearchParams();
   const payment_intent = params.get("payment_intent");
   const redirect_status = params.get("redirect_status");
-
-  // Create An order after stripe payment succeeded
-  useEffect(() => {
-    if (redirect_status == "succeeded" && payment_intent && !loading) {
-      const orderData = localStorage.getItem("orderData");
-      if (orderData) {
-        (async () => {
-          createReservation();
-        })();
-      }
-    }
-  }, [payment_intent, redirect_status]);
-
-  const [paymentMethod, setPaymentMethod] = useState("card");
   let event_type = params.get("type");
-  const [loading, setLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
 
   const { event } = useSelector((state) => state.allEvents.getById);
-  const { onFalse, onTrue,  value } = useModal();
+  const { data } = useSelector((state) => state.bookings.userBooking);
+
+  const { user } = useAuthContext();
+  const { enqueueSnackbar } = useSnackbar();
+  const { onFalse, onTrue, value } = useModal();
+
   const stayNights = calculateDaysBetweenDates(
     event?.start_date,
     event?.end_date
   );
-
-  const [guestCount, setGuestCount] = useState(1);
 
   const handleCalculation = (number) => {
     setGuestCount(number);
   };
 
   const createReservation = async () => {
+    setLoading(true);
+
     try {
+      const data = localStorage.getItem("orderData");
       const request = await axiosInstance.post(
         endpoints.booking.book_event,
         data
@@ -100,6 +90,7 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
         enqueueSnackbar("Your booking request has been sent successfully", {
           variant: "success",
         });
+        router.push(`http://localhost:3000/hotels/${id}?type=${type}`);
       }
     } catch (error) {
       console.log(error);
@@ -110,7 +101,6 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
   };
 
   const handleEventReserve = async () => {
-    setLoading(true);
     try {
       if (user?.user_type === "GUEST") {
         let data = {
@@ -130,7 +120,6 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
         localStorage.setItem("orderData", JSON.stringify(data));
         onTrue();
       } else {
-        console.log("triggred without guest");
         enqueueSnackbar("Only guest users can book this event", {
           variant: "warning",
         });
@@ -138,62 +127,8 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
-
-  const stripePayment = async () => {
-    if (paymentMethod === "card") {
-      if (!stripe || !elements) {
-        return;
-      }
-      try {
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `http://localhost:3000/hotels/${id}?type=${type}`,
-            payment_method_data: {
-              billing_details: {
-                address: {
-                  country: "US",
-                },
-              },
-            },
-          },
-        });
-        if (error) {
-          console.log("error", error);
-          enqueueSnackbar(error.message, { variant: "error" });
-        } else {
-        }
-      } catch (err) {
-        console.log("error");
-        enqueueSnackbar("Opps! something went wrong", { variant: "error" });
-      }
-    }
-  };
-
-
-  const stripeElement = (
-    <div className="mt-10 ">
-      <PaymentElement
-        options={{
-          fields: {
-            billingDetails: {
-              address: {
-                country: "never",
-              },
-            },
-          },
-        }}
-      />
-      <Button onClick={stripePayment} className="mt-5">
-        Pay Now
-      </Button>
-    </div>
-
-  );
 
   const paypalButtons = (
     <div className="my-10">
@@ -246,19 +181,25 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
       </PayPalScriptProvider>
     </div>
   );
+
+  // Create An order after stripe payment succeeded
+  useEffect(() => {
+    if (redirect_status == "succeeded" && payment_intent && !loading) {
+      const orderData = localStorage.getItem("orderData");
+      if (orderData) {
+        (async () => {
+          createReservation();
+        })();
+      }
+    }
+  }, [payment_intent, redirect_status]);
+
+  console.log("Event User", data);
+  console.log("User", user);
+
   return (
-    <div className="flex flex-col lg:flex-row bg-white  gap-10 mt-5 ">
-      {/* Left Panel - Image and Time */}
-      {/* <div className="flex flex-col h-fit items-center lg:items-start w-full lg:w-2/3 bg-primary text-white rounded-l-xl p-4">
-        <div className="flex items-center justify-between w-full">
-          <span className="text-lg font-medium flex items-center gap-2">
-            <Iconify iconName="noto-v1:alarm-clock" />
-            {hotelData?.time}
-          </span>
-          <Button className="bg-white text-primary ">Flexible</Button>
-        </div>
-      </div> */}
-      <div className=" w-full lg:w-[65%] ">
+    <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
+      <div className="  w-full  lg:w-[70%] ">
         <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
@@ -312,14 +253,22 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
           </Card>
         </div>
         <div className="mt-2">
-          {paymentMethod === "card" && stripeElement}
+          {paymentMethod === "card" && (
+            <StripePayment
+              amount={(
+                event?.price * stayNights * guestCount +
+                ((event?.price * stayNights * guestCount) / 100) * 20
+              ).toFixed(2)}
+              type={type}
+              id={id}
+            />
+          )}
           {paymentMethod === "paypal" && paypalButtons}
         </div>
       </Modal>
 
-      {/* Booking Information */}
-      <div className="w-full lg:w-[35%]  py-4   flex flex-col justify-between border-neutral-400">
-        <Card className="flex flex-col gap-1 w-full">
+      <div className="w-full lg:w-[30%]  py-4   flex flex-col justify-between border-neutral-400">
+        <Card className="flex  flex-col gap-1 w-full">
           <div className="w-full">
             <Typography variant="h6" className=" font-semibold">
               ${event?.price} Per / Night
@@ -421,9 +370,23 @@ export const HotelBio = ({ clientSecret, type, id, secretLoading }) => {
                   ).toFixed(2)}
                 </Typography>
               </span>
-              <Button className="w-full mt-2" onClick={handleEventReserve}>
-                Reserve
-              </Button>
+              {user?.user_type !== "GUEST" ? (
+                <div className="flex bg-gray-50  p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography variant="h6" className="font-semibold text-center">
+                    You should be signin as a guest for reservation
+                  </Typography>
+                </div>
+              ) : data?.id ? (
+                <div className="flex bg-gray-50 p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography variant="h6" className="font-semibold text-center">
+                    You already part of this event
+                  </Typography>
+                </div>
+              ) : (
+                <Button className="w-full mt-2" onClick={handleEventReserve}>
+                  Reserve
+                </Button>
+              )}
             </div>
           </div>
         </Card>

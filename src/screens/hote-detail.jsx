@@ -9,19 +9,19 @@ import { getEventById } from "../redux/all-events/thunk";
 import { enqueueSnackbar } from "notistack";
 import Spinner from "../components/ui/spinner";
 import { HotelDetailScreen } from ".";
-import { createClientSecret } from "../actions/payment.action";
+import { getUserBooking } from "../redux/bookings/thunk";
+import { useAuthContext } from "../providers/auth/context/auth-context";
 
 const HotelDetail = () => {
   const params = useSearchParams();
   const { id } = useParams();
 
   const type = params.get("type");
-  const [clientSecret, setClientSecret] = useState("");
-  const [secretLoading, setSecretLoading] = useState(true);
+
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state) => state.allEvents.getById);
-
+  const { isLoading, event } = useSelector((state) => state.allEvents.getById);
+  const { user } = useAuthContext();
   const fetchEventById = async () => {
     try {
       await dispatch(getEventById({ id: id, type: type })).unwrap();
@@ -32,35 +32,20 @@ const HotelDetail = () => {
   };
 
   useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(getUserBooking({ eventId: id, userId: user?.guest?.[0].id, type }));
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [user, id, event]);
+
+  useEffect(() => {
     fetchEventById();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      setSecretLoading(true);
-      try {
-        const clientSecret = await createClientSecret(
-          10
-        );
-        setClientSecret(clientSecret);
-      } catch (err) {
-        console.log("error", err);
-      } finally {
-        setSecretLoading(false);
-      }
-    })();
-  }, []);
-
-  return isLoading || secretLoading ? (
-    <Spinner />
-  ) : (
-    <HotelDetailScreen
-      clientSecret={clientSecret}
-      secretLoading={secretLoading}
-      type={type}
-      id={id}
-    />
-  );
+  return isLoading ? <Spinner /> : <HotelDetailScreen type={type} id={id} />;
 };
 
 export default HotelDetail;
