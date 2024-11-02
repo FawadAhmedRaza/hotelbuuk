@@ -44,7 +44,7 @@ export const NavBar = React.memo(({ className }) => {
       )}
       <div className="flex gap-2 sm:gap-5">
         {/* language  */}
-        <LangaugeTranslator />
+        <LangaugeTranslator isWhite={true} />
         {/* Login  */}
         <div
           onClick={toggleDrawer}

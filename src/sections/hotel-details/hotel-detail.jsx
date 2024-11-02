@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 
 import { useSelector } from "react-redux";
@@ -7,8 +6,10 @@ import { useSelector } from "react-redux";
 import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
-
-export const HotelDetail = () => {
+import { useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+export const HotelDetail = ({  type, id }) => {
   const { event } = useSelector((state) => state.allEvents.getById);
 
   return (
@@ -68,7 +69,9 @@ export const HotelDetail = () => {
           <HostBio />
         </div>
       </div>
-      <HotelBio />
+      <HotelBio 
+      type={type}
+      id={id}/>
     </div>
   );
 };

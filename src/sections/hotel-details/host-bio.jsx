@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 
 export const HostBio = React.memo(() => {
   const { event } = useSelector((state) => state.allEvents.getById);
-
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="flex justify-between md:flex-row  flex-wrap">
@@ -84,7 +83,6 @@ export const HostBio = React.memo(() => {
           <Typography variant="p" className="font-normal">
             {event?.nomad?.bio}
           </Typography>
-          <Button className="w-full mt-2">Reserve</Button>
         </div>
       </div>
     </div>
