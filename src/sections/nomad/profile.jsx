@@ -441,7 +441,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
       {isOpen && (
         <DeleteModal
           isLoading={isLoading}
-          title="Delete Room"
+          title="Delete Profile"
           isOpen={isOpen}
           onClose={toggleDrawer}
           handleDelete={handleDelete}
