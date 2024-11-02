@@ -18,6 +18,7 @@ export async function getTotalNomadRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
+      booking_status: "ACCEPTED", // include so the revenue will be calculated
     },
   });
 

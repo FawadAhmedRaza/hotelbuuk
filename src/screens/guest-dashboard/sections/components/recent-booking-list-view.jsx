@@ -29,10 +29,8 @@ const RecentBookingListView = () => {
   const { guestBookings: upcomingEvents } = useSelector(
     (state) => state.bookings
   );
-  console.log("guest bookings", upcomingEvents);
 
   const guestBookings = filterUpcomingEvents(upcomingEvents || []);
-  console.log("upcoming bookings", guestBookings);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(guestBookings?.length / rowsPerPage);

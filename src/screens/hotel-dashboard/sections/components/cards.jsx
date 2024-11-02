@@ -35,7 +35,6 @@ const HotelCards = () => {
 
   const fetchRooms = async () => {
     const totalRooms = await getTotalRooms(user?.id);
-    console.log("totalrooms", totalRooms);
     setRoomsCount(totalRooms?.length || 0);
   };
 
