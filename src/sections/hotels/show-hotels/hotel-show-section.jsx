@@ -36,10 +36,9 @@ const HotelShowSection = () => {
   useEffect(() => {
     if (!isLoading) {
       const filteredResults = events.filter((event) => {
-        const titleMatches = event.title
-          .toLowerCase()
-          .includes(filters.event_name.toLowerCase());
-        console.log(`Title matches (${event.title}):`, titleMatches);
+        const titleMatches = event?.title
+          ?.toLowerCase()
+          .includes(filters?.event_name?.toLowerCase());
 
         // Price validation
         const priceValid =
