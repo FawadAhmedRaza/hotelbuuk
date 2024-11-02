@@ -249,7 +249,6 @@ input::-webkit-inner-spin-button {
 .clear-dates-button:hover {
   text-decoration: underline;
 }
-<<<<<<<<< Temporary merge branch 1
 
 .range {
   appearance: none;
@@ -271,10 +270,8 @@ input::-webkit-inner-spin-button {
   border-radius: 50%; /* Round thumb */
   cursor: pointer; /* Pointer cursor on hover */
 }
-=========
-.animate-slide-down {
+/* .animate-slide-down {
   animation: slide-down 0.3s ease forwards;
-}
+} */
 
 /* Main container */
->>>>>>>>> Temporary merge branch 2

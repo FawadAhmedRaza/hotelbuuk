@@ -18,7 +18,7 @@ const AvailabilityCalendar = ({
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <Pannel className="flex flex-col md:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
       <div className="text-center md:text-left  w-full">
         <Typography variant="h1" className="text-black">
           Availability
@@ -50,7 +50,7 @@ const AvailabilityCalendar = ({
         <div className="border border-gray-300 rounded-lg shadow-md  bg-white mx-auto w-full">
           <DateRange
             onChange={handleDateChange}
-            months={2}
+            months={isMobile ? 1 : 2}
             ranges={dateRange}
             direction={isMobile ? "vertical" : "horizontal"}
             rangeColors={["#000000"]}
@@ -59,7 +59,7 @@ const AvailabilityCalendar = ({
             color="#000000"
             weekdayDisplayFormat="EEE"
             monthDisplayFormat="MMMM yyyy"
-            className=" text-[11px] sm:text-[20px] md:text-[15px] xl:text-sm   text-gray-800 "
+            className=" text-[10px] sm:text-[13px] md:text-[0.745rem] xl:text-sm 2xl:text-[16px]   text-gray-800 "
           />
 
           {/* Date Display Section */}
