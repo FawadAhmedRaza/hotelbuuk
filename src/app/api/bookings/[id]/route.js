@@ -7,6 +7,7 @@ import {
   generateBookingRequestAcceptedTemplate,
   generateBookingRequestRejectedTemplate,
 } from "@/src/libs/otpTemplate";
+import { createNotification } from "@/src/libs/create-notification";
 
 export async function POST(req, { params }) {
   try {
@@ -68,7 +69,8 @@ export async function POST(req, { params }) {
         guestName,
         "Event booking Accepted",
         message,
-        user?.User?.id
+        user?.User?.id,
+        organizer?.id
       );
 
       await sendMail(
@@ -90,7 +92,8 @@ export async function POST(req, { params }) {
         guestName,
         "Event booking Rejected",
         message,
-        user?.User?.id
+        user?.User?.id,
+        organizer?.id
       );
 
       await sendMail(
