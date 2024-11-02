@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Iconify, Pannel, Typography } from "../components";
@@ -25,8 +25,9 @@ import ImageRender from "../components/ImageRenderer";
 export const MeetOurPatners = React.memo(() => {
   const dispatch = useDispatch();
   const swiperRef = React.useRef(null);
-  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
-  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
+  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const [isHotelLoading, setIsHotelLoading] = useState(true);
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
 
@@ -45,6 +46,7 @@ export const MeetOurPatners = React.memo(() => {
         await dispatch(getHotelInfo()).unwrap();
       } catch (error) {
         console.log(error);
+      } finally {
       }
     }
 

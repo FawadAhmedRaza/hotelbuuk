@@ -26,6 +26,7 @@ const socialMedia = [
 
 export const HotelOverview = ({ type }) => {
   const { isOpen, toggleDrawer } = useBoolean();
+  const [isHotelLoading, setisHotelLoading] = useState(true);
 
   const { event, isLoading } = useSelector((state) => state.allEvents.getById);
 
@@ -37,13 +38,13 @@ export const HotelOverview = ({ type }) => {
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
-      <ImageModal 
+      <ImageModal
         images={eventImages || []}
         isOpen={isOpen}
         onClose={toggleDrawer}
       />
 
-      {isLoading ? (
+      {isHotelLoading ? (
         <HotelDetailsSkeleton />
       ) : (
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
