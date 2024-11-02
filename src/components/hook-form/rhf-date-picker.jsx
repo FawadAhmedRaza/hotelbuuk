@@ -9,6 +9,8 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
   const { control } = useFormContext();
   const [isMobile, setIsMobile] = useState(false);
 
+  console.log(value);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 930);
@@ -32,7 +34,7 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
           ranges={value}
           direction={isMobile ? "vertical" : "horizontal"}
           rangeColors={rangeColors}
-          className="w-fit z-20"
+          className="w-fit z-20 bg-white"
           calendarWrapper="mb-10 "
         />
       )}
