@@ -39,7 +39,7 @@ export const BookingCalender = React.memo(
             control={control}
             render={({ field }) => (
               <div
-                className={`flex flex-col items-start  gap-1 py-2 px-0 sm:px-3  xl:px6 xll:px-5 rounded-full    ${InputBoxClass}`}
+                className={`flex flex-col items-start  gap-1 py-2 px-0 sm:px-3  xl:px6 xll:px-5 rounded-full ${InputBoxClass}`}
               >
                 <div className="flex gap-3">
                   <Iconify iconName="uil:calender" className="text-primary" />
@@ -57,9 +57,8 @@ export const BookingCalender = React.memo(
                     {errors[nameStart]?.message}
                   </Typography>
                 )} */}
-                </div>
-              );
-            }}
+              </div>
+            )}
           />
 
           {/* End Date */}
