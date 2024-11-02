@@ -24,6 +24,21 @@ export async function GET(_, { params }) {
             amenities: true,
           },
         },
+        event_associated_cancel_policies: {
+          include: {
+            event_cancel_policy: true,
+          },
+        },
+        event_associated_rules: {
+          include: {
+            event_rules: true,
+          },
+        },
+        event_associated_safeties: {
+          include: {
+            event_safeties: true,
+          },
+        },
       },
     });
 
@@ -43,10 +58,23 @@ export async function GET(_, { params }) {
           country: nomadEvent?.country || "",
           city: nomadEvent?.city || "",
           address: nomadEvent?.address || "",
+          address: nomadEvent?.address || "",
+          about_bnb: nomadEvent?.about_bnb || "",
         },
       },
       images: nomadEvent?.event_images || [],
       topics: nomadEvent?.event_topics || [],
+      rules:
+        nomadEvent?.event_associated_rules?.map((item) => item?.event_rules) ||
+        [],
+      safeties:
+        nomadEvent?.event_associated_safeties?.map(
+          (item) => item?.event_safeties
+        ) || [],
+      cancelPolicies:
+        nomadEvent?.event_associated_cancel_policies?.map(
+          (item) => item?.event_cancel_policy
+        ) || [],
       availibility: {
         start_date: nomadEvent?.start_date,
         end_date: nomadEvent?.end_date,
@@ -93,8 +121,15 @@ export async function PUT(req, { params }) {
     const data = convertFormData(body);
     const newImages = body.getAll("new_images");
 
-    const { business_meeting, availibility, topics, user_id, price } =
-      data || {};
+    const {
+      business_meeting,
+      availibility,
+      topics,
+      user_id,
+      rules: event_rules,
+      safeties,
+      cancelPolicies,
+    } = data || {};
 
     const {
       title,
@@ -131,6 +166,7 @@ export async function PUT(req, { params }) {
           city: location?.city,
           country: location?.country,
           address: location?.address,
+          about_bnb: location?.about_bnb,
           start_date,
           end_date,
           // rules
@@ -215,6 +251,64 @@ export async function PUT(req, { params }) {
       // create
       await prisma.event_associated_amenities.createMany({
         data: asscoiateAmenities,
+      });
+    }
+
+    // rules
+    if (event_rules?.length > 0) {
+      await prisma.event_associated_rules?.deleteMany({
+        where: {
+          nomad_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = event_rules?.map((item) => {
+        return {
+          rules_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_rules.createMany({
+        data: formatedArr,
+      });
+    }
+    // safety and property
+    if (safeties?.length > 0) {
+      await prisma.event_associated_safeties?.deleteMany({
+        where: {
+          nomad_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = safeties?.map((item) => {
+        return {
+          safety_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_safeties.createMany({
+        data: formatedArr,
+      });
+    }
+    // cancel policies
+    if (cancelPolicies?.length > 0) {
+      await prisma.event_associated_cancel_policies?.deleteMany({
+        where: {
+          nomad_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = cancelPolicies?.map((item) => {
+        return {
+          policy_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
       });
     }
 

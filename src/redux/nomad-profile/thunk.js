@@ -43,3 +43,13 @@ export const updateNomadProfile = createAsyncThunk(
     return request?.data;
   }
 );
+
+export const deleteNomadProfile = createAsyncThunk(
+  "deleteNomadProfie",
+  async (id) => {
+    const request = await axiosInstance.delete(
+      endpoints.nomad.deleteProfile(id)
+    );
+    return request?.data;
+  }
+);

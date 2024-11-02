@@ -40,20 +40,13 @@ export const BussinessMeeting = () => {
     };
   });
 
-  console.log(watch("business_meeting"));
-
   const accomodationType = watch("business_meeting.accomodation_type");
 
   const country = watch("business_meeting.location.country");
   const city = watch("business_meeting.location.city");
-  // const hotelId = watch("business_meeting.hotel_id");
-
-  console.log(city);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
-
-  console.log(type);
 
   const handleCheckboxChange = (amenity, checked) => {
     setValue(
@@ -67,8 +60,6 @@ export const BussinessMeeting = () => {
   useEffect(() => {
     setType(accomodationType); // Update local state when type changes
   }, [accomodationType]);
-
-  // console.log(hotelId);
 
   useEffect(() => {
     async function fetchCountries() {
@@ -192,7 +183,7 @@ export const BussinessMeeting = () => {
                 <Typography variant="h5" className="font-semibold">
                   Location
                 </Typography>
-                <div className="flex flex-col md:flex-row gap-5  w-full">
+                <div className="flex flex-col md:flex-row gap-4  w-full">
                   <RHFSelect
                     name="business_meeting.country"
                     placeholder="Select your Country"
@@ -211,6 +202,11 @@ export const BussinessMeeting = () => {
                 name="business_meeting.address"
                 label="Street Address"
                 placeholder="Address of your B&B"
+              />
+              <RHFTextArea
+                label="About bnb"
+                placeholder="Enter short details about bnb"
+                name="business_meeting.location.about_bnb"
               />
             </>
           ) : (

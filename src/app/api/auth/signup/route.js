@@ -3,9 +3,17 @@ import { NextResponse } from "next/server";
 import { generateOTP, saltAndHashPassword } from "@/src/libs/helper";
 import { prisma } from "@/src/db";
 import { sendMail } from "@/src/service/mailService";
-import { generateRegistrationOtpTemplate, otpTemplate } from "@/src/libs/otpTemplate";
+import {
+  generateRegistrationOtpTemplate,
+  otpTemplate,
+} from "@/src/libs/otpTemplate";
 import { room_facilities } from "@/src/_mock/_room";
-import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
+import {
+  bnb_amenities,
+  cancellationPolicies,
+  house_rules,
+  safetyAndProperty,
+} from "@/src/_mock/_popolar-amentities";
 
 export async function POST(req) {
   try {
@@ -95,6 +103,25 @@ export async function POST(req) {
       };
     });
 
+    const houseRules = house_rules?.map((item) => {
+      return {
+        ...item,
+        user_id: String(newUser?.id),
+      };
+    });
+    const safetyAndProperties = safetyAndProperty?.map((item) => {
+      return {
+        ...item,
+        user_id: String(newUser?.id),
+      };
+    });
+    const cancellationPolicy = cancellationPolicies?.map((item) => {
+      return {
+        ...item,
+        user_id: String(newUser?.id),
+      };
+    });
+
     // create initial facilities
     await prisma.facilities
       .createMany({
@@ -115,6 +142,19 @@ export async function POST(req) {
         data: eventAmenities,
       })
       .catch((error) => console.log("event amenities error", error));
+
+    // create house rules
+    await prisma.event_rules.createMany({
+      data: houseRules,
+    });
+    // create safety
+    await prisma.event_safety.createMany({
+      data: safetyAndProperties,
+    });
+    // create cancellation policies
+    await prisma.event_cancellation_policy.createMany({
+      data: cancellationPolicy,
+    });
 
     return NextResponse.json(
       {

@@ -22,6 +22,12 @@ import { enqueueSnackbar } from "notistack";
 import { Router } from "lucide-react";
 import { paths } from "@/src/contants";
 import { useRouter } from "next/navigation";
+import {
+  getAllCancellationPolicy,
+  getAllEventRules,
+  getAllEventSafetyAndProperty,
+} from "@/src/redux/event-things-to-know/thunk";
+import { ThingsToKnowNomad } from "./things-to-know";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
@@ -142,9 +148,36 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     }
   };
 
+  const fetchEventRules = async () => {
+    try {
+      await dispatch(getAllEventRules(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventSafetyProperty = async () => {
+    try {
+      await dispatch(getAllEventSafetyAndProperty(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventPolicies = async () => {
+    try {
+      await dispatch(getAllCancellationPolicy(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchHotels();
     fetchAmenities();
+    fetchEventRules();
+    fetchEventPolicies();
+    fetchEventSafetyProperty();
   }, []);
 
   const steps = [
@@ -165,6 +198,12 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       icon: "octicon:person-16",
       value: "guest",
       component: <GuestLearn />,
+    },
+    {
+      label: "Things to know",
+      icon: "octicon:person-16",
+      value: "thingsToKnow",
+      component: <ThingsToKnowNomad />,
     },
     {
       label: "Set Availability",
@@ -261,7 +300,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       fieldsToValidate.push("images");
     } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
@@ -301,12 +340,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             }
           }
         }
-
         images?.forEach((file) => formData.append("images", file));
         images?.forEach(() =>
           formData.append("imagesNames", JSON.stringify(names))
         );
-
         const request = await axiosInstance.post(
           endpoints.nomad.event.create,
           formData

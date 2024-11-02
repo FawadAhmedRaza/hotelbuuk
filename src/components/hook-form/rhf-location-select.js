@@ -6,8 +6,9 @@ import { Typography } from "../typography";
 import { Iconify } from "../iconify";
 import { cn } from "@/src/libs/cn";
 import get from "lodash/get";
+import { fetchPlacesSuggestions } from "@/src/actions/google-location";
 
-export const RHFSelect = ({
+export const RHFLocationSelect = ({
   label,
   name,
   placeholder,
@@ -19,8 +20,10 @@ export const RHFSelect = ({
   const [openDropdown, setOpenDropdown] = useState(false);
   const [query, setQuery] = useState("");
   const dropDownRef = useRef(null);
+  const [isLoading, setLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
 
-  const filterOptions = options.filter((item) =>
+  const filterOptions = options?.filter((item) =>
     item?.label?.toLowerCase().includes(query.toLowerCase())
   );
 
@@ -31,9 +34,22 @@ export const RHFSelect = ({
     }
   };
 
-  const handleChangeQuery = (e) => {
+  const handleChangeQuery = async (e) => {
     e.stopPropagation();
-    setQuery(e.target.value);
+    const value = e.target.value;
+    setQuery(value);
+    if (value.length >= 3) {
+      setLoading(true);
+      const results = await fetchPlacesSuggestions(value);
+      console.log("results",results);
+      setSuggestions(
+        results.map((suggestion) => ({
+          label: suggestion.description,
+          value: suggestion.place_id,
+        }))
+      );
+      setLoading(false);
+    }
   };
 
   const handleOptionClick = (field, selectedValue) => {
@@ -100,27 +116,26 @@ export const RHFSelect = ({
               />
             </div>
             {openDropdown && (
-              <div className="rounded-md absolute bg-white top-[52px]  w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
+              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
                 <div className="p-2">
                   <input
-                    className="!border-b border-primary !py-1.5    w-full  text-sm  outline-none px-2 placeholder:text-neutral-300  text-secondary "
+                    className="!border-b border-primary !py-1.5 w-full text-sm outline-none px-2 placeholder:text-neutral-300 text-secondary"
                     placeholder="Search..."
                     value={query}
                     onChange={handleChangeQuery}
                   />
                 </div>
                 <div className="overflow-auto max-h-40 divide-y divide-dashed divide-secondary hide-scrollbar">
-                  {filterOptions.length > 0 ? (
-                    filterOptions.map((option, index) => (
+                  {suggestions.length > 0 ? (
+                    suggestions.map((option, index) => (
                       <Typography
                         variant="p"
                         key={index}
-                        className={`!text-sm
-                           w-full py-2 px-3 hover:bg-tertiary cursor-pointer ${
-                             field.value === option.value
-                               ? "!text-primary bg-tertiary"
-                               : "!text-custom-black"
-                           }`}
+                        className={`!text-sm w-full py-2 px-3 hover:bg-tertiary cursor-pointer ${
+                          field.value === option.value
+                            ? "!text-primary bg-tertiary"
+                            : "!text-custom-black"
+                        }`}
                         onClick={() => handleOptionClick(field, option.label)}
                       >
                         {option.label}

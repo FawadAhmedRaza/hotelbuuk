@@ -48,6 +48,21 @@ export async function GET(req, { params }) {
               amenities: true,
             },
           },
+          event_associated_cancel_policies: {
+            include: {
+              event_cancel_policy: true,
+            },
+          },
+          event_associated_rules: {
+            include: {
+              event_rules: true,
+            },
+          },
+          event_associated_safeties: {
+            include: {
+              event_safeties: true,
+            },
+          },
           nomad: true,
           hotel: {
             include: {
@@ -62,6 +77,17 @@ export async function GET(req, { params }) {
         event_associated_amenities: nomadEvent?.event_associated_amenities?.map(
           (item) => item?.amenities
         ),
+        event_associated_rules: nomadEvent?.event_associated_rules?.map(
+          (item) => item?.event_rules
+        ),
+        event_associated_cancel_policies:
+          nomadEvent?.event_associated_safeties?.map(
+            (item) => item?.event_safeties
+          ),
+        event_associated_safeties:
+          nomadEvent?.event_associated_cancel_policies?.map(
+            (item) => item?.event_cancel_policy
+          ),
       };
     } else {
       const isHotelEventExist = await prisma.hotel_event.findUnique({
@@ -88,6 +114,21 @@ export async function GET(req, { params }) {
               amenities: true,
             },
           },
+          event_associated_cancel_policies: {
+            include: {
+              event_cancel_policy: true,
+            },
+          },
+          event_associated_rules: {
+            include: {
+              event_rules: true,
+            },
+          },
+          event_associated_safeties: {
+            include: {
+              event_safeties: true,
+            },
+          },
           nomad: true,
           hotel: true,
         },
@@ -98,6 +139,17 @@ export async function GET(req, { params }) {
         event_associated_amenities: hotelEvent?.event_associated_amenities?.map(
           (item) => item?.amenities
         ),
+        event_associated_rules: hotelEvent?.event_associated_rules?.map(
+          (item) => item?.event_rules
+        ),
+        event_associated_cancel_policies:
+          hotelEvent?.event_associated_safeties?.map(
+            (item) => item?.event_safeties
+          ),
+        event_associated_safeties:
+          hotelEvent?.event_associated_cancel_policies?.map(
+            (item) => item?.event_cancel_policy
+          ),
       };
     }
 
