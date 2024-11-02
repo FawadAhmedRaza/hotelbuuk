@@ -44,11 +44,13 @@ export const BussinessMeeting = () => {
 
   const accomodationType = watch("business_meeting.accomodation_type");
 
-  const country = watch("business_meeting.location.country");
-  const city = watch("business_meeting.location.city");
+  const country = watch("business_meeting.country");
+  const city = watch("business_meeting.city");
+
   // const hotelId = watch("business_meeting.hotel_id");
 
-  console.log(city);
+  console.log("city form edit:", city);
+  console.log("Country form edit:", country);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
@@ -79,12 +81,17 @@ export const BussinessMeeting = () => {
   }, []);
 
   useEffect(() => {
-    setValue("city", "");
     async function fetchCities() {
       const allCities = await getCities(country);
       setCities(allCities);
     }
     fetchCities();
+
+    cities?.map((item) => {
+      if (item !== city) {
+        setValue("business_meeting.city", ""); // Reset the city fie
+      }
+    });
   }, [country]);
 
   return (
@@ -204,6 +211,8 @@ export const BussinessMeeting = () => {
                     placeholder="Select your City"
                     label="City"
                     options={cities}
+                    // value={city || ""}
+                    // onChange={(e) => setValue("city", e.target.value)}
                   />
                 </div>
               </div>
