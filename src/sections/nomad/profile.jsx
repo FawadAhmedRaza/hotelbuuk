@@ -37,6 +37,8 @@ import { getCities, getCountries } from "@/src/libs/helper";
 import { useBoolean } from "@/src/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
+import { businessCategories } from "@/src/_mock/_business_categories";
+import { RHFWorkPermitUploader } from "@/src/components/hook-form/rhf-work-permit-uploader";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser, logout } = useAuthContext();
@@ -76,7 +78,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     city: Yup.string().required("city is required"),
     country: Yup.string().required("country is required"),
     address: Yup.string().required("address is required"),
+    work_permit_front_img: Yup.mixed().required("front image is required"),
+    work_permit_back_img: Yup.mixed().required("back image is required"),
+    work_permit_expiry_date: Yup.string().required("expiry date is required"),
     experience: Yup.string().required("Experience is required"),
+    industry: Yup.string().required("industry is required"),
     electronics: Yup.string().required("Electronics field is required"),
     manufacturing: Yup.string().required("Manufacturing field is required"),
     fundraising: Yup.string().required("Fundraising field is required"),
@@ -310,9 +316,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               label="Experience"
               placeholder="Experience"
               options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
+                { label: "Entry level", value: "entry_level" },
+                { label: "Junior level", value: "junior_level" },
+                { label: "Mid-level", value: "mid_level" },
+                { label: "Senior level", value: "senior_level" },
+                { label: "Principle level", value: "principle_level" },
               ]}
             />
             <RHFTextArea
@@ -327,6 +335,35 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
             />
           </div>
 
+          <div className="flex flex-col gap-5">
+            <Typography variant="h5" className="font-semibold">
+              Work permit
+            </Typography>
+
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+              <div className="flex flex-row justify-between items-center gap-2 w-full">
+                <RHFWorkPermitUploader
+                  label="Front image"
+                  name={"work_permit_front_img"}
+                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md"
+                />
+                <RHFWorkPermitUploader
+                  label="Back image"
+                  name={"work_permit_back_img"}
+                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md"
+                />
+              </div>
+              <div className="!mt-3 w-full">
+                <RHFInput
+                  label="Expiry date"
+                  placeholder="Work permit expiry date"
+                  name="work_permit_expiry_date"
+                  type="date"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Specialty  */}
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
@@ -335,25 +372,33 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
+                name="industry"
+                label="Industry"
+                placeholder="Industry"
+                options={businessCategories}
+              />
+              <RHFSelect
                 name="electronics"
                 label="Electronics"
                 placeholder="Electronics"
                 options={electronics}
               />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="manufacturing"
                 label="Manufacturing"
                 placeholder=" Manufacturing "
                 options={manufacturing}
               />
-            </div>
-            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="fundraising"
                 label="Fundraising"
                 placeholder=" Fundraising "
                 options={fundraising}
               />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="retails"
                 label="Retails"

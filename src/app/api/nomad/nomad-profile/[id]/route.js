@@ -50,8 +50,12 @@ export async function PUT(req, { params }) {
       city,
       country,
       address,
+      industry,
       bio,
       availability,
+      work_permit_front_img,
+      work_permit_back_img,
+      work_permit_expiry_date,
       userId,
     } = data || {};
 
@@ -70,6 +74,22 @@ export async function PUT(req, { params }) {
       profileImage = profile_img;
     }
 
+    // front file
+    let frontImage;
+    if (typeof work_permit_front_img !== "string") {
+      frontImage = await uploadFileToGoogleCloud(work_permit_front_img);
+    } else {
+      frontImage = work_permit_front_img;
+    }
+
+    // back file
+    let backImage;
+    if (typeof work_permit_back_img !== "string") {
+      backImage = await uploadFileToGoogleCloud(work_permit_back_img);
+    } else {
+      backImage = work_permit_back_img;
+    }
+
     await prisma.nomad.update({
       where: {
         id: params?.id,
@@ -84,6 +104,7 @@ export async function PUT(req, { params }) {
         electronics,
         manufacturing,
         fundraising,
+        industry,
         retails,
         projector,
         video,
@@ -98,6 +119,9 @@ export async function PUT(req, { params }) {
         country,
         address,
         bio,
+        work_permit_expiry_date,
+        work_permit_back_img: backImage,
+        work_permit_front_img: frontImage,
       },
     });
 
