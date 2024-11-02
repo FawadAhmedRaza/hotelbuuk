@@ -10,6 +10,7 @@ export default function UploadAvatar({
   disabled,
   helperText,
   isEdit,
+  className,
   ...other
 }) {
   const [preview, setPreview] = useState(null);
@@ -43,7 +44,7 @@ export default function UploadAvatar({
   return (
     <div
       {...getRootProps()}
-      className={`relative p-1 mx-auto md:w-[150px] md:h-[150px] w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
+      className={`relative p-1 mx-auto  w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
         hasError ? "border-red-500" : "border-[#852169]"
       } ${disabled ? "opacity-50 pointer-events-none" : ""}`}
     >
@@ -53,8 +54,8 @@ export default function UploadAvatar({
           <Image
             alt="avatar"
             src={preview}
-            
-            className="w-full h-full rounded-full object-cover"
+            className="w-full h-full rounded-full object-cover absolute"
+            wrapperClassName="w-full h-full rounded-full object-cover"
             type={typeof file !== "string" ? "normal" : "server"}
           />
         )}

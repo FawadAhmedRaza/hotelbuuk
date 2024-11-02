@@ -2,12 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 
-// Components and Others...
 import {
   Breadcrumb,
   Button,
   CalendarInput,
   CustomPopover,
+  DeleteModal,
   Pannel,
   Typography,
 } from "@/src/components";
@@ -19,11 +19,10 @@ import {
   RHFDatePicker,
   RHFFormProvider,
   RHFInput,
-  RHFProfileImgUploader,
   RHFSelect,
+  RHFTextArea,
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
@@ -34,16 +33,26 @@ import {
   manufacturing,
   retails,
 } from "@/src/_mock/_speciality";
+import { getCities, getCountries } from "@/src/libs/helper";
+import { useBoolean } from "@/src/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
+import { businessCategories } from "@/src/_mock/_business_categories";
+import { RHFWorkPermitUploader } from "@/src/components/hook-form/rhf-work-permit-uploader";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
-  const { user, setUser } = useAuthContext();
+  const { user, setUser, logout } = useAuthContext();
+  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  console.log(defaultValues);
+  const { isLoading } = useSelector((state) => state.nomadProfile.deleteById);
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
 
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   // Handle date state
   const [date, setDate] = useState([
     {
@@ -58,11 +67,22 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     first_name: Yup.string().required("First name is required"),
     last_name: Yup.string().optional("Last name is required"),
     phone_number: Yup.string().required("Phone number is required"),
-    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"), // Example regex for a 10-digit phone number
+    bio: Yup.string().required("bio is required"),
+    linkedin: Yup.string()
+      .url("Please provide a valid URL")
+      .required("linked profile is required"),
+    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
     email: Yup.string()
       .required("Email is required")
       .email("Invalid email format"),
+    city: Yup.string().required("city is required"),
+    country: Yup.string().required("country is required"),
+    address: Yup.string().required("address is required"),
+    work_permit_front_img: Yup.mixed().required("front image is required"),
+    work_permit_back_img: Yup.mixed().required("back image is required"),
+    work_permit_expiry_date: Yup.string().required("expiry date is required"),
     experience: Yup.string().required("Experience is required"),
+    industry: Yup.string().required("industry is required"),
     electronics: Yup.string().required("Electronics field is required"),
     manufacturing: Yup.string().required("Manufacturing field is required"),
     fundraising: Yup.string().required("Fundraising field is required"),
@@ -93,11 +113,12 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     formState: { isSubmitting, errors },
   } = methods;
 
-  console.log("errors", errors);
+  const country = watch("country");
+  const city = watch("city");
 
   useEffect(() => {
-    setValue("availability.date.start_date", date[0].startDate.toString());
-    setValue("availability.date.end_date", date[0].endDate.toString());
+    setValue("availability.date.start_date", date?.[0]?.startDate?.toString());
+    setValue("availability.date.end_date", date?.[0]?.endDate?.toString());
   }, [date]);
 
   useEffect(() => {
@@ -110,11 +131,54 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     ]);
   }, []);
 
+  const fetchCountries = async () => {
+    try {
+      const allCountries = await getCountries();
+      setCountries(allCountries);
+    } catch (error) {
+      console.error("Failed to fetch countries:", error);
+    }
+  };
+
+  const fetchCitiesForCountry = async (selectedCountry) => {
+    try {
+      const allCities = await getCities(selectedCountry);
+      setCities(allCities);
+      if (!city && allCities.length > 0) {
+        setValue("city", allCities[0].value);
+      }
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+    }
+  };
+
+  // Fetch cities when the country changes.
+  useEffect(() => {
+    if (country) {
+      fetchCitiesForCountry(country);
+    }
+  }, [country]);
+
+  // Fetch countries on initial render.
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteNomadProfile(user?.id)).unwrap();
+      logout();
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     if (!defaultValues) {
       // create handling
       try {
-        console.log("create triggered");
         let updatedData = {
           ...data,
           user_id: user?.id,
@@ -153,8 +217,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     // update handling
     else {
       try {
-        console.log("truggred", data);
-
         const formData = new FormData();
 
         for (const key in data) {
@@ -220,8 +282,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Last Name"
               label="Last Name"
             />
-            {/* </div> */}
-            {/* <div className="flex flex-col sm:flex-row gap-5 w-full"> */}
             <RHFInput
               name="phone_number"
               type="number"
@@ -233,17 +293,75 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               placeholder="Enter your Email"
               label="Email"
             />
-            {/* </div> */}
+            <RHFSelect
+              name="country"
+              placeholder="Select your Country"
+              label="Country"
+              options={countries}
+            />
+            <RHFSelect
+              name="city"
+              label="City"
+              options={cities}
+              value={city || ""}
+              onChange={(e) => setValue("city", e.target.value)}
+            />
+            <RHFInput
+              name="address"
+              label="Address"
+              placeholder="Enter full address"
+            />
             <RHFSelect
               name="experience"
               label="Experience"
               placeholder="Experience"
               options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
+                { label: "Entry level", value: "entry_level" },
+                { label: "Junior level", value: "junior_level" },
+                { label: "Mid-level", value: "mid_level" },
+                { label: "Senior level", value: "senior_level" },
+                { label: "Principle level", value: "principle_level" },
               ]}
             />
+            <RHFTextArea
+              name="bio"
+              label="Bio"
+              placeholder="Enter short bio about yourself"
+            />
+            <RHFInput
+              name="linkedin"
+              label="Linkedin"
+              placeholder="https://www.linkedin.com/"
+            />
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <Typography variant="h5" className="font-semibold">
+              Work permit
+            </Typography>
+
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+              <div className="flex flex-row justify-between items-center gap-2 w-full">
+                <RHFWorkPermitUploader
+                  label="Front image"
+                  name={"work_permit_front_img"}
+                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md"
+                />
+                <RHFWorkPermitUploader
+                  label="Back image"
+                  name={"work_permit_back_img"}
+                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md"
+                />
+              </div>
+              <div className="!mt-3 w-full">
+                <RHFInput
+                  label="Expiry date"
+                  placeholder="Work permit expiry date"
+                  name="work_permit_expiry_date"
+                  type="date"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Specialty  */}
@@ -254,25 +372,33 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
+                name="industry"
+                label="Industry"
+                placeholder="Industry"
+                options={businessCategories}
+              />
+              <RHFSelect
                 name="electronics"
                 label="Electronics"
                 placeholder="Electronics"
                 options={electronics}
               />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="manufacturing"
                 label="Manufacturing"
                 placeholder=" Manufacturing "
                 options={manufacturing}
               />
-            </div>
-            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="fundraising"
                 label="Fundraising"
                 placeholder=" Fundraising "
                 options={fundraising}
               />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="retails"
                 label="Retails"
@@ -308,7 +434,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
           </div>
 
           {/* AVAILABILITY  */}
-
           <div className="flex flex-col gap-5">
             <Typography variant="h5" className="font-semibold">
               Availability
@@ -321,8 +446,8 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               >
                 <CalendarInput
                   label="Date"
-                  startDate={date[0].startDate.toString().slice(0, 10)}
-                  endDate={date[0].endDate.toString().slice(0, 10)}
+                  startDate={date?.[0]?.startDate?.toString()?.slice(0, 10)}
+                  endDate={date?.[0]?.endDate?.toString()?.slice(0, 10)}
                   onClick={toggleDateCalender}
                 />
                 <CustomPopover
@@ -341,31 +466,37 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                   />
                 </CustomPopover>
               </div>
-
-              {/* Time Picker */}
-              {/* <div className="flex flex-col md:flex-row gap-5 w-full">
-                <RHFInput
-                  name="availability.time.start_time"
-                  placeholder="Start Time"
-                  label="Start Time"
-                  type="time"
-                />
-                <RHFInput
-                  name="availability.time.end_time"
-                  placeholder="End Time"
-                  label="End Time"
-                  type="time"
-                />
-              </div> */}
             </div>
           </div>
         </div>
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full gap-3">
+          <Button
+            type="button"
+            className="!bg-red-600"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Delete profile
+          </Button>
           <Button type="submit" loading={isSubmitting}>
             {isEdit ? "Save" : "Submit"}
           </Button>
         </div>
       </RHFFormProvider>
+
+      {isOpen && (
+        <DeleteModal
+          isLoading={isLoading}
+          title="Delete Profile"
+          isOpen={isOpen}
+          onClose={toggleDrawer}
+          handleDelete={handleDelete}
+        >
+          <Typography variant="p">
+            Are you sure you want to delete your profile ? this action will
+            delete all of your data?
+          </Typography>
+        </DeleteModal>
+      )}
     </Pannel>
   );
 });

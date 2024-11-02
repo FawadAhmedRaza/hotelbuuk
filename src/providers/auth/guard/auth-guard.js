@@ -54,6 +54,10 @@ function Container({ children }) {
     return null;
   }
 
+  if (!user?.is_profile_active) {
+    return router.push("/login");
+  }
+
   if (!user?.is_user_type_completed) {
     return router.push(paths.auth.set_user_type);
   }

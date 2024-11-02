@@ -31,6 +31,8 @@ export const MeetOurPatners = React.memo(() => {
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
 
+  console.log(hotels);
+
   const updateNavigation = () => {
     if (swiperRef.current) {
       const { isBeginning, isEnd } = swiperRef.current.swiper;

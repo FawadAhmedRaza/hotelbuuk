@@ -22,6 +22,12 @@ import { enqueueSnackbar } from "notistack";
 import { Router } from "lucide-react";
 import { paths } from "@/src/contants";
 import { useRouter } from "next/navigation";
+import {
+  getAllCancellationPolicy,
+  getAllEventRules,
+  getAllEventSafetyAndProperty,
+} from "@/src/redux/event-things-to-know/thunk";
+import { ThingsToKnowNomad } from "./things-to-know";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
@@ -55,7 +61,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
-
       country: Yup.string().when("accomodation_type", {
         is: "bnb",
         then: (schema) => schema.required("Country is required for BnB"),
@@ -71,14 +76,20 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("Address is required for BnB"),
         otherwise: (schema) => schema.notRequired(),
       }),
+      about_bnb: Yup.string().when("accomodation_type", {
+        is: "bnb",
+        then: (schema) => schema.required("bnb bio is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
     }),
+    rules: Yup.array().optional(),
+    safeties: Yup.array().optional(),
+    cancelPolicies: Yup.array().optional(),
     images: Yup.array().when("accomodation_type", {
       is: "hotel",
       then: (schema) => schema.required("At least Two images are required"),
       otherwise: (schema) => schema.notRequired(),
     }),
-    // .min(2, "At least Two images are required")
-    // .required("Files are required"),
 
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -146,9 +157,36 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     }
   };
 
+  const fetchEventRules = async () => {
+    try {
+      await dispatch(getAllEventRules(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventSafetyProperty = async () => {
+    try {
+      await dispatch(getAllEventSafetyAndProperty(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventPolicies = async () => {
+    try {
+      await dispatch(getAllCancellationPolicy(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchHotels();
     fetchAmenities();
+    fetchEventRules();
+    fetchEventPolicies();
+    fetchEventSafetyProperty();
   }, []);
 
   const steps = [
@@ -169,6 +207,12 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       icon: "octicon:person-16",
       value: "guest",
       component: <GuestLearn />,
+    },
+    {
+      label: "Things to know",
+      icon: "octicon:person-16",
+      value: "thingsToKnow",
+      component: <ThingsToKnowNomad />,
     },
     {
       label: "Set Availability",
@@ -217,14 +261,15 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         fieldsToValidate.push(
           "business_meeting.country",
           "business_meeting.city",
-          "business_meeting.address"
+          "business_meeting.address",
+          "business_meeting.about_bnb"
         );
       }
     } else if (activeStep === 1 && accomodationType === "bnb") {
       fieldsToValidate.push("images");
     } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
@@ -241,7 +286,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       ...data,
       user_id: user?.id,
     };
-    console.log("final data", finalData);
     if (!isEdit) {
       // create
       try {
@@ -264,12 +308,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             }
           }
         }
-
         images?.forEach((file) => formData.append("images", file));
         images?.forEach(() =>
           formData.append("imagesNames", JSON.stringify(names))
         );
-
         const request = await axiosInstance.post(
           endpoints.nomad.event.create,
           formData

@@ -27,12 +27,12 @@ export const BookingCalender = React.memo(
     return (
       <div
         className={cn(
-          "flex items-center  rounded gap-2  cursor-pointer",
+          "flex items-center  rounded gap-2  cursor-pointer ",
           className
         )}
         onClick={onOpenPopover}
       >
-        <div className="flex items-center gap-5  ">
+        <div className="flex items-center gap-3 sm:gap-5  ">
           {/* Start Date */}
           <Controller
             name={nameStart}
@@ -72,7 +72,7 @@ export const BookingCalender = React.memo(
             control={control}
             render={({ field }) => (
               <div
-                className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+                className={`flex flex-col items-start gap-1 py-2 px-0 sm:px-5 md:px-6 xl:px-10 rounded-full    ${InputBoxClass}`}
               >
                 <div className="flex gap-3 items-center">
                   <Iconify iconName="uil:calender" className="text-primary" />

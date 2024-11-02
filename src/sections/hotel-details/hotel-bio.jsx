@@ -101,8 +101,8 @@ export const HotelBio = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
-      <div className="  w-full  lg:w-[70%] ">
+    <div className="flex flex-col lg:flex-row bg-white  gap-10 mt-5 px-2 md:px-10 ">
+      <div className="  flex-grow  ">
         <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">

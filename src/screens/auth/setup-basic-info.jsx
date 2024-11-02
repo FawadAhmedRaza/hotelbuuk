@@ -14,7 +14,11 @@ const SetupBasicInfoNomad = () => {
   const schema = yup.object({
     first_name: yup.string().required("name is required"),
     last_name: yup.string().optional(),
-    phone_number: yup.number().required("phone number is required"),
+    phone_number: yup
+      .string()
+      .required("Phone number is required")
+      .matches(/^\d+$/, "Phone number must be numeric")
+      .length(11, "Phone number must be 11 digits"),
   });
 
   const { setupBasicInfo, user } = useAuthContext();

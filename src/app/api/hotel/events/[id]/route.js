@@ -21,7 +21,27 @@ export async function GET(_, { params }) {
             amenities: true,
           },
         },
+        event_associated_cancel_policies: {
+          include: {
+            event_cancel_policy: true,
+          },
+        },
+        event_associated_rules: {
+          include: {
+            event_rules: true,
+          },
+        },
+        event_associated_safeties: {
+          include: {
+            event_safeties: true,
+          },
+        },
         nomad: true,
+        hotel: {
+          include: {
+            hotelImages: true,
+          },
+        },
       },
     });
 
@@ -42,6 +62,17 @@ export async function GET(_, { params }) {
         nomad_id: hotelEvent?.nomad?.id,
       },
       topics: hotelEvent?.event_topics || [],
+      rules:
+        hotelEvent?.event_associated_rules?.map((item) => item?.event_rules) ||
+        [],
+      safeties:
+        hotelEvent?.event_associated_safeties?.map(
+          (item) => item?.event_safeties
+        ) || [],
+      cancelPolicies:
+        hotelEvent?.event_associated_cancel_policies?.map(
+          (item) => item?.event_cancel_policy
+        ) || [],
       availibility: {
         start_date: hotelEvent?.start_date,
         end_date: hotelEvent?.end_date,
@@ -134,8 +165,15 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ message: "event not found" });
     }
 
-    const { business_meeting, availibility, topics, user_id, price } =
-      data || {};
+    const {
+      business_meeting,
+      availibility,
+      topics,
+      user_id,
+      rules: event_rules,
+      safeties,
+      cancelPolicies,
+    } = data || {};
 
     const {
       title,
@@ -228,6 +266,64 @@ export async function PUT(req, { params }) {
       });
       await prisma.event_associated_amenities.createMany({
         data: asscoiateAmenities,
+      });
+    }
+
+    // rules
+    if (event_rules?.length > 0) {
+      await prisma.event_associated_rules?.deleteMany({
+        where: {
+          hotel_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = event_rules?.map((item) => {
+        return {
+          rules_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_rules.createMany({
+        data: formatedArr,
+      });
+    }
+    // safety and property
+    if (safeties?.length > 0) {
+      await prisma.event_associated_safeties?.deleteMany({
+        where: {
+          hotel_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = safeties?.map((item) => {
+        return {
+          safety_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_safeties.createMany({
+        data: formatedArr,
+      });
+    }
+    // cancel policies
+    if (cancelPolicies?.length > 0) {
+      await prisma.event_associated_cancel_policies?.deleteMany({
+        where: {
+          hotel_event_id: params?.id,
+        },
+      });
+
+      const formatedArr = cancelPolicies?.map((item) => {
+        return {
+          policy_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
       });
     }
 

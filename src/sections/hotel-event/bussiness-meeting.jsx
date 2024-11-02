@@ -1,24 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-// Components and Others...
 import {
-  RHFCheckbox,
   RHFImageSelect,
   RHFInput,
-  RHFRadio,
   RHFSelect,
   RHFTextArea,
 } from "@/src/components/hook-form";
-import { useForm, useFormContext } from "react-hook-form";
-import { Button, Typography } from "@/src/components";
+import { useFormContext } from "react-hook-form";
+import { Typography } from "@/src/components";
 
-import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
-import { hotels } from "@/src/_mock/_hotel-qna";
-import { getCities, getCountries } from "@/src/libs/helper";
 import { useSelector } from "react-redux";
-import { useBoolean } from "@/src/hooks";
 import { useModal } from "@/src/hooks/use-modal";
 import CreateEditAmenities from "./modals/create-edit-amenities";
 
@@ -29,6 +22,19 @@ export const BussinessMeeting = () => {
   const { amenities } = useSelector((state) => state.eventAmenities);
   const { nomads } = useSelector((state) => state.nomadProfile);
 
+  const selectedBusiness = watch("business_meeting.business_category");
+
+  let recomendedList = nomads
+    ?.filter((item) => item?.industry === selectedBusiness)
+    .map((item) => {
+      return {
+        hotel_name: item?.first_name + " " + item?.last_name,
+        image: item?.profile_img,
+        address: item?.email,
+        value: item?.id,
+      };
+    });
+  console.log("recomedned", recomendedList);
   let modifiedNomadList = nomads?.map((item) => {
     return {
       hotel_name: item?.first_name + " " + item?.last_name,
@@ -64,11 +70,6 @@ export const BussinessMeeting = () => {
             label="Description"
             required={true}
             placeholder="Describe your Business Tour "
-          />
-          <RHFInput
-            name="business_meeting.official_name"
-            label="Official Name"
-            placeholder="John Tesla Factory Tour"
           />
           <div className="flex flex-col gap-5 ">
             <div className="flex gap-3 justify-start items-center">
@@ -117,11 +118,19 @@ export const BussinessMeeting = () => {
             options={businessCategories}
           />
 
+          <RHFInput
+            name="business_meeting.official_name"
+            label="Official Name"
+            placeholder="John Tesla Factory Tour"
+          />
+
           <RHFImageSelect
             name="business_meeting.nomad_id"
             placeholder="Select Nomad"
             label="Nomads"
-            options={modifiedNomadList}
+            options={
+              recomendedList?.length > 0 ? recomendedList : modifiedNomadList
+            }
           />
         </div>
       </div>

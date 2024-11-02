@@ -7,8 +7,15 @@ export async function POST(req) {
   try {
     const data = await req.json();
 
-    const { business_meeting, availibility, topics, user_id, price } =
-      data || {};
+    const {
+      business_meeting,
+      availibility,
+      topics,
+      user_id,
+      rules: event_rules,
+      safeties,
+      cancelPolicies,
+    } = data || {};
 
     const {
       title,
@@ -93,6 +100,46 @@ export async function POST(req) {
       });
       await prisma.event_associated_amenities.createMany({
         data: asscoiateAmenities,
+      });
+    }
+
+    // rules
+    if (event_rules?.length > 0) {
+      const formatedArr = event_rules?.map((item) => {
+        return {
+          rules_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_rules.createMany({
+        data: formatedArr,
+      });
+    }
+    // safety and property
+    if (safeties?.length > 0) {
+      const formatedArr = safeties?.map((item) => {
+        return {
+          safety_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_safeties.createMany({
+        data: formatedArr,
+      });
+    }
+    // cancel policies
+    if (cancelPolicies?.length > 0) {
+      const formatedArr = cancelPolicies?.map((item) => {
+        return {
+          policy_id: item?.id,
+          hotel_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
       });
     }
 

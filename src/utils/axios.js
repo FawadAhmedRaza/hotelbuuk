@@ -91,6 +91,7 @@ export const endpoints = {
     create: "/nomad/nomad-profile",
     getProfile: (id) => `/nomad/nomad-profile/${id}`,
     updateProfile: (id) => `/nomad/nomad-profile/${id}`,
+    deleteProfile: (id) => `/nomad/nomad-profile/${id}`,
     amenities: {
       create: "/nomad/event-amenities",
       getAll: (id) => `/nomad/event-amenities?userId=${id}`,
@@ -107,6 +108,18 @@ export const endpoints = {
   events: {
     root: "/all-events",
     getById: (id, type) => `/all-events/${id}?type=${type}`,
+    rules: {
+      create: "/event-rules",
+      getAll: (id) => `/event-rules?user_id=${id}`,
+    },
+    safety: {
+      create: "/event-safety",
+      getAll: (id) => `/event-safety?user_id=${id}`,
+    },
+    policy: {
+      create: "/event-policy",
+      getAll: (id) => `/event-policy?user_id=${id}`,
+    },
   },
   booking: {
     book_event: "/bookings",

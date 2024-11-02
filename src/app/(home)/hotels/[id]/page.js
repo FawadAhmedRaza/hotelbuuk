@@ -1,7 +1,7 @@
 import HotelDetail from "@/src/screens/hote-detail";
 
 export const metadata = {
-  title: "Hotel Detail",
+  title: "Event Detail",
   description: "",
 };
 const page = () => {
