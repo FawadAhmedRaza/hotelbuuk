@@ -33,7 +33,7 @@ export const NavBar = React.memo(({ className }) => {
         />
         <Typography
           variant="h3"
-          className=" !text-md sm:!text-3xl md:!text-3xl font-semibold !text-primary text-start font-poppins  "
+          className=" !text-md sm:!text-3xl sm:flex hidden md:!text-3xl font-semibold !text-primary text-start font-poppins  "
         >
           Hotelbuuk
         </Typography>
@@ -48,24 +48,20 @@ export const NavBar = React.memo(({ className }) => {
         {/* Login  */}
         <div
           onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-5  rounded-full px-2 py- sm:px-4 sm:py-0 border border-gray-600 cursor-pointer hover:bg-gray-100 "
+          className="flex items-center gap-1 sm:gap-5  rounded-full px-2 py-1 sm:px-4 sm:py-1 border border-gray-600 cursor-pointer hover:bg-gray-100 "
         >
           <Iconify
             iconName="mynaui:menu"
             className="size-5 sm:size-8 text-gray-600"
           />
           <span className="flex items-center gap-1">
-            {/* <Iconify
-              iconName="fluent:person-circle-12-filled"
-              className="size-5 sm:size-8"
-            /> */}
+        
             <ProfileAvatar
               src={user?.profile_img}
               type={"server"}
               effect="blur"
               alt={user?.hotel_name}
-              iconSize=" size-8 border-none "
-              className="  object-cover rounded-full  md:h-10 md:w-10 h-5 w-5"
+              className="!w-5 !h-5 md:!w-5 md:!h-5  object-cover rounded-full "
             />
 
             <Typography

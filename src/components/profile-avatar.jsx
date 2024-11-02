@@ -116,7 +116,7 @@ export const ProfileAvatar = React.memo(
         return (
           <Iconify
             iconName="carbon:user-avatar-filled"
-            className={`size-10  rounded-full object-cover border-primary border-2 text-gray-500 ${iconSize}`}
+            className={`size-7  rounded-full object-cover border-primary border-2 text-gray-500 ${iconSize}`}
           />
         );
       }
