@@ -61,7 +61,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
-
       country: Yup.string().when("accomodation_type", {
         is: "bnb",
         then: (schema) => schema.required("Country is required for BnB"),
@@ -77,14 +76,20 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("Address is required for BnB"),
         otherwise: (schema) => schema.notRequired(),
       }),
+      about_bnb: Yup.string().when("accomodation_type", {
+        is: "bnb",
+        then: (schema) => schema.required("bnb bio is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
     }),
+    rules: Yup.array().optional(),
+    safeties: Yup.array().optional(),
+    cancelPolicies: Yup.array().optional(),
     images: Yup.array().when("accomodation_type", {
       is: "hotel",
       then: (schema) => schema.required("At least Two images are required"),
       otherwise: (schema) => schema.notRequired(),
     }),
-    // .min(2, "At least Two images are required")
-    // .required("Files are required"),
 
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -256,7 +261,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         fieldsToValidate.push(
           "business_meeting.country",
           "business_meeting.city",
-          "business_meeting.address"
+          "business_meeting.address",
+          "business_meeting.about_bnb"
         );
       }
     } else if (activeStep === 1 && accomodationType === "bnb") {
@@ -280,7 +286,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       ...data,
       user_id: user?.id,
     };
-    console.log("final data", finalData);
     if (!isEdit) {
       // create
       try {

@@ -79,8 +79,10 @@ export const RecentBookingListView = React.memo(() => {
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row?.hotel_event?.title}
+                <Typography variant="p" className="!text-nowrap max-w-full">
+                  {row?.hotel_event?.title?.length > 35
+                    ? `${row?.hotel_event?.title?.slice(0, 35)}...`
+                    : row?.hotel_event?.title}
                 </Typography>
               </td>
               <td className="px-6 py-4">
