@@ -41,9 +41,9 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       )}
     >
       <AnchorTag href={"/"}>
-      <div className=" flex gap-3 items-center">
+        <div className=" flex gap-3 items-center">
           <img
-            src="/assets/images/transperent-logo/transperent/White.png"
+            src="/assets/images/transperent-logo/transperent/WHITE.png"
             className="w-12"
           />
           <Typography
