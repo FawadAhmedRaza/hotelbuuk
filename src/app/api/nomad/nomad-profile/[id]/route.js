@@ -46,7 +46,16 @@ export async function PUT(req, { params }) {
       sample,
       video,
       experience,
+      linkedin,
+      city,
+      country,
+      address,
+      industry,
+      bio,
       availability,
+      work_permit_front_img,
+      work_permit_back_img,
+      work_permit_expiry_date,
       userId,
     } = data || {};
 
@@ -65,6 +74,22 @@ export async function PUT(req, { params }) {
       profileImage = profile_img;
     }
 
+    // front file
+    let frontImage;
+    if (typeof work_permit_front_img !== "string") {
+      frontImage = await uploadFileToGoogleCloud(work_permit_front_img);
+    } else {
+      frontImage = work_permit_front_img;
+    }
+
+    // back file
+    let backImage;
+    if (typeof work_permit_back_img !== "string") {
+      backImage = await uploadFileToGoogleCloud(work_permit_back_img);
+    } else {
+      backImage = work_permit_back_img;
+    }
+
     await prisma.nomad.update({
       where: {
         id: params?.id,
@@ -79,6 +104,7 @@ export async function PUT(req, { params }) {
         electronics,
         manufacturing,
         fundraising,
+        industry,
         retails,
         projector,
         video,
@@ -88,6 +114,14 @@ export async function PUT(req, { params }) {
         start_time: availability?.time?.start_time,
         end_time: availability?.time?.end_time,
         userId: userId,
+        linkedin,
+        city,
+        country,
+        address,
+        bio,
+        work_permit_expiry_date,
+        work_permit_back_img: backImage,
+        work_permit_front_img: frontImage,
       },
     });
 
@@ -127,6 +161,44 @@ export async function PUT(req, { params }) {
     console.log(error);
     return NextResponse.json(
       { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(_, { params }) {
+  try {
+    if (!params?.id) {
+      return NextResponse.json({ message: "Id is required" }, { status: 400 });
+    }
+
+    const isUserExist = await prisma.user?.findUnique({
+      where: {
+        id: params?.id,
+      },
+    });
+
+    if (!isUserExist) {
+      return NextResponse.json(
+        { message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.user.update({
+      where: {
+        id: params?.id,
+      },
+      data: {
+        is_profile_active: false,
+      },
+    });
+
+    return NextResponse.json({ message: "success" }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
       { status: 500 }
     );
   }

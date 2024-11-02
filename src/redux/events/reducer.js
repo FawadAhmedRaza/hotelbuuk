@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   deleteEvent,
   getAllNomadEvents,
+  getBusinessFacts,
   getEventById,
 } from "./thunk";
 
@@ -19,7 +20,6 @@ const initialState = {
     error: null,
     event: {},
   },
-
   deleteById: {
     isLoading: false,
     error: null,
@@ -27,6 +27,11 @@ const initialState = {
   updateById: {
     isLoading: false,
     error: null,
+  },
+  facts: {
+    businessFacts: [],
+    isLoading: false,
+    error: false,
   },
 };
 
@@ -75,6 +80,20 @@ const nomadEvents = createSlice({
     builder.addCase(deleteEvent.rejected, (state, action) => {
       state.deleteById.error = action.error;
       state.deleteById.isLoading = false;
+    });
+
+    // get business facts
+    builder.addCase(getBusinessFacts.pending, (state, action) => {
+      state.facts.isLoading = true;
+    });
+    builder.addCase(getBusinessFacts.fulfilled, (state, action) => {
+      console.log("acion",action.payload);
+      state.facts.businessFacts = action.payload;
+      state.facts.isLoading = false;
+    });
+    builder.addCase(getBusinessFacts.rejected, (state, action) => {
+      state.facts.error = action.error;
+      state.facts.isLoading = false;
     });
   },
 });

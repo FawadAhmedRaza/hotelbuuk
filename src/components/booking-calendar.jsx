@@ -27,19 +27,19 @@ export const BookingCalender = React.memo(
     return (
       <div
         className={cn(
-          "flex items-center  rounded gap-2  cursor-pointer",
+          "flex items-center  rounded gap-0  cursor-pointer ",
           className
         )}
         onClick={onOpenPopover}
       >
-        <div className="flex items-center gap-5  ">
+        <div className="flex items-center gap-1 sm:gap-5  ">
           {/* Start Date */}
           <Controller
             name={nameStart}
             control={control}
             render={({ field }) => (
               <div
-                className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+                className={`flex flex-col items-start  gap-1 py-2 px-0 sm:px-3  xl:px xll:px-5 rounded-full    ${InputBoxClass}`}
               >
                 <div className="flex gap-3">
                   <Iconify iconName="uil:calender" className="text-primary" />
@@ -49,6 +49,7 @@ export const BookingCalender = React.memo(
                 </div>
                 <input
                   {...field}
+                  value={field?.value?.toString().slice(0,10)}
                   className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
                   readOnly
                 />
@@ -67,7 +68,7 @@ export const BookingCalender = React.memo(
             control={control}
             render={({ field }) => (
               <div
-                className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+                className={`flex flex-col items-start gap-1 py-2 px-0 sm:px-5 md:px- xl:px-10 rounded-full    ${InputBoxClass}`}
               >
                 <div className="flex gap-3 items-center">
                   <Iconify iconName="uil:calender" className="text-primary" />
@@ -77,6 +78,8 @@ export const BookingCalender = React.memo(
                 </div>
                 <input
                   {...field}
+                  value={field?.value?.toString().slice(0,10)}
+                  
                   className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
                   readOnly
                 />

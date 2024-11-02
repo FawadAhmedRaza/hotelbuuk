@@ -1,11 +1,17 @@
 "use client";
 import * as Yup from "yup";
-import { Breadcrumb, Button, Pannel } from "@/src/components";
+import {
+  Breadcrumb,
+  Button,
+  DeleteModal,
+  Pannel,
+  Typography,
+} from "@/src/components";
 import Tabs from "@/src/components/tabs";
 import React, { useEffect, useState } from "react";
 import HotelProfile from "./components/hotel-profile";
 import HotelImages from "./components/hote-images";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { useRouter } from "next/navigation";
@@ -14,6 +20,8 @@ import { RHFFormProvider } from "@/src/components/hook-form";
 import { getAllHotelFacilities } from "@/src/redux/hotel-facilities/thunk";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
+import { useBoolean } from "@/src/hooks";
+import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
 
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
@@ -34,7 +42,9 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
       .required("Files are required"),
   });
 
-  const { user, setUser } = useAuthContext();
+  const { user, setUser, logout } = useAuthContext();
+  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
+  const { isLoading } = useSelector((state) => state.nomadProfile.deleteById);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -46,8 +56,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
   const {
     handleSubmit,
-    trigger,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = methods;
 
   const fetchHotelFacilities = async () => {
@@ -147,6 +156,17 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     },
   ];
 
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteNomadProfile(user?.id)).unwrap();
+      logout();
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
+
   return (
     <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
@@ -160,13 +180,34 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
         </div>
 
         {activeTabs === "hotel-images" && (
-          <div className="flex justify-end my-5">
+          <div className="flex justify-end my-5 gap-3">
+            <Button
+              type="button"
+              className="!bg-red-600"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              Delete profile
+            </Button>
             <Button loading={isSubmitting} type="submit">
               {isEdit ? "Save" : "Submit"}
             </Button>
           </div>
         )}
       </RHFFormProvider>
+      {isOpen && (
+        <DeleteModal
+          isLoading={isLoading}
+          title="Delete Profile"
+          isOpen={isOpen}
+          onClose={toggleDrawer}
+          handleDelete={handleDelete}
+        >
+          <Typography variant="p">
+            Are you sure you want to delete your profile ? this action will
+            delete all of your data?
+          </Typography>
+        </DeleteModal>
+      )}
     </Pannel>
   );
 };

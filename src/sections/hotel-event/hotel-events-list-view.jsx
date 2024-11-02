@@ -81,6 +81,10 @@ const HotelEventsView = React.memo(() => {
     }
   };
 
+  const handleViewEvent = (id) => {
+    router.push(`/hotel-dashboard/view-event/${id}?type=HOTEL`);
+  };
+
   const openDeleteModal = (id, name) => {
     setIsOpen(!isOpen);
     setEventId(id);
@@ -106,9 +110,11 @@ const HotelEventsView = React.memo(() => {
             renderRow={(row) => {
               return (
                 <>
-                  <td className=" px-6 py-4">
-                    <Typography variant="p" className="  !text-nowrap ">
-                      {row?.title}
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="!text-nowrap">
+                      {row?.title?.length > 30
+                        ? `${row?.title?.slice(0, 30)}...`
+                        : row?.title}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
@@ -128,12 +134,14 @@ const HotelEventsView = React.memo(() => {
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap   ">
-                      {row?.official_name}
+                      {row?.official_name?.length > 30
+                        ? `${row?.official_name?.slice(0, 30)}...`
+                        : row?.official_name?.length}
                     </Typography>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {row?.price}
+                      ${row?.price}
                     </Typography>
                   </td>
                   <td className="px-6 py-4 max-w-full custom-scrollbar">
@@ -160,11 +168,15 @@ const HotelEventsView = React.memo(() => {
                   <td className=" px-6 py-4">
                     <div className="flex gap-5">
                       <Iconify
+                        onClick={() => handleViewEvent(row.id)}
+                        iconName="icon-park-outline:preview-open"
+                        className="text-blue-500 cursor-pointer"
+                      />
+                      <Iconify
                         onClick={() => handleEventEdit(row.id)}
                         iconName="lucide:edit"
                         className="text-gray-500 cursor-pointer"
                       />
-
                       <Iconify
                         onClick={() => openDeleteModal(row?.id, row.title)}
                         iconName="fluent-mdl2:delete"

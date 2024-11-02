@@ -20,7 +20,6 @@ export const RHFSelect = ({
   const [query, setQuery] = useState("");
   const dropDownRef = useRef(null);
 
-  // Filter the options based on the query
   const filterOptions = options.filter((item) =>
     item?.label?.toLowerCase().includes(query.toLowerCase())
   );
@@ -136,16 +135,6 @@ export const RHFSelect = ({
               </div>
             )}
           </div>
-          {/* {errors && (
-            <Typography
-              variant={"p"}
-              className="!text-xs text-red-400 transition-all duration-500"
-            >
-              {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
-            </Typography>
-          )} */}
-
-          {/* Display errors dynamically using lodash get */}
           {errors && (
             <Typography
               variant="p"

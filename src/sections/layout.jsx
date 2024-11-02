@@ -7,7 +7,7 @@ export const Layout = React.memo(
   ({ children, isNavBg = false, isFooter = true }) => {
     return (
       <main className="w-full h-full">
-        <NavBar className={isNavBg ? "bg-white px-10  z-50 static" : ""} />
+        <NavBar className={isNavBg ? "bg-white px-5  z-50 static" : ""} />
         {children}
         {isFooter && <Footer />}
       </main>

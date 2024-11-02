@@ -12,6 +12,7 @@ import nomadEvents from "./events/reducer";
 import hotelEvent from "./hotel-event/reducer";
 import allEvents from "./all-events/reducer";
 import bookings from "./bookings/reducer";
+import eventThings from "./event-things-to-know/reducer";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     nomadEvents,
     allEvents,
     bookings,
+    eventThings,
   },
 });
 

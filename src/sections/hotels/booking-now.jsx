@@ -152,10 +152,13 @@ export const BookNow = React.memo(() => {
                 </Popover>
               </div>
             </div>
+
+            <div>
+              <Button type="submit" className="w-full sm:w-fit text-nowrap">
+                Book Now
+              </Button>
+            </div>
           </div>
-          <Button type="submit" className="w-full sm:w-fit text-nowrap">
-            Book Now
-          </Button>
         </div>
       </RHFFormProvider>
     </Pannel>

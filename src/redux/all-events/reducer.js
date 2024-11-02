@@ -7,7 +7,7 @@ const initialState = {
   events: [],
   error: null,
   getById: {
-    isLoading: false,
+    isLoading: true,
     error: null,
     event: {},
   },

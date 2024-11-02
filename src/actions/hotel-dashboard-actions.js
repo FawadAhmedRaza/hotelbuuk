@@ -27,6 +27,7 @@ export async function getTotalHotelRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
+      booking_status: "ACCEPTED",
     },
   });
 

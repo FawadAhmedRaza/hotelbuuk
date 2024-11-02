@@ -9,12 +9,21 @@ import {
   RHFUploadAvatar,
 } from "@/src/components/hook-form";
 
-import { Breadcrumb, Button, Pannel, Typography } from "@/src/components";
+import {
+  Breadcrumb,
+  Button,
+  DeleteModal,
+  Pannel,
+  Typography,
+} from "@/src/components";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
+import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
+import { useDispatch, useSelector } from "react-redux";
+import { useBoolean } from "@/src/hooks";
 
 const UpdateGuestProfile = ({ defaultValues }) => {
   const schema = yup.object({
@@ -28,8 +37,13 @@ const UpdateGuestProfile = ({ defaultValues }) => {
       .email("Invalid email format"),
   });
 
-  const { user, setUser } = useAuthContext();
+  const { user, setUser, logout } = useAuthContext();
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
+
+  const { isLoading } = useSelector((state) => state.nomadProfile.deleteById);
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -42,7 +56,6 @@ const UpdateGuestProfile = ({ defaultValues }) => {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("data,", data);
     try {
       const formData = new FormData();
 
@@ -72,6 +85,17 @@ const UpdateGuestProfile = ({ defaultValues }) => {
       enqueueSnackbar(error?.message, { variant: "success" });
     }
   });
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteNomadProfile(user?.id)).unwrap();
+      logout();
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
 
   return (
     <Pannel>
@@ -113,12 +137,33 @@ const UpdateGuestProfile = ({ defaultValues }) => {
             />
           </div>
         </div>
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full gap-3">
+          <Button
+            type="button"
+            className="!bg-red-600"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Delete profile
+          </Button>
           <Button type="submit" loading={isSubmitting}>
             Save
           </Button>
         </div>
       </RHFFormProvider>
+      {isOpen && (
+        <DeleteModal
+          isLoading={isLoading}
+          title="Delete Profile"
+          isOpen={isOpen}
+          onClose={toggleDrawer}
+          handleDelete={handleDelete}
+        >
+          <Typography variant="p">
+            Are you sure you want to delete your profile ? this action will
+            delete all of your data?
+          </Typography>
+        </DeleteModal>
+      )}
     </Pannel>
   );
 };

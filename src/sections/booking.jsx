@@ -9,6 +9,7 @@ import {
 } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
 import { addDays } from "date-fns";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Popover,
@@ -17,6 +18,7 @@ import {
 } from "../components/ui/popover";
 import { BookingCalender } from "../components/booking-calendar";
 import { formatDate } from "../utils/formate-date";
+// import { RHFCalendarInput } from "../components/RHFCalendarInput";
 
 export const Booking = React.memo(() => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -39,13 +41,13 @@ export const Booking = React.memo(() => {
     defaultValues: {
       destination: "",
 
-      startDate: date[0].startDate?.toString().slice(0, 10),
-      endDate: date[0].endDate?.toString().slice(0, 10),
+      startDate: date[0].startDate,
+      endDate: date[0].endDate,
     },
   });
 
   const handleSubmit = async (data) => {
-    console.log({
+    console.log("Final Date", {
       destination: data.destination,
       check_in: data.startDate ? data.startDate.toString() : "",
       check_out: data.endDate ? data.endDate.toString() : "00-00-0000",
@@ -61,10 +63,10 @@ export const Booking = React.memo(() => {
       onSubmit={methods.handleSubmit(handleSubmit)}
       className=""
     >
-      <div className="flex items-center !w-fit pl-0 pr-3 py-0 m-0 rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm bg-white mx-auto">
+      <div className="flex items-center !w-fit pl-0 pr-3 py-0 m-0 bg-white  md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm  mx-auto">
         <div className="flex   md:flex-row flex-col w-full  gap-3 md:items-center ">
           {/* Destination Input */}
-          <div className="py-2 md:pl-5 xl:pl-10 pr-10 md:hover:bg-gray-100 rounded-full">
+          <div className="py-2 pl-0  md:pl-5 xl:pl-10 pr-4 ms:pr-10 md:hover:bg-gray-100 md:rounded-full">
             <div className="flex gap-3 items-center">
               <Iconify
                 iconName="carbon:location-filled"
@@ -116,7 +118,7 @@ export const Booking = React.memo(() => {
           </div>
 
           {/* Search Button */}
-          <Button type="submit" className=" sm:w-fit">
+          <Button type="submit" className=" sm:w-fit md:mt-0 mt-5">
             Search
           </Button>
         </div>

@@ -1,7 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-// Components and Others...
+import { useBoolean } from "@/src/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useRouter } from "next/navigation";
+
+import { deleteEvent, getAllNomadEvents } from "@/src/redux/events/thunk";
+
 import {
   AnchorTag,
   Breadcrumb,
@@ -11,23 +17,9 @@ import {
   Pannel,
   Typography,
 } from "@/src/components";
-import Link from "next/link";
 import { paths } from "@/src/contants";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
-import { useDispatch, useSelector } from "react-redux";
-import { getHotelById, getHotelInfo } from "@/src/redux/hotel-info/thunk";
-import { StarRating } from "@/src/components/star-rating";
-import {
-  deleteRoom,
-  getAllRooms,
-  getRooms,
-} from "@/src/redux/hotel-rooms/thunk";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
-import { useRouter } from "next/navigation";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
-import { useBoolean } from "@/src/hooks";
-import { useModal } from "@/src/hooks/use-modal";
-import { deleteEvent, getAllNomadEvents } from "@/src/redux/events/thunk";
 
 const header = [
   { id: 1, label: "Title" },
@@ -55,8 +47,6 @@ const NomadEventsView = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { events, isLoading } = useSelector((state) => state.nomadEvents);
-
-  console.log(events);
 
   const { isLoading: deleteLoading } = useSelector(
     (state) => state.nomadEvents.deleteById
@@ -91,6 +81,10 @@ const NomadEventsView = React.memo(() => {
     } finally {
       setIsOpen(false); // Close the modal
     }
+  };
+
+  const handleViewEvent = (id) => {
+    router.push(`/nomad-dashboard/view-event/${id}?type=NOMAD`);
   };
 
   const openDeleteModal = (id, name) => {
@@ -148,9 +142,11 @@ const NomadEventsView = React.memo(() => {
                     <td className=" px-6 py-4">
                       <Typography
                         variant="p"
-                        className="  !text-nowrap max-w-56"
+                        className="  !text-nowrap max-w-full"
                       >
-                        {row?.title}
+                        {row?.title?.length > 30
+                          ? `${row?.title?.slice(0, 30)}...`
+                          : row?.title}
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
@@ -173,7 +169,9 @@ const NomadEventsView = React.memo(() => {
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {row?.official_name}
+                        {row?.official_name?.length > 30
+                          ? `${row?.official_name?.slice(0, 30)}...`
+                          : row?.official_name}
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
@@ -184,7 +182,7 @@ const NomadEventsView = React.memo(() => {
                         {row?.accomodation_type}
                       </Typography>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 max-w-full">
                       <span className="flex flex-col">
                         <span className="flex gap-1">
                           <Typography
@@ -273,11 +271,15 @@ const NomadEventsView = React.memo(() => {
                     <td className=" px-6 py-4">
                       <span className="flex gap-5">
                         <Iconify
+                          onClick={() => handleViewEvent(row.id)}
+                          iconName="icon-park-outline:preview-open"
+                          className="text-blue-500 cursor-pointer"
+                        />
+                        <Iconify
                           onClick={() => handleEventEdit(row.id)}
                           iconName="lucide:edit"
                           className="text-gray-500 cursor-pointer"
                         />
-
                         <Iconify
                           onClick={() => openDeleteModal(row.id, row?.title)}
                           iconName="fluent-mdl2:delete"
