@@ -61,7 +61,7 @@ export const NavBar = React.memo(({ className }) => {
               type={"server"}
               effect="blur"
               alt={user?.hotel_name}
-              className="!w-5 !h-5 md:!w-5 md:!h-5  object-cover rounded-full "
+              className="!w-5 !h-5 md:!w-8 md:!h-8  object-cover rounded-full "
             />
 
             <Typography
