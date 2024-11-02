@@ -11,9 +11,12 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { addDays } from "date-fns";
-import { Popover, PopoverTrigger } from "@/src/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/src/components/ui/popover";
 import { RHFCalendarInput } from "@/src/components/calendar-input";
-import { PopoverContent } from "@radix-ui/react-popover";
 import { BookingCalender } from "@/src/components/booking-calendar";
 
 export const BookNow = React.memo(() => {
@@ -133,7 +136,7 @@ export const BookNow = React.memo(() => {
                       onOpenPopover={togglePopover}
                     />
                   </PopoverTrigger>
-                  <PopoverContent className="w-full">
+                  <PopoverContent className="w-full bg-white">
                     <RHFDatePicker
                       name="availability"
                       onChange={(item) => {

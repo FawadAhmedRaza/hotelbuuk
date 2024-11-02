@@ -18,8 +18,8 @@ const AvailabilityCalendar = ({
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <Pannel className="flex flex-col md:flex-row gap-5 md:gap-10 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
-      <div className="text-center md:text-left">
+    <Pannel className="flex flex-col md:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+      <div className="text-center md:text-left  w-full">
         <Typography variant="h1" className="text-black">
           Availability
         </Typography>
@@ -27,14 +27,14 @@ const AvailabilityCalendar = ({
           {startDate && endDate && nights > 0 ? (
             <div>
               <Typography
-                variant="h3"
+                variant="h4"
                 className="text-lg md:text-[] font-medium"
               >
                 {nights} nights in Sohna
               </Typography>
               <Typography
                 variant="h5"
-                className="text-gray-400 text-sm md:text-base"
+                className="text-gray-400 mt-2 text-sm md:text-base"
               >
                 {format(startDate, "MMM d, yyyy")} -{" "}
                 {format(endDate, "MMM d, yyyy")}
@@ -47,7 +47,7 @@ const AvailabilityCalendar = ({
       </div>
 
       <div className="w-full md:w-auto">
-        <div className="border border-gray-300 rounded-lg shadow-md p-4 bg-white mx-auto max-w-xs md:max-w-none">
+        <div className="border border-gray-300 rounded-lg shadow-md  bg-white mx-auto w-full">
           <DateRange
             onChange={handleDateChange}
             months={2}
@@ -59,7 +59,7 @@ const AvailabilityCalendar = ({
             color="#000000"
             weekdayDisplayFormat="EEE"
             monthDisplayFormat="MMMM yyyy"
-            className=" text-[9px] sm:text-[10px] md:text-sm   text-gray-800 "
+            className=" text-[11px] sm:text-[20px] md:text-[15px] xl:text-sm   text-gray-800 "
           />
 
           {/* Date Display Section */}

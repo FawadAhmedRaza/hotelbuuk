@@ -5,14 +5,14 @@ import HotelCard from "./hotel-card";
 import HotelTabComponent from "./tab-components";
 import BnBCard from "./bnb-card";
 
-const HotelTab = () => {
+const HotelTab = ({ filteredEvents }) => {
   const TABS = [
     {
       value: "tab1",
       label: "Hotels",
       component: (
         <div>
-          <HotelCard />
+          <HotelCard filteredEvents={filteredEvents} />
         </div>
       ),
     },
@@ -21,7 +21,7 @@ const HotelTab = () => {
       label: "B&B",
       component: (
         <div>
-          <BnBCard />
+          <BnBCard filteredEvents={filteredEvents} />
         </div>
       ),
     },

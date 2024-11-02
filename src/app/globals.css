@@ -249,6 +249,27 @@ input::-webkit-inner-spin-button {
 .clear-dates-button:hover {
   text-decoration: underline;
 }
+
+.range {
+  appearance: none;
+
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px; /* Height of the track */
+  background: #d1d5db; /* Default track color */
+  border-radius: 4px;
+  outline: none; /* Remove outline */
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default styles */
+  appearance: none;
+  width: 16px; /* Thumb size */
+  height: 16px; /* Thumb size */
+  background: #000; /* Thumb color */
+  border-radius: 50%; /* Round thumb */
+  cursor: pointer; /* Pointer cursor on hover */
+}
 .animate-slide-down {
   animation: slide-down 0.3s ease forwards;
 }

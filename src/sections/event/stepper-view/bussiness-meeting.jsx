@@ -194,13 +194,13 @@ export const BussinessMeeting = () => {
                 </Typography>
                 <div className="flex flex-col md:flex-row gap-5  w-full">
                   <RHFSelect
-                    name="business_meeting.location.country"
+                    name="business_meeting.country"
                     placeholder="Select your Country"
                     label="Country"
                     options={countries}
                   />
                   <RHFSelect
-                    name="business_meeting.location.city"
+                    name="business_meeting.city"
                     placeholder="Select your City"
                     label="City"
                     options={cities}
@@ -208,7 +208,7 @@ export const BussinessMeeting = () => {
                 </div>
               </div>
               <RHFInput
-                name="business_meeting.location.address"
+                name="business_meeting.address"
                 label="Street Address"
                 placeholder="Address of your B&B"
               />

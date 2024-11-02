@@ -40,7 +40,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 930);
+      setIsMobile(window.innerWidth < 730);
     };
 
     handleResize();
@@ -51,7 +51,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <div className=" px-10">
+        <div className="  md:px-4">
           <HotelOverview type={type} />
           <HotelDetail />
           <BusinessFacts className="bg-white" />

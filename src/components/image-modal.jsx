@@ -34,11 +34,6 @@ export const ImageModal = ({ images, isOpen, onClose }) => {
 
         {/* Image Display */}
         <div className="flex items-center justify-center h-full w-full">
-          {/* <img
-            src={images[currentIndex]}
-            alt={`Slide ${currentIndex}`}
-            className="max-w-full max-h-full w-4/5 h-[75vh] object-cover"
-          /> */}
           <ImageRender
             key={images[currentIndex]?.img} // Force re-render when src changes
             src={images[currentIndex]?.img}
