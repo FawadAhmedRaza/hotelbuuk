@@ -60,17 +60,21 @@ export async function POST(req) {
         where: {
           id: guest_id,
         },
+        include: {
+          User: true,
+        },
       });
 
       let guestName = guest?.first_name + " " + guest?.last_name;
 
       // send notification
-      let message = `${guest} wants to book your ${isHotelEventExist?.title} event. check your email for confirmation`;
+      let message = `${guestName} wants to book your ${isHotelEventExist?.title} event. check your email for confirmation`;
       await createNotification(
         isHotelEventExist?.user?.hotel_name,
         "Event booking request",
         message,
-        isHotelEventExist?.user?.id
+        isHotelEventExist?.user?.id, // to
+        guest?.User?.id // from
       );
 
       await sendMail(
@@ -131,6 +135,9 @@ export async function POST(req) {
         where: {
           id: guest_id,
         },
+        include: {
+          User: true,
+        },
       });
 
       let guestName = guest?.first_name + " " + guest?.last_name;
@@ -140,12 +147,13 @@ export async function POST(req) {
         isNomadEventExist?.user?.last_name;
 
       // send notification
-      let message = `${guest} wants to book your ${isNomadEventExist?.title} event. check your email for confirmation`;
+      let message = `${guestName} wants to book your ${isNomadEventExist?.title} event. check your email for confirmation`;
       await createNotification(
         name,
         "Event booking request",
         message,
-        isNomadEventExist?.user?.id
+        isNomadEventExist?.user?.id,
+        guest?.User?.id
       );
 
       // send email

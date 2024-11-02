@@ -1,6 +1,12 @@
 import { prisma } from "../db";
 
-export const createNotification = async (name, subject, message, user_id) => {
+export const createNotification = async (
+  name,
+  subject,
+  message,
+  user_id,
+  from_user_id
+) => {
   try {
     await prisma.notifications.create({
       data: {
@@ -8,6 +14,7 @@ export const createNotification = async (name, subject, message, user_id) => {
         message,
         subject,
         user_id,
+        from_user_id,
       },
     });
     return true;
