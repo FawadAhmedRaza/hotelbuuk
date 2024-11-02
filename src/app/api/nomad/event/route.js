@@ -31,6 +31,7 @@ export async function POST(req) {
       address,
       amenities,
       hotel_id,
+      about_bnb,
     } = business_meeting || {};
 
     const { rules, end_date, start_date } = availibility || {};
@@ -73,7 +74,7 @@ export async function POST(req) {
           price: String(data?.price),
           user_id: user_id,
           nomad_id: nomad?.id,
-          about_bnb: location?.about_bnb,
+          about_bnb: about_bnb,
         },
       });
     } else {

@@ -1,11 +1,11 @@
-import HotelDetail from "@/src/screens/hote-detail";
+import ViewEvents from "@/src/sections/view-events/page";
 
 export const metadata = {
   title: "Event Detail",
   description: "",
 };
 const page = () => {
-  return <HotelDetail />;
+  return <ViewEvents />;
 };
 
 export default page;

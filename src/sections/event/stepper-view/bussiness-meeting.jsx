@@ -206,7 +206,7 @@ export const BussinessMeeting = () => {
               <RHFTextArea
                 label="About bnb"
                 placeholder="Enter short details about bnb"
-                name="business_meeting.location.about_bnb"
+                name="business_meeting.about_bnb"
               />
             </>
           ) : (

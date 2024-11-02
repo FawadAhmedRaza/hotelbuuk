@@ -81,6 +81,10 @@ const HotelEventsView = React.memo(() => {
     }
   };
 
+  const handleViewEvent = (id) => {
+    router.push(`/hotel-dashboard/view-event/${id}?type=HOTEL`);
+  };
+
   const openDeleteModal = (id, name) => {
     setIsOpen(!isOpen);
     setEventId(id);
@@ -160,11 +164,15 @@ const HotelEventsView = React.memo(() => {
                   <td className=" px-6 py-4">
                     <div className="flex gap-5">
                       <Iconify
+                        onClick={() => handleViewEvent(row.id)}
+                        iconName="icon-park-outline:preview-open"
+                        className="text-blue-500 cursor-pointer"
+                      />
+                      <Iconify
                         onClick={() => handleEventEdit(row.id)}
                         iconName="lucide:edit"
                         className="text-gray-500 cursor-pointer"
                       />
-
                       <Iconify
                         onClick={() => openDeleteModal(row?.id, row.title)}
                         iconName="fluent-mdl2:delete"

@@ -105,27 +105,27 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     defaultValues: isEdit
       ? defaultValues
       : {
-        business_meeting: {
-          title: "",
-          description: "",
-          official_name: "",
-          business_category: "",
-          accomodation_type: "bnb",
-          hotel_id: "",
-          country: "",
-          city: "",
-          address: "",
-          amenities: [],
+          business_meeting: {
+            title: "",
+            description: "",
+            official_name: "",
+            business_category: "",
+            accomodation_type: "bnb",
+            hotel_id: "",
+            country: "",
+            city: "",
+            address: "",
+            amenities: [],
+          },
+          images: [],
+          topics: [],
+          availibility: {
+            start_date: "",
+            end_date: "",
+            rules: {},
+          },
+          price: "",
         },
-        images: [],
-        topics: [],
-        availibility: {
-          start_date: "",
-          end_date: "",
-          rules: {},
-        },
-        price: "",
-      },
   });
 
   const {
@@ -238,47 +238,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     }
   }, [accomodationType]);
 
-  // const handleNext = async () => {
-  //   const fieldsToValidate = [];
-
-  //   if (activeStep === 0) {
-  //     fieldsToValidate.push(
-  //       "business_meeting.title",
-  //       "business_meeting.description",
-  //       "business_meeting.official_name",
-  //       "business_meeting.business_category",
-  //       "business_meeting.accomodation_type", // Ensure it’s present
-  //       "business_meeting.amenities",
-  //       "business_meeting.hotel_id"
-  //     );
-
-  //     if (accomodationType === "hotel") {
-  //       fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
-  //     } else if (accomodationType === "bnb") {
-  //       fieldsToValidate.push(
-  //         "business_meeting.location.country",
-  //         "business_meeting.location.city",
-  //         "business_meeting.location.address"
-  //       );
-  //     }
-  //   } else if (activeStep === 1) {
-  //     if (accomodationType === "bnb") {
-  //       fieldsToValidate.push("images");
-  //     }
-  //   } else if (activeStep === 2) {
-  //     fieldsToValidate.push("topics");
-  //   } else if (activeStep === 3) {
-  //     fieldsToValidate.push("availibility.start_date", "availibility.end_date");
-  //   }
-
-  //   const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
-  //   console.log(isStepValid);
-
-  //   if (isStepValid) {
-  //     setActiveStep((prev) => prev + 1);
-  //   }
-  // };
-
   const handleNext = async () => {
     let fieldsToValidate = [];
 
@@ -296,16 +255,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         fieldsToValidate.push("business_meeting.hotel_id");
       } else if (accomodationType === "bnb") {
         fieldsToValidate.push(
-<<<<<<< HEAD
-          "business_meeting.location.country",
-          "business_meeting.location.city",
-          "business_meeting.location.street_name",
-          "business_meeting.location.about_bnb"
-=======
           "business_meeting.country",
           "business_meeting.city",
-          "business_meeting.address"
->>>>>>> 29c3d21b8aef4bea1fd561ed852ce0dcacad3d52
+          "business_meeting.address",
+          "business_meeting.about_bnb"
         );
       }
     } else if (activeStep === 1 && accomodationType === "bnb") {
@@ -329,7 +282,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       ...data,
       user_id: user?.id,
     };
-    console.log("final data", finalData);
     if (!isEdit) {
       // create
       try {
