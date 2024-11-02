@@ -142,9 +142,11 @@ const NomadEventsView = React.memo(() => {
                     <td className=" px-6 py-4">
                       <Typography
                         variant="p"
-                        className="  !text-nowrap max-w-56"
+                        className="  !text-nowrap max-w-full"
                       >
-                        {row?.title}
+                        {row?.title?.length > 30
+                          ? `${row?.title?.slice(0, 30)}...`
+                          : row?.title}
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
@@ -167,7 +169,9 @@ const NomadEventsView = React.memo(() => {
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {row?.official_name}
+                        {row?.official_name?.length > 30
+                          ? `${row?.official_name?.slice(0, 30)}...`
+                          : row?.official_name}
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
@@ -178,7 +182,7 @@ const NomadEventsView = React.memo(() => {
                         {row?.accomodation_type}
                       </Typography>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 max-w-full">
                       <span className="flex flex-col">
                         <span className="flex gap-1">
                           <Typography

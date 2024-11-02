@@ -82,7 +82,7 @@ const HotelShowSection = () => {
 
   return (
     <Pannel className="!pt-0 flex gap-7">
-      <div className=" md:w-[25%]">
+      <div className=" md:w-[25%] sm:flex hidden">
         <SideFilterSection setFilters={setFilters} />
       </div>
       <div className=" md:w-[75%]">

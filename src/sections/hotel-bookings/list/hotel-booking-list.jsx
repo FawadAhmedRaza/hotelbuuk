@@ -89,7 +89,6 @@ const HotelBookingList = () => {
                     src={row?.guest?.profile_img}
                     type={"server"}
                     effect="blur"
-
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
                   />
@@ -112,8 +111,10 @@ const HotelBookingList = () => {
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row?.hotel_event?.title}
+                <Typography variant="p" className="!text-nowrap max-w-full">
+                  {row?.hotel_event?.title?.length > 30
+                    ? `${row?.hotel_event?.title?.slice(0, 30)}...`
+                    : row?.hotel_event?.title}
                 </Typography>
               </td>
               <td className="px-6 py-4">

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/src/db";
 import { sendMail } from "@/src/service/mailService";
 import { generateBookingRequestTemplate } from "@/src/libs/otpTemplate";
+import { createNotification } from "@/src/libs/create-notification";
 
 export async function POST(req) {
   try {
@@ -62,6 +63,15 @@ export async function POST(req) {
       });
 
       let guestName = guest?.first_name + " " + guest?.last_name;
+
+      // send notification
+      let message = `${guest} wants to book your ${isHotelEventExist?.title} event. check your email for confirmation`;
+      await createNotification(
+        isHotelEventExist?.user?.hotel_name,
+        "Event booking request",
+        message,
+        isHotelEventExist?.user?.id
+      );
 
       await sendMail(
         "Event Booking Request",
@@ -129,6 +139,16 @@ export async function POST(req) {
         " " +
         isNomadEventExist?.user?.last_name;
 
+      // send notification
+      let message = `${guest} wants to book your ${isNomadEventExist?.title} event. check your email for confirmation`;
+      await createNotification(
+        name,
+        "Event booking request",
+        message,
+        isNomadEventExist?.user?.id
+      );
+
+      // send email
       await sendMail(
         "Event Booking Request",
         isNomadEventExist?.user?.email,

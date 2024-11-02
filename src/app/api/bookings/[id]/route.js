@@ -12,9 +12,15 @@ export async function POST(req, { params }) {
   try {
     const data = await req.json();
     const { guest, organizer, eventTitle, event_type, status } = data;
-    console.log("data", data);
 
-    if (!guest || !params?.id || !organizer || !event_type || !eventTitle || !status) {
+    if (
+      !guest ||
+      !params?.id ||
+      !organizer ||
+      !event_type ||
+      !eventTitle ||
+      !status
+    ) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
@@ -45,7 +51,26 @@ export async function POST(req, { params }) {
       },
     });
 
+    const user = await prisma.guest?.findUnique({
+      where: {
+        id: guest?.id,
+      },
+      include: {
+        User: true,
+      },
+    });
+
     if (status === "ACCEPTED") {
+      // send notification
+      let message = `Congratulations ! ${organizerName} has succussfully accepted your booking request for the ${eventTitle} event.
+       check your email for confirmation`;
+      await createNotification(
+        guestName,
+        "Event booking Accepted",
+        message,
+        user?.User?.id
+      );
+
       await sendMail(
         "Event Booking Accepted",
         guest?.email,
@@ -58,6 +83,16 @@ export async function POST(req, { params }) {
         )
       );
     } else {
+      // send notification
+      let message = `we are sad to announce that ${organizerName} has rejected your booking request for the ${eventTitle} event.
+       check your email for confirmation`;
+      await createNotification(
+        guestName,
+        "Event booking Rejected",
+        message,
+        user?.User?.id
+      );
+
       await sendMail(
         "Event Booking Rejected",
         guest?.email,

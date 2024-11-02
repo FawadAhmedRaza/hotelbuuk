@@ -46,7 +46,7 @@ const GuestDashboardSection = () => {
               <RoomListSkeleton />
             ) : (
               <>
-                <Typography variant="h4">Upcoming Booking</Typography>
+                <Typography variant="h4">Upcoming Events</Typography>
                 <RecentBookingListView />
               </>
             )}
