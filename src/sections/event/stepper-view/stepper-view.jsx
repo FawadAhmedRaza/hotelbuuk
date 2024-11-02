@@ -37,6 +37,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
 
+  console.log("Default values", isEdit);
+
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
       amenities.reduce((schema, amenity) => {
@@ -99,6 +101,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     }),
     price: Yup.string().required("Price is required"),
   });
+
+  console.log("Default Values:", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),

@@ -58,9 +58,9 @@ export async function POST(req) {
           business_category,
           official_name,
           accomodation_type,
-          city: city,
-          country: country,
-          address: address,
+          city,
+          country,
+          address,
           start_date,
           end_date,
           // rules
