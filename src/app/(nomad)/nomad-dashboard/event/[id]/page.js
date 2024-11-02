@@ -16,7 +16,7 @@ const page = () => {
     (state) => state.nomadEvents.getById
   );
 
-  console.log(event);
+  console.log("full event",event);
 
   const fetchEvent = async () => {
     try {

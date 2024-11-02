@@ -9,6 +9,7 @@ import {
 } from "@/src/components/hook-form";
 import { useForm } from "react-hook-form";
 import { addDays } from "date-fns";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Popover,
@@ -17,6 +18,7 @@ import {
 } from "../components/ui/popover";
 import { BookingCalender } from "../components/booking-calendar";
 import { formatDate } from "../utils/formate-date";
+// import { RHFCalendarInput } from "../components/RHFCalendarInput";
 
 export const Booking = React.memo(() => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -39,13 +41,13 @@ export const Booking = React.memo(() => {
     defaultValues: {
       destination: "",
 
-      startDate: date[0].startDate?.toString().slice(0, 10),
-      endDate: date[0].endDate?.toString().slice(0, 10),
+      startDate: date[0].startDate,
+      endDate: date[0].endDate,
     },
   });
 
   const handleSubmit = async (data) => {
-    console.log({
+    console.log("Final Date", {
       destination: data.destination,
       check_in: data.startDate ? data.startDate.toString() : "",
       check_out: data.endDate ? data.endDate.toString() : "00-00-0000",

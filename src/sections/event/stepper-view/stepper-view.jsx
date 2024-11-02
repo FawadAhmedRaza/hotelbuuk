@@ -37,6 +37,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
 
+  console.log("Default values", isEdit);
+
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
       amenities.reduce((schema, amenity) => {
@@ -94,6 +96,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     }),
     price: Yup.string().required("Price is required"),
   });
+
+  console.log("Default Values:", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),
@@ -232,47 +236,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       setCurrentSteps(newSteps);
     }
   }, [accomodationType]);
-
-  // const handleNext = async () => {
-  //   const fieldsToValidate = [];
-
-  //   if (activeStep === 0) {
-  //     fieldsToValidate.push(
-  //       "business_meeting.title",
-  //       "business_meeting.description",
-  //       "business_meeting.official_name",
-  //       "business_meeting.business_category",
-  //       "business_meeting.accomodation_type", // Ensure it’s present
-  //       "business_meeting.amenities",
-  //       "business_meeting.hotel_id"
-  //     );
-
-  //     if (accomodationType === "hotel") {
-  //       fieldsToValidate.push("business_meeting.hotel"); // Validate hotels field only if type is hotel
-  //     } else if (accomodationType === "bnb") {
-  //       fieldsToValidate.push(
-  //         "business_meeting.location.country",
-  //         "business_meeting.location.city",
-  //         "business_meeting.location.address"
-  //       );
-  //     }
-  //   } else if (activeStep === 1) {
-  //     if (accomodationType === "bnb") {
-  //       fieldsToValidate.push("images");
-  //     }
-  //   } else if (activeStep === 2) {
-  //     fieldsToValidate.push("topics");
-  //   } else if (activeStep === 3) {
-  //     fieldsToValidate.push("availibility.start_date", "availibility.end_date");
-  //   }
-
-  //   const isStepValid = await trigger(fieldsToValidate); // Validate step-specific fields
-  //   console.log(isStepValid);
-
-  //   if (isStepValid) {
-  //     setActiveStep((prev) => prev + 1);
-  //   }
-  // };
 
   const handleNext = async () => {
     let fieldsToValidate = [];
