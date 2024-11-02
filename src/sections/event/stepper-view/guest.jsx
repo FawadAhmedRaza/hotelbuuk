@@ -19,11 +19,8 @@ export const GuestLearn = () => {
 
   // Watch the learning info values from the form state
   const learningInfo = watch("learning_info");
-  console.log("Learning Info", learningInfo);
 
   const formTopics = watch("topics");
-
-  console.log("Form Topics", formTopics);
 
   const handleAdd = () => {
     const currentTopics = getValues("topics") || []; // Get existing topics (fallback to empty array)
@@ -33,8 +30,6 @@ export const GuestLearn = () => {
     setValue("topics", [...currentTopics, topicInfo], { shouldValidate: true });
 
     setTopicInfo({ title: "", description: "" });
-
-    console.log("this is toic info", topicInfo);
   };
 
   const handleDelete = (id) => {
@@ -108,7 +103,14 @@ export const GuestLearn = () => {
         </div>
 
         <div className="flex justify-end items-end">
-          <Button onClick={handleAdd}>Add</Button>
+          <Button
+            disabled={
+              topicInfo?.title?.length < 3 || topicInfo?.description?.length < 3
+            }
+            onClick={handleAdd}
+          >
+            Add
+          </Button>
         </div>
       </div>
 

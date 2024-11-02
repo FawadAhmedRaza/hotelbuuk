@@ -31,9 +31,11 @@ export const LangaugeTranslator = React.memo(({isWhite}) => {
   };
 
   const isDashboardPage =
-    pathname === paths.hotelDashboard.root ||
-    pathname === paths.guestDashboard.root ||
-    pathname === paths.nomadDashboard.root;
+    pathname.startsWith(paths.hotelDashboard.root) ||
+    pathname.startsWith(paths.guestDashboard.root) ||
+    pathname.startsWith(paths.nomadDashboard.root);
+
+  console.log(isDashboardPage, "isDashboardPage");
 
   return (
     <div className="relative w-fit">

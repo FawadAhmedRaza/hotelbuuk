@@ -58,7 +58,6 @@ const NomadDashboardSections = () => {
 
   const fetchTotalCheckIns = async () => {
     let total = await getNomadTotalCheckIns(user?.id);
-    console.log("total checkins", total);
     setTotalCheckIns(total);
   };
 

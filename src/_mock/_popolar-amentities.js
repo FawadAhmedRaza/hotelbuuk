@@ -75,3 +75,18 @@ export const price_includes = [
   "Business Insights",
   "B&B Lodging",
 ];
+
+export const house_rules = [
+  { name: "After 2:00 PM" },
+  { name: "Before 10:00 AM" },
+  { name: "4 guests maximum" },
+];
+
+export const safetyAndProperty = [
+  { name: "Carbon monoxide alarm" },
+  { name: "smoke alarm" },
+];
+
+export const cancellationPolicies = [
+  { name: "Free Cancellation For 48 Hours" },
+];

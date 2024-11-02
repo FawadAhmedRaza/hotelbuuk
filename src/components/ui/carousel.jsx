@@ -17,7 +17,7 @@ function useCarousel() {
   return context;
 }
 
-const defaultTransitionSpeed = 4000; // 4 seconds
+const defaultTransitionSpeed = 20000; // 4 seconds
 
 const Carousel = React.forwardRef(
   (

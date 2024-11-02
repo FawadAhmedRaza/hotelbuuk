@@ -97,25 +97,18 @@ export const GuestLearn = () => {
         </div>
 
         <div className="flex justify-end items-end">
-          <Button onClick={handleAdd}>Add</Button>
+          <Button
+            disabled={
+              topicInfo?.title?.length < 3 || topicInfo?.description?.length < 3
+            }
+            onClick={handleAdd}
+          >
+            Add
+          </Button>
         </div>
       </div>
 
       {/* Conditionally render the Accordion only when visible */}
-
-      {/* {isAccordionVisible &&
-        topics?.map((topic, index) => (
-          <div key={index} className="w-full">
-            <Accordion
-              id={topic.id}
-              title={topic?.title}
-              className=""
-              deleteTopic={handleDelete}
-            >
-              <Typography variant="p">{topic?.description}</Typography>
-            </Accordion>
-          </div>
-        ))} */}
 
       {formTopics &&
         formTopics?.map((topic) => (

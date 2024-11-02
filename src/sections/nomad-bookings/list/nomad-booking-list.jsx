@@ -111,17 +111,19 @@ const NomadBookingList = () => {
                   #{row?.nomad_event?.id?.slice(0, 6)?.toUpperCase()}
                 </Typography>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 max-w-full">
                 <Typography variant="p" className="  !text-nowrap max-w-56">
-                  {row?.nomad_event?.title}
+                  {row?.nomad_event?.title?.length > 30
+                    ? `${row?.nomad_event?.title?.slice(0, 30)}...`
+                    : row?.nomad_event?.title}
                 </Typography>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 max-w-full">
                 <Typography variant="p" className="!text-nowrap max-w-56">
                   {formatDate(row?.nomad_event?.start_date)}
                 </Typography>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 max-w-full">
                 <Typography variant="p" className="!text-nowrap max-w-56">
                   {formatDate(row?.nomad_event?.end_date)}
                 </Typography>

@@ -10,6 +10,7 @@ export default function UploadAvatar({
   disabled,
   helperText,
   isEdit,
+  className,
   ...other
 }) {
   const [preview, setPreview] = useState(null);
@@ -53,7 +54,6 @@ export default function UploadAvatar({
           <Image
             alt="avatar"
             src={preview}
-            
             className="w-full h-full rounded-full object-cover"
             type={typeof file !== "string" ? "normal" : "server"}
           />

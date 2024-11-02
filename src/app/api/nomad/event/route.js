@@ -10,8 +10,15 @@ export async function POST(req) {
     const data = convertFormData(body);
     const images = body.getAll("images");
 
-    const { business_meeting, availibility, topics, user_id, price } =
-      data || {};
+    const {
+      business_meeting,
+      availibility,
+      topics,
+      user_id,
+      rules: event_rules,
+      safeties,
+      cancelPolicies,
+    } = data || {};
 
     const {
       title,
@@ -19,9 +26,12 @@ export async function POST(req) {
       official_name,
       business_category,
       accomodation_type,
-      location,
+      city,
+      country,
+      address,
       amenities,
       hotel_id,
+      about_bnb,
     } = business_meeting || {};
 
     const { rules, end_date, start_date } = availibility || {};
@@ -48,9 +58,9 @@ export async function POST(req) {
           business_category,
           official_name,
           accomodation_type,
-          city: location?.city,
-          country: location?.country,
-          address: location?.address,
+          city,
+          country,
+          address,
           start_date,
           end_date,
           // rules
@@ -64,6 +74,7 @@ export async function POST(req) {
           price: String(data?.price),
           user_id: user_id,
           nomad_id: nomad?.id,
+          about_bnb: about_bnb,
         },
       });
     } else {
@@ -115,6 +126,46 @@ export async function POST(req) {
       });
       await prisma.event_associated_amenities.createMany({
         data: asscoiateAmenities,
+      });
+    }
+
+    // rules
+    if (event_rules?.length > 0) {
+      const formatedArr = event_rules?.map((item) => {
+        return {
+          rules_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_rules.createMany({
+        data: formatedArr,
+      });
+    }
+    // safety and property
+    if (safeties?.length > 0) {
+      const formatedArr = safeties?.map((item) => {
+        return {
+          safety_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_safeties.createMany({
+        data: formatedArr,
+      });
+    }
+    // cancel policies
+    if (cancelPolicies?.length > 0) {
+      const formatedArr = cancelPolicies?.map((item) => {
+        return {
+          policy_id: item?.id,
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
       });
     }
 
@@ -193,4 +244,3 @@ export async function GET(req) {
     );
   }
 }
-
