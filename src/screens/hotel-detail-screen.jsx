@@ -9,7 +9,6 @@ import {
   ThingsKnow,
   PopularAmenities,
   HotelDetail,
-  HotelBio,
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
@@ -41,7 +40,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 930);
+      setIsMobile(window.innerWidth < 730);
     };
 
     handleResize();
@@ -54,10 +53,7 @@ const HotelDetailScreen = React.memo(({ type }) => {
       <Layout isNavBg={true}>
         <div className="md:px-4">
           <HotelOverview type={type} />
-
           <HotelDetail />
-          <HotelBio />
-
           <BusinessFacts className="bg-white" />
           <AvailabilityCalendar
             dateRange={dateRange}

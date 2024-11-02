@@ -125,10 +125,8 @@ export const HotelBio = () => {
           </div>
         </div>
       </div>
-      {/* Right Panel - Hotel Details and Booking Information */}
 
-      {/* Booking Information */}
-      <div className="w-full lg:w-[400px]  py-4   flex flex-col justify-between border-neutral-400">
+      <div className="w-full lg:w-[30%]  py-4   flex flex-col justify-between border-neutral-400">
         <Card className="flex  flex-col gap-1 w-full">
           <div className="w-full">
             <Typography variant="h6" className=" font-semibold">

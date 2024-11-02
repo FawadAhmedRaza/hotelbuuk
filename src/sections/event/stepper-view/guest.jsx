@@ -103,7 +103,14 @@ export const GuestLearn = () => {
         </div>
 
         <div className="flex justify-end items-end">
-          <Button onClick={handleAdd}>Add</Button>
+          <Button
+            disabled={
+              topicInfo?.title?.length < 3 || topicInfo?.description?.length < 3
+            }
+            onClick={handleAdd}
+          >
+            Add
+          </Button>
         </div>
       </div>
 

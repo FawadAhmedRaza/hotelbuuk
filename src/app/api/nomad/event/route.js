@@ -26,7 +26,9 @@ export async function POST(req) {
       official_name,
       business_category,
       accomodation_type,
-      location,
+      city,
+      country,
+      address,
       amenities,
       hotel_id,
     } = business_meeting || {};
@@ -55,9 +57,9 @@ export async function POST(req) {
           business_category,
           official_name,
           accomodation_type,
-          city: location?.city,
-          country: location?.country,
-          address: location?.address,
+          city: city,
+          country: country,
+          address: address,
           start_date,
           end_date,
           // rules

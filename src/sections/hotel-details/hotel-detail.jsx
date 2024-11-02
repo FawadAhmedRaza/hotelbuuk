@@ -51,6 +51,36 @@ export const HotelDetail = () => {
                   : event?.hotel?.description}
               </Typography>
             </div>
+            <div className="flex flex-col gap-3 w-full flex-wrap">
+              <Card className="flex flex-col gap-3  w-full p-5">
+                {event.event_topics?.map((item, index) => (
+                  <Accordion
+                    key={item.id} // Make sure to include a unique key for each accordion
+                    title={item?.title}
+                    isOpen={index === 0} // Open the first accordion by default
+                  >
+                    <Typography variant="p" className=" text-gray-500">
+                      {item?.description}
+                    </Typography>
+                  </Accordion>
+                ))}
+              </Card>
+              <div className=" mt-5">
+                <Typography variant="h3" className="font-semibold text-primary">
+                  Hotel Bio
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="!text-sm text-secondary mt-2"
+                >
+                  {event?.description}
+                </Typography>
+              </div>
+            </div>
+          </div>
+
+          <div className=" sticky top-5 w-full  lg:w-[30%]  ">
+            <HostBio />
           </div>
         </div>
 

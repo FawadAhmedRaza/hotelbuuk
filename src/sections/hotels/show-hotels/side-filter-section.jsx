@@ -144,19 +144,19 @@ const SideFilterSection = ({ setFilters }) => {
                     }}
                   />
                   <div
-                    className="absolute top-0 transform -translate-x-1/2 -translate-y-8 bg-black text-white text-xs font-bold py-1 px-2 rounded-md"
+                    className="absolute top-0 transform -translate-x-1/2 -translate-y-8 bg-black text-white text-xs font-normal py-1 px-2 rounded-md"
                     style={{
                       left: `${
                         (rangeValue / highestPricedEvent?.price) * 100
                       }%`, // Position the tooltip correctly
                     }}
                   >
-                    {rangeValue}
+                    {`$${rangeValue}`}
                   </div>
                 </div>
 
                 <p className="text-gray-700 text-xs font-medium">
-                  Selected price: {rangeValue}
+                  Selected price: {`$${rangeValue}`}
                 </p>
               </div>
             </div>
@@ -166,7 +166,7 @@ const SideFilterSection = ({ setFilters }) => {
             <Typography variant="h6" className="font-semibold">
               Filter by Rating
             </Typography>
-            <div className="space-y-3 mt-4">
+            <div className="space-y-3 mt-4 ">
               {[5, 4, 3, 2, 1].map((rate) => (
                 <CheckBoxButton
                   key={rate}

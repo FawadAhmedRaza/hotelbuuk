@@ -17,7 +17,7 @@ export const HostBio = React.memo(() => {
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      <div className="flex justify-between">
+      <div className="flex justify-between md:flex-row  flex-wrap">
         <Typography variant="h4" className="font-medium text-xl md:text-2xl">
           Meet Your Host
         </Typography>
@@ -36,7 +36,7 @@ export const HostBio = React.memo(() => {
               className="w-24 h-24 lg:w-32 lg:h-28 object-cover rounded-full"
             />
             <div className="flex flex-col gap-3 mr-3 ">
-              <Typography variant="h4" className="font-semibold ">
+              <Typography variant="h5" className="font-semibold ">
                 {event?.nomad?.first_name}
               </Typography>
               <Typography variant="p" className="font-medium ">
@@ -63,7 +63,7 @@ export const HostBio = React.memo(() => {
                 12 completed
               </Typography>
             </div>
-            <div className="flex flex-col  gap-3 ">
+            <div className="flex flex-col  gap-3 pe-10 ">
               <Typography variant="h6" className="font-semibold">
                 Specialty
               </Typography>
