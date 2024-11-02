@@ -49,7 +49,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
       title: Yup.string().required("Title is required"),
-      description: Yup.string().required("required"),
+      description: Yup.string().required("Description is required"),
       official_name: Yup.string().required("Official name is required"),
       business_category: Yup.string().required("Business category is required"),
       amenities: Yup.array().optional(),
@@ -146,7 +146,8 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
         "business_meeting.description",
         "business_meeting.official_name",
         "business_meeting.business_category",
-        "business_meeting.amenities"
+        "business_meeting.amenities",
+        "business_meeting.nomad_id"
       );
     } else if (activeStep === 1) {
       fieldsToValidate.push("topics");

@@ -11,8 +11,6 @@ import { paths } from "../contants";
 import ImageRender from "./ImageRenderer";
 
 export const HotelCard = React.memo(({ event, className }) => {
-  console.log("Sinle event", event);
-
   return (
     <AnchorTag
       href={paths.hotels.getHotelById(event?.id, event?.type)}

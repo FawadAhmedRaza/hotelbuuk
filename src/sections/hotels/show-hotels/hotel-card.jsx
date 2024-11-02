@@ -8,73 +8,17 @@ import { paths } from "@/src/contants";
 import { cn } from "@/lib/utils";
 import EventCardSkeleton from "@/src/components/Skeleton/event-card-skeleton";
 
-const mockHotels = [
-  {
-    id: 1,
-    name: "Luxury Stay at The Heart of the City Luxury Stay at The Heart of the City",
-    price: 350,
-    location: "Times Square, New York",
-    rating: 4.9,
-    amenities: 30000,
-    image: "/assets/images/hotel-det-1.png",
-    reviews: 210,
-  },
-  {
-    id: 2,
-    name: "Beachfront Bliss with Stunning Views Beachfront Bliss with Stunning Views",
-    price: 275,
-    location: "Waikiki, Honolulu",
-    rating: 4.7,
-    amenities: 18000,
-    image: "/assets/images/hotel-det-2.png",
-    reviews: 340,
-  },
-  {
-    id: 3,
-    name: " Modern Comfort in a Classic Setting Modern Comfort in a Classic Setting",
-    price: 225,
-    location: "Downtown, Chicago",
-    rating: 4.6,
-    amenities: 20000,
-    image: "/assets/images/hotel-det-3.png",
-    reviews: 190,
-  },
-  {
-    id: 4,
-    name: " Eco-Friendly Resort in the Mountains Eco-Friendly Resort in the Mountains",
-    price: 300,
-    location: "Aspen, Colorado",
-    rating: 4.8,
-    amenities: 22000,
-    image: "/assets/images/hotel-det-4.png",
-    reviews: 145,
-  },
-];
-
-const HotelCard = () => {
+const HotelCard = ({ filteredEvents }) => {
   const [hotelEvents, sethotelEvents] = useState([]);
-
-  const dispatch = useDispatch();
-
-  const { events, isLoading } = useSelector((state) => state.allEvents);
+  const { isLoading } = useSelector((state) => state.allEvents);
 
   useEffect(() => {
-    async function fetchEvents() {
-      await dispatch(getAllEvents()).unwrap();
-    }
-
-    fetchEvents();
-  }, []);
-
-  useEffect(() => {
-    const filteredEvents = events?.filter(
+    const filteredHotelEvents = filteredEvents?.filter(
       (event) => event?.accomodation_type === "bnb"
     );
 
-    sethotelEvents(filteredEvents);
-  }, []);
-
-  console.log("Events from Show mote", hotelEvents);
+    sethotelEvents(filteredHotelEvents);
+  }, [filteredEvents]);
 
   return (
     <>

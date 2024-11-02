@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Iconify, Pannel, Typography } from "../components";
@@ -18,11 +18,17 @@ import {
   CarouselPrevious,
 } from "../components/ui/carousel";
 import { ShadcnCard } from "../components/ui/card";
+import { useDispatch, useSelector } from "react-redux";
+import { getHotelInfo } from "../redux/hotel-info/thunk";
+import ImageRender from "../components/ImageRenderer";
 
 export const MeetOurPatners = React.memo(() => {
+  const dispatch = useDispatch();
   const swiperRef = React.useRef(null);
   const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
   const [isNextDisabled, setIsNextDisabled] = React.useState(false);
+
+  const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
 
   const updateNavigation = () => {
     if (swiperRef.current) {
@@ -33,7 +39,19 @@ export const MeetOurPatners = React.memo(() => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    async function fetchHotels() {
+      try {
+        await dispatch(getHotelInfo()).unwrap();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchHotels();
+  }, []);
+
+  useEffect(() => {
     if (swiperRef.current) {
       swiperRef?.current?.navigation?.update();
     }
@@ -54,13 +72,11 @@ export const MeetOurPatners = React.memo(() => {
       </div>
 
       <div className="w-full">
-
-
         <Carousel className="px-5">
           <CarouselContent className="-ml-1">
-            {SwiperCards.map((card, index) => (
+            {hotels.map((hotel) => (
               <CarouselItem
-                key={index}
+                key={hotel.id}
                 className="pl-1 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
                 <div className="px-2">
@@ -68,20 +84,33 @@ export const MeetOurPatners = React.memo(() => {
                     {/* <CardContent className="flex items-center justify-center h-52"> */}
                     <span className="relative w-full">
                       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
-                      <img
+                      {/* <img
                         src={card.img}
                         alt={card.hotelName}
                         className=" w-full"
-                      />
+                      /> */}
                       <BgIcon
                         iconName="skill-icons:instagram"
-                        className="absolute top-4 right-4"
+                        className="absolute top-4 right-4 z-20"
+                      />
+                      <ImageRender
+                        src={hotel?.hotel_image}
+                        type={"server"}
+                        alt={`Uploaded Image `}
+                        ratio="4/3"
+                        delayTime={300}
+                        threshold={200}
+                        effect="opacity"
+                        wrapperProps={{
+                          style: { transitionDelay: "0.5s" },
+                        }}
+                        className="h-72 w-full object-cover rounded-3xl  !event-card-shadow"
                       />
                       <Typography
-                        variant="h4"
+                        variant="h5"
                         className="absolute bottom-4 w-full z-30 text-center text-white font-semibold mt-2"
                       >
-                        {card.hotelName}
+                        {hotel.hotel_name}
                       </Typography>
                     </span>
                     {/* </CardContent> */}

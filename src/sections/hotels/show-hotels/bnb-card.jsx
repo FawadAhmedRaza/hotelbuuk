@@ -7,35 +7,23 @@ import EventCardSkeleton from "@/src/components/Skeleton/event-card-skeleton";
 import { paths } from "@/src/contants";
 import ImageRender from "@/src/components/ImageRenderer";
 
-const BnBCard = () => {
+const BnBCard = ({ filteredEvents }) => {
   const [bnbEvents, setbnbEvents] = useState([]);
-
-  const dispatch = useDispatch();
-
-  const { events, isLoading } = useSelector((state) => state.allEvents);
+  const { isLoading } = useSelector((state) => state.allEvents);
 
   useEffect(() => {
-    async function fetchEvents() {
-      await dispatch(getAllEvents()).unwrap();
-    }
-
-    fetchEvents();
-  }, []);
-
-  useEffect(() => {
-    const filteredEvents = events?.filter(
+    const filteredBnbEvents = filteredEvents?.filter(
       (event) => event?.accomodation_type !== "bnb"
     );
 
-    setbnbEvents(filteredEvents);
-  }, []);
+    setbnbEvents(filteredBnbEvents);
+  }, [filteredEvents]);
 
-  console.log("Events from Show mote", bnbEvents);
   return (
     <div>
       <div>
         <Typography variant="p" className="font-medium">
-          Showing 4 of{" "}
+          Showing {bnbEvents?.length > 4 ? 4 : bnbEvents?.length} of{" "}
           <span className="text-blue-500">{bnbEvents?.length}+ places</span>
         </Typography>
       </div>
