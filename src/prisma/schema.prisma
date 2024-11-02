@@ -71,8 +71,8 @@ model facilities {
   user    User   @relation(fields: [user_id], references: [id])
 
   hotelFacilites hotel_facilities[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 }
 
 model hotel_info {
@@ -159,10 +159,10 @@ model hotel_images {
   img  String
   name String?
 
-  hotel_id String     @db.ObjectId
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  hotel_id  String     @db.ObjectId
+  hotel     hotel_info @relation(fields: [hotel_id], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model hotel_facilities {
@@ -170,10 +170,10 @@ model hotel_facilities {
   hotel_id    String @db.ObjectId
   facility_id String @db.ObjectId
 
-  facility facilities @relation(fields: [facility_id], references: [id])
-  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  facility  facilities @relation(fields: [facility_id], references: [id])
+  hotel     hotel_info @relation(fields: [hotel_id], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model hotel_rooms {
@@ -194,16 +194,15 @@ model hotel_rooms {
   createdAt                  DateTime                     @default(now())
   updatedAt                  DateTime                     @updatedAt
   room_associated_facilities room_associated_facilities[]
-  
 }
 
 model room_types {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
 
-  user_id String @db.ObjectId
-  user    User   @relation(fields: [user_id], references: [id])
-    createdAt DateTime @default(now())
+  user_id   String   @db.ObjectId
+  user      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
@@ -214,8 +213,8 @@ model room_facilities {
   user_id                    String                       @db.ObjectId
   user                       User                         @relation(fields: [user_id], references: [id])
   room_associated_facilities room_associated_facilities[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
 }
 
 model room_associated_facilities {
@@ -225,8 +224,8 @@ model room_associated_facilities {
 
   room          hotel_rooms     @relation(fields: [room_id], references: [id])
   room_facility room_facilities @relation(fields: [room_facility_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 model room_images {
@@ -234,10 +233,10 @@ model room_images {
   img  String
   name String?
 
-  room_id String      @db.ObjectId
-  room    hotel_rooms @relation(fields: [room_id], references: [id], onDelete: Cascade)
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  room_id   String      @db.ObjectId
+  room      hotel_rooms @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model amenities {
@@ -247,8 +246,8 @@ model amenities {
   user_id                    String                       @db.ObjectId
   user                       User                         @relation(fields: [user_id], references: [id])
   event_associated_amenities event_associated_amenities[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
 }
 
 model hotel_internal_nomads {
@@ -257,10 +256,10 @@ model hotel_internal_nomads {
   hotel_id String @db.ObjectId
   nomad_id String @db.ObjectId
 
-  hotel hotel_info @relation(fields: [hotel_id], references: [id])
-  nomad nomad      @relation(fields: [nomad_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  hotel     hotel_info @relation(fields: [hotel_id], references: [id])
+  nomad     nomad      @relation(fields: [nomad_id], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model nomad_event {
@@ -362,8 +361,8 @@ model event_topics {
 
   hotel_event_id String?      @db.ObjectId
   hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model event_images {
@@ -374,8 +373,8 @@ model event_images {
 
   nomad_event_id String?      @db.ObjectId
   nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model event_associated_amenities {
@@ -388,8 +387,8 @@ model event_associated_amenities {
   nomad_event nomad_event? @relation(fields: [nomad_event_id], references: [id])
   amenities   amenities    @relation(fields: [amenities_id], references: [id])
   hotel_event hotel_event? @relation(fields: [hotel_event_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model booking {
@@ -420,8 +419,8 @@ model business_amenities {
   id                       String                     @id @default(auto()) @map("_id") @db.ObjectId
   name                     String
   business_facts_amenities business_facts_amenities[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
 }
 
 model business_facts_amenities {
@@ -432,8 +431,8 @@ model business_facts_amenities {
 
   business_facts     business_facts     @relation(fields: [business_facts_id], references: [id])
   business_amenities business_amenities @relation(fields: [business_amenities_id], references: [id])
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 }
 
 model business_facts {
@@ -446,8 +445,8 @@ model business_facts {
   cover_img   String
 
   business_facts_amenities business_facts_amenities[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
 }
 
 model event_rules {
@@ -457,8 +456,8 @@ model event_rules {
   user_id                String                   @db.ObjectId
   user                   User                     @relation(fields: [user_id], references: [id])
   event_associated_rules event_associated_rules[]
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
 }
 
 model event_safety {
