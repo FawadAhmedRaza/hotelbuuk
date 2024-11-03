@@ -2,6 +2,8 @@ import { prisma } from "@/src/db";
 import { checkNomadAvailability } from "@/src/utils/is-nomad-available";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(_, { params }) {
   try {
     const { id } = params;
