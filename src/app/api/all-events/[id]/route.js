@@ -103,9 +103,40 @@ export async function GET(req, { params }) {
         );
       }
 
+      // let hotelEvent = await prisma.hotel_event.findUnique({
+      //   where: {
+      //     id: params?.id,
+      //   },
+      //   include: {
+      //     event_topics: true,
+      //     event_associated_amenities: {
+      //       include: {
+      //         amenities: true,
+      //       },
+      //     },
+      //     event_associated_cancel_policies: {
+      //       include: {
+      //         event_cancel_policy: true,
+      //       },
+      //     },
+      //     event_associated_rules: {
+      //       include: {
+      //         event_rules: true,
+      //       },
+      //     },
+      //     event_associated_safeties: {
+      //       include: {
+      //         event_safeties: true,
+      //       },
+      //     },
+      //     nomad: true,
+      //     hotel: true,
+      //   },
+      // });
+
       let hotelEvent = await prisma.hotel_event.findUnique({
         where: {
-          id: params?.id,
+          id: params.id,
         },
         include: {
           event_topics: true,
@@ -130,7 +161,11 @@ export async function GET(req, { params }) {
             },
           },
           nomad: true,
-          hotel: true,
+          hotel: {
+            include: {
+              hotelImages: true,
+            },
+          },
         },
       });
 

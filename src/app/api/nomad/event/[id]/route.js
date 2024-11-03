@@ -47,6 +47,8 @@ export async function GET(_, { params }) {
       },
     });
 
+    console.log(nomadEvent);
+
     let modifiedObject = {
       id: nomadEvent?.id,
       business_meeting: {
@@ -143,7 +145,7 @@ export async function PUT(req, { params }) {
       city,
       country,
       address,
-     
+
       amenities,
       hotel_id,
       about_bnb,

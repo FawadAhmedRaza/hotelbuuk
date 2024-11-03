@@ -45,6 +45,8 @@ export async function GET(_, { params }) {
       },
     });
 
+    console.log("Event Of Hotel", hotelEvent);
+
     if (!hotelEvent) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });
     }
