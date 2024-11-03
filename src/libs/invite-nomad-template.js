@@ -1,4 +1,7 @@
 export const invitationEmailTemplate = (name, imageUrl, query) => {
+  const image =
+    imageUrl ||
+    "https://images.unsplash.com/photo-1579625224451-b0ab6ed101f5?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return `
        <!DOCTYPE html>
 <html lang="en">
@@ -82,10 +85,7 @@ export const invitationEmailTemplate = (name, imageUrl, query) => {
       </div>
       <div class="email-body">
        <img
-            src="${
-              imageUrl ||
-              "https://images.unsplash.com/photo-1579625224451-b0ab6ed101f5?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }"
+            src="${image}"
             alt="Hotel Image"
             style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; border: 5px solid #852169;"
           />
