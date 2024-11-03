@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@/src/components";
 import { BgIcon } from "@/src/components/bg-icon";
-import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
 import { paths } from "@/src/contants";
 
