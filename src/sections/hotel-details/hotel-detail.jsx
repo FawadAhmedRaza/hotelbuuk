@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-
 import { useSelector } from "react-redux";
-
 import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
@@ -67,9 +65,7 @@ export const HotelDetail = ({  type, id }) => {
           <HostBio />
         </div>
       </div>
-      <HotelBio 
-      type={type}
-      id={id}/>
+      <HotelBio type={type} id={id} />
     </div>
   );
 };

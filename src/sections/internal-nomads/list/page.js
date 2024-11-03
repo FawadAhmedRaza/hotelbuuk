@@ -20,6 +20,7 @@ import {
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Name" },
@@ -34,13 +35,14 @@ const header = [
   { id: 10, label: "Projector" },
   { id: 11, label: "Video" },
   { id: 12, label: "Sample" },
+  { id: 13, label: "Actions" },
 ];
 
 const InternalNomadsListView = () => {
   const inviteModal = useModal();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
-
+  const router = useRouter()
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -69,6 +71,7 @@ const InternalNomadsListView = () => {
       console.log(error);
     }
   };
+  
 
   useEffect(() => {
     fetchInternalNomads();
@@ -100,6 +103,7 @@ const InternalNomadsListView = () => {
             enableSelection={false}
             renderRow={({ nomad }) => (
               <>
+              {console.log("nomad data",nomad)}
                 <td className=" px-6 py-4">
                   <div className="flex gap-2 items-center">
                     {/* {!nomad?.profile_img ? (
@@ -196,6 +200,16 @@ const InternalNomadsListView = () => {
                     {nomad?.sample}
                   </Typography>
                 </td>
+                <td className="px-6 py-4">
+                <div className="flex gap-1 items-center">
+                      <Iconify
+                        iconName="tabler:mail-filled"
+                        onClick={() => router.push(`/chat/${nomad?.userId}`)}
+                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                      />
+                    </div>
+                </td>
+             
               </>
             )}
           />

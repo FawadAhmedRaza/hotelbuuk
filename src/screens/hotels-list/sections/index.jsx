@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { StarRating } from "@/src/components/star-rating";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Name" },
@@ -27,10 +28,11 @@ const header = [
   { id: 5, label: "Description" },
   { id: 6, label: "Rating" },
   { id: 7, label: "Facilities" },
+  { id: 8, label: "Actions" },
 ];
 const HotelsListSection = React.memo(() => {
   const dispatch = useDispatch();
-
+  const router = useRouter()
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -75,6 +77,7 @@ const HotelsListSection = React.memo(() => {
               enableSelection={false}
               renderRow={(row) => (
                 <>
+                {console.log('row',row)}
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
                       {/* {!row?.hotel_image ? (
@@ -163,6 +166,16 @@ const HotelsListSection = React.memo(() => {
                           +{row?.hotelFacilites?.length - 4} more
                         </span>
                       )}
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4">
+                    <div className="flex gap-1 items-center">
+                        <Iconify
+                          iconName="tabler:mail-filled"
+                          onClick={()=>router.push(`/chat/${row.user_id}`)}
+                          className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                        />
                     </div>
                   </td>
                 </>

@@ -15,10 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import RecommendedNomadSkeleton from "@/src/components/Skeleton/recomended-skeleton";
+import { useRouter } from "next/navigation";
 recommended_nomad;
 const RecentBooking = () => {
   const [showMore, setShowMore] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { nomads, isLoading: nomadsLoading } = useSelector(
     (state) => state.nomadProfile
@@ -70,6 +72,7 @@ const RecentBooking = () => {
                   .slice(0, showMore ? recommended_nomad.length : 4)
                   .map((person) => (
                     <div key={person.id} className="w-full">
+                      {console.log(person)}
                       <Card className="!shadow-custom-shadow-xs !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md w-full">
                         <div className="flex gap-4 w-full">
                           <ProfileAvatar
@@ -82,20 +85,35 @@ const RecentBooking = () => {
                           />
                           <div className="flex flex-1 flex-col grow">
                             <div className=" flex grow mr-3  justify-between items-center w-full ">
-                              <Typography variant="p" className="font-semibold">
-                                {person.first_name} {person.last_name}
-                              </Typography>
-                              <Button
-                                className={
-                                  "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
-                                }
-                              >
-                                Create List
-                              </Button>
+                              <div>
+                                <Typography
+                                  variant="p"
+                                  className="font-semibold"
+                                >
+                                  {person.first_name} {person.last_name}
+                                </Typography>
+                                <Typography variant="p" className="!text-xs">
+                                  {person.email}
+                                </Typography>
+                              </div>
+
+                              <div className="flex flex-col items-end gap-2">
+                                <Iconify
+                                  iconName="tabler:mail-filled"
+                                  onClick={() =>
+                                    router.push(`/chat/${person.userId}`)
+                                  }
+                                  className="!size-5  cursor-pointer rounded-full object-cover text-blue-500"
+                                />
+                                <Button
+                                  className={
+                                    "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                  }
+                                >
+                                  Create List
+                                </Button>
+                              </div>
                             </div>
-                            <Typography variant="p" className="!text-xs">
-                              {person.email}
-                            </Typography>
                           </div>
                         </div>
                       </Card>
