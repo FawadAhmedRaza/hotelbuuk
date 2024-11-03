@@ -94,9 +94,9 @@ export async function PUT(req) {
       },
     });
 
-    const isNomadExist = await prisma.hotel_info.findUnique({
+    const isNomadExist = await prisma.nomad.findUnique({
       where: {
-        id: hotelId,
+        id: nomadId,
       },
     });
 
@@ -114,6 +114,17 @@ export async function PUT(req) {
       );
     }
 
+    const isAlreadyAccepted = await prisma.hotel_internal_nomads.findFirst({
+      where: {
+        hotel_id: hotelId,
+        nomad_id: nomadId,
+      },
+    });
+
+    if (isAlreadyAccepted) {
+      return NextResponse.json({ message: "Invitaion Accpeted" }, { status: 200 });
+    }
+
     await prisma.hotel_internal_nomads.create({
       data: {
         hotel_id: hotelId,
@@ -121,7 +132,7 @@ export async function PUT(req) {
       },
     });
 
-    return NextResponse.json({ message: "Nomad added" }, { status: 200 });
+    return NextResponse.json({ message: "Invitaion Accpeted" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
