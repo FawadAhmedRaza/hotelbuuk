@@ -71,6 +71,7 @@ const RecentBooking = () => {
                   .slice(0, showMore ? recommended_nomad.length : 4)
                   .map((hotel) => (
                     <div key={hotel.id} className="w-full">
+                      {console.log("Hotel ", hotel)}
                       <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                         <div className="flex gap-4 w-full">
                           <ProfileAvatar
@@ -84,10 +85,30 @@ const RecentBooking = () => {
                           {/* )} */}
                           <div className="flex flex-1 flex-col grow">
                             <div className=" flex grow mr-3  justify-between items-center w-full ">
-                              <Typography variant="p" className="font-semibold">
-                                {hotel.hotel_name}
-                              </Typography>
-                              <div className="flex flex-col items-end ">
+                              <div>
+                                <Typography
+                                  variant="p"
+                                  className="font-semibold"
+                                >
+                                  {hotel.hotel_name}
+                                </Typography>
+
+                                <Typography variant="p" className="!text-xs">
+                                  {hotel?.description?.length > 40
+                                    ? `${hotel?.description?.slice(0, 40)}...`
+                                    : hotel?.description}
+                                  {/* {hotel.description} */}
+                                </Typography>
+                              </div>
+
+                              <div className="flex flex-col gap-2 items-end">
+                                <Iconify
+                                  iconName="tabler:mail-filled"
+                                  onClick={() =>
+                                    router.push(`/chat/${hotel.user_id}`)
+                                  }
+                                  className="!size-5  cursor-pointer rounded-full object-cover text-blue-500"
+                                />
                                 <Button
                                   className={
                                     "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
@@ -95,24 +116,8 @@ const RecentBooking = () => {
                                 >
                                   Create List
                                 </Button>
-                                <Button
-                                  onClick={() =>
-                                    router.push(`/chat/${hotel?.user_id}`)
-                                  }
-                                  className={
-                                    "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
-                                  }
-                                >
-                                  Contact
-                                </Button>
                               </div>
                             </div>
-                            <Typography variant="p" className="!text-xs">
-                              {hotel?.description?.length > 40
-                                ? `${hotel?.description?.slice(0, 40)}...`
-                                : hotel?.description}
-                              {/* {hotel.description} */}
-                            </Typography>
                           </div>
                         </div>
                       </Card>

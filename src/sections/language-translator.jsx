@@ -19,7 +19,7 @@ const allLangs = [
   },
 ];
 
-export const LangaugeTranslator = React.memo(({isWhite}) => {
+export const LangaugeTranslator = React.memo(() => {
   const { isOpen, toggleDrawer } = useBoolean();
   const popoverRef = useRef(null);
   const pathname = usePathname(); // Use usePathname instead of useRouter
@@ -53,7 +53,7 @@ export const LangaugeTranslator = React.memo(({isWhite}) => {
           iconName="et:global"
           className={cn(
             "hidden sm:block size-4 sm:size-5",
-            isWhite ? "text-white" : "text-gray-600"
+            isDashboardPage ? "text-white" : "text-gray-600"
           )}
         />
         <h2 className="text-sm hidden sm:block">{activeLang?.label}</h2>
@@ -61,7 +61,7 @@ export const LangaugeTranslator = React.memo(({isWhite}) => {
           iconName="iconamoon:arrow-down-2"
           className={cn(
             "size-5 -ml-1 hidden sm:block",
-            isWhite ? "text-white" : "text-gray-600"
+            isDashboardPage ? "text-white" : "text-gray-600"
           )}
         />
         <span className="flex sm:hidden justify-center items-center size-9  rounded-full">

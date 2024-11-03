@@ -1,24 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
-
-// Components and Others...
+import React, { useEffect } from "react";
 import {
-  AnchorTag,
   Breadcrumb,
-  Button,
   Iconify,
   Pannel,
   ProfileAvatar,
   Typography,
 } from "@/src/components";
-import Link from "next/link";
-import { paths } from "@/src/contants";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useDispatch, useSelector } from "react-redux";
-import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
-import { StarRating } from "@/src/components/star-rating";
 import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import { useRouter } from "next/navigation";
 
 const header = [
   { id: 1, label: "Name" },
@@ -33,9 +26,11 @@ const header = [
   { id: 10, label: "Projector" },
   { id: 11, label: "Video" },
   { id: 12, label: "Sample" },
+  { id: 13, label: "Actions" },
 ];
 const NomadsListSection = React.memo(() => {
   const dispatch = useDispatch();
+  const router = useRouter()
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -90,7 +85,7 @@ const NomadsListSection = React.memo(() => {
                       {/* {!row?.profile_img ? (
                         <Iconify
                           iconName="carbon:user-avatar-filled"
-                          className="!size-10   rounded-full object-cover text-gray-500"
+                          className="!size-10  rounded-full object-cover text-gray-500"
                         />
                       ) : ( */}
                       <ProfileAvatar
@@ -200,6 +195,15 @@ const NomadsListSection = React.memo(() => {
                     <Typography variant="p" className="  !text-nowrap max-w-56">
                       {row?.sample}
                     </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-1 items-center">
+                      <Iconify
+                        iconName="tabler:mail-filled"
+                        onClick={() => router.push(`/chat/${row.userId}`)}
+                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                      />
+                    </div>
                   </td>
                 </>
               )}
