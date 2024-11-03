@@ -13,6 +13,7 @@ import hotelEvent from "./hotel-event/reducer";
 import allEvents from "./all-events/reducer";
 import bookings from "./bookings/reducer";
 import eventThings from "./event-things-to-know/reducer";
+import notifications from "./notifications/reducer";
 
 const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
     allEvents,
     bookings,
     eventThings,
+    notifications,
   },
 });
 

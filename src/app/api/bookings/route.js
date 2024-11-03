@@ -70,7 +70,7 @@ export async function POST(req) {
       let guestName = guest?.first_name + " " + guest?.last_name;
 
       // send notification
-      let message = `${guestName} wants to book your ${isHotelEventExist?.title} event. check your email for confirmation`;
+      let message = `${guestName} wants to book your ${isHotelEventExist?.title} event.`;
       await createNotification(
         isHotelEventExist?.user?.hotel_name,
         "Event booking request",
@@ -149,7 +149,7 @@ export async function POST(req) {
         isNomadEventExist?.user?.last_name;
 
       // send notification
-      let message = `${guestName} wants to book your ${isNomadEventExist?.title} event. check your email for confirmation`;
+      let message = `${guestName} wants to book your ${isNomadEventExist?.title} event.`;
       await createNotification(
         name,
         "Event booking request",
