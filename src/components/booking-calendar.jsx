@@ -49,7 +49,7 @@ export const BookingCalender = React.memo(
                 </div>
                 <input
                   {...field}
-                  value={field?.value?.toString().slice(0,10)}
+                  value={field?.value?.toString().slice(0, 10)}
                   className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
                   readOnly
                 />
@@ -78,8 +78,7 @@ export const BookingCalender = React.memo(
                 </div>
                 <input
                   {...field}
-                  value={field?.value?.toString().slice(0,10)}
-                  
+                  value={field?.value?.toString().slice(0, 10)}
                   className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
                   readOnly
                 />

@@ -41,3 +41,13 @@ export const getRecentBookings = createAsyncThunk(
     return request?.data?.recentBookings;
   }
 );
+export const getUserBooking = createAsyncThunk(
+  "getUserBooking",
+  async ({ userId,eventId, type }) => {
+    const request = await axiosInstance.get(
+      endpoints.booking.get_user_booking(userId,eventId, type)
+    );
+    console.log("Resquest",request)
+    return request?.data?.booking;
+  }
+);

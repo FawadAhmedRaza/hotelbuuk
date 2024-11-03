@@ -39,8 +39,15 @@ export async function GET(_, { params }) {
             event_safeties: true,
           },
         },
+        hotel: {
+          include: {
+            hotelImages: true,
+          },
+        },
       },
     });
+
+    console.log(nomadEvent);
 
     let modifiedObject = {
       id: nomadEvent?.id,
@@ -55,6 +62,7 @@ export async function GET(_, { params }) {
         ),
         hotel_id: nomadEvent?.hotel_id || "",
         about_bnb: nomadEvent?.about_bnb || "",
+
         country: nomadEvent?.country || "",
         city: nomadEvent?.city || "",
         address: nomadEvent?.address || "",
@@ -137,6 +145,7 @@ export async function PUT(req, { params }) {
       city,
       country,
       address,
+
       amenities,
       hotel_id,
       about_bnb,
@@ -163,13 +172,10 @@ export async function PUT(req, { params }) {
           business_category,
           official_name,
           accomodation_type,
-          city: city,
-          country: country,
-          address: address,
-          about_bnb: about_bnb,
           city,
           country,
           address,
+          about_bnb,
           start_date,
           end_date,
           // rules

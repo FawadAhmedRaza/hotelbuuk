@@ -37,8 +37,15 @@ export async function GET(_, { params }) {
           },
         },
         nomad: true,
+        hotel: {
+          include: {
+            hotelImages: true,
+          },
+        },
       },
     });
+
+    console.log("Event Of Hotel", hotelEvent);
 
     if (!hotelEvent) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });

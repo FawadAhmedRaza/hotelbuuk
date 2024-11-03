@@ -11,7 +11,6 @@ import {
   CarouselPrevious,
 } from "../components/ui/carousel";
 import { getAllEvents } from "../redux/all-events/thunk";
-// import { getAllEvents } from "../redux/actions"; // Adjust if necessary
 
 export const PreviewHotels = () => {
   const swiperRef = React.useRef(null);

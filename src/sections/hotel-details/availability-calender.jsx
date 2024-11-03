@@ -2,7 +2,7 @@ import React from "react";
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
 import { differenceInDays } from "date-fns"; // Import differenceInDays
-import { Pannel, Typography } from "@/src/components";
+import { Card, Pannel, Typography } from "@/src/components";
 
 const AvailabilityCalendar = ({
   dateRange,
@@ -46,8 +46,8 @@ const AvailabilityCalendar = ({
         </div>
       </div>
 
-      <div className="w-full md:w-auto">
-        <div className="border border-gray-300 rounded-lg shadow-md  bg-white mx-auto w-full">
+      <div className=" h-full w-full flex justify-center items-center md:w-auto">
+        <Card className=" flex-col w-fit md:w-full"   >
           <DateRange
             onChange={handleDateChange}
             months={isMobile ? 1 : 2}
@@ -81,7 +81,7 @@ const AvailabilityCalendar = ({
           >
             Clear dates
           </div>
-        </div>
+        </Card>
       </div>
     </Pannel>
   );
