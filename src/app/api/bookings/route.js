@@ -4,6 +4,8 @@ import { sendMail } from "@/src/service/mailService";
 import { generateBookingRequestTemplate } from "@/src/libs/otpTemplate";
 import { createNotification } from "@/src/libs/create-notification";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req) {
   try {
     const data = await req.json();
