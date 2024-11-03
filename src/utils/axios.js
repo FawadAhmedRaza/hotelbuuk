@@ -126,8 +126,9 @@ export const endpoints = {
     get_all_bookings: (id, type) => `/bookings?user_id=${id}&type=${type}`,
     get_recent_bookings: (id, type) =>
       `/bookings/recent-bookings?user_id=${id}&type=${type}`,
-    get_user_booking: (userId,eventId, type) =>
+    get_user_booking: (userId, eventId, type) =>
       `/bookings/get-user-booking?user_id=${userId}&event_id=${eventId}&type=${type}`,
     update_accepted_booking: (id) => `/bookings/${id}`,
   },
+  notifications: (id) => `/notifications?user_id=${id}`,
 };

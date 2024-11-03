@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Button, Iconify, Pannel, Typography } from "../../components";
 import * as Yup from "yup";
 import {
@@ -18,6 +18,8 @@ import {
 } from "@/src/components/ui/popover";
 import { RHFCalendarInput } from "@/src/components/calendar-input";
 import { BookingCalender } from "@/src/components/booking-calendar";
+import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
+import { fetchPlacesSuggestions } from "@/src/actions/google-location";
 
 export const BookNow = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -56,10 +58,25 @@ export const BookNow = React.memo(() => {
 
   const {
     reset,
+    watch,
     formState: { errors },
   } = methods;
 
   console.log(errors); // Display validation errors in the console
+
+  const location = watch("destination");
+
+  console.log(location);
+
+  useEffect(() => {
+    async function searchLocation() {
+      const loc = await fetchPlacesSuggestions(location);
+      console.log(loc);
+      return loc;
+    }
+
+    searchLocation();
+  }, [location]);
 
   const handleSubmit = async (data) => {
     try {
@@ -103,6 +120,13 @@ export const BookNow = React.memo(() => {
                 inputClass="outline-none border-none text-base font-normal !p-0"
                 className="outline-none border-none !p-0 h-8 ml-1"
               />
+
+              {/* <RHFLocationSelect
+                placeholder="Moxy Dortmunt City"
+                name="destination"
+                inputClass="outline-none border-none text-base font-normal !p-0"
+                className="outline-none border-none !p-0 h-8 ml-1"
+              /> */}
             </div>
 
             <span className="hidden sm:flex h-16 w-[2px] bg-primary mr-8 min-900:mr-0" />

@@ -35,6 +35,7 @@ export const uploadFileToGoogleCloud = async (file) => {
 
 
 export const generateSignedUrl = async (fileName) => {
+  if (!fileName) return null;
   try {
     const bucketName = process.env.GOOGLE_CLOUD_STORAGE_BUCKET;
     const bucket = storage.bucket(bucketName);

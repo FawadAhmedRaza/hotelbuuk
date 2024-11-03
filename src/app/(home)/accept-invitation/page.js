@@ -47,7 +47,7 @@ const page = () => {
   useEffect(() => {
     if (!isRegistered) {
       redirect(
-        `sign-up?email=${email}&isRegistered=false&hotel=${hotel}&hotelId=${hotelId}`
+        `/sign-up?email=${email}&isRegistered=false&hotel=${hotel}&hotelId=${hotelId}`
       );
     }
 
@@ -56,9 +56,11 @@ const page = () => {
     }
   }, [isRegistered]);
 
+  if (isLoading) return <Spinner/>;
+
   return (
     <Layout isNavBg={true}>
-      {isLoading ? <Spinner /> : <AcceptInvitationScreen hotelName={hotel} />}
+      <AcceptInvitationScreen hotelName={hotel} />
     </Layout>
   );
 };

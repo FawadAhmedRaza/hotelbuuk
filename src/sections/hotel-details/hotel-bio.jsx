@@ -90,8 +90,7 @@ export const HotelBio = ({ type, id }) => {
         enqueueSnackbar("Your booking request has been sent successfully", {
           variant: "success",
         });
-        // router.push(`http://localhost:3000/hotels/${id}?type=${type}`);
-        router.push(`https://hotelbuuk.vercel.app/hotels/${id}?type=${type}`);
+        router.push(`/hotels/${id}?type=${type}`);
       }
     } catch (error) {
       console.log(error);

@@ -15,7 +15,7 @@ import ChatSidebar from "./chat-sidebar";
 import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
 
-const socket = io("http://192.168.100.57:5000");
+const socket = io("https://hotelbuuk-chat.onrender.com");
 
 const ChatMainSection = ({ id }) => {
   const [room, setRoom] = useState(null);
