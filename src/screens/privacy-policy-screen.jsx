@@ -30,7 +30,7 @@ const PrivacyPolicy = React.memo(() => {
   }, []);
 
   // Destructure staticContent from privacyAndPolicy state
-  const { description, updatedAt } = privacyAndPolicy;
+  const { description, updatedAt } = privacyAndPolicy || {};
   return (
     <main className="relative">
       <Layout>

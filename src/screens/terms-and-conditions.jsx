@@ -29,7 +29,7 @@ const TermsAndConditions = React.memo(() => {
   }, []);
 
   // Destructure staticContent from termsConditionDescription state
-  const { description, updatedAt } = termsConditionDescription;
+  const { description, updatedAt } = termsConditionDescription || {};
 
   return (
     <main className="relative">
