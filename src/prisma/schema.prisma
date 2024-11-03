@@ -68,6 +68,7 @@ model User {
   UserB Chat[] @relation("UserB")
 
   Message Message[]
+  from_notifications        notifications[]             @relation("FromUserNotifications")
 }
 
 model facilities {
@@ -537,6 +538,9 @@ model notifications {
 
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
+
+  from_user_id String @db.ObjectId
+  from_user    User   @relation("FromUserNotifications", fields: [from_user_id], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

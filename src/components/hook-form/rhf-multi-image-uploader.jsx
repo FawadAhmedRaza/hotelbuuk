@@ -33,7 +33,7 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
     setValue(name, updatedImages);
   };
 
-  const handleDeleteImage = (id) => { 
+  const handleDeleteImage = (id) => {
     const imageToRemove = uploadedImages.find((img) => img.id === id);
 
     if (imageToRemove?.url) {
@@ -71,15 +71,11 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
         />
 
         {uploadedImages?.map((image, index) => {
-          const imageSrc = image?.file
-            ? URL.createObjectURL(image?.file)
-            : image?.img;
-
           return (
             <div key={image.id} className="relative group">
               <div className="flex justify-center items-center">
                 <ImageRender
-                  src={imageSrc}
+                  src={image.url || image?.img}
                   type={image.file ? "normal" : "server"}
                   alt={`Uploaded Image ${index}`}
                   effect="blur"

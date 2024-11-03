@@ -2,6 +2,8 @@ import { prisma } from "@/src/db";
 import { checkNomadAvailability } from "@/src/utils/is-nomad-available";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(_, { params }) {
   try {
     const { id } = params;
@@ -37,8 +39,15 @@ export async function GET(_, { params }) {
           },
         },
         nomad: true,
+        hotel: {
+          include: {
+            hotelImages: true,
+          },
+        },
       },
     });
+
+    console.log("Event Of Hotel", hotelEvent);
 
     if (!hotelEvent) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });

@@ -54,7 +54,7 @@ const HotelDetailScreen = React.memo(
     return (
       <div className="w-full h-full">
         <Layout isNavBg={true}>
-          <div className=" px-10">
+          <div className=" md:px-10">
             <HotelOverview type={type} />
             <HotelDetail type={type} id={id} />
             <BusinessFacts className="bg-white" />

@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
-export const HotelDetail = ({ type, id }) => {
+
+export const HotelDetail = ({  type, id }) => {
   const { event } = useSelector((state) => state.allEvents.getById);
 
   return (

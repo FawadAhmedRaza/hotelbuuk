@@ -14,7 +14,7 @@ import { Pannel } from "../components";
 const HomeScreen = React.memo(() => {
   return (
     <main className="relative">
-      <Layout>
+      <Layout >
         <HeroSection />
         <Pannel className=" md:hidden block">
           <Booking />
