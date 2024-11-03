@@ -12,6 +12,7 @@ import {
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
+// import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
 const HotelDetailScreen = React.memo(
   ({ type,id }) => {

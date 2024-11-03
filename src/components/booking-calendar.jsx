@@ -37,29 +37,33 @@ export const BookingCalender = React.memo(
           <Controller
             name={nameStart}
             control={control}
-            render={({ field }) => (
-              <div
-                className={`flex flex-col items-start  gap-1 py-2 px-0 sm:px-3  xl:px xll:px-5 rounded-full    ${InputBoxClass}`}
-              >
-                <div className="flex gap-3">
-                  <Iconify iconName="uil:calender" className="text-primary" />
-                  <Typography variant="p" className="text-sm">
-                    {labelStart}
-                  </Typography>
-                </div>
-                <input
-                  {...field}
-                  value={field?.value?.toString().slice(0, 10)}
-                  className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
-                  readOnly
-                />
-                {/* {errors[nameStart] && (
+            render={({ field }) => {
+              console.log("field logs:", field);
+
+              return (
+                <div
+                  className={`flex flex-col items-start gap-1 py-2 px-5 md:px-10 rounded-full  hover:bg-gray-100 ${InputBoxClass}`}
+                >
+                  <div className="flex gap-3">
+                    <Iconify iconName="uil:calender" className="text-primary" />
+                    <Typography variant="p" className="text-sm">
+                      {labelStart}
+                    </Typography>
+                  </div>
+                  <input
+                    {...field}
+                    value={field.value?.toString().slice(0, 10)}
+                    className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
+                    readOnly
+                  />
+                  {/* {errors[nameStart] && (
                   <Typography variant="p" className="!text-xs text-red-400">
                     {errors[nameStart]?.message}
                   </Typography>
                 )} */}
-              </div>
-            )}
+                </div>
+              );
+            }}
           />
 
           {/* End Date */}
@@ -78,7 +82,7 @@ export const BookingCalender = React.memo(
                 </div>
                 <input
                   {...field}
-                  value={field?.value?.toString().slice(0, 10)}
+                  value={field.value?.toString().slice(0, 10)}
                   className={`!text-sm text-gray-900 outline-none bg-transparent ${inputClass}`}
                   readOnly
                 />
