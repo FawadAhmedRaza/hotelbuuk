@@ -62,6 +62,12 @@ model User {
   event_safety              event_safety[]
   event_cancellation_policy event_cancellation_policy[]
   notifications             notifications[]
+
+  UserA Chat[] @relation("UserA")
+
+  UserB Chat[] @relation("UserB")
+
+  Message Message[]
   from_notifications        notifications[]             @relation("FromUserNotifications")
 }
 
@@ -538,4 +544,25 @@ model notifications {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+model Chat {
+  id        String @db.ObjectId @default(auto()) @id  @map("_id")
+  userA     String @db.ObjectId
+  userB     String @db.ObjectId
+  userAData User?     @relation("UserA", fields: [userA], references: [id])
+  userBData User?     @relation("UserB", fields: [userB], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  chatId   String   @db.ObjectId
+  senderId String   @db.ObjectId
+  content  String
+  sentAt   DateTime @default(now())
+
+  chat   Chat @relation(fields: [chatId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
 }

@@ -51,7 +51,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     {
       id: 7,
       label: "Messages",
-      path: "",
+      path: paths.chats.root,
     },
     {
       id: 8,

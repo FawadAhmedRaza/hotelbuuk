@@ -59,9 +59,9 @@ export const NavBar = React.memo(({ className }) => {
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
       <div className="flex gap-2 sm:gap-5">
-        {/* Language */}
-        <LangaugeTranslator isWhite={true} />
-        {/* Login */}
+        {/* language  */}
+        <LangaugeTranslator />
+        {/* Login  */}
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-1 sm:gap-5 rounded-full px-2 py-1 sm:px-4 sm:py-1 border border-gray-600 cursor-pointer hover:bg-gray-100"
