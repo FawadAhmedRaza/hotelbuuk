@@ -13,17 +13,20 @@ import { useSelector } from "react-redux";
 export const HostBio = React.memo(() => {
   const { event } = useSelector((state) => state.allEvents.getById);
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between md:flex-row  flex-wrap">
-        <Typography variant="h4" className="font-medium text-xl md:text-2xl">
+        <Typography
+          variant="h4"
+          className="font-semibold !text-[1.26rem] md:text-2xl"
+        >
           Meet Your Host
         </Typography>
         <Typography variant="h6" className="text-gray-400">
           in-house
         </Typography>
       </div>
-      <div className="flex flex-col mt-2  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
-        <div className="flex flex-col  gap-5 bg-white rounded-b-lg w-full p-5 ">
+      <div className="flex flex-col mt-3  bg-gray-100   rounded-xl  shadow-md  ">
+        <div className="flex flex-col  gap-5 bg-white  w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start w-full  gap-2 xl:gap-10 ">
             {/* <Avatar
               src="/assets/images/host.png"

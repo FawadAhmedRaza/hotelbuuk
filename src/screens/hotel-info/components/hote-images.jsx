@@ -81,6 +81,7 @@ const HotelImages = () => {
                 src={image.url}
                 type={image.file ? "normal" : "server"}
                 alt={`Uploaded Image ${index}`}
+                effect="blur"
                 className="w-full h-20 sm:h-28 md:h-36 lg:h-40 object-cover rounded-xl"
               />
               <div

@@ -15,6 +15,10 @@ export const paths = {
   },
   about: "/about",
   terms: "/terms",
+  chats: {
+    root: "/chat",
+    chatsById: (id) => `/chat/${id}`,
+  },
   impressum: "/impressum",
   privacyPolicy: "/privacy-policy",
   hotels: {

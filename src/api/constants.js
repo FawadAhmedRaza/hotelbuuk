@@ -1,4 +1,4 @@
-const base_url = "http://localhost:5000/api";
+const base_url = "http://192.168.100.57:5000/api";
 const endpoints = {
   chats: {
     getRoomsUser: (userId) => `${base_url}/chats/user/${userId}`,

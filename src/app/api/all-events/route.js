@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/src/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const nomadEvents = await prisma.nomad_event.findMany({

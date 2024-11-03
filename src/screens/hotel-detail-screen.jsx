@@ -14,66 +14,62 @@ import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 // import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
-const HotelDetailScreen = React.memo(
-  ({ type,id }) => {
-    const [isMobile, setIsMobile] = useState(false);
+const HotelDetailScreen = React.memo(({ type, id }) => {
+  const [isMobile, setIsMobile] = useState(false);
 
-    const [dateRange, setDateRange] = useState([
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const handleDateChange = (ranges) => {
+    setDateRange([ranges.selection]);
+  };
+
+  const clearDateRange = () => {
+    setDateRange([
       {
         startDate: new Date(),
         endDate: new Date(),
         key: "selection",
       },
     ]);
+  };
 
-    const handleDateChange = (ranges) => {
-      setDateRange([ranges.selection]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 930);
     };
 
-    const clearDateRange = () => {
-      setDateRange([
-        {
-          startDate: new Date(),
-          endDate: new Date(),
-          key: "selection",
-        },
-      ]);
-    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 930);
-      };
-
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    
-
-    return (
-      <div className="w-full h-full">
-        <Layout isNavBg={true}>
-          <div className=" px-10">
-            <HotelOverview type={type} />
-            <HotelDetail type={type} id={id} />
-            <BusinessFacts className="bg-white" />
-            <AvailabilityCalendar
-              dateRange={dateRange}
-              handleDateChange={handleDateChange}
-              isMobile={isMobile}
-              clearDateRange={clearDateRange} // Pass clearDateRange as prop
-            />
-            <PopularAmenities />
-            <Itinerary />
-            <ThingsKnow />
-            <GuestReviews />
-          </div>
-        </Layout>
-      </div>
-    );
-  }
-);
+  return (
+    <div className="w-full h-full">
+      <Layout isNavBg={true}>
+        <div className=" md:px-4">
+          <HotelOverview type={type} />
+          <HotelDetail type={type} id={id} />
+          <BusinessFacts className="bg-white" />
+          <AvailabilityCalendar
+            dateRange={dateRange}
+            handleDateChange={handleDateChange}
+            isMobile={isMobile}
+            clearDateRange={clearDateRange} // Pass clearDateRange as prop
+          />
+          <PopularAmenities />
+          <Itinerary />
+          <ThingsKnow />
+          <GuestReviews />
+        </div>
+      </Layout>
+    </div>
+  );
+});
 
 export default HotelDetailScreen;

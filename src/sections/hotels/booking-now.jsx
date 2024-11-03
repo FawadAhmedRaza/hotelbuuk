@@ -107,50 +107,35 @@ export const BookNow = React.memo(() => {
 
             <span className="hidden sm:flex h-16 w-[2px] bg-primary mr-8 min-900:mr-0" />
 
-            {/* Calendar Fields */}
-            <div
-              ref={datePopoverRef}
-              className="relative flex flex-col gap-2 items-start w-full sm:w-fit"
-            >
-              <span className="flex items-center gap-3">
-                <Iconify
-                  iconName="octicon:checklist-16"
-                  className="text-primary mt-0.5"
-                />
-                <Typography
-                  variant="p"
-                  className="text-sm text-start text-custom-neutral w-full"
-                >
-                  Night
-                </Typography>
-              </span>
-              <div className="bg-transparent">
-                <Popover>
-                  <PopoverTrigger>
-                    <BookingCalender
-                      nameStart="startDate"
-                      nameEnd="endDate"
-                      labelStart="From :"
-                      labelEnd="To :"
-                      InputBoxClass="!py-0 rounded-none !px-0 !flex-row"
-                      onOpenPopover={togglePopover}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent className="w-full bg-white">
-                    <RHFDatePicker
-                      name="availability"
-                      onChange={(item) => {
-                        setDate([item.selection]);
-                        methods.setValue("startDate", item.selection.startDate);
-                        methods.setValue("endDate", item.selection.endDate);
-                      }}
-                      value={date}
-                      rangeColors={["#852169"]}
-                      twoSideCalendar={true}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+            {/* Calendar Input */}
+            <div className="  w-full ">
+              <Popover>
+                <PopoverTrigger>
+                  <BookingCalender
+                    InputBoxClass=""
+                    nameStart="startDate"
+                    nameEnd="endDate"
+                    labelStart="From Night"
+                    labelEnd="To Night"
+                    startIcon="uil:calendar-alt"
+                    endIcon="uil:calendar-alt"
+                    onOpenPopover={togglePopover}
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="w-full">
+                  <RHFDatePicker
+                    name="availability"
+                    onChange={(item) => {
+                      setDate([item.selection]);
+                      methods.setValue("startDate", item.selection.startDate);
+                      methods.setValue("endDate", item.selection.endDate);
+                    }}
+                    value={date}
+                    rangeColors={["#852169"]}
+                    twoSideCalendar={true}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div>

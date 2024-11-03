@@ -178,7 +178,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 6,
       label: "Messages",
-      path: "",
+      path: paths.chats.root,
     },
     {
       id: 7,

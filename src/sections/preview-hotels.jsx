@@ -11,7 +11,6 @@ import {
   CarouselPrevious,
 } from "../components/ui/carousel";
 import { getAllEvents } from "../redux/all-events/thunk";
-// import { getAllEvents } from "../redux/actions"; // Adjust if necessary
 
 export const PreviewHotels = () => {
   const swiperRef = React.useRef(null);
@@ -19,6 +18,8 @@ export const PreviewHotels = () => {
   const { events, isLoading } = useSelector((state) => state.allEvents);
 
   const [isEventLoading, setIsEventLoading] = useState(true);
+
+  console.log("All events", events);
 
   useEffect(() => {
     const fetchEvents = async () => {

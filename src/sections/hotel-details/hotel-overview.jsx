@@ -1,7 +1,7 @@
 "use client";
 import { Iconify, ImageModal, Pannel, Typography } from "@/src/components";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Slider } from ".";
 import { useBoolean } from "@/src/hooks";
 import { useSelector } from "react-redux";
@@ -30,14 +30,17 @@ export const HotelOverview = ({ type }) => {
   const { event, isLoading } = useSelector((state) => state.allEvents.getById);
 
   console.log("Single evetn", event);
+
   const eventImages =
     Array.isArray(event?.event_images) && event?.event_images.length > 0
       ? event.event_images
-      : [{ img: event?.hotel?.hotel_image }];
+      : event?.hotel?.hotelImages;
+
+  console.log("Hotel Images", event?.hotel?.hotelImages);
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
-      <ImageModal 
+      <ImageModal
         images={eventImages || []}
         isOpen={isOpen}
         onClose={toggleDrawer}
@@ -47,7 +50,7 @@ export const HotelOverview = ({ type }) => {
         <HotelDetailsSkeleton />
       ) : (
         <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-3">
-          <div className=" flex flex-col justify-center items-center sm:justify-start sm:items-start gap-2 grow">
+          <div className=" flex flex-col   gap-2">
             <Typography variant="h3" className="md:text-[27px]  font-medium">
               {type === "NOMAD"
                 ? event?.accomodation_type === "bnb"
@@ -55,8 +58,8 @@ export const HotelOverview = ({ type }) => {
                   : `${event?.hotel?.hotel_name}, ${event?.hotel?.city}`
                 : event?.hotel?.hotel_name + "," + event?.hotel?.city}
             </Typography>
-            <div className=" flex gap-5 md:flex-row flex-col text-start flex-wrap -mt-1  items-center w-full ">
-              <span className="flex items-center gap-2">
+            <div className=" flex gap-1 md:gap-5 md:flex-row flex-col  text-start flex-wrap -mt-1  md:items-center w-full ">
+              <span className="flex  gap-2 items-center">
                 <Iconify
                   iconName="mdi:location"
                   className="text-gray-500 size-3.5 "
@@ -69,19 +72,27 @@ export const HotelOverview = ({ type }) => {
                     : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`}
                 </Typography>
               </span>
-              <span className="flex items-center gap-3">
-                <Iconify iconName="gg:phone" className="text-black size-3.5" />
-                <Typography className=" text-nowrap font-medium" variant="p">
-                  {event?.hotel?.hotel_contact_no}
-                </Typography>
-              </span>
+              {event?.hotel?.hotel_contact_no && (
+                <span className="flex gap-3 items-center">
+                  <Iconify
+                    iconName="gg:phone"
+                    className=" text-gray-500 size-3.5"
+                  />
+                  <Typography
+                    className=" text-nowrap font-medium  text-gray-500"
+                    variant="p"
+                  >
+                    {event?.hotel?.hotel_contact_no}
+                  </Typography>
+                </span>
+              )}
             </div>
           </div>
           <div className="flex gap-3">
             {socialMedia?.map((item) => (
               <Link
                 href={item?.href}
-                className=" flex justify-center items-center w-12 h-12 rounded-lg border border-primary"
+                className=" flex justify-center items-center w-10 h-10 rounded-lg border border-black"
               >
                 <Iconify iconName={item?.icon} className="text-black" />
               </Link>
@@ -109,7 +120,11 @@ export const HotelOverview = ({ type }) => {
             className="h-full w-full rounded-l-2xl rounded-bl-2xl "
           >
             <ImageRender
-              src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
+              src={
+                event?.event_images?.[0]?.img ||
+                event?.hotel?.hotel_image ||
+                event?.hotel?.hotelImages[0]?.img
+              }
               type={"server"}
               alt="Lazy Loaded Image"
               ratio="4/3" // Aspect ratio
@@ -123,7 +138,7 @@ export const HotelOverview = ({ type }) => {
             />
           </span>
           <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-full">
-            {eventImages?.slice(0, 4).map((img, index) => (
+            {eventImages?.slice(1, 5).map((img, index) => (
               <div
                 key={img.id}
                 className="relative w-full h-full cursor-pointer"
