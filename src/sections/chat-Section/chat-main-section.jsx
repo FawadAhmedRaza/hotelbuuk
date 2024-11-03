@@ -12,7 +12,7 @@ import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import { LoadingScreen } from "@/src/components/loading-screen";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://hotelbuuk-chat.onrender.com");
 
 const ChatMainSection = ({ id, onBack }) => {
   const [room, setRoom] = useState(null);

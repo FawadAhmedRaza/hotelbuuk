@@ -16,7 +16,7 @@ const StripeElement = ({id,type}) => {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${process.env.HOST_URL}/hotels/${id}?type=${type}`,
+          return_url: `${process.env.NEXT_PUBLIC_HOST_URL}/hotels/${id}?type=${type}`,
           payment_method_data: {
             billing_details: {
               address: {
