@@ -4,6 +4,8 @@ import { convertFormData } from "@/src/utils/convert-form-data";
 import { prisma } from "@/src/db";
 import { uploadFileToGoogleCloud } from "@/src/utils/upload-images";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req) {
   try {
     const body = await req.formData();

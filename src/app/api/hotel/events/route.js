@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/src/db";
 import { checkNomadAvailability } from "@/src/utils/is-nomad-available";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req) {
   try {
     const data = await req.json();

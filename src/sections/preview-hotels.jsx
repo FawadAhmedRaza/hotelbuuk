@@ -19,6 +19,8 @@ export const PreviewHotels = () => {
 
   const [isEventLoading, setIsEventLoading] = useState(true);
 
+  console.log("All events", events);
+
   useEffect(() => {
     const fetchEvents = async () => {
       setIsEventLoading(true);
