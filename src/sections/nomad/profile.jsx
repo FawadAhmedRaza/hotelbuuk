@@ -71,7 +71,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     linkedin: Yup.string()
       .url("Please provide a valid URL")
       .required("linked profile is required"),
-    // .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
     email: Yup.string()
       .required("Email is required")
       .email("Invalid email format"),

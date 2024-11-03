@@ -1,4 +1,4 @@
-const base_url = "http://localhost:5000/api";
+const base_url = "https://hotelbuuk-chat.onrender.com/api";
 const endpoints = {
   chats: {
     getRoomsUser: (userId) => `${base_url}/chats/user/${userId}`,

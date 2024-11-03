@@ -13,12 +13,10 @@ export const NavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
-  // State for controlling navbar visibility and shadow
   const [showNavBar, setShowNavBar] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Toggle shadow when scrolled more than 20px from the top
       if (window.scrollY > 20) {
         setShowNavBar(true);
       } else {
@@ -59,9 +57,9 @@ export const NavBar = React.memo(({ className }) => {
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
       <div className="flex gap-2 sm:gap-5">
-        {/* language  */}
+        {/* Language */}
         <LangaugeTranslator />
-        {/* Login  */}
+        {/* Login */}
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-1 sm:gap-5 rounded-full px-2 py-1 sm:px-4 sm:py-1 border border-gray-600 cursor-pointer hover:bg-gray-100"

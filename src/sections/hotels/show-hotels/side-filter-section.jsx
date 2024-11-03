@@ -110,7 +110,7 @@ const SideFilterSection = ({ setFilters }) => {
             </Typography>
             <div className="flex flex-col gap-3">
               {/* Search by Event */}
-              <div className="flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral">
+              <div className="flex items-center  bg-white  py-1.5 px-2 rounded-full gap-2 border border-custom-neutral">
                 <Iconify
                   iconName="lucide:search"
                   className="!size-5 text-gray-500"

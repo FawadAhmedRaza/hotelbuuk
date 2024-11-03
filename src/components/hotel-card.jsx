@@ -40,36 +40,39 @@ export const HotelCard = React.memo(({ event, className }) => {
           alt={hotel.title}
           className="w-[96%] sm:w-[96%]  h-full absolute top-0 left-2"
         /> */}
-        <div className="absolute top-0 w-full h-full flex flex-col gap-1.5 justify-center hotels-center">
+        <div className="absolute top-0 w-full  h-full flex flex-col gap-1.5 justify-center hotels-center">
           <Typography
             variant="h3"
-            className="!text-2xl !md:text-3xl font-bold text-white uppercase text-center font-lemonMilk"
+            className="!text-2xl md:!text-[25px] !font-medium text-white uppercase text-center font-lemonMilk"
           >
-            {event?.title}
+            {event?.title?.length > 30
+              ? `${event.title.slice(0, 40)}...`
+              : event?.title}
           </Typography>
+
           <Typography
             variant="h3"
-            className="!text-2xl !md:text-3xl font-bold text-white uppercase font-lemonMilk text-center"
+            className="!text-[18px]  font-normal text-white uppercase font-lemonMilk text-center"
           >
             {event?.city}
           </Typography>
           <Typography
             variant="h4"
-            className="font-normal text-white mt-2 text-center"
+            className="font-normal !text-[15px] text-white -mt-5 text-center"
           >
             {event?.country}
           </Typography>
         </div>
-        <div className="absolute bottom-2 left-8 w-full h-full flex flex-col justify-end hotels-start pb-5">
+        <div className="absolute bottom-2 left-5 w-full h-full flex flex-col justify-end hotels-start pb-3">
           <Typography
             variant="p"
-            className="!text-base font-semibold text-white font-dmSans"
+            className="!text-base font-medium text-white font-dmSans"
           >
             ${event?.price} / Per Night
           </Typography>
           <Typography
             variant="p"
-            className="!text-base font-semibold text-white font-dmSans"
+            className="!text-base font-medium text-white font-dmSans"
           >
             {event?.business_category}
           </Typography>

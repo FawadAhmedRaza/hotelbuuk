@@ -151,7 +151,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 2,
       label: "Notifications",
-      path: "",
+      path: paths.hotelDashboard.notifications,
     },
     {
       id: 3,

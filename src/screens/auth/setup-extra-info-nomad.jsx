@@ -90,9 +90,11 @@ const SetupExtraInfoNomad = () => {
               placeholder="Experience"
               className="mt-2"
               options={[
-                { label: "Option 1", value: "option1" },
-                { label: "Option 2", value: "option2" },
-                { label: "Option 3", value: "option3" },
+                { label: "Entry level", value: "entry_level" },
+                { label: "Junior level", value: "junior_level" },
+                { label: "Mid-level", value: "mid_level" },
+                { label: "Senior level", value: "senior_level" },
+                { label: "Principle level", value: "principle_level" },
               ]}
             />
 

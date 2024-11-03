@@ -127,7 +127,9 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
         ))}
 
         {authenticated ? (
-          <Button className="mb-12" onClick={handleLogout}>Logout</Button>
+          <Button className="mb-12" onClick={handleLogout}>
+            Logout
+          </Button>
         ) : (
           AuthLinks?.map((item) => (
             <AnchorTag
@@ -158,7 +160,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 2,
       label: "Notifications",
-      path: "",
+      path: paths.guestDashboard.notifications,
     },
     {
       id: 3,
@@ -168,7 +170,7 @@ export const MenuLinks = (UserId) => {
     {
       id: 4,
       label: "Hotels",
-      path: paths.guestDashboard.hotels
+      path: paths.guestDashboard.hotels,
     },
     {
       id: 5,

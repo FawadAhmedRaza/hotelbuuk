@@ -18,7 +18,6 @@ const SetupBasicInfoNomad = () => {
       .string()
       .required("Phone number is required")
       .matches(/^\d+$/, "Phone number must be numeric")
-      .length(11, "Phone number must be 11 digits"),
   });
 
   const { setupBasicInfo, user } = useAuthContext();

@@ -4,15 +4,26 @@ import React, { useState } from "react";
 // Components and Others...
 import { Pannel, Typography } from "@/src/components";
 import SignUpAsHotel from "./sections/signup-as-hotel";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const SignUpScreen = () => {
   return (
     <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-28 md:!py-10  !px-5 lg:!px-14 xl:!px-20 w-full h-full">
-      <img
+      {/* <img
         src="/assets/images/signup.png"
         alt="img"
         className=" hidden lg:block w-[400px]  xl:w-[500px] h-full"
-      />
+      /> */}
+      <div className=" hidden lg:block w-full ">
+        <LazyLoadImage
+          src="/assets/images/signup.png"
+          alt="img"
+          width="100%"
+          height="100%"
+          effect="blur"
+          className=" hidden lg:block w-full h-full object-cover"
+        />
+      </div>
       <div
         className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0`}
       >

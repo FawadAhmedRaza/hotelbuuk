@@ -37,7 +37,7 @@ const SetupUserType = () => {
 
   return (
     <RHFFormProvider methods={methods} onSubmit={onSubmit}>
-      <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-20 md:!py-10 !px-5 lg:!px-14 xl:!px-20 w-full h-full">
+      <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-16 xl:gap-12 md:!py-10 !px-5 lg:!px-14 xl:!px-16 w-full h-full">
         <img
           src="/assets/images/account-type-img.jpg"
           alt="img"
@@ -75,14 +75,14 @@ const SetupUserType = () => {
                     ${
                       type === item?.value
                         ? "border-[3px] border-primary border-dashed bg-gray-200"
-                        : "hover:cursor-pointer transition-all duration-500 hover:border hover:border-dashed hover:border-primary hover:bg-opacity-50"
+                        : "hover:cursor-pointer border-[3px] border-transparent transition-all duration-500  hover:bg-opacity-50"
                     }`}
               >
                 <Iconify
                   iconName={item.icon}
-                  className="!text-primary size-16"
+                  className="!text-primary !size-14"
                 />
-                <Typography variant="h5" className="!font-semibold">
+                <Typography variant="h6" className="!font-medium text-sm">
                   {item.label}
                 </Typography>
               </Card>

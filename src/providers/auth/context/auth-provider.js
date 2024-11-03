@@ -503,12 +503,11 @@ export function AuthProvider({ children }) {
           user,
         },
       });
+      enqueueSnackbar("Profile completed", { variant: "success" });
 
-      enqueueSnackbar("Success", { variant: "success" });
       router.push(
         user?.user_type === "HOTEL" ? "/hotel-dashboard" : "/nomad-dashboard"
       );
-      enqueueSnackbar("Profile completed", { variant: "success" });
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });

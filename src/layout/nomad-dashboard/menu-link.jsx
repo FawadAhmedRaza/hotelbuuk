@@ -31,7 +31,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
     {
       id: 2,
       label: "Notifications",
-      path: "",
+      path: paths.nomadDashboard.notifications,
     },
     {
       id: 3,

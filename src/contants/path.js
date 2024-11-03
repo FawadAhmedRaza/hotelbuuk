@@ -41,6 +41,7 @@ export const paths = {
     bookings: {
       root: "/nomad-dashboard/bookings",
     },
+    notifications: "/nomad-dashboard/notifications",
   },
   hotelDashboard: {
     root: "/hotel-dashboard",
@@ -58,6 +59,7 @@ export const paths = {
     bookings: {
       root: "/hotel-dashboard/bookings",
     },
+    notifications: "/hotel-dashboard/notifications",
   },
 
   createRooms: {
@@ -74,5 +76,6 @@ export const paths = {
     bookings: "/guest-dashboard/bookings",
     nomads: "/guest-dashboard/nomads",
     hotels: "/guest-dashboard/hotels",
+    notifications: "/guest-dashboard/notifications",
   },
 };
