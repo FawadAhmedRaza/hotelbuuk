@@ -57,6 +57,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { cn } from "@/src/libs/cn"; // Utility for combining class names
+import { Typography } from ".";
 
 // Badge component to render status with different colors
 const Badge = ({ message }) => {
@@ -64,7 +65,7 @@ const Badge = ({ message }) => {
   const messageToStatusMap = {
     "Event booking Accepted": "accepted",
     "Event booking request": "pending",
-    Rejected: "rejected",
+    "Event booking Rejected": "rejected",
   };
 
   // Determine the status based on the message
@@ -96,6 +97,8 @@ Badge.propTypes = {
 
 // Main Notification Component
 export const Notification = ({ note }) => {
+
+
   const date = new Date(note?.createdAt);
   return (
     <div className="flex flex-col justify-start  gap-4 p-4 border border-gray-200 rounded-md shadow-sm">
@@ -104,7 +107,9 @@ export const Notification = ({ note }) => {
         <p className="text-gray-800 text-sm">{date.toDateString()}</p>
       </div>
       <div>
-        <p className="text-gray-800 text-sm text-start">{note?.message}</p>
+        <Typography variant="p" className="text-gray-800 text-sm text-start">
+          {note?.message}
+        </Typography>
       </div>
     </div>
   );

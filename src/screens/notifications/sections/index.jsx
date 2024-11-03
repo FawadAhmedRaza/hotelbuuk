@@ -1,6 +1,6 @@
 "use client";
 
-import { Breadcrumb, Notification, Pannel } from "@/src/components";
+import { Breadcrumb, Notification, Pannel, Typography } from "@/src/components";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { getAllNotifications } from "@/src/redux/notifications/thunk";
 import React, { useEffect } from "react";
@@ -27,9 +27,15 @@ const NotificationsSection = () => {
     <Pannel className="flex flex-col gap-10">
       <Breadcrumb title="Notifications" />
       <div className="flex flex-col gap-5">
-        {notifications?.map((note) => (
-          <Notification note={note} />
-        ))}
+        {!notifications || notifications.length === 0 ? (
+          <div className="flex flex-col justify-center items-center gap-4 p-4 border border-gray-200 rounded-md shadow-sm">
+            <Typography variant="h3" className="text-gray-500 text-sm">
+              No notifications available.
+            </Typography>
+          </div>
+        ) : (
+          notifications?.map((note) => <Notification note={note} />)
+        )}
       </div>
     </Pannel>
   );
