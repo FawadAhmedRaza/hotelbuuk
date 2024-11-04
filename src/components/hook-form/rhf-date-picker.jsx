@@ -1,28 +1,38 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import Datepicker from "react-tailwindcss-datepicker";
+"use client";
+import React, { useState, useEffect } from "react";
+import { DateRange } from "react-date-range";
+import { Controller, useFormContext } from "react-hook-form";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
-export const RHFDatePicker = () => {
-  const { control, watch } = useForm({
-    defaultValues: {
-      dateRange: { startDate: null, endDate: null },
-    },
-  });
+export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
+  const { control } = useFormContext();
+  const [isMobile, setIsMobile] = useState(false);
 
-  // To observe changes (optional)
-  const selectedDate = watch("dateRange");
-  console.log("Selected Date Range:", selectedDate);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 930);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <Controller
-      name="dateRange"
+      name={name}
       control={control}
-      render={({ field }) => (
-        <Datepicker
-          value={field.value}
-          onChange={(newValue) => field.onChange(newValue)}
-          showShortcuts={true}
-          inputClassName="w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-white"
+      render={() => (
+        <DateRange
+          onChange={onChange}
+          months={2}
+          ranges={value}
+          direction={isMobile ? "vertical" : "horizontal"}
+          rangeColors={rangeColors}
+          className="w-fit "
         />
       )}
     />

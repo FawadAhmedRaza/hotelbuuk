@@ -3,24 +3,29 @@ import {
   Banner,
   Booking,
   BookingSteps,
-  Footer,
+  BusinessFacts,
   HeroSection,
+  Layout,
   MeetOurPatners,
-  NavBar,
+  PreviewHotelsSection,
 } from "../sections";
-import { Hotels } from "../sections/hotels";
+import { Pannel } from "../components";
+
 
 const HomeScreen = React.memo(() => {
   return (
     <main className="relative">
-      <NavBar />
-      <HeroSection />
-      <Booking />
-      <Hotels />
-      <Banner />
-      <BookingSteps />
-      <MeetOurPatners />
-      <Footer />
+      <Layout>
+        <HeroSection />
+        <Pannel className=" md:hidden block">
+          <Booking />
+        </Pannel>
+        <PreviewHotelsSection />
+        <Banner />
+        <BusinessFacts />
+        <BookingSteps />
+        <MeetOurPatners />
+      </Layout>
     </main>
   );
 });

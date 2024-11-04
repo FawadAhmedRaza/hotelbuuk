@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Navigation Buttons */
+/* Hide swiper buttons */
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 0px;
@@ -12,8 +12,51 @@
   display: none;
 }
 
+/* Hide scrollbars completely */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Remove spin buttons from number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Custom Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 20px; /* Narrow scrollbar width */
+  height: 20px; /* Horizontal scrollbar height */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #852169; /* Scrollbar track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #852169; /* Scrollbar thumb color */
+  border-radius: 999px; /* Fully rounded scrollbar thumb */
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar for Firefox */
+  scrollbar-color: #852169 rgba(0, 74, 95, 0); /* Custom colors for thumb and track */
+}
+
 @layer utilities {
-  .shadow {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .text-shadow {
+    color: white;
     text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.1),
       0px 18px 23px rgba(0, 0, 0, 0.1);
   }
@@ -28,74 +71,174 @@
     -webkit-text-fill-color: transparent;
     text-shadow: none !important;
   }
+}
 
-  .text-17fs {
-    font-size: 17px; /* Custom font size */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 72.2% 50.6%;
+    --primary-foreground: 0 85.7% 97.3%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 72.2% 50.6%;
+    --radius: 0.75rem;
+    --chart-1: 317, 60%, 33%;
+    --chart-2: 317, 60%, 33%;
+    --chart-3: 317, 60%, 33%;
+    --chart-4: 317, 60%, 33%;
+    --chart-5: 317, 60%, 33%;
   }
-  .text-42fs {
-    font-size: 42px; /* Custom font size */
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 72.2% 50.6%;
+    --primary-foreground: 0 85.7% 97.3%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 72.2% 50.6%;
+    --chart-1: 317, 60%, 33%;
+    --chart-2: 317, 60%, 33%;
+    --chart-3: 317, 60%, 33%;
+    --chart-4: 317, 60%, 33%;
+    --chart-5: 317, 60%, 33%;
   }
-  .text-26fs {
-    font-size: 26px; /* Custom font size */
-  }
-  .text-20fs {
-    font-size: 20px; /* Custom font size */
-  }
-  .leading-40fs {
-    line-height: 40px; /* Custom line Height */
-  }
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+.custom-border-shape {
+  border-radius: 200px 80px 200px 80px;
+  overflow: hidden;
 }
 
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+
+/* SWiper */
+
+
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px; 
+  height: 40px; 
+  background-color: #852169; 
+  color: #ffffff; /* Text/icon color */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: 30;
 }
 
-/* global.css */
-
-/* Paragraph Styles */
-.custom-html > p {
-  @apply text-base sm:text-lg md:text-xl !leading-10 mb-20 text-gray-900;
+.swiper-button-prev {
+  left: -10px; 
 }
 
-/* Heading Styles */
-.custom-html > h2 {
-  @apply text-3xl md:text-42fs mb-10 font-semibold;
+.swiper-button-next {
+  right: -10px;
 }
 
-.custom-html > h1 {
-  @apply text-3xl sm:text-4xl md:text-5xl font-semibold text-primary;
+
+.swiper-button-prev .iconify, 
+.swiper-button-next .iconify {
+  width: 20px; 
+  height: 20px; 
 }
 
-.custom-html > h3 {
-  @apply text-26fs sm:text-3xl md:text-2xl font-semibold my-5;
+/* DateRangeStyles.css */
+
+
+/* Main container */
+.calendar-container {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  text-align: left;
 }
 
-.custom-html > h4 {
-  @apply text-xl md:text-2xl font-normal;
+/* Calendar styling */
+.custom-calendar .rdrCalendarWrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  background-color: #0071c2;
 }
 
-.custom-html > h5 {
-  @apply text-lg md:text-xl font-normal;
+.custom-calendar .rdrMonthAndYearWrapper {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  text-align: center;
 }
 
-.custom-html > h6 {
-  @apply text-sm md:text-base;
+.custom-calendar .rdrWeekDays {
+  font-weight: normal;
+  color: #666;
 }
 
-/* List Styles */
-.custom-html > ul {
-  padding-left: 20px;
-  list-style: decimal;
+.custom-calendar .rdrDayNumber span {
+  color: #333;
 }
 
-.custom-html  > li {
-  list-style: circle;
-  position: relative;
-  padding-left: 0.5rem;
-  font-size: 16px;
+.custom-calendar .rdrDayNumber span:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.custom-calendar .rdrSelected,
+.custom-calendar .rdrStartEdge,
+.custom-calendar .rdrEndEdge {
+  background-color: #000000 !important; /* Dark color for start and end dates */
+  color: #fff !important;
+  border-radius: 50%;
+   /* Rounded selection */
+}
+
+.custom-calendar .rdrInRange {
+  background-color: #f0f0f0 !important; /* Light background for in-range dates */
+  color: #333;
+}
+
+/* Styling for Clear dates button */
+.clear-dates-button {
+  margin-top: 10px;
+  color: #0071c2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.clear-dates-button:hover {
+  text-decoration: underline;
 }

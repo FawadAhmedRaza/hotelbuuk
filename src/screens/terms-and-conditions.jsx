@@ -1,6 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { ConditionsContent, Footer, NavBar, TermsBanner } from "../sections";
+import React from "react";
+import { ConditionsContent, Layout } from "../sections";
 import { HeadingBanner } from "../components";
 import { getStaticContentByType } from "../actions/staticContent.action";
 import { formatDate } from "../utils/dateFormate";
@@ -34,15 +33,14 @@ const TermsAndConditions = React.memo(() => {
 
   return (
     <main className="relative">
-      <NavBar />
-      {/* <TermsBanner /> */}
-      <HeadingBanner
-        heading="Terms and Conditions"
-        text={`Last Updated on ${formatDate(updatedAt)}`}
-        className="bg-terms"
-      />
-      <ConditionsContent description={description} termsConditionLoading={termsConditionLoading} />
-      <Footer />
+      <Layout>
+        <HeadingBanner
+          heading="Terms and Conditions"
+          text="Last Updated on 7 Oct 2024"
+          className="bg-terms"
+        />
+        <ConditionsContent />
+      </Layout>
     </main>
   );
 });

@@ -8,6 +8,8 @@ export const RHFTextArea = ({
   name,
   placeholder,
   className,
+  onChange,
+
   rows = 5,
 }) => {
   const { control } = useFormContext();
@@ -27,9 +29,14 @@ export const RHFTextArea = ({
           )}
           <textarea
             name={name}
+            value={field.value || ""}
             {...field}
             placeholder={placeholder}
             rows={rows}
+            onChange={(e) => {
+              field.onChange(e); // Call react-hook-form's onChange
+              onChange?.(e); // Optionally call the custom onChange if provided
+            }}
             className="w-full border bg-white text-sm py-2 px-4  rounded-md outline-none border-custom-neutral placeholder:text-neutral-300  text-secondary  resize-none"
           />
           {errors && (
@@ -37,7 +44,7 @@ export const RHFTextArea = ({
               variant={"p"}
               className="!text-xs text-red-400 transition-all duration-500"
             >
-              {errors[name]?.message}
+              {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
             </Typography>
           )}
         </div>

@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+google-cloud.json
+
 # next.js
 /.next/
 /out/
@@ -34,3 +36,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+my-credentials.json

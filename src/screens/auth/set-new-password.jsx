@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Link from "next/link";
 
-// Components and Others...
+import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
+import { paths } from "@/src/contants";
+
 import {
   AnchorTag,
   Button,
@@ -13,17 +17,15 @@ import {
   Typography,
   Pannel,
 } from "@/src/components";
-import { RHFFormProvider, RHFInput } from "@/src/components/hook-form";
-import { paths } from "@/src/contants";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
 
 const SetNewPasswordScreen = () => {
   const { resetPasswordHandle } = useAuthContext();
+
   const SetPasswordSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters"),
-      
+
     confirm_password: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
@@ -38,8 +40,7 @@ const SetNewPasswordScreen = () => {
   });
 
   const {
-    reset,
-    formState: { errors },
+    formState: { isSubmitting },
   } = methods;
 
   const handleSubmit = async (data) => {
@@ -49,9 +50,16 @@ const SetNewPasswordScreen = () => {
   return (
     <Pannel className="flex justify-center items-center lg:justify-between gap-10 lg:gap-20 xl:gap-28 md:!py-10  !px-5 lg:!px-14 xl:!px-20 w-full h-screen sm:h-full lg:h-screen">
       <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full">
-        <Typography variant="h3" className="font-bold text-primary md:mb-8">
-          Hotelbuuk
-        </Typography>
+        <div className="flex items-center gap-2">
+          <img
+            src="/assets/images/transperent-logo/transperent/PINK.png"
+            alt="log"
+            className=" w-16"
+          />
+          <Typography variant="h3" className="font-bold text-primary">
+            Hotelbuuk
+          </Typography>
+        </div>
         <Link
           className="flex items-center gap-1 cursor-pointer"
           href={paths.auth.login}
@@ -81,7 +89,6 @@ const SetNewPasswordScreen = () => {
           onSubmit={methods.handleSubmit(handleSubmit)}
           className="flex flex-col gap-5"
         >
-          {/* Input for the code with validation */}
           <RHFInput
             label="Create Password"
             type="password"
@@ -95,15 +102,8 @@ const SetNewPasswordScreen = () => {
             name="confirm_password"
           />
 
-          <Typography
-            variant="p"
-            className="font-montserrat font-medium text-sm"
-          >
-            Didn’t receive a code? <AnchorTag href="#">Resend</AnchorTag>
-          </Typography>
-
           <div className="flex flex-col gap-8 mt-5">
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" loading={isSubmitting}>
               Submit
             </Button>
           </div>

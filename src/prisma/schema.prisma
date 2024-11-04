@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,99 +12,354 @@ enum AuthMethod {
   GOOGLE
 }
 
+enum UserType {
+  NOMAD
+  HOTEL
+  GUEST
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
-  id                String     @id @default(auto()) @map("_id") @db.ObjectId
-  first_name        String
-  last_name         String
-  email             String     @unique
-  password          String?
-  googleId          String?
-  phone_number      String?    
-  terms             Boolean
-  confirmationOTP   String
-  forgetPasswordOTP String
-  authMethod        AuthMethod @default(EMAIL)
+  id                           String     @id @default(auto()) @map("_id") @db.ObjectId
+  first_name                   String?
+  last_name                    String?
+  hotel_name                   String?
+  user_type                    UserType?
+  email                        String     @unique
+  password                     String?
+  profile_img                  String?
+  googleId                     String?
+  phone_number                 String?
+  terms                        Boolean?
+  confirmation_OTP             String?
+  forget_password_OTP          String?
+  is_verified_user             Boolean?
+  is_user_profile_completed    Boolean?
+  is_user_type_completed       Boolean?
+  is_user_basic_info_completed Boolean?
+  auth_method                  AuthMethod @default(EMAIL)
 
-  Account       Account[]
-  Session       Session[]
-  Authenticator Authenticator[]
+  hotels          hotel_info[]
+  nomad           nomad[]
+  guest           guest[]
+  facilities      facilities[]
+  room_facilities room_facilities[]
+  room_types      room_types[]
+  amenities       amenities[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  nomad_event nomad_event[]
+  hotel_event hotel_event[]
+  booking     booking[]
+}
+
+model facilities {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  hotelFacilites hotel_facilities[]
+}
+
+model hotel_info {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_name       String?
+  hotel_contact_no Int?
+  contact_email    String?
+  description      String?
+  country          String?
+  city             String?
+  address          String?
+  stars            Int?
+  hotel_image      String?
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  hotelFacilites        hotel_facilities[]
+  hotel_rooms           hotel_rooms[]
+  hotelImages           hotel_images[]
+  hotel_internal_nomads hotel_internal_nomads[]
+  nomad_events          nomad_event[]
+  hotel_event           hotel_event[]
 }
 
-model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
-  session_state     String?
+model nomad {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img   String?
+  first_name    String?
+  last_name     String?
+  phone_number  Int?
+  email         String
+  experience    String?
+  electronics   String?
+  manufacturing String?
+  fundraising   String?
+  retails       String?
+  projector     String?
+  video         String?
+  sample        String?
+  end_date      String?
+  start_date    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+  User                  User?                   @relation(fields: [userId], references: [id])
+  userId                String?                 @db.ObjectId
+  hotel_internal_nomads hotel_internal_nomads[]
+  hotel_event           hotel_event[]
+  nomad_event           nomad_event[]
 }
 
-model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model guest {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img  String?
+  first_name   String?
+  last_name    String?
+  phone_number Int?
+  email        String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  User    User?     @relation(fields: [userId], references: [id])
+  userId  String?   @db.ObjectId
+  booking booking[]
 }
 
-model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
-  token      String
-  expires    DateTime
+model hotel_images {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
 
-  @@unique([identifier, token])
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }
 
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @id @map("_id")
-  userId               String  @db.ObjectId
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
+model hotel_facilities {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  hotel_id    String @db.ObjectId
+  facility_id String @db.ObjectId
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, credentialID])
+  facility facilities @relation(fields: [facility_id], references: [id])
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
 }
 
+model hotel_rooms {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
-model Faq {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  question  String
-  answer    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  room_name         String
+  description       String
+  maximum_occupancy String
+  room_type         String
+  price             String
+  start_date        String?
+  end_date          String?
+
+  hotel_id    String        @db.ObjectId
+  hotel       hotel_info    @relation(fields: [hotel_id], references: [id])
+  room_images room_images[]
+
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  room_associated_facilities room_associated_facilities[]
 }
 
-model StaticContent {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+model room_types {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+}
+
+model room_facilities {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id                    String                       @db.ObjectId
+  user                       User                         @relation(fields: [user_id], references: [id])
+  room_associated_facilities room_associated_facilities[]
+}
+
+model room_associated_facilities {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  room_id          String @db.ObjectId
+  room_facility_id String @db.ObjectId
+
+  room          hotel_rooms     @relation(fields: [room_id], references: [id])
+  room_facility room_facilities @relation(fields: [room_facility_id], references: [id])
+}
+
+model room_images {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  img  String
+  name String?
+
+  room_id String      @db.ObjectId
+  room    hotel_rooms @relation(fields: [room_id], references: [id], onDelete: Cascade)
+}
+
+model amenities {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  user_id                    String                       @db.ObjectId
+  user                       User                         @relation(fields: [user_id], references: [id])
+  event_associated_amenities event_associated_amenities[]
+}
+
+model hotel_internal_nomads {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  hotel_id String @db.ObjectId
+  nomad_id String @db.ObjectId
+
+  hotel hotel_info @relation(fields: [hotel_id], references: [id])
+  nomad nomad      @relation(fields: [nomad_id], references: [id])
+}
+
+model nomad_event {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title               String
+  description         String
+  business_category   String
+  official_name       String
+  accomodation_type   String
+  city                String?
+  country             String?
+  address             String?
+  start_date          String?
+  end_date            String?
+  // rules
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
+
+  price String
+
+  hotel_id String?     @db.ObjectId
+  hotel    hotel_info? @relation(fields: [hotel_id], references: [id])
+
+  nomad_id String @db.ObjectId
+  nomad    nomad  @relation(fields: [nomad_id], references: [id])
+
+  event_topics               event_topics[]
+  event_images               event_images[]
+  event_associated_amenities event_associated_amenities[]
+
+  user_id String    @db.ObjectId
+  user    User      @relation(fields: [user_id], references: [id])
+  booking booking[]
+}
+
+model hotel_event {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title               String
+  description         String
+  business_category   String
+  official_name       String
+  start_date          String?
+  end_date            String?
+  // rules
+  check_in            Boolean? @default(false)
+  cancellation_policy Boolean? @default(false)
+  check_out           Boolean? @default(false)
+  no_smoking          Boolean? @default(false)
+  pets_policy         Boolean? @default(false)
+  quiet_hours         Boolean? @default(false)
+  pool_usage          Boolean? @default(false)
+  payment_policy      Boolean? @default(false)
+
+  price String
+
+  nomad_id String @db.ObjectId
+  nomad    nomad  @relation(fields: [nomad_id], references: [id])
+
+  hotel_id String     @db.ObjectId
+  hotel    hotel_info @relation(fields: [hotel_id], references: [id])
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  event_topics               event_topics[]
+  event_associated_amenities event_associated_amenities[]
+  booking                    booking[]
+}
+
+model event_topics {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
   title       String?
   description String?
-  type        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  nomad_event_id String?      @db.ObjectId
+  nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+
+  hotel_event_id String?      @db.ObjectId
+  hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
+}
+
+model event_images {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String?
+  img  String
+
+  nomad_event_id String?      @db.ObjectId
+  nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+}
+
+model event_associated_amenities {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  amenities_id   String  @db.ObjectId
+  nomad_event_id String? @db.ObjectId
+  hotel_event_id String? @db.ObjectId
+
+  nomad_event nomad_event? @relation(fields: [nomad_event_id], references: [id])
+  amenities   amenities    @relation(fields: [amenities_id], references: [id])
+  hotel_event hotel_event? @relation(fields: [hotel_event_id], references: [id])
+}
+
+model booking {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  no_of_guests   Int
+  event_type     String
+  total_price    Int
+  booking_status BookingStatus @default(PENDING)
+
+  guest_id String @db.ObjectId
+  guest    guest  @relation(fields: [guest_id], references: [id])
+
+  hotel_event_id String?      @db.ObjectId
+  hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
+
+  nomad_event_id String?      @db.ObjectId
+  nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

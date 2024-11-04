@@ -1,23 +1,30 @@
 import React from "react";
-import { Button, Pannel, Typography } from "../components";
+import { AnchorTag, Button, Pannel, Typography } from "../components";
+import { paths } from "../contants";
 
 export const Banner = React.memo(() => {
   return (
-    <div className="flex items-center  bg-banner bg-cover bg-center bg-no-repeat w-full h-96 sm:h-80">
-      <Pannel className="flex flex-col md:flex-row w-full items-center gap-3 sm:gap-3 h-full">
-        <div className="flex flex-col justify-center items-center md:items-start gap-3 lg:gap-6 h-full w-full grow">
-          <Typography
-            variant="h3"
-            className="font-semibold text-white md:!leading-50ld text-center sm:text-start"
-          >
-            Are you taking your business <br /> or opening a new branch abroad?
-          </Typography>
-          <Typography variant="h6" className="text-white text-center sm:text-start">
-            Find hotels with in-house consultants to walk you through.
-          </Typography>
-        </div>
-        <Button>Book Now</Button>
-      </Pannel>
-    </div>
+    <Pannel className="flex flex-col md:flex-row w-full items-center gap-10 md:gap-3 h-full ">
+      <div className="flex flex-col justify-center items-center md:items-start gap-3 lg:gap-6 h-full w-full grow">
+        <Typography
+          variant="h3"
+          className="font-semibold  md:!leading-50ld text-center sm:text-start"
+        >
+          Are you taking your business abroad <br className=" hidden md:block"/> or opening a new branch?
+        </Typography>
+        <Typography variant="h6" className=" text-center sm:text-start">
+          Find hotels with in-house consultants to walk you through.
+        </Typography>
+        <AnchorTag href={paths.auth.signUp}>
+          <Button>Signup Now</Button>
+        </AnchorTag>
+      </div>
+      <div className="custom-border-shape overflow-hidden h-full sm:h-72  w-full sm:w-[600px] relative z-10">
+        <img
+          src="/assets/images/hotel.jpg"
+          className="h-full w-full object-cover"
+        />
+      </div>
+    </Pannel>
   );
 });

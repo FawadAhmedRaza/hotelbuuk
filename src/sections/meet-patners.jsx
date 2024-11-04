@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 // Components and Others...
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Iconify, Pannel, Typography } from "../components";
@@ -13,26 +12,68 @@ import "swiper/swiper-bundle.css";
 import "../app/globals.css";
 
 export const MeetOurPatners = React.memo(() => {
-  return (
-    <Pannel className="flex flex-col gap-10 justify-center items-center bg-section-bg p-10">
-      <Typography variant="h3" className="font-semibold">
-        Meet Our Partners
-      </Typography>
+  const swiperRef = React.useRef(null);
+  const [isPrevDisabled, setIsPrevDisabled] = React.useState(true);
+  const [isNextDisabled, setIsNextDisabled] = React.useState(false);
 
-      <div className="w-full relative ">
-        <BgIcon
-          iconName="cuida:arrow-left-outline"
-          iconClass="!size-6"
-          className="swiper-button-prev custom-prev absolute -left-5 lg:-left-10 -mt-8 bg-primary size-8 z-30 top-1/2"
-        />
-        <BgIcon
-          iconName="cuida:arrow-right-outline"
-          iconClass="!size-6"
-          className=" swiper-button-next custom-next absolute -right-5 lg:-right-10 -mt-8 bg-primary size-8  z-30 top-1/2"
-        />
+  const updateNavigation = () => {
+    if (swiperRef.current) {
+      const { isBeginning, isEnd } = swiperRef.current.swiper;
+
+      setIsPrevDisabled(isBeginning); // Disable left button if at the beginning
+      setIsNextDisabled(isEnd); // Disable right button if at the end
+    }
+  };
+
+  React.useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef?.current?.navigation?.update();
+    }
+  }, [swiperRef]);
+
+  return (
+    <Pannel className="flex flex-col gap-10  justify-center items-center bg-section-bg p-10 w-full">
+      <div>
+        <Typography variant="h2" className="text-center font-semibold w-full">
+          Meet Our Partners
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-normal text-center mt-2 text-neutral-400"
+        >
+          Introducing the partners who help us elevate your stay
+        </Typography>
+      </div>
+
+      <div className="w-full relative px-10">
+        {/* Left Arrow Button */}
+        <span
+          className={`swiper-button-prev custom-prev ${isPrevDisabled ? "!opacity-50 !cursor-not-allowed" : ""}`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slidePrev();
+            updateNavigation();
+          }}
+          aria-disabled={isPrevDisabled}
+        >
+          <Iconify iconName="cuida:arrow-left-outline" />
+        </span>
+
+        {/* Right Arrow Button */}
+        <span
+          className={`swiper-button-next custom-next ${
+            isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={() => {
+            swiperRef.current?.swiper?.slideNext();
+            updateNavigation(); 
+          }}
+        >
+          <Iconify iconName="cuida:arrow-right-outline" />
+        </span>
 
         <Swiper
-          spaceBetween={30}
+          ref={swiperRef}
+          spaceBetween={20}
           slidesPerView={4}
           modules={[Navigation]}
           navigation={{
@@ -46,15 +87,12 @@ export const MeetOurPatners = React.memo(() => {
             },
             640: {
               slidesPerView: 2,
-              spaceBetween: 20,
             },
             768: {
               slidesPerView: 3,
-              spaceBetween: 30,
             },
             1024: {
               slidesPerView: 4,
-              spaceBetween: 40,
             },
           }}
         >
@@ -64,20 +102,27 @@ export const MeetOurPatners = React.memo(() => {
                 key={card.id}
                 className="flex flex-col  relative w-fit"
               >
-                <span className="relative">
+                <span className="relative ">
+                  <div className="absolute rounded-3xl inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
                   <img
                     src={card.img}
                     alt={card.hotelName}
                     className="rounded-lg w-full"
                   />
+
                   <BgIcon
                     iconName="skill-icons:instagram"
-                    className="absolute bottom-4 right-4"
+                    className="absolute top-4 right-4"
                   />
+
+                  <Typography
+                    variant="h4"
+                    className="absolute mt-2 font-semibold bottom-4 w-full z-30 text-center text-white "
+                  >
+                    {/* {card.hotelName} */}
+                    Hotel Name
+                  </Typography>
                 </span>
-                <Typography variant="h3" className="mt-4 font-medium z-10 text-center">
-                  {card.hotelName}
-                </Typography>
               </SwiperSlide>
             ))}
           </div>

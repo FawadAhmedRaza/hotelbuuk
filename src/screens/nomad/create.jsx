@@ -1,14 +1,10 @@
+"use client";
+
 import React from "react";
-import { NavBar } from "@/src/sections";
-import { StepperView } from "@/src/sections/nomad";
+import { NomadListView } from "@/src/sections/nomad";
 
 const NomadCreateScreen = React.memo(() => {
-  return (
-    <>
-      <NavBar className="bg-primary static" />
-      <StepperView />
-    </>
-  );
+  return <NomadListView />;
 });
 
 export default NomadCreateScreen;

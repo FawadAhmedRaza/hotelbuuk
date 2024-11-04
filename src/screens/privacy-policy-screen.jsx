@@ -1,6 +1,6 @@
-'use client'
-import React, { useEffect, useState } from "react";
-import { Footer, NavBar, QAContent } from "../sections";
+import React from "react";
+import { Footer, Layout, NavBar, QAContent } from "../sections";
+import ConditionsContent from "../sections/conditions-content";
 import { HeadingBanner } from "../components";
 import { getStaticContentByType } from "../actions/staticContent.action";
 
@@ -32,16 +32,14 @@ const PrivacyPolicy = React.memo(() => {
   const { description,updatedAt } = privacyAndPolicy;
   return (
     <main className="relative">
-      <NavBar />
-      <HeadingBanner
-        heading="Privacy Policy"
-        text="We care about your privacy. Seriously!"
-        // text={`Last Updated on ${formatDate(updatedAt)}`}
-        className="bg-privacy"
-      />
-      <QAContent  description={description} privacyPolicyLoading={privacyPolicyLoading}/>
-
-      <Footer />
+      <Layout>
+        <HeadingBanner
+          heading="Privacy Policy"
+          text="We care about your privacy. Seriously!"
+          className="bg-privacy"
+        />
+        <QAContent />
+      </Layout>
     </main>
   );
 });

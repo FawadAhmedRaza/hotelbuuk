@@ -10,16 +10,13 @@ export const Breadcrumb = React.memo(
       >
         {/* Title */}
         {title && (
-          <Typography
-            variant="h3"
-            className={`  ${titleClass}`}
-          >
+          <Typography variant="h3" className={`  ${titleClass}`}>
             {title}
           </Typography>
         )}
 
         {/* action */}
-        {action && <div className=" grow flex justify-end "> {action}</div>}
+        {action && <div className="grow flex justify-end"> {action}</div>}
       </div>
     );
   }

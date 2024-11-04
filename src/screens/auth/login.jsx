@@ -2,8 +2,20 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 
-// Components and Others...
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { signIn } from "next-auth/react";
+import { paths } from "@/src/contants";
+
+import {
+  RHFCheckbox,
+  RHFFormProvider,
+  RHFInput,
+} from "@/src/components/hook-form";
+
 import {
   AnchorTag,
   Button,
@@ -12,21 +24,9 @@ import {
   Pannel,
   Typography,
 } from "@/src/components";
-import {
-  RHFCheckbox,
-  RHFFormProvider,
-  RHFInput,
-} from "@/src/components/hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { paths } from "@/src/contants";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/src/auth/jwt/auth-context";
-import { signIn } from "next-auth/react";
 
 const LoginScreen = () => {
-  const router = useRouter();
-  const {login} = useAuthContext()
+  const { login } = useAuthContext();
 
   const SignUpSchema = Yup.object().shape({
     email: Yup.string()
@@ -39,7 +39,6 @@ const LoginScreen = () => {
 
   const methods = useForm({
     resolver: yupResolver(SignUpSchema),
-
     defaultValues: {
       email: "",
       password: "",
@@ -47,14 +46,11 @@ const LoginScreen = () => {
   });
 
   const {
-    reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
-  console.log(errors);
-
   const handleSubmit = async (data) => {
-      await login(data)    
+    await login(data);
   };
 
   return (
@@ -62,9 +58,16 @@ const LoginScreen = () => {
       <div
         className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full`}
       >
-        <Typography variant="h3" className="font-bold text-primary md:mb-8">
-          Hotelbuuk
-        </Typography>
+        <div className="flex items-center gap-2">
+          <img
+            src="/assets/images/transperent-logo/transperent/PINK.png"
+            alt="log"
+            className=" w-16"
+          />
+          <Typography variant="h3" className="font-bold text-primary">
+            Hotelbuuk
+          </Typography>
+        </div>
         <div className="flex flex-col justify-center  items-center lg:items-start lg:justify-start gap-3 mb-5 w-full">
           <Typography variant="h2" className="font-semibold">
             Login
@@ -100,20 +103,23 @@ const LoginScreen = () => {
             </AnchorTag>
           </div>
           <div className="flex flex-col gap-4 mt-5">
-            <Button disabled={isSubmitting} type="submit" className="w-full">
-              {isSubmitting ? "Submitting..." : "Login"}
+            <Button loading={isSubmitting} type="submit" className="w-full">
+              Login
             </Button>
             <Typography
               variant="p"
               className=" !text-sm w-full text-center text-black font-medium font-montserrat"
             >
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <AnchorTag href={paths.auth.signUp}>Sign up </AnchorTag>
             </Typography>
 
             <Line className="my-2">Or Login with</Line>
 
-            <ImgButton onClick={()=>signIn("google")} src="/assets/images/google.png" />
+            <ImgButton
+              onClick={() => signIn("google")}
+              src="/assets/images/google.png"
+            />
           </div>
         </RHFFormProvider>
       </div>

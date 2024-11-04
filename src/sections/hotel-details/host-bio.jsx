@@ -17,9 +17,14 @@ export const HostBio = React.memo(() => {
       <div className="flex flex-col  bg-section-bg rounded-lg  shadow-custom-shadow-sm overflow-hidden ">
         <div className="flex flex-col  gap-5 bg-white rounded-b-lg w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start lg:gap-16 ">
-            <Avatar src="/assets/images/host.png" className=" size-24 lg:!size-32" />
-            <div className="flex flex-col gap-3 ">
-              <Typography variant="h4">John</Typography>
+            <Avatar
+              src="/assets/images/host.png"
+              className=" size-24 lg:!size-32"
+            />
+            <div className="flex flex-col gap-3 mr-3 ">
+              <Typography variant="h4" className="font-semibold ">
+                John
+              </Typography>
               <Typography variant="p" className="font-medium ">
                 Paris, france
               </Typography>
