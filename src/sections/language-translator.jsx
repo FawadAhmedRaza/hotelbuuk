@@ -22,7 +22,7 @@ const allLangs = [
   },
 ];
 
-export const LangaugeTranslator = React.memo(() => {
+export const LangaugeTranslator = React.memo(({ mainClass, iconClass }) => {
   const { isOpen, toggleDrawer } = useBoolean();
   const popoverRef = useRef(null);
   const pathname = usePathname(); // Use usePathname instead of useRouter
@@ -64,12 +64,6 @@ export const LangaugeTranslator = React.memo(() => {
     return null;
   }
 
-
-  const isDashboardPage =
-    pathname.startsWith(paths.hotelDashboard.root) ||
-    pathname.startsWith(paths.guestDashboard.root) ||
-    pathname.startsWith(paths.nomadDashboard.root);
-
   const switchLanguage = (lang) => {
     setActiveLang(lang);
     toggleDrawer();
@@ -79,37 +73,29 @@ export const LangaugeTranslator = React.memo(() => {
     window.location.reload();
   };
 
-
   return (
     <div className="relative w-fit">
       <div
         ref={popoverRef}
-        className={cn(
-          "flex items-center gap-2 sm:gap-3 cursor-pointer px-1 py-1 sm:px-4 sm:py-2.5 border rounded-full hover:shadow-md transition-all",
-          isDashboardPage
-            ? "bg-transparent border-white border-[1.5px] text-white hover:bg-black hover:bg-opacity-20"
-            : " border-gray-600 text-black "
-        )}
+        className={`flex items-center gap-2 sm:gap-3  cursor-pointer px-1 py-1 sm:px-4 sm:py-2.5  rounded-full hover:shadow-md  bg-transparent border-white border-[1.5px] text-white hover:bg-black hover:bg-opacity-20 transition-all ${mainClass}`}
         onClick={toggleDrawer}
       >
         <Iconify
           iconName="et:global"
-          className={cn(
-            "hidden sm:block size-4 sm:size-5",
-            isDashboardPage ? "text-white" : "text-gray-600"
-          )}
+          className={`hidden sm:block size-4 sm:size-5 ${iconClass}`}
         />
-        <h2 className="text-sm hidden sm:block">{currentLanguage=="de"?"German":"English"}</h2>
+        <h2 className="text-sm hidden sm:block">
+          {currentLanguage == "de" ? "German" : "English"}
+        </h2>
         <Iconify
           iconName="iconamoon:arrow-down-2"
-          className={cn(
-            "size-5 -ml-1 hidden sm:block",
-            isDashboardPage ? "text-white" : "text-gray-600"
-          )}
+          className={` size-5 -ml-1 hidden sm:block ${iconClass}`}
         />
         <span className="flex sm:hidden justify-center items-center size-9  rounded-full">
           <Iconify
-            iconName={currentLanguage=="en"? "flagpack:gb-nir" : "flagpack:de"}
+            iconName={
+              currentLanguage == "en" ? "flagpack:gb-nir" : "flagpack:de"
+            }
             className="size-5 text-gray-600"
           />
         </span>

@@ -13,13 +13,11 @@ import {
 import { getAllEvents } from "../redux/all-events/thunk";
 
 export const PreviewHotels = () => {
-  const swiperRef = React.useRef(null);
   const dispatch = useDispatch();
   const { events, isLoading } = useSelector((state) => state.allEvents);
 
   const [isEventLoading, setIsEventLoading] = useState(true);
 
-  console.log("All events", events);
 
   useEffect(() => {
     const fetchEvents = async () => {
