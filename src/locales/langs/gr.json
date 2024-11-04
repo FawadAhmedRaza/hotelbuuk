@@ -1,0 +1,18 @@
+{
+  "common": {
+    "checkin": "Einchecken",
+    "checkout": "Auschecken",
+    "search": "Suche"
+  },
+  "home": {
+    "hero": {
+      "stay": "Aufenthalt",
+      "heading": "Für Geschäftseinblicke",
+      "description": "Unsere Partnerhotels bieten Geschäftstouren und Markteinblicke für Unternehmensführer",
+      "filter": {
+        "destination": "Ziele",
+        "destinationPlaceholder": "Moxy Dortmund City"
+      }
+    }
+  }
+}

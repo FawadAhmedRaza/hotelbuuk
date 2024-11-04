@@ -5,6 +5,7 @@ import { useBoolean } from "../hooks";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation"; // Import usePathname
 import { paths } from "../contants";
+import i18next from "i18next";
 
 const allLangs = [
   {
@@ -28,6 +29,7 @@ export const LangaugeTranslator = React.memo(() => {
   const handleLangaugeChange = (lng) => {
     setActiveLang(lng);
     toggleDrawer();
+    i18next.changeLanguage(lng?.value);
   };
 
   const isDashboardPage =

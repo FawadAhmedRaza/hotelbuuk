@@ -1,4 +1,5 @@
-import { DM_Sans, Montserrat , Poppins} from "next/font/google";
+import "../locales/i18n";
+import { DM_Sans, Montserrat, Poppins } from "next/font/google";
 import LocalFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/src/auth";

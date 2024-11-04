@@ -13,11 +13,12 @@ import { GuestDashboardMenu } from "./menu-links";
 import { LangaugeTranslator } from "@/src/sections";
 import { cn } from "@/src/libs/cn";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useTranslation } from "react-i18next";
 
 export const GuestDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
-
+  const { t } = useTranslation()
   console.log("guest User", user);
 
   return (
@@ -67,7 +68,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
                 variant="p"
                 className="hidden md:block font-medium !text-xs text-white text-nowrap"
               >
-                {`Hi, ${user?.first_name}`}
+                {`${t("common.hi")}, ${user?.first_name}`}
               </Typography>
             )}
             {user?.profile_img ? (

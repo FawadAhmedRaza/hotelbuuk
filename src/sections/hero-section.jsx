@@ -1,9 +1,12 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { Button, Pannel, Typography } from "../components";
 import { Booking } from ".";
+import { useTranslation } from "react-i18next";
 
 export const HeroSection = React.memo(() => {
+  const {t} = useTranslation()
   return (
     <Pannel className=" relative  w-full h-[80vh] sm:h-[75vh] bg-hero bg-center bg-no-repeat bg-cover  py-10 pt-40  md:py-40">
       <div className="flex justify-center items-center h-full md:h-fit">
@@ -18,16 +21,15 @@ export const HeroSection = React.memo(() => {
         <div className="flex flex-col  justify-center lg:justify-start gap-5 z-10 w-full h-full  ">
           <div className=" !text-[3rem] md:!text-[3.3rem] text-white font-bold uppercase  !custom-line  font-poppins  ">
             <span className=" bg-[#bd2c94bb] text-opacity-80 text-[#ffffffea] px-3 rounded-md ">
-              Stay
+              {t('home.hero.stay')}
             </span>
-            <br /> For Business Insights
+            <br /> {t('home.hero.heading')}
           </div>
           <Typography
             variant="h6"
             className="  text-white  !font-helvetica  sm:mt-0 -mt-2"
           >
-            Our partner hotels offer business tours and market insights to
-            business leaders
+           {t("home.hero.description")}
           </Typography>
         </div>
       </div>
