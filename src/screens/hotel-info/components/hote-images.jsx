@@ -11,7 +11,7 @@ const HotelImages = () => {
     Array.from({ length: 10 }, (value, index) => index)
   );
 
-  const { getValues, setValue, watch } = useFormContext();
+  const { setValue, watch } = useFormContext();
   const uploaderRef = useRef();
   const [uploadedImages, setUploadedImages] = useState([]);
   const fieldImages = watch("images") || [];

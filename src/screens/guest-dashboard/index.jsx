@@ -12,11 +12,12 @@ import GuestProfileAlert from "./sections/profile-alert";
 import GuestCards from "./sections/components/cards";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import RecentBookingListView from "./sections/components/recent-booking-list-view";
+import { useTranslation } from "react-i18next";
 
 const GuestDashboardSection = () => {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
-
+  const {t} = useTranslation()
   const [alert, setShowAlert] = useState(false);
   const { isLoading } = useSelector((state) => state.bookings.getGuestBookings);
 
@@ -46,28 +47,13 @@ const GuestDashboardSection = () => {
               <RoomListSkeleton />
             ) : (
               <>
-                <Typography variant="h4">Upcoming Events</Typography>
+                <Typography variant="h4">{t("common.upev")}</Typography>
                 <RecentBookingListView />
               </>
             )}
           </div>
         </div>
       </div>
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div>
-          <MountChart />
-        </div>
-        <div>
-          <ThisMonthBooking />
-        </div>
-        <div>
-          <CheckInChart />
-        </div>
-        <div>
-          <CheckOutChart />
-        </div>
-      </div> */}
     </Pannel>
   );
 };

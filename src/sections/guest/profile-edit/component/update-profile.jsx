@@ -24,6 +24,7 @@ import { paths } from "@/src/contants";
 import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { useBoolean } from "@/src/hooks";
+import { useTranslation } from "react-i18next";
 
 const UpdateGuestProfile = ({ defaultValues }) => {
   const schema = yup.object({
@@ -40,6 +41,7 @@ const UpdateGuestProfile = ({ defaultValues }) => {
   const { user, setUser, logout } = useAuthContext();
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { isOpen, setIsOpen, toggleDrawer } = useBoolean();
 
@@ -116,24 +118,24 @@ const UpdateGuestProfile = ({ defaultValues }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <RHFInput
               name="first_name"
-              placeholder="Enter your First Name"
-              label="First Name"
+              placeholder={t("form.placeholder.fn")}
+              label={t("form.labels.fn")}
             />
             <RHFInput
               name="last_name"
-              placeholder="Enter your Last Name"
-              label="Last Name"
+              placeholder={t("form.placeholder.ln")}
+              label={t("form.labels.ln")}
             />
             <RHFInput
               name="phone_number"
               type="number"
-              placeholder="Enter your Phone Number"
-              label="Phone Number"
+              placeholder={t("form.placeholder.pn")}
+              label={t("form.labels.pn")}
             />
             <RHFInput
               name="email"
-              placeholder="Enter your Email"
-              label="Email"
+              placeholder={t("form.placeholder.em")}
+              label={t("form.labels.em")}
             />
           </div>
         </div>
@@ -143,24 +145,23 @@ const UpdateGuestProfile = ({ defaultValues }) => {
             className="!bg-red-600"
             onClick={() => setIsOpen(!isOpen)}
           >
-            Delete profile
+            {t("common.delp")}
           </Button>
           <Button type="submit" loading={isSubmitting}>
-            Save
+          {t("common.save")}
           </Button>
         </div>
       </RHFFormProvider>
       {isOpen && (
         <DeleteModal
           isLoading={isLoading}
-          title="Delete Profile"
+          title= {t("common.delp")}
           isOpen={isOpen}
           onClose={toggleDrawer}
           handleDelete={handleDelete}
         >
           <Typography variant="p">
-            Are you sure you want to delete your profile ? this action will
-            delete all of your data?
+          {t("common.delConf")}
           </Typography>
         </DeleteModal>
       )}

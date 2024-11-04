@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 
 import { CustomTable, Pagination } from "@/src/components/custom-table";
-import { Button, Iconify, ProfileAvatar, Typography } from "@/src/components";
-import { useDispatch, useSelector } from "react-redux";
+import { Button,  ProfileAvatar, Typography } from "@/src/components";
+import {  useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
 import { formatDate } from "@/src/utils/formate-date";
+import { useTranslation } from "react-i18next";
 
-const header = [
-  { id: 1, label: "Booking id" },
-  { id: 2, label: "Event" },
-  { id: 3, label: "Location" },
-  { id: 4, label: "Status" },
-  { id: 5, label: "Nomad" },
-  { id: 6, label: "Check-in" },
-  { id: 7, label: "Check-out" },
-  { id: 8, label: "Total guests" },
-  { id: 9, label: "Total days" },
-  { id: 10, label: "Event price" },
-  { id: 11, label: "Service fee" },
-  { id: 12, label: "Total price" },
+const header  = (t)=> [
+  { id: 1, label: t("listing.labels.bki") },
+  { id: 2, label: t("common.ev") },
+  { id: 3, label: t("common.loc") },
+  { id: 4, label: t("common.stat") },
+  { id: 5, label: t("links.nd") },
+  { id: 6, label: t("common.checkin") },
+  { id: 7, label: t("common.checkout") },
+  { id: 8, label: t("listing.labels.tg") },
+  { id: 9, label: t('listing.labels.td')},
+  { id: 10, label: t('listing.labels.ep') },
+  { id: 11, label: t('listing.labels.sf')},
+  { id: 12, label: t('listing.labels.tp') },
 ];
 
 const GuestBookingList = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+  const {t} = useTranslation()
   const { guestBookings } = useSelector((state) => state.bookings);
 
   const totalPages = React.useMemo(() => {
@@ -45,7 +46,7 @@ const GuestBookingList = () => {
     <div className="border border-gray-200 rounded-xl">
       <CustomTable
         items={items}
-        TABLE_HEADER={header}
+        TABLE_HEADER={header(t)}
         enableSelection={false}
         renderRow={(row) => {
           let user =

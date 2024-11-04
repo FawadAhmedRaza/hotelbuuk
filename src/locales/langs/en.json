@@ -1,11 +1,15 @@
 {
   "common": {
     "checkin": "Check-in",
+    "palt":"Your profile is incomplete. complete now",
     "checkout": "Check-out",
+    "upev":"Upcoming Event",
     "search": "Search",
+    "noNtf": "No notifications available.",
     "showmore": "Show More",
     "signup": "Signup Now",
     "daysperguest": "days per guest",
+    "stat":"Status",
     "ask": "Ask",
     "exploreMoreBussinessFacts": "Explore More Business Facts",
     "showless": "Show less",
@@ -16,6 +20,8 @@
     "delp": "Delete profile",
     "save": "Save",
     "submit": "Submit",
+    "ev":"Event",
+    "loc":"Location",
     "delConf": "Are you sure you want to delete your profile ? this action will delete all of your data?",
     "night": "Night",
     "guests": "Guests",
@@ -36,6 +42,60 @@
     "showing": "Showing",
     "place": "Place",
     "of": "of"
+  },
+  "listing": {
+    "labels": {
+      "n": "Name",
+      "em": "Email",
+      "bki":"Booking Id",
+      "ph": "Phone",
+      "avl": "Availibility",
+      "exp": "Experience",
+      "elec": "Electronics",
+      "manuf": "Manufacturing",
+      "fund": "Fundraising",
+      "rtl": "Retails",
+      "prj": "Projector",
+      "v": "Video",
+      "smp": "Sample",
+      "act": "Actions",
+      "cont": "Contact",
+      "loc": "Location",
+      "des": "Description",
+      "rat": "Ratings",
+      "faclt": "Facilities",
+      "tg":"Total guests",
+      "td":"Total days",
+      "ep":"Event price",
+      "sf":"Service fee",
+      "tp":"Total price"
+    }
+  },
+  "widgets": {
+    "tot": "TOTAL",
+    "pend": "PENDING",
+    "acpt": "ACCEPTED",
+    "rej": "REJECTED",
+    "capitalize": {
+      "tot": "Total",
+      "pend": "Pending",
+      "acpt": "Accepted",
+      "rej": "Rejected"
+    }
+  },
+  "form": {
+    "labels": {
+      "fn": "First Name",
+      "ln": "Last Name",
+      "pn": "Phone Number",
+      "em": "Email"
+    },
+    "placeholder": {
+      "fn": "Enter your First Name",
+      "ln": "Enter your Last Name",
+      "pn": "Enter your Phone Number",
+      "em": "Enter your Email"
+    }
   },
   "home": {
     "hero": {
@@ -114,6 +174,7 @@
     "ev": "Events",
     "ht": "Hotels",
     "htl": "Hotels Lists",
+    "ndl": "Nomads Lists",
     "rm": "Rooms",
     "msg": "Messages",
     "st": "Settings",

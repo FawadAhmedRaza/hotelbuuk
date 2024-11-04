@@ -19,25 +19,26 @@ import { getHotelInfo } from "@/src/redux/hotel-info/thunk";
 import { StarRating } from "@/src/components/star-rating";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
-const header = [
-  { id: 1, label: "Name" },
-  { id: 2, label: "Email" },
-  { id: 3, label: "Contact" },
-  { id: 4, label: "Location" },
-  { id: 5, label: "Description" },
-  { id: 6, label: "Rating" },
-  { id: 7, label: "Facilities" },
-  { id: 8, label: "Actions" },
+const header = (t) => [
+  { id: 1, label: t("listing.labels.n") },
+  { id: 2, label: t("listing.labels.em") },
+  { id: 3, label: t("listing.labels.cont") },
+  { id: 4, label: t("listing.labels.loc") },
+  { id: 5, label: t("listing.labels.des") },
+  { id: 6, label: t("listing.labels.rat") },
+  { id: 7, label: t("listing.labels.faclt") },
+  { id: 8, label: t("listing.labels.act") },
 ];
+
 const HotelsListSection = React.memo(() => {
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const { t } = useTranslation();
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-  console.log("hotel list", hotels);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotels?.length / rowsPerPage);
@@ -69,23 +70,17 @@ const HotelsListSection = React.memo(() => {
     <>
       {!isLoading ? (
         <Pannel className="flex flex-col gap-10">
-          <Breadcrumb title="Hotels List" />
+          <Breadcrumb title={t("links.htl")} />
           <div className="border border-gray-200 rounded-xl">
             <CustomTable
               items={items}
-              TABLE_HEADER={header}
+              TABLE_HEADER={header(t)}
               enableSelection={false}
               renderRow={(row) => (
                 <>
-                {console.log('row',row)}
+                  {console.log("row", row)}
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
-                      {/* {!row?.hotel_image ? (
-                        <Iconify
-                          iconName="carbon:user-avatar-filled"
-                          className="!size-10  rounded-full object-cover text-gray-500"
-                        />
-                      ) : ( */}
                       <ProfileAvatar
                         src={row?.hotel_image}
                         type={"server"}
@@ -93,7 +88,6 @@ const HotelsListSection = React.memo(() => {
                         alt={row?.hotel_name}
                         className="  h-10 w-10 rounded-full object-cover"
                       />
-                      {/* )} */}
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"
@@ -171,11 +165,11 @@ const HotelsListSection = React.memo(() => {
 
                   <td className="px-6 py-4">
                     <div className="flex gap-1 items-center">
-                        <Iconify
-                          iconName="tabler:mail-filled"
-                          onClick={()=>router.push(`/chat/${row.user_id}`)}
-                          className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
-                        />
+                      <Iconify
+                        iconName="tabler:mail-filled"
+                        onClick={() => router.push(`/chat/${row.user_id}`)}
+                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                      />
                     </div>
                   </td>
                 </>

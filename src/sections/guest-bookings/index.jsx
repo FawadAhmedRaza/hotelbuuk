@@ -12,11 +12,12 @@ import { Breadcrumb, Pannel } from "@/src/components";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import GuestBookingList from "./list/guest-booking-list";
 import BookingsOverViewCards from "../hotel-bookings/overview-cards/bookings-over-view-cards";
+import { useTranslation } from "react-i18next";
 
 const GuestBookingListOverview = () => {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
-
+  const {t} = useTranslation()
   const { isLoading } = useSelector((state) => state.bookings.getGuestBookings);
   const { guestBookings } = useSelector((state) => state.bookings);
 
@@ -33,15 +34,15 @@ const GuestBookingListOverview = () => {
     {
       id: 1,
       icon: "tabler:sum",
-      title: "TOTAL",
+      title: t("widgets.tot"),
       subTitle: "",
       value: guestBookings?.length || 0,
     },
     {
       id: 2,
       icon: "carbon:pending",
-      title: "PENDING",
-      subTitle: "Pending",
+      title: t("widgets.pend"),
+      subTitle: t("widgets.capitalize.pend"),
       value:
         guestBookings?.filter((item) => item?.booking_status === "PENDING")
           ?.length || 0,
@@ -49,8 +50,8 @@ const GuestBookingListOverview = () => {
     {
       id: 1,
       icon: "fluent-mdl2:completed",
-      title: "ACCEPTED",
-      subTitle: "Accepted",
+      title: t("widgets.acpt"),
+      subTitle: t("widgets.capitalize.acpt"),
       value:
         guestBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
@@ -58,8 +59,8 @@ const GuestBookingListOverview = () => {
     {
       id: 1,
       icon: "material-symbols:cancel-outline",
-      title: "REJECTED",
-      subTitle: "Rejected",
+      title:  t("widgets.rej"),
+      subTitle: t("widgets.capitalize.rej"),
       value:
         guestBookings?.filter((item) => item?.booking_status === "REJECTED")
           ?.length || 0,

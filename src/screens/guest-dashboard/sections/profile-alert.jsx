@@ -5,10 +5,11 @@ import React from "react";
 import Link from "next/link";
 import { paths } from "@/src/contants";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useTranslation } from "react-i18next";
 
-const GuestProfileAlert = ({ setShowAlert }) => {
+const GuestProfileAlert = () => {
   const { user } = useAuthContext();
-
+  const { t } = useTranslation();
   return (
     <div
       role="alert"
@@ -20,7 +21,7 @@ const GuestProfileAlert = ({ setShowAlert }) => {
           className={`font-medium text-md text-primary hover:underline font-montserrat`}
           rel="noopener noreferrer"
         >
-          Your profile is incomplete. complete now
+          {t("common.palt")}
         </Link>
       </div>
 

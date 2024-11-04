@@ -12,22 +12,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
-const header = [
-  { id: 1, label: "Name" },
-  { id: 2, label: "Email" },
-  { id: 3, label: "Phone" },
-  { id: 4, label: "Availibility" },
-  { id: 5, label: "Experience" },
-  { id: 6, label: "Electronics" },
-  { id: 7, label: "Manufacturing" },
-  { id: 8, label: "Fundraising" },
-  { id: 9, label: "Retails" },
-  { id: 10, label: "Projector" },
-  { id: 11, label: "Video" },
-  { id: 12, label: "Sample" },
-  { id: 13, label: "Actions" },
+const header = (t) => [
+  { id: 1, label: t("listing.labels.n") },
+  { id: 2, label: t("listing.labels.em") },
+  { id: 3, label: t("listing.labels.ph") },
+  { id: 4, label: t("listing.labels.avl") },
+  { id: 5, label: t("listing.labels.exp") },
+  { id: 6, label: t("listing.labels.elec") },
+  { id: 7, label: t("listing.labels.manuf") },
+  { id: 8, label: t("listing.labels.fund") },
+  { id: 9, label: t("listing.labels.rtl") },
+  { id: 10, label: t("listing.labels.prj") },
+  { id: 11, label: t("listing.labels.v") },
+  { id: 12, label: t("listing.labels.smp") },
+  { id: 13, label: t("listing.labels.act") },
 ];
+
 const NomadsListSection = React.memo(() => {
   const dispatch = useDispatch();
   const router = useRouter()
@@ -36,7 +38,7 @@ const NomadsListSection = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { nomads, isLoading } = useSelector((state) => state.nomadProfile);
-
+  const {t} = useTranslation()
   const totalPages = React.useMemo(() => {
     return Math.ceil(nomads?.length / rowsPerPage);
   }, [nomads, rowsPerPage]);
@@ -67,27 +69,16 @@ const NomadsListSection = React.memo(() => {
     <>
       {!isLoading ? (
         <Pannel className="flex flex-col gap-10">
-          <Breadcrumb title="Nomads List" />
+          <Breadcrumb title={t("links.ndl")} />
           <div className="border border-gray-200 rounded-xl">
             <CustomTable
               items={items}
-              TABLE_HEADER={header}
+              TABLE_HEADER={header(t)}
               enableSelection={false}
               renderRow={(row) => (
                 <>
                   <td key={row?.id} className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
-                      {/* <img
-                        src="/assets/images/hotel-det-1.png"
-                        alt="avatar"
-                        className="h-8 w-8 rounded-full"
-                      /> */}
-                      {/* {!row?.profile_img ? (
-                        <Iconify
-                          iconName="carbon:user-avatar-filled"
-                          className="!size-10  rounded-full object-cover text-gray-500"
-                        />
-                      ) : ( */}
                       <ProfileAvatar
                         src={row?.profile_img}
                         type={"server"}
@@ -95,8 +86,6 @@ const NomadsListSection = React.memo(() => {
                         alt={row?.first_name}
                         className="  h-10 w-10 rounded-full object-cover"
                       />
-                      {/* )} */}
-
                       <div className="flex gap-1">
                         <Typography
                           variant="p"

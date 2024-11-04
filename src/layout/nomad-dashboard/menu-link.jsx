@@ -25,41 +25,41 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const MenuLinks = [
     {
       id: 1,
-      label: t("link.h"),
+      label: t("links.h"),
       path: "/nomad-dashboard",
     },
     {
       id: 2,
-      label: t("link.nt"),
+      label: t("links.nt"),
       path: paths.nomadDashboard.notifications,
     },
     {
       id: 3,
-      label: t("link.bk"),
+      label: t("links.bk"),
       path: paths.nomadDashboard.bookings.root,
     },
     {
       id: 4,
-      label: t("link.ev"),
+      label: t("links.ev"),
       path: paths.nomadDashboard.events.root,
     },
     {
       id: 6,
-      label: t("link.ht"),
+      label: t("links.ht"),
       path: "/nomad-dashboard/hotels-list",
     },
     {
       id: 7,
-      label: t("link.msg"),
+      label: t("links.msg"),
       path: paths.chats.root,
     },
     {
       id: 8,
-      label: t("link.st"),
+      label: t("links.st"),
       children: [
-        { id: 4, title: t("link.pr"), path: `/nomad/profile/${user?.id}` },
-        { id: 5, title: t("link.tc"), path: "" },
-        { id: 5, title: t("link.pp"), path: "" },
+        { id: 4, title: t("links.pr"), path: `/nomad/profile/${user?.id}` },
+        { id: 5, title: t("links.tc"), path: "" },
+        { id: 5, title: t("links.pp"), path: "" },
       ],
     },
   ];
@@ -180,40 +180,40 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
 export const MenuLinks = (t)=> [
   {
     id: 1,
-    label: t("link.h"),
+    label: t("links.h"),
     path: "/nomad-dashboard",
   },
   {
     id: 2,
-    label: t("link.nt"),
+    label: t("links.nt"),
     path: "",
   },
   {
     id: 3,
-    label:t("link.bk"),
+    label:t("links.bk"),
     path: "",
   },
   {
     id: 6,
-    label: t("link.ht"),
+    label: t("links.ht"),
     path: "",
     children: [
-      { id: 1, title: t("link.htl"), path: paths.nomadDashboard.hotels },
+      { id: 1, title: t("links.htl"), path: paths.nomadDashboard.hotels },
     ],
   },
   {
     id: 7,
-    label: t("link.msg"),
+    label: t("links.msg"),
     path: "",
   },
   {
     id: 8,
-    label: t("link.st"),
+    label: t("links.st"),
     path: "",
     children: [
-      { id: 4, title: t("link.pr"), path: "" },
-      { id: 5, title: t("link.tc"), path: "" },
-      { id: 5, title:t("link.pp"), path: "" },
+      { id: 4, title: t("links.pr"), path: "" },
+      { id: 5, title: t("links.tc"), path: "" },
+      { id: 5, title:t("links.pp"), path: "" },
     ],
   },
 ];
