@@ -7,7 +7,14 @@ import HotelCard from "./hotel-card";
 import HotelTab from "./hotel-tab";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEvents } from "@/src/redux/all-events/thunk";
-import { eventsFilter, filterEvents } from "@/src/libs/helper";
+import {
+  eventsFilter,
+  filterEvents,
+  filterEventsByDateAndDestination,
+} from "@/src/libs/helper";
+import { useBoolean } from "@/src/hooks";
+import MobileFilter from "./mob-filter";
+import { useSearchParams } from "next/navigation";
 
 const HotelShowSection = () => {
   const initialState = {
@@ -20,6 +27,12 @@ const HotelShowSection = () => {
 
   const [filters, setFilters] = useState(initialState);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const searchParams = useSearchParams();
+
+  // Extract query parameters from the URL
+  const destination = searchParams.get("destination") || "";
+  const checkIn = searchParams.get("check_in") || "";
+  const checkOut = searchParams.get("check_out") || "";
 
   const { events, isLoading } = useSelector((state) => state.allEvents);
 
@@ -33,60 +46,52 @@ const HotelShowSection = () => {
     fetchEvents();
   }, []);
 
+  console.log("Search params:", destination, checkIn, checkOut);
+
   useEffect(() => {
-    if (!isLoading) {
-      const filteredResults = events.filter((event) => {
-        const titleMatches = event?.title
-          ?.toLowerCase()
-          .includes(filters?.event_name?.toLowerCase());
-
-        // Price validation
-        const priceValid =
-          filters.price !== null
-            ? parseFloat(event.price) <= filters.price
-            : true;
-
-        // Rating validation
-        const eventRating = (event?.hotel && event.hotel?.stars) || 0; // Default to 0 if no rating
-        const ratingValid =
-          filters.rating.length > 0
-            ? filters.rating.includes(eventRating)
-            : true;
-
-        // Location validation
-        const eventLocation = event.city || event.hotel?.city;
-        const locationValid =
-          filters.location.length > 0
-            ? filters.location.includes(eventLocation)
-            : true;
-
-        // Nomad validation
-        const nomadValid =
-          filters.nomad.length > 0
-            ? filters.nomad.includes(event.nomad_id)
-            : true;
-
-        // Return true if all conditions are met
-        return (
-          titleMatches &&
-          priceValid &&
-          ratingValid &&
-          locationValid &&
-          nomadValid
-        );
-      });
-
+    if (!isLoading && events.length > 0) {
+      const filteredResults = eventsFilter(events, filters);
       setFilteredEvents(filteredResults);
     }
   }, [filters, events, isLoading]);
+
+  useEffect(() => {
+    if (!isLoading && events.length > 0) {
+      const finalFilteredResults = filterEventsByDateAndDestination(
+        events,
+        checkIn,
+        checkOut,
+        destination
+      );
+
+      setFilteredEvents(finalFilteredResults);
+    }
+  }, [events, isLoading, checkIn, checkOut, destination]);
+
+  const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+  {
+    isOpen && (
+      <MobileFilter
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClick={toggleDrawer}
+        setFilters={setFilters}
+      />
+    );
+  }
 
   return (
     <Pannel className="!pt-0 flex gap-7">
       <div className=" md:w-[25%] sm:flex hidden">
         <SideFilterSection setFilters={setFilters} />
       </div>
+
       <div className=" md:w-[75%]">
-        <HotelTab filteredEvents={filteredEvents} />
+        <HotelTab
+          filteredEvents={filteredEvents}
+          setFilters={setFilters}
+          toggleDrawer={toggleDrawer}
+        />
       </div>
     </Pannel>
   );

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
-export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children }) => {
+export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children ,DrawerClass}) => {
   const drawerRef = useRef(null);
 
   // Lock or unlock body scroll based on drawer state
@@ -33,7 +33,7 @@ export const Drawer = ({ isDrawerOpen, setIsDrawerOpen, children }) => {
     >
       <div
         ref={drawerRef}
-        className={`fixed top-0 left-0 h-full z-50 bg-white p-6 w-full min-450:w-96 transition-transform duration-300 ease-in-out transform ${
+        className={`fixed top-0 left-0 h-full z-50 bg-white p-6 w-full min-450:w-96 transition-transform ${DrawerClass}  duration-300 ease-in-out transform ${
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

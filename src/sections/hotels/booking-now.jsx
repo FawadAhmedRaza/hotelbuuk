@@ -20,10 +20,18 @@ import { RHFCalendarInput } from "@/src/components/calendar-input";
 import { BookingCalender } from "@/src/components/booking-calendar";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 import { fetchPlacesSuggestions } from "@/src/actions/google-location";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const BookNow = React.memo(() => {
+  const router = useRouter();
   const [isDateOpen, setIsDateOpen] = useState(false);
   const datePopoverRef = useRef(null);
+  const searchParams = useSearchParams();
+
+  // Extract query parameters from the URL
+  const destination = searchParams.get("destination") || "";
+  const checkIn = searchParams.get("check_in") || "";
+  const checkOut = searchParams.get("check_out") || "";
 
   // Date state with default values
   const [date, setDate] = useState([
@@ -50,9 +58,9 @@ export const BookNow = React.memo(() => {
   const methods = useForm({
     resolver: yupResolver(bookingSchema),
     defaultValues: {
-      destination: "",
-      startDate: date[0].startDate,
-      endDate: date[0].endDate,
+      destination: destination ? destination : "",
+      startDate: checkIn ? checkIn?.toString().slice(0, 10) : date[0].startDate,
+      endDate: checkOut ? checkOut?.toString().slice(0, 10) : date[0].endDate,
     },
   });
 
@@ -64,24 +72,21 @@ export const BookNow = React.memo(() => {
 
   console.log(errors); // Display validation errors in the console
 
-  const location = watch("destination");
-
-  console.log(location);
-
-  useEffect(() => {
-    async function searchLocation() {
-      const loc = await fetchPlacesSuggestions(location);
-      console.log(loc);
-      return loc;
-    }
-
-    searchLocation();
-  }, [location]);
-
   const handleSubmit = async (data) => {
     try {
       console.log("Submitted Data:", data); // Show submitted data in the console
-      reset();
+
+      // Construct query parameters
+      const queryParams = new URLSearchParams({
+        destination: data.destination || "", // Destination from input
+        check_in: data.startDate.toString().slice(0, 15), // Check-in date
+        check_out: data.endDate.toString().slice(0, 15), // Check-out date
+      }).toString();
+
+      // Update the current URL with query parameters
+      router.push(`?${queryParams}`, undefined, { shallow: true });
+
+      // reset(); // Reset the form after submission
     } catch (error) {
       console.log(error);
     }
@@ -116,17 +121,11 @@ export const BookNow = React.memo(() => {
               <RHFInput
                 type="text"
                 placeholder="Moxy Dortmunt City"
+                isBookingSearch 
                 name="destination"
                 inputClass="outline-none border-none text-base font-normal !p-0"
                 className="outline-none border-none !p-0 h-8 ml-1"
               />
-
-              {/* <RHFLocationSelect
-                placeholder="Moxy Dortmunt City"
-                name="destination"
-                inputClass="outline-none border-none text-base font-normal !p-0"
-                className="outline-none border-none !p-0 h-8 ml-1"
-              /> */}
             </div>
 
             <span className="hidden sm:flex h-16 w-[2px] bg-primary mr-8 min-900:mr-0" />
@@ -164,7 +163,7 @@ export const BookNow = React.memo(() => {
 
             <div>
               <Button type="submit" className="w-full sm:w-fit text-nowrap">
-                Book Now
+                Search
               </Button>
             </div>
           </div>

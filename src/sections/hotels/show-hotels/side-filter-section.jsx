@@ -103,7 +103,7 @@ const SideFilterSection = ({ setFilters }) => {
   return (
     <div className="">
       <div className="flex flex-col items-center space-y-4 ">
-        <div className="w-full px-5 space-y-8">
+        <div className="w-full px-0 md:px-5 py-4 sm:space-y-8">
           <div>
             <Typography variant="h6" className="font-semibold">
               Filter
