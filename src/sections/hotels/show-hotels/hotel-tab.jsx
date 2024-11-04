@@ -5,7 +5,7 @@ import HotelCard from "./hotel-card";
 import HotelTabComponent from "./tab-components";
 import BnBCard from "./bnb-card";
 
-const HotelTab = ({ filteredEvents }) => {
+const HotelTab = ({ filteredEvents, toggleDrawer, setFilters }) => {
   const TABS = [
     {
       value: "tab1",
@@ -35,6 +35,8 @@ const HotelTab = ({ filteredEvents }) => {
         TABS={TABS}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        toggleDrawer={toggleDrawer}
+        setFilters={setFilters}
       />
     </div>
   );

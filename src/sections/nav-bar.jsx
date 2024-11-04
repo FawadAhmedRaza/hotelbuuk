@@ -13,10 +13,12 @@ export const NavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
+  // State for controlling navbar visibility and shadow
   const [showNavBar, setShowNavBar] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      // Toggle shadow when scrolled more than 20px from the top
       if (window.scrollY > 20) {
         setShowNavBar(true);
       } else {
