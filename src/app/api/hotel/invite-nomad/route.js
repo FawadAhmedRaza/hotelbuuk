@@ -5,6 +5,7 @@ import { prisma } from "@/src/db";
 import { invitationEmailTemplate } from "@/src/libs/invite-nomad-template";
 import { sendMail } from "@/src/service/mailService";
 import { generateSignedUrl } from "@/src/utils/upload-images";
+import { createNotification } from "@/src/libs/create-notification";
 
 export async function POST(req) {
   try {
@@ -16,23 +17,59 @@ export async function POST(req) {
       where: {
         id: hotel_id,
       },
+      include: {
+        user: true,
+      },
     });
 
     const profileImage = await generateSignedUrl(hotel?.hotel_image);
 
     if (nomad_type === "registered") {
-      let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
+      let nomadUser = await prisma.nomad.findUnique({
+        where: {
+          id: nomad?.id,
+        },
+        include: {
+          User: true,
+        },
+      });
+
+      let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`; // accept link
+      let invitationRejected = `accept-invitation?email=${email}&status=REJECTED&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`; // reject link
+
+      let message = `${hotel?.hotel_name} has invited you to become their internal nomad. Check your email.`;
+      // send notifications
+      await createNotification(
+        hotel?.hotel_name,
+        "Invitation for Hotel Internal Nomad",
+        message,
+        nomadUser?.User?.id,
+        hotel?.user?.id
+      );
+
       await sendMail(
         "Hotel Invitation",
         nomad?.email,
-        invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
+        invitationEmailTemplate(
+          hotel?.hotel_name,
+          profileImage,
+          queryParams,
+          invitationRejected
+        )
       );
     } else {
-      let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+      let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`; // accept
+      let invitationRejected = `accept-invitation?email=${email}&status=DIRECT_EMAIL&hotel=${hotel?.hotel_name}`; // reject
+      
       await sendMail(
         "Hotel Invitation",
         email,
-        invitationEmailTemplate(hotel?.hotel_name, profileImage, queryParams)
+        invitationEmailTemplate(
+          hotel?.hotel_name,
+          profileImage,
+          queryParams,
+          invitationRejected
+        )
       );
     }
 
@@ -92,11 +129,17 @@ export async function PUT(req) {
       where: {
         id: hotelId,
       },
+      include: {
+        user: true,
+      },
     });
 
     const isNomadExist = await prisma.nomad.findUnique({
       where: {
         id: nomadId,
+      },
+      include: {
+        User: true,
       },
     });
 
@@ -114,6 +157,17 @@ export async function PUT(req) {
       );
     }
 
+    // create notifications
+    let nomadName = isNomadExist?.first_name + "" + isNomadExist?.last_name;
+    let message = `Congratulations ${isHotelExist?.hotel_name} ! ${nomadName} has successfully accepted your invitation for becoming Internal Nomad`;
+    await createNotification(
+      isHotelExist?.hotel_name,
+      "Invitation Accepted for Internal Nomad",
+      message,
+      isHotelExist?.user?.id,
+      isNomadExist?.User?.id
+    );
+
     const isAlreadyAccepted = await prisma.hotel_internal_nomads.findFirst({
       where: {
         hotel_id: hotelId,
@@ -122,7 +176,10 @@ export async function PUT(req) {
     });
 
     if (isAlreadyAccepted) {
-      return NextResponse.json({ message: "Invitaion Accpeted" }, { status: 200 });
+      return NextResponse.json(
+        { message: "Invitaion Accpeted" },
+        { status: 200 }
+      );
     }
 
     await prisma.hotel_internal_nomads.create({
@@ -132,7 +189,10 @@ export async function PUT(req) {
       },
     });
 
-    return NextResponse.json({ message: "Invitaion Accpeted" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Invitaion Accpeted" },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
