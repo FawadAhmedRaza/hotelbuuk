@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// Components and Others...
-import { Iconify, Pannel, Typography } from "../components";
+import {  Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 
 import {
@@ -15,7 +14,7 @@ import { ShadcnCard } from "../components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "../redux/hotel-info/thunk";
 import ImageRender from "../components/ImageRenderer";
-import HotelCardSkeleton from "../components/Skeleton/hotel-card-skeleton";
+import MeetPartnerSkeleton from "../components/Skeleton/meet-partner";
 
 export const MeetOurPatners = () => {
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ export const MeetOurPatners = () => {
     const fetchHotels = async () => {
       setIsHotelLoading(true);
       try {
-        setIsHotelLoading(true)
+        setIsHotelLoading(true);
         await dispatch(getHotelInfo()).unwrap();
       } catch (error) {
         console.log(error);
@@ -41,6 +40,7 @@ export const MeetOurPatners = () => {
 
   return (
     <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
+
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
@@ -61,7 +61,7 @@ export const MeetOurPatners = () => {
                 key={index}
                 className=" pl-5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <HotelCardSkeleton />
+                <MeetPartnerSkeleton />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -79,7 +79,7 @@ export const MeetOurPatners = () => {
                     <ShadcnCard className="p-0 overflow-hidden rounded-3xl">
                       <div className="relative w-full">
                         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
-         
+
                         <BgIcon
                           iconName="skill-icons:instagram"
                           className="absolute top-4 right-4 z-20"
@@ -114,6 +114,7 @@ export const MeetOurPatners = () => {
           </Carousel>
         </div>
       )}
+      
     </Pannel>
   );
 };
