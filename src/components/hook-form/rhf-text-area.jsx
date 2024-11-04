@@ -9,7 +9,7 @@ export const RHFTextArea = ({
   placeholder,
   className,
   onChange,
-
+  required = false,
   rows = 5,
 }) => {
   const { control } = useFormContext();
@@ -33,6 +33,7 @@ export const RHFTextArea = ({
             {...field}
             placeholder={placeholder}
             rows={rows}
+            required={required}
             onChange={(e) => {
               field.onChange(e); // Call react-hook-form's onChange
               onChange?.(e); // Optionally call the custom onChange if provided

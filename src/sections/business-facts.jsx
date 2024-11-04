@@ -10,8 +10,13 @@ import { enqueueSnackbar } from "notistack";
 import axiosInstance from "../utils/axios";
 import { calculateDaysBetweenDates } from "../libs/helper";
 import BusinessFactsSkeleton from "../components/Skeleton/business-facts-skeleton";
+import { useAuthContext } from "../providers/auth/context/auth-context";
+import { useRouter } from "next/navigation";
+import { paths } from "../contants";
 
 export const BusinessFacts = React.memo(({ className }) => {
+  const router = useRouter();
+  const { user } = useAuthContext();
   const [visibleFacts, setVisibleFacts] = React.useState(4);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -41,6 +46,14 @@ export const BusinessFacts = React.memo(({ className }) => {
       setVisibleFacts((prevNum) => prevNum + 2);
     } else {
       setVisibleFacts(4);
+    }
+  };
+
+  const handleAsk = (item) => {
+    if (user) {
+      router.push(paths?.chats?.chatsById(item?.user?.id));
+    } else {
+      router.push(paths?.auth?.login);
     }
   };
 
@@ -116,8 +129,11 @@ export const BusinessFacts = React.memo(({ className }) => {
                       )}{" "}
                       days per guest
                     </Typography>
-                    <Button className="py-1.5 px-4 mx-auto min-450:mx-0">
-                      Ask John
+                    <Button
+                      onClick={() => handleAsk(item)}
+                      className="py-1.5 px-4 mx-auto min-450:mx-0"
+                    >
+                      Ask {item?.user?.nomad[0].first_name}
                     </Button>
                   </div>
                 </div>
