@@ -9,8 +9,10 @@ import {
   Typography,
 } from "@/src/components";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const HostBio = React.memo(() => {
+  const { t } = useTranslation();
   const { event } = useSelector((state) => state.allEvents.getById);
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -19,10 +21,10 @@ export const HostBio = React.memo(() => {
           variant="h4"
           className="font-semibold !text-[1.26rem] md:text-2xl"
         >
-          Meet Your Host
+          {t("hotelDetail.hostBio.meetHost")}
         </Typography>
         <Typography variant="h6" className="text-gray-400">
-          in-house
+          {t("hotelDetail.hostBio.inHouse")}
         </Typography>
       </div>
       <div className="flex flex-col mt-3  bg-gray-100   rounded-xl  shadow-md  ">
@@ -61,15 +63,15 @@ export const HostBio = React.memo(() => {
           <div className="flex  justify-between lg:justify-start gap-8 ">
             <div className="flex flex-col  gap-3 ">
               <Typography variant="h6" className="font-semibold">
-                Business meeting
+                {t("hotelDetail.hostBio.businessMeeting")}
               </Typography>
               <Typography variant="p" className="font-medium -mt-3">
-                12 completed
+                {t("hotelDetail.hostBio.complete")}
               </Typography>
             </div>
             <div className="flex flex-col  gap-3 pe-10 ">
               <Typography variant="h6" className="font-semibold">
-                Specialty
+                {t("hotelDetail.hostBio.specialty")}
               </Typography>
               <Typography variant="p" className="font-medium text-secondary">
                 {event?.nomad?.electronics} <br /> {event?.nomad?.manufacturing}{" "}
@@ -81,7 +83,7 @@ export const HostBio = React.memo(() => {
         </div>
         <div className="flex flex-col gap-2 p-5">
           <Typography variant="h5" className="font-semibold">
-            MY BIO
+            {t("hotelDetail.hostBio.myBio")}
           </Typography>
           <Typography variant="p" className="font-normal">
             {event?.nomad?.bio}

@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
+import { useTranslation } from "react-i18next";
 
 export const HotelDetail = ({ type, id }) => {
+  const { t } = useTranslation();
   const { event } = useSelector((state) => state.allEvents.getById);
 
   return (
@@ -14,7 +16,7 @@ export const HotelDetail = ({ type, id }) => {
         variant="h3"
         className="font-medium !text-xl md:!text-2xl mb-5 text-gray-600"
       >
-        Refresh your mind before your business meetings
+        {t("hotelDetail.hotelDetailSec.mainPara")}
       </Typography>
       <div className=" flex ga5 flex-col lg:flex-row w-full gap-5 ">
         <div className="  w-full lg:w-[70%] ">
@@ -25,7 +27,7 @@ export const HotelDetail = ({ type, id }) => {
                   variant="h3"
                   className="font-semibold !text-[1.26rem] md:text-2xl "
                 >
-                  What you'll learn
+                  {t("hotelDetail.hotelDetailSec.accordionHead")}
                 </Typography>
               </div>
               <div className="flex flex-col gap-3 w-full">
@@ -51,7 +53,7 @@ export const HotelDetail = ({ type, id }) => {
                     variant="h3"
                     className="font-semibold text-primary"
                   >
-                    About the Hotel
+                    {t("hotelDetail.hotelDetailSec.aboutHotel")}
                   </Typography>
                   <Typography
                     variant="p"

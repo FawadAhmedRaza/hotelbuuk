@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
 import { differenceInDays } from "date-fns"; // Import differenceInDays
 import { Card, Pannel, Typography } from "@/src/components";
+import { useTranslation } from "react-i18next";
 
 const AvailabilityCalendar = ({
   dateRange,
@@ -17,11 +19,12 @@ const AvailabilityCalendar = ({
   const nights =
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
+  const { t } = useTranslation();
   return (
-    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+    <Pannel className="flex flex-col gap-10 lg:flex-row md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
       <div className="text-center md:text-left  w-full">
-        <Typography variant="h1" className="text-black">
-          Availability
+        <Typography variant="h3" className="text-black font-semibold">
+          {t("hotelDetail.availabilityCalendar.availability")}
         </Typography>
         <div className="mt-5">
           {startDate && endDate && nights > 0 ? (
@@ -41,13 +44,13 @@ const AvailabilityCalendar = ({
               </Typography>
             </div>
           ) : (
-            <span>No dates selected</span>
+            <span>{t}</span>
           )}
         </div>
       </div>
 
       <div className=" h-full w-full flex justify-center items-center md:w-auto">
-        <Card className=" flex-col w-fit md:w-full"   >
+        <Card className=" flex-col w-fit md:w-full">
           <DateRange
             onChange={handleDateChange}
             months={isMobile ? 1 : 2}
@@ -66,11 +69,11 @@ const AvailabilityCalendar = ({
           <div className="text-center mt-4 text-gray-800">
             {startDate && endDate ? (
               <div className="text-sm">
-                Selected Range: {format(startDate, "MMM d, yyyy")} -{" "}
-                {format(endDate, "MMM d, yyyy")}
+                {t("common.selectedRange")}: {format(startDate, "MMM d, yyyy")}{" "}
+                - {format(endDate, "MMM d, yyyy")}
               </div>
             ) : (
-              <span>No dates selected</span>
+              <span> {t("common.noDateSelect")}</span>
             )}
           </div>
 
@@ -79,7 +82,7 @@ const AvailabilityCalendar = ({
             className="text-center mt-4 text-blue-600 cursor-pointer hover:underline"
             onClick={clearDateRange} // Call clearDateRange on click
           >
-            Clear dates
+            {t("common.clearData")}
           </div>
         </Card>
       </div>

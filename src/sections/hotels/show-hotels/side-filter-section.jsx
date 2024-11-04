@@ -3,9 +3,12 @@ import { Iconify, Typography } from "@/src/components";
 import SideFilterSectionSkeleton from "@/src/components/Skeleton/side-filter-skeleton";
 import { CheckBoxButton } from "@/src/components/ui/check-box-button";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 const SideFilterSection = ({ setFilters }) => {
+  const { t } = useTranslation();
+
   // State to keep track of checked values
   const [checkedNomads, setCheckedNomads] = useState([]);
   const [checkedLocations, setCheckedLocations] = useState([]);
@@ -106,7 +109,7 @@ const SideFilterSection = ({ setFilters }) => {
         <div className="w-full px-0 md:px-5 py-4 sm:space-y-8">
           <div>
             <Typography variant="h6" className="font-semibold">
-              Filter
+              {t("common.filter")}
             </Typography>
             <div className="flex flex-col gap-3">
               {/* Search by Event */}
@@ -125,7 +128,9 @@ const SideFilterSection = ({ setFilters }) => {
               </div>
 
               <div className="mt-4">
-                <Typography variant="p">Price Range</Typography>
+                <Typography variant="p">
+                  {t("showMoreHotel.priceRange")}
+                </Typography>
 
                 <div className="relative w-full">
                   <input
@@ -156,7 +161,7 @@ const SideFilterSection = ({ setFilters }) => {
                 </div>
 
                 <p className="text-gray-700 text-xs font-medium">
-                  Selected price: {`$${rangeValue}`}
+                  {t("showMoreHotel.selectedPrice")}: {`$${rangeValue}`}
                 </p>
               </div>
             </div>
@@ -164,7 +169,7 @@ const SideFilterSection = ({ setFilters }) => {
 
           <div>
             <Typography variant="h6" className="font-semibold">
-              Filter by Rating
+              {t("showMoreHotel.filterRating")}
             </Typography>
             <div className="space-y-3 mt-4 ">
               {[5, 4, 3, 2, 1].map((rate) => (
@@ -180,7 +185,7 @@ const SideFilterSection = ({ setFilters }) => {
 
           <div>
             <Typography variant="h6" className="font-semibold">
-              Location
+              {t("showMoreHotel.location")}
             </Typography>
             <div className="space-y-3 mt-4">
               {uniqueCities.map((city) => (
@@ -197,7 +202,7 @@ const SideFilterSection = ({ setFilters }) => {
 
           <div>
             <Typography variant="h6" className="font-semibold">
-              Nomads
+              {t("showMoreHotel.nomads")}
             </Typography>
             <div className="mt-4 space-y-3">
               {uniqueNomads.map((nomad) => (

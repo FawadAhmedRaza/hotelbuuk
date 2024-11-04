@@ -10,6 +10,7 @@ import { enqueueSnackbar } from "notistack";
 import axiosInstance from "../utils/axios";
 import { calculateDaysBetweenDates } from "../libs/helper";
 import BusinessFactsSkeleton from "../components/Skeleton/business-facts-skeleton";
+import { useTranslation } from "react-i18next";
 
 export const BusinessFacts = React.memo(({ className }) => {
   const [visibleFacts, setVisibleFacts] = React.useState(4);
@@ -44,6 +45,7 @@ export const BusinessFacts = React.memo(({ className }) => {
     }
   };
 
+  const { t } = useTranslation();
   return (
     <Pannel
       className={cn(
@@ -60,13 +62,13 @@ export const BusinessFacts = React.memo(({ className }) => {
               variant="h2"
               className="font-semibold text-start !text-black"
             >
-              Business Facts
+              {t("common.businessFacts")}
             </Typography>
             <Typography
               variant="h6"
               className="font-normal text-start  text-neutral-400"
             >
-              Our journey in numbers and highlights.
+              {t("common.businessTitle")}
             </Typography>
           </div>
           <CustomCollapsible isOpen={isOpen}>

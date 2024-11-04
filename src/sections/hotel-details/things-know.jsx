@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HotelsThings } from "@/src/_mock/_hotels-things";
 import { AnchorTag, Pannel, Typography } from "@/src/components";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const ThingsKnow = () => {
   const { rules, safety, cancellationPolicy } = HotelsThings[0];
@@ -18,11 +19,12 @@ export const ThingsKnow = () => {
     return showFull ? list : list.slice(0, limit);
   };
 
+  const { t } = useTranslation();
   return (
     <Pannel className="flex flex-col flex-wrap gap-5 md:gap-8 p-5">
       {/* Header */}
       <Typography variant="h3" className="font-semibold">
-        Things to Know
+        {t("hotelDetail.thingsKnow.thingsKnowHead")}
       </Typography>
 
       {/* Main content */}
@@ -30,7 +32,7 @@ export const ThingsKnow = () => {
         {/* House Rules */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
-            House Rules
+            {t("hotelDetail.thingsKnow.houseRules")}
           </Typography>
           {renderTruncatedList(
             event?.event_associated_rules,
@@ -55,7 +57,7 @@ export const ThingsKnow = () => {
         {/* Safety & Property */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
-            Safety & Property
+            {t("hotelDetail.thingsKnow.safetyProperty")}
           </Typography>
           {renderTruncatedList(
             event?.event_associated_safeties,
@@ -72,7 +74,7 @@ export const ThingsKnow = () => {
               onClick={() => setShowFullSafety(!showFullSafety)}
               className="text-base lg:text-lg underline font-semibold"
             >
-              {showFullSafety ? "Show less" : "Show more"}
+              {showFullSafety ? t("common.showLess") : t("common.showAll")}
             </AnchorTag>
           )}
         </div>
@@ -80,7 +82,7 @@ export const ThingsKnow = () => {
         {/* Cancellation Policy */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
-            Cancellation Policy
+            {t("hotelDetail.thingsKnow.cancellationPolicy")}
           </Typography>
           {renderTruncatedList(
             event?.event_associated_cancel_policies,
@@ -97,7 +99,9 @@ export const ThingsKnow = () => {
               onClick={() => setShowFullCancellation(!showFullCancellation)}
               className="text-base lg:text-lg underline font-semibold"
             >
-              {showFullCancellation ? "Show less" : "Show more"}
+              {showFullCancellation
+                ? t("common.showLess")
+                : t("common.showAll")}
             </AnchorTag>
           )}
         </div>

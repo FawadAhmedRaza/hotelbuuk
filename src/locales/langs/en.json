@@ -1,18 +1,96 @@
 {
-  "common":{
-    "checkin":"Check-in",
-    "checkout":"Check-out",
-    "search":"Search"
+  "common": {
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "search": "Search",
+    "night": "Night",
+    "guests": "Guests",
+    "total": "Total",
+    "reserve": "Reserve",
+    "noDateSelect": "No dates selected",
+    "clearData": " Clear dates",
+    "selectedRange": "Selected Range",
+    "showLess": "Show Less",
+    "showAll": "Show All",
+    "showMore": "Show More",
+    "businessFacts": "Unternehmensfakten",
+    "businessTitle": "Unsere Reise in Zahlen und Highlights.",
+    "bookNow": "  Book Now",
+    "hotels": "Hotels",
+    "bnb": "BnB",
+    "filter": "Filter",
+    "showing": "Showing",
+    "place": "Place",
+    "of": "of"
   },
   "home": {
     "hero": {
       "stay": "Stay",
       "heading": "For Business Insights",
-      "description":"Our partner hotels offer business tours and market insights to business leaders",
-      "filter":{
-        "destination":"Destinations",
-        "destinationPlaceholder":"Moxy Dortmunt City"
+      "description": "Our partner hotels offer business tours and market insights to business leaders",
+      "filter": {
+        "destination": "Destinations",
+        "destinationPlaceholder": "Moxy Dortmunt City"
       }
     }
+  },
+
+  "hotelDetail": {
+    "hotelOverview": {
+      "showHotel": " Show all Photos"
+    },
+    "hotelDetailSec": {
+      "mainPara": " Refresh your mind before your business meetings",
+      "accordionHead": "What you'll learn",
+      "aboutHotel": "About the Hotel"
+    },
+    "hostBio": {
+      "meetHost": "  Meet Your Host",
+      "inHouse": "  in-house",
+      "businessMeeting": "Business meeting",
+      "complete": "12 completed",
+      "specialty": "Specialty",
+      "myBio": "MY BIO"
+    },
+    "HotelBio": {
+      "teachingTool": "Teaching Tool",
+      "competence": "Competence",
+      "card": "Card",
+      "Paypal": "Paypal",
+      "perNight": "Per / Night",
+      "priceInclude": "  price includes business room & meetings",
+      "HotelServiceFee": "HotelBuuk Service Fee",
+      "youSign": "You should be sign in as a guest for reservation",
+      "alreadyPart": "You already part of this event"
+    },
+    "availabilityCalendar": {
+      "availability": "AvailabilityCalendar"
+    },
+    "PopularAmenities": {
+      "mostPopularAmenities": "    Most popular Amenities"
+    },
+    "itinerary": {
+      "itineraryHead": "Itinerary"
+    },
+    "thingsKnow": {
+      "thingsKnowHead": "  Things to Know",
+      "houseRules": "House Rules",
+      "safetyProperty": " Safety & Property",
+      "cancellationPolicy": "  Cancellation Policy"
+    },
+    "guestReviews": {
+      "guestReviewsHead": "Guests Reviews"
+    }
+  },
+  "showMoreHotel": {
+    "stayBusiness": " Stay For Business Meetings",
+    "destination": "Destination",
+    "formNight": "From Night",
+    "toNight": "To Night",
+    "priceRange": "Price Range",
+    "selectedPrice": "Selected price",
+    "filterRating": " Filter by Rating",
+    "location": "Location",
+    "nomads": "Nomads"
   }
 }

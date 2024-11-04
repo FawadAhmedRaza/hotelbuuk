@@ -4,12 +4,15 @@ import React, { useState } from "react";
 import HotelCard from "./hotel-card";
 import HotelTabComponent from "./tab-components";
 import BnBCard from "./bnb-card";
+import { useTranslation } from "react-i18next";
 
 const HotelTab = ({ filteredEvents, toggleDrawer, setFilters }) => {
+
+  const {t}  = useTranslation()
   const TABS = [
     {
       value: "tab1",
-      label: "Hotels",
+      label: t("common.hotels"),
       component: (
         <div>
           <HotelCard filteredEvents={filteredEvents} />
@@ -18,7 +21,7 @@ const HotelTab = ({ filteredEvents, toggleDrawer, setFilters }) => {
     },
     {
       value: "tab2",
-      label: "B&B",
+      label: t("common.bnb"),
       component: (
         <div>
           <BnBCard filteredEvents={filteredEvents} />

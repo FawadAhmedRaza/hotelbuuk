@@ -102,7 +102,6 @@ const HotelShowSection = () => {
 
       <div className=" md:w-[75%]">
         <HotelTab
-            onClick={onClick}
           filteredEvents={filteredEvents}
           setFilters={setFilters}
           toggleDrawer={toggleDrawer}

@@ -7,6 +7,7 @@ import ImageRender from "@/src/components/ImageRenderer";
 import { paths } from "@/src/contants";
 import { cn } from "@/lib/utils";
 import EventCardSkeleton from "@/src/components/Skeleton/event-card-skeleton";
+import { useTranslation } from "react-i18next";
 
 const HotelCard = ({ filteredEvents }) => {
   const [hotelEvents, sethotelEvents] = useState([]);
@@ -20,12 +21,17 @@ const HotelCard = ({ filteredEvents }) => {
     sethotelEvents(filteredHotelEvents);
   }, [filteredEvents]);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <div>
         <Typography variant="p" className="font-medium">
-          Showing {hotelEvents?.length > 4 ? 4 : hotelEvents?.length} of{" "}
-          <span className="text-blue-500">{hotelEvents?.length}+ places</span>
+          {t("common.showing")}{" "}
+          {hotelEvents?.length > 4 ? 4 : hotelEvents?.length} {t("common.of")}{" "}
+          <span className="text-blue-500">
+            {hotelEvents?.length}+ {t("common.place")}
+          </span>
         </Typography>
       </div>
       <div className=" mt-5 space-y-5">

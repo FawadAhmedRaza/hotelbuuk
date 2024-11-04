@@ -2,6 +2,7 @@
 import React from "react";
 import { AnchorTag, Button, Card, Pannel, Typography } from "@/src/components";
 import { guestReviewsData } from "@/src/_mock/_guest-review";
+import { useTranslation } from "react-i18next";
 
 export const GuestReviews = () => {
   const [visibleReview, setVisibleReview] = React.useState(2);
@@ -16,11 +17,13 @@ export const GuestReviews = () => {
       setVisibleReview(2);
     }
   };
+
+  const { t } = useTranslation();
   return (
     <Pannel className="flex flex-col gap-10 justify-start items-start  ">
       {/* Header */}
       <Typography variant="h3" className="font-semibold">
-        Guests Reviews
+        {t("hotelDetail.guestReviews.guestReviewsHead")}
       </Typography>
 
       {/* Reviews Grid */}
@@ -63,15 +66,17 @@ export const GuestReviews = () => {
             </Typography>
 
             {/* Show More */}
-            <AnchorTag href="#">Show More</AnchorTag>
+            <AnchorTag href="#">{t("common.showMore")}</AnchorTag>
           </Card>
         ))}
       </div>
       <span className="w-full  flex justify-start">
         <Button onClick={handleLoadReview}>
           {guestReviewsData?.length > visibleReviewList?.length
-            ? ` Show All ${guestReviewsData?.length - visibleReview} Reviews`
-            : "Show less"}
+            ? ` ${t("common.showLess")}  ${
+                guestReviewsData?.length - visibleReview
+              } Reviews`
+            : `${t("common.showLess")}`}
         </Button>
       </span>
     </Pannel>

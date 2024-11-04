@@ -4,8 +4,8 @@ import { Pannel } from "..";
 const SideFilterSectionSkeleton = () => {
   return (
     <Pannel>
-      <div className="flex flex-col items-center space-y-4">
-        <div className="w-full px-5 space-y-8">
+      <div className="flex flex-col items-center ">
+        <div className="w-full ">
           {/* Filter Title */}
           <div>
             <div className="h-6 bg-gray-200 rounded-md w-24"></div>
