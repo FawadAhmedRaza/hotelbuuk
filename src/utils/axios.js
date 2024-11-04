@@ -70,6 +70,7 @@ export const endpoints = {
     },
 
     inviteNomads: "/hotel/invite-nomad",
+    rejecteRequest: "/hotel/invite-nomad/reject",
     internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
     event: {
       create: "/hotel/events",

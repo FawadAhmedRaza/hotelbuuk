@@ -17,7 +17,10 @@ const SetupBasicInfoHotel = () => {
   const schema = yup.object({
     hotel_name: yup.string().required("name is required"),
     hotel_bio: yup.string().optional(),
-    phone_number: yup.number().required("phone number is required"),
+    phone_number: yup
+      .string()
+      .required("Phone number is required")
+      .matches(/^\d{11}$/, "Phone number must be 11 digits"),
   });
 
   const { setupBasicInfo, user } = useAuthContext();
