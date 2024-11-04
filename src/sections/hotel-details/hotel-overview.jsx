@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import ImageRender from "@/src/components/ImageRenderer";
 import ImageGallerySkeleton from "@/src/components/Skeleton/image-gallery-skeleton";
 import HotelDetailsSkeleton from "@/src/components/Skeleton/hotel-details-skeleton";
+import { useTranslation } from "react-i18next";
 
 const images = [
   "/assets/images/hotel-det-1.png",
@@ -37,6 +38,8 @@ export const HotelOverview = ({ type }) => {
       : event?.hotel?.hotelImages;
 
   console.log("Hotel Images", event?.hotel?.hotelImages);
+
+  const { t } = useTranslation();
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
@@ -112,7 +115,7 @@ export const HotelOverview = ({ type }) => {
             className="absolute right-5 z-20 bottom-5 bg-primary  rounded-lg  py-2 px-4 cursor-pointer"
           >
             <Typography variant="p" className="text-white">
-              Show all Photos
+              {t("hotelDetail.hotelOverview.showHotel")}
             </Typography>
           </span>
           <span

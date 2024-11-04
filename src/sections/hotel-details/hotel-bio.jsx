@@ -18,6 +18,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { paypalCaptureOrder } from "@/src/actions/payment.action";
 import StripePayment from "../stripe-payment";
+import { useTranslation } from "react-i18next";
 
 const hotelData = {
   time: "10am - 4pm",
@@ -196,6 +197,7 @@ export const HotelBio = ({ type, id }) => {
 
   console.log("Event User", data);
   console.log("User", user);
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
@@ -203,7 +205,7 @@ export const HotelBio = ({ type, id }) => {
         <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
           <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
-              Teaching Tool
+              {t("hotelDetail.HotelBio.teachingTool")}
             </Typography>
             <div className=" mt-3">
               <Built>{event?.nomad?.video}</Built>
@@ -213,7 +215,7 @@ export const HotelBio = ({ type, id }) => {
           </div>
           <div className=" ">
             <Typography variant="h4" className=" font-semibold text-primary">
-              Competence
+              {t("hotelDetail.HotelBio.competence")}
             </Typography>
             <div className=" mt-3">
               <Built>Market Research</Built>
@@ -237,7 +239,7 @@ export const HotelBio = ({ type, id }) => {
             }`}
           >
             <Iconify iconName="ion:card" className="text-black size-7" />
-            Card
+            {t("common.card")}
           </Card>
           <Card
             onClick={() => setPaymentMethod("paypal")}
@@ -249,7 +251,7 @@ export const HotelBio = ({ type, id }) => {
               iconName="lineicons:paypal"
               className="text-black size-7"
             />
-            Paypal
+            {t("common.Paypal")}
           </Card>
         </div>
         <div className="mt-2">
@@ -271,7 +273,7 @@ export const HotelBio = ({ type, id }) => {
         <Card className="flex  flex-col gap-1 w-full">
           <div className="w-full">
             <Typography variant="p" className=" font-medium text-gray-500">
-              ${event?.price} Per / Night
+              ${event?.price} {t("hotelDetail.HotelBio.perNight")}
             </Typography>
             <Typography
               variant="p"
@@ -295,7 +297,7 @@ export const HotelBio = ({ type, id }) => {
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
               >
-                Check-In
+                {t("common.checkin")}
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
                 {event?.start_date?.toString().slice(0, 10)}
@@ -308,7 +310,7 @@ export const HotelBio = ({ type, id }) => {
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
               >
-                Check-out
+                {t("common.checkout")}
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
                 {event?.end_date?.toString().slice(0, 10)}
@@ -320,7 +322,7 @@ export const HotelBio = ({ type, id }) => {
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
               >
-                {stayNights} Night
+                {stayNights} {t("common.night")}
               </Typography>
             </div>
           </div>
@@ -331,7 +333,7 @@ export const HotelBio = ({ type, id }) => {
                 variant="p"
                 className="font-medium grow justify-between"
               >
-                Guests
+                {t("common.night")}
               </Typography>
               <input
                 type="number"
@@ -345,7 +347,7 @@ export const HotelBio = ({ type, id }) => {
               variant="p"
               className="text-secondary text-sm text-center"
             >
-              price includes business room & meetings
+              {t("hotelDetail.HotelBio.priceInclude")}
             </Typography>
             <div className=" flex flex-col gap-2 ">
               <div className=" flex flex-col gap-2 border-b w-full pb-2 border-neutral-500">
@@ -359,7 +361,7 @@ export const HotelBio = ({ type, id }) => {
                 </span>
                 <span className="flex justify-between items-center ">
                   <Typography variant="p" className="font-medium">
-                    HotelBuuk Service Fee
+                    {t("hotelDetail.HotelBio.HotelServiceFee")}
                   </Typography>
                   <Typography variant="p" className="font-medium">
                     $
@@ -373,7 +375,7 @@ export const HotelBio = ({ type, id }) => {
               </div>
               <span className="flex justify-between items-center mt-2 mb-3">
                 <Typography variant="h6" className="font-semibold">
-                  Total
+                  {t("common.total")}
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
@@ -389,7 +391,7 @@ export const HotelBio = ({ type, id }) => {
                     variant="p"
                     className="font-medium text-sm text-center text-gray-500"
                   >
-                    You should be sign in as a guest for reservation
+                    {t("hotelDetail.HotelBio.youSign")}
                   </Typography>
                 </div>
               ) : data?.id ? (
@@ -398,12 +400,12 @@ export const HotelBio = ({ type, id }) => {
                     variant="h6"
                     className="font-semibold text-center"
                   >
-                    You already part of this event
+                    {t("hotelDetail.HotelBio.alreadyPart")}
                   </Typography>
                 </div>
               ) : (
                 <Button className="w-full mt-2" onClick={handleEventReserve}>
-                  Reserve
+                  {t("common.reserve")}
                 </Button>
               )}
             </div>

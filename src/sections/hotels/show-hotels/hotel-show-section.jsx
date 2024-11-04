@@ -8,6 +8,8 @@ import HotelTab from "./hotel-tab";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEvents } from "@/src/redux/all-events/thunk";
 import { eventsFilter, filterEvents } from "@/src/libs/helper";
+import { useBoolean } from "@/src/hooks";
+import MobileFilter from "./mob-filter";
 
 const HotelShowSection = () => {
   const initialState = {
@@ -80,13 +82,30 @@ const HotelShowSection = () => {
     }
   }, [filters, events, isLoading]);
 
+  const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+  {
+    isOpen && (
+      <MobileFilter
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClick={toggleDrawer}
+        setFilters={setFilters}
+      />
+    );
+  }
+
   return (
     <Pannel className="!pt-0 flex gap-7">
       <div className=" md:w-[25%] sm:flex hidden">
         <SideFilterSection setFilters={setFilters} />
       </div>
+
       <div className=" md:w-[75%]">
-        <HotelTab filteredEvents={filteredEvents} />
+        <HotelTab
+          filteredEvents={filteredEvents}
+          setFilters={setFilters}
+          toggleDrawer={toggleDrawer}
+        />
       </div>
     </Pannel>
   );

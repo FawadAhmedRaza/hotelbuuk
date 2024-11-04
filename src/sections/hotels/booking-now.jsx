@@ -20,6 +20,7 @@ import { RHFCalendarInput } from "@/src/components/calendar-input";
 import { BookingCalender } from "@/src/components/booking-calendar";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 import { fetchPlacesSuggestions } from "@/src/actions/google-location";
+import { useTranslation } from "react-i18next";
 
 export const BookNow = React.memo(() => {
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -87,6 +88,7 @@ export const BookNow = React.memo(() => {
     }
   };
 
+  const { t } = useTranslation();
   return (
     <Pannel>
       <RHFFormProvider
@@ -95,7 +97,7 @@ export const BookNow = React.memo(() => {
         className="flex flex-col gap-5 justify-start items-start w-full"
       >
         <Typography variant="h3" className="font-semibold text-center">
-          Stay For Business Meetings
+          {t("showMoreHotel.stayBusiness")}
         </Typography>
         <div className="flex flex-col min-900:flex-row gap-10 min-900:gap-0 justify-between items-center w-full bg-white shadow-custom-shadow-sm px-6 py-8 rounded-2xl">
           <div className="relative flex flex-col sm:flex-row justify-between min-900:justify-start items-center gap-3 lg:gap-12 xl:gap-28 w-full min-900:w-fit lg:w-full">
@@ -110,7 +112,7 @@ export const BookNow = React.memo(() => {
                   variant="p"
                   className="text-sm text-start text-custom-neutral w-full"
                 >
-                  Destination
+                  {t("showMoreHotel.destination")}
                 </Typography>
               </span>
               <RHFInput
@@ -139,8 +141,8 @@ export const BookNow = React.memo(() => {
                     InputBoxClass=""
                     nameStart="startDate"
                     nameEnd="endDate"
-                    labelStart="From Night"
-                    labelEnd="To Night"
+                    labelStart={t("showMoreHotel.formNight")}
+                    labelEnd={t("showMoreHotel.toNight")}
                     startIcon="uil:calendar-alt"
                     endIcon="uil:calendar-alt"
                     onOpenPopover={togglePopover}
@@ -164,7 +166,7 @@ export const BookNow = React.memo(() => {
 
             <div>
               <Button type="submit" className="w-full sm:w-fit text-nowrap">
-                Book Now
+                {t("common.bookNow")}
               </Button>
             </div>
           </div>

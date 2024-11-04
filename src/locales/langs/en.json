@@ -9,14 +9,33 @@
     "ask": "Ask",
     "exploreMoreBussinessFacts": "Explore More Business Facts",
     "showless": "Show less",
-    "social":"Social",
-    "tech":"Tecnologies",
-    "hti":"Hotel Info",
-    "htimg":"Hotel Images",
-    "delp":"Delete profile",
-    "save":"Save",
-    "submit":"Submit",
-    "delConf":"Are you sure you want to delete your profile ? this action will delete all of your data?"
+    "social": "Social",
+    "tech": "Tecnologies",
+    "hti": "Hotel Info",
+    "htimg": "Hotel Images",
+    "delp": "Delete profile",
+    "save": "Save",
+    "submit": "Submit",
+    "delConf": "Are you sure you want to delete your profile ? this action will delete all of your data?",
+    "night": "Night",
+    "guests": "Guests",
+    "total": "Total",
+    "reserve": "Reserve",
+    "noDateSelect": "No dates selected",
+    "clearData": " Clear dates",
+    "selectedRange": "Selected Range",
+    "showLess": "Show Less",
+    "showAll": "Show All",
+    "showMore": "Show More",
+    "businessFacts": "Unternehmensfakten",
+    "businessTitle": "Unsere Reise in Zahlen und Highlights.",
+    "bookNow": "  Book Now",
+    "hotels": "Hotels",
+    "bnb": "BnB",
+    "filter": "Filter",
+    "showing": "Showing",
+    "place": "Place",
+    "of": "of"
   },
   "home": {
     "hero": {
@@ -76,32 +95,90 @@
     }
   },
   "footer": {
-    "description":"The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and  typesetting industry. Lorem Ipsum has been"
+    "description": "The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and  typesetting industry. Lorem Ipsum has been"
   },
-  "links":{
-    "h":"Home",
-    "su":"Sign Up",
-    "log":"Login",
-    "d":"Dashboard",
-    "about":"About Us",
-    "impressum":"Impressum",
-    "tc":"Terms & Conditions",
-    "pp":"Privacy Policy",
-    "cont":"Contact",
-    "leg":"Legal",
-    "lo":"Logout",
-    "nt":"Notifications",
-    "bk":"Bookings",
-    "ev":"Events",
-    "ht":"Hotels",
-    "htl":"Hotels Lists",
-    "rm":"Rooms",
-    "msg":"Messages",
-    "st":"Settings",
-    "pr":"Profile",
-    "nd":"Nomads",
-    "alnd":"All Nomads",
-    "ind":"Intenal Nomads"
+  "links": {
+    "h": "Home",
+    "su": "Sign Up",
+    "log": "Login",
+    "d": "Dashboard",
+    "about": "About Us",
+    "impressum": "Impressum",
+    "tc": "Terms & Conditions",
+    "pp": "Privacy Policy",
+    "cont": "Contact",
+    "leg": "Legal",
+    "lo": "Logout",
+    "nt": "Notifications",
+    "bk": "Bookings",
+    "ev": "Events",
+    "ht": "Hotels",
+    "htl": "Hotels Lists",
+    "rm": "Rooms",
+    "msg": "Messages",
+    "st": "Settings",
+    "pr": "Profile",
+    "nd": "Nomads",
+    "alnd": "All Nomads",
+    "ind": "Intenal Nomads"
   },
-  "copyr":"copyrights © Hotelbuuk Technologies all rights reserved."
+  "hotelDetail": {
+    "hotelOverview": {
+      "showHotel": " Show all Photos"
+    },
+    "hotelDetailSec": {
+      "mainPara": " Refresh your mind before your business meetings",
+      "accordionHead": "What you'll learn",
+      "aboutHotel": "About the Hotel"
+    },
+    "hostBio": {
+      "meetHost": "  Meet Your Host",
+      "inHouse": "  in-house",
+      "businessMeeting": "Business meeting",
+      "complete": "12 completed",
+      "specialty": "Specialty",
+      "myBio": "MY BIO"
+    },
+    "HotelBio": {
+      "teachingTool": "Teaching Tool",
+      "competence": "Competence",
+      "card": "Card",
+      "Paypal": "Paypal",
+      "perNight": "Per / Night",
+      "priceInclude": "  price includes business room & meetings",
+      "HotelServiceFee": "HotelBuuk Service Fee",
+      "youSign": "You should be sign in as a guest for reservation",
+      "alreadyPart": "You already part of this event"
+    },
+    "availabilityCalendar": {
+      "availability": "AvailabilityCalendar"
+    },
+    "PopularAmenities": {
+      "mostPopularAmenities": "    Most popular Amenities"
+    },
+    "itinerary": {
+      "itineraryHead": "Itinerary"
+    },
+    "thingsKnow": {
+      "thingsKnowHead": "  Things to Know",
+      "houseRules": "House Rules",
+      "safetyProperty": " Safety & Property",
+      "cancellationPolicy": "  Cancellation Policy"
+    },
+    "guestReviews": {
+      "guestReviewsHead": "Guests Reviews"
+    }
+  },
+  "showMoreHotel": {
+    "stayBusiness": " Stay For Business Meetings",
+    "destination": "Destination",
+    "formNight": "From Night",
+    "toNight": "To Night",
+    "priceRange": "Price Range",
+    "selectedPrice": "Selected price",
+    "filterRating": " Filter by Rating",
+    "location": "Location",
+    "nomads": "Nomads"
+  },
+  "copyr": "copyrights © Hotelbuuk Technologies all rights reserved."
 }

@@ -2,7 +2,6 @@
   "common": {
     "checkin": "Check-in",
     "checkout": "Check-out",
-    "search": "Suche",
     "showmore": "Mehr anzeigen",
     "signup": "Jetzt registrieren",
     "daysperguest": "Tage pro Gast",
@@ -10,7 +9,27 @@
     "exploreMoreBussinessFacts": "Weitere Geschäftsfakten erkunden",
     "showless": "Weniger anzeigen",
     "social": "Sozial",
-    "tech": "Technologien"
+    "tech": "Technologien",
+    "search": "Suchen",
+    "night": "Nacht",
+    "guests": "Gäste",
+    "total": "Gesamt",
+    "reserve": "Reservieren",
+    "noDateSelect": "Keine Daten ausgewählt",
+    "clearData": "Daten löschen",
+    "selectedRange": "Ausgewählter Bereich",
+    "showLess": "Weniger anzeigen",
+    "showAll": "Alle anzeigen",
+    "showMore": "Mehr anzeigen",
+    "businessFacts": "Unternehmensfakten",
+    "businessTitle": "Unsere Reise in Zahlen und Highlights.",
+    "bookNow": "Jetzt buchen",
+    "hotels": "Hotels",
+    "bnb": "BnB",
+    "filter": "Filter",
+    "showing": "Anzeigen",
+    "place": "Ort",
+    "of": "von"
   },
   "home": {
     "hero": {
@@ -97,5 +116,63 @@
     "alnd": "Alle Nomaden",
     "ind": "Interne Nomaden"
   },
-  "copyr": "Urheberrechte © Hotelbuuk Technologies, alle Rechte vorbehalten."
+  "copyr": "Urheberrechte © Hotelbuuk Technologies, alle Rechte vorbehalten.",
+  "hotelDetail": {
+    "hotelOverview": {
+      "showHotel": " Alle Fotos anzeigen"
+    },
+    "hotelDetailSec": {
+      "mainPara": " Erfrischen Sie Ihren Geist vor Ihren Geschäftstreffen",
+      "accordionHead": " Was Sie lernen werden",
+      "aboutHotel": " Über das Hotel"
+    },
+    "hostBio": {
+      "meetHost": " Lernen Sie Ihren Gastgeber kennen",
+      "inHouse": " In-House",
+      "businessMeeting": " Geschäftstreffen",
+      "complete": " 12 abgeschlossen",
+      "specialty": " Spezialgebiet",
+      "myBio": " MEINE BIOGRAFIE"
+    },
+    "HotelBio": {
+      "teachingTool": " Lehrmittel",
+      "competence": " Kompetenz",
+      "card": " Karte",
+      "Paypal": " Paypal",
+      "perNight": " Pro / Nacht",
+      "priceInclude": " Preis beinhaltet Geschäftszimmer und Meetings",
+      "HotelServiceFee": " HotelBuuk Servicegebühr",
+      "youSign": "Sie sollten sich für die Reservierung als Gast anmelden",
+      "alreadyPart": "Sie nehmen bereits an dieser Veranstaltung teil"
+    },
+    "availabilityCalendar": {
+      "availability": "AvailabilityCalendar"
+    },
+    "PopularAmenities": {
+      "mostPopularAmenities": "Beliebteste Annehmlichkeiten"
+    },
+    "itinerary": {
+      "itineraryHead": "Reiseplan"
+    },
+    "thingsKnow": {
+      "thingsKnowHead": "Wissenswertes",
+      "houseRules": "Hausordnung",
+      "safetyProperty": "Sicherheit und Eigentum",
+      "cancellationPolicy": "Stornierungsbedingungen"
+    },
+    "guestReviews": {
+      "guestReviewsHead": "Bewertungen der Gäste"
+    }
+  },
+  "showMoreHotel": {
+    "stayBusiness": " Aufenthalt für Geschäftstreffen",
+    "destination": "Reiseziel",
+    "formNight": "Ab Nacht",
+    "toNight": "Bis Nacht",
+    "priceRange": "Preisspanne",
+    "selectedPrice": "Ausgewählter Preis",
+    "filterRating": " Filtern nach Bewertung",
+    "location": "Standort",
+    "nomads": "Nomaden"
+  }
 }

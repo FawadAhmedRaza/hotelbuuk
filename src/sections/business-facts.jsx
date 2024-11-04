@@ -1,6 +1,5 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { Button, Pannel, ProfileAvatar, Typography } from "../components";
 import { BusinessFactsData } from "../_mock/_business-facts";
@@ -62,13 +61,13 @@ export const BusinessFacts = React.memo(({ className }) => {
               variant="h2"
               className="font-semibold text-start !text-black"
             >
-              {t("home.facts.title")}
+              {t("common.businessFacts")}
             </Typography>
             <Typography
               variant="h6"
               className="font-normal text-start  text-neutral-400"
             >
-              {t("home.facts.shortDes")}
+              {t("common.businessTitle")}
             </Typography>
           </div>
           <CustomCollapsible isOpen={isOpen}>

@@ -2,13 +2,15 @@ import { Typography } from "@/src/components";
 import React from "react";
 import TimeLine from "./time-line";
 import { Map } from "./map";
+import { useTranslation } from "react-i18next";
 
 const Itinerary = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <div className=" py-8">
         <Typography variant="h2" className="px-12 font-semibold">
-          Itinerary
+          {t("hotelDetail.itinerary.itineraryHead")}
         </Typography>
         <div className="grid grid-cols-12 gap-5 items-start mt-3">
           <div className="col-span-12 md:col-span-5">

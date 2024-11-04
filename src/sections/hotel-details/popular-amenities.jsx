@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Pannel, Typography, Button, Iconify } from "@/src/components";
 import { mockAmenities } from "@/src/_mock/_popolar-amentities";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const PopularAmenities = React.memo(() => {
   const [showAll, setShowAll] = useState(false);
@@ -13,11 +14,12 @@ export const PopularAmenities = React.memo(() => {
     setShowAll(!showAll);
   };
 
+  const { t } = useTranslation();
   return (
     <Pannel className="flex flex-col gap-10 justify-start items-start bg-white !px-10  sm:p-6">
       {/* Header */}
       <Typography variant="h3" className="font-medium">
-        Most popular Amenities
+        {t("hotelDetail.PopularAmenities.mostPopularAmenities")}
       </Typography>
 
       {/* Amenities list */}
@@ -39,7 +41,9 @@ export const PopularAmenities = React.memo(() => {
 
       {/* Show/Hide button */}
       <Button onClick={handleToggleShow} className="mt-4">
-        {showAll ? "Show Less" : `Show All (${mockAmenities.length})`}
+        {showAll
+          ? `${t("common.showLess")}`
+          : `${t("common.showAll")}  (${mockAmenities.length})`}
       </Button>
     </Pannel>
   );
