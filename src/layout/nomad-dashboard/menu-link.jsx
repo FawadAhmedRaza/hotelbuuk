@@ -103,7 +103,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       </div>
 
       <div className="flex flex-col h-full justify-center sm:justify-start  overflow-y-scroll hide-scrollbar items-center sm:items-start gap-5 mt-10 w-full pb-12">
-        {MenuLinks(t)?.map((item) => (
+        {MenuLinks?.map((item) => (
           <div key={item.id} className=" w-full">
             <Link
               href={item?.path || "#"}
