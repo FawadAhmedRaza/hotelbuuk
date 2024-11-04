@@ -21,6 +21,7 @@ import { ShadcnCard } from "../components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "../redux/hotel-info/thunk";
 import ImageRender from "../components/ImageRenderer";
+import { useTranslation } from "react-i18next";
 
 export const MeetOurPatners = React.memo(() => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export const MeetOurPatners = React.memo(() => {
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
   const [isHotelLoading, setIsHotelLoading] = useState(true);
-
+  const {t} = useTranslation()
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
 
   console.log(hotels);
@@ -65,13 +66,13 @@ export const MeetOurPatners = React.memo(() => {
     <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
-          Meet Our Partners
+          {t("home.meetOurPartner.title")}
         </Typography>
         <Typography
           variant="h6"
           className="font-normal text-start mt-2 text-neutral-400"
         >
-          Introducing the partners who help us elevate your stay
+          {t("home.meetOurPartner.shortDes")}
         </Typography>
       </div>
 

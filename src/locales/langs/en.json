@@ -1,18 +1,107 @@
 {
-  "common":{
-    "checkin":"Check-in",
-    "checkout":"Check-out",
-    "search":"Search"
+  "common": {
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "search": "Search",
+    "showmore": "Show More",
+    "signup": "Signup Now",
+    "daysperguest": "days per guest",
+    "ask": "Ask",
+    "exploreMoreBussinessFacts": "Explore More Business Facts",
+    "showless": "Show less",
+    "social":"Social",
+    "tech":"Tecnologies",
+    "hti":"Hotel Info",
+    "htimg":"Hotel Images",
+    "delp":"Delete profile",
+    "save":"Save",
+    "submit":"Submit",
+    "delConf":"Are you sure you want to delete your profile ? this action will delete all of your data?"
   },
   "home": {
     "hero": {
       "stay": "Stay",
       "heading": "For Business Insights",
-      "description":"Our partner hotels offer business tours and market insights to business leaders",
-      "filter":{
-        "destination":"Destinations",
-        "destinationPlaceholder":"Moxy Dortmunt City"
+      "description": "Our partner hotels offer business tours and market insights to business leaders",
+      "filter": {
+        "destination": "Destinations",
+        "destinationPlaceholder": "Moxy Dortmunt City"
       }
+    },
+    "hotelPreview": {
+      "title": "Stay For Business Meetings",
+      "shortDes": "Find Business Hotels with Local Market Insights.",
+      "actionDes": "Find More Business Hotels"
+    },
+    "banner": {
+      "title": "Are you taking your business abroad",
+      "title2": "or opening a new branch?",
+      "shortDes": "Find hotels with in-house consultants to walk you through."
+    },
+    "facts": {
+      "title": "Business Facts",
+      "shortDes": "Our journey in numbers and highlights."
+    },
+    "bookingStep": {
+      "title": "What to expect",
+      "shortExp": "we'll exceed your high expectations",
+      "steps": [
+        {
+          "id": 3,
+          "title": "Seamless Booking Experience",
+          "description": "Guests receive curated options for business tours relevant to their industry with detailed insights on local industries, tour agendas, and networking opportunities.",
+          "image": "/assets/images/imgthree.jpg",
+          "reverse": false
+        },
+        {
+          "id": 2,
+          "title": "Personalized Itinerary and Pre-Tour Insights",
+          "description": "During tours, guests get personalized itinerary and in-depth insights on key industry trends, consumer behavior, and the relevant local markets.",
+          "descriptionTwo": "Guests can access market overviews and industry analysis to prepare for valuable engagements.",
+          "image": "/assets/images/imgtwo.jpg",
+          "reverse": true
+        },
+        {
+          "id": 1,
+          "title": "Effortless Check-In and Tour Assistance",
+          "description": "At check-in, our consultants are ready to help you settle in, access relevant resources and contact exchanges to deepen networking and understanding of the markets, thereby maximizing the business potential of each experience.",
+          "image": "/assets/images/imgone.jpg",
+          "reverse": false
+        }
+      ]
+    },
+    "meetOurPartner": {
+      "title": "Meet Our Partners",
+      "shortDes": "Introducing the partners who help us elevate your stay"
     }
-  }
+  },
+  "footer": {
+    "description":"The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and typesetting industry. Lorem Ipsum has been The printing and  typesetting industry. Lorem Ipsum has been"
+  },
+  "links":{
+    "h":"Home",
+    "su":"Sign Up",
+    "log":"Login",
+    "d":"Dashboard",
+    "about":"About Us",
+    "impressum":"Impressum",
+    "tc":"Terms & Conditions",
+    "pp":"Privacy Policy",
+    "cont":"Contact",
+    "leg":"Legal",
+    "lo":"Logout",
+    "nt":"Notifications",
+    "bk":"Bookings",
+    "ev":"Events",
+    "ht":"Hotels",
+    "htl":"Hotels Lists",
+    "rm":"Rooms",
+    "msg":"Messages",
+    "st":"Settings",
+    "pr":"Profile",
+    "nd":"Nomads",
+    "alnd":"All Nomads",
+    "ind":"Intenal Nomads"
+  },
+  "copyr":"copyrights © Hotelbuuk Technologies all rights reserved."
 }

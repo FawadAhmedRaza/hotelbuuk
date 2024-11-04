@@ -15,12 +15,13 @@ import { BgIcon } from "@/src/components/bg-icon";
 import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
 import { paths } from "@/src/contants";
+import { useTranslation } from "react-i18next";
 
 export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
   const { authenticated, logout, user } = useAuthContext();
   const pathname = usePathname();
-
+  const {t} = useTranslation()
   const UserId = user?.id;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
@@ -42,7 +43,6 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   }, [pathname]);
 
   const isActive = (path) => pathname === path;
-
   return (
     <Drawer isDrawerOpen={isOpen} setIsDrawerOpen={setIsOpen}>
       <div className="flex justify-between items-center">
@@ -62,7 +62,7 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       </div>
 
       <div className="flex flex-col h-full justify-center sm:justify-start items-center sm:items-start overflow-y-scroll hide-scrollbar gap-5 mt-10 w-full pb-12">
-        {MenuLinks(UserId)?.map((item) => (
+        {MenuLinks(UserId,t)?.map((item) => (
           <div key={item.id} className="w-full">
             <Link
               href={item?.path || "#"}
@@ -128,10 +128,10 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
 
         {authenticated ? (
           <Button className="mb-12" onClick={handleLogout}>
-            Logout
+            {t('links.lo')}
           </Button>
         ) : (
-          AuthLinks?.map((item) => (
+          AuthLinks(t)?.map((item) => (
             <AnchorTag
               key={item?.id}
               href={item?.path}
@@ -150,50 +150,50 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   );
 };
 
-export const MenuLinks = (UserId) => {
+export const MenuLinks = (UserId,t) => {
   return [
     {
       id: 1,
-      label: "Home",
+      label: t("links.h"),
       path: paths.guestDashboard.root,
     },
     {
       id: 2,
-      label: "Notifications",
+      label: t("links.nt"),
       path: paths.guestDashboard.notifications,
     },
     {
       id: 3,
-      label: "Bookings",
+      label: t("links.bk"),
       path: paths.guestDashboard.bookings,
     },
     {
       id: 4,
-      label: "Hotels",
+      label: t("links.ht"),
       path: paths.guestDashboard.hotels,
     },
     {
       id: 5,
-      label: "Nomads",
+      label: t("links.nd"),
       path: paths.guestDashboard.nomads,
     },
     {
       id: 6,
-      label: "Messages",
+      label: t("links.msg"),
       path: paths.chats.root,
     },
     {
       id: 7,
-      label: "Settings",
+      label:t("links.st"),
       path: "",
       children: [
         {
           id: 1,
-          title: "Profile",
+          title: t("links.pr"),
           path: `/profile/${UserId}`,
         },
-        { id: 2, title: "Terms", path: "" },
-        { id: 3, title: "Privacy", path: "" },
+        { id: 2, title: t("links.tc"), path: "" },
+        { id: 3, title: t("links.pp"), path: "" },
       ],
     },
   ];

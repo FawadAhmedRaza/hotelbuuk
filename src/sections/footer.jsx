@@ -2,8 +2,11 @@ import React from "react";
 import { AnchorTag, Iconify, Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
+  const {t}  = useTranslation('')
+
   return (
     <div className="flex flex-col w-full h-full">
       
@@ -22,49 +25,46 @@ export const Footer = () => {
             variant="p"
             className="text-sm w-full text-white text-wrap text-justify"
           >
-            The printing and typesetting industry. Lorem Ipsum has been The
-            printing and typesetting industry. Lorem Ipsum has been The printing
-            and typesetting industry. Lorem Ipsum has been The printing and
-            typesetting industry. Lorem Ipsum has been The printing and
-            typesetting industry. Lorem Ipsum has been
+            {t("footer.description")}
           </Typography>
         </div>
 
         <div className="flex flex-col">
           <Typography variant="h3" className="font-semibold text-white ">
-            Legal
+          {t("links.leg")}
+
           </Typography>
           <div className="flex flex-col gap-y-3 mt-4">
             <AnchorTag
               className="text-white font-poppins font-normal text-base"
               href="/about"
-            >
-              About Us
+              >
+              {t("links.about")}
             </AnchorTag>
             <AnchorTag
               className="text-white font-poppins font-normal text-base"
               href="/impressum"
             >
-              Impressum
+              {t("links.impressum")}
             </AnchorTag>
             <AnchorTag
               className="text-white font-poppins font-normal text-base"
               href="/terms"
-            >
-              Terms & Conditions
+              >
+              {t("links.tc")}
             </AnchorTag>
             <AnchorTag
               className="text-white font-poppins font-normal text-base"
               href="/privacy-policy"
             >
-              Privacy Policy
+              {t("links.pp")}
             </AnchorTag>
           </div>
         </div>
 
         <div className="flex flex-col gap-y-3">
           <Typography variant="h3" className="font-semibold text-white ">
-            Social
+          {t("common.social")}
           </Typography>
 
           <div className="flex gap-x-2">
@@ -85,7 +85,7 @@ export const Footer = () => {
 
         <div className="flex flex-col gap-y-3">
           <Typography variant="h3" className="font-semibold text-white ">
-            Contact
+          {t("links.cont")}
           </Typography>
           <div className="flex gap-x-2 items-center">
             <BgIcon iconName="ic:baseline-email" iconClass="!text-black" />
@@ -108,10 +108,10 @@ export const Footer = () => {
         </p>
 
         <p
-          className="!text-transparent leading-none font-poppins lg:!text-[40px] md:!text-[30px] sm:!text-[20px] !text-[20px] pb-[20px] text-center"
+          className="!text-transparent uppercase leading-none font-poppins lg:!text-[40px] md:!text-[30px] sm:!text-[20px] !text-[20px] pb-[20px] text-center"
           style={{ textShadow: "rgba(255, 255, 255, 0.5) 0px 3px 3px" }}
         >
-          TECHNOLOGIES
+          {t("common.tech")}
         </p>
       </div>
 
@@ -122,7 +122,7 @@ export const Footer = () => {
           variant="p"
           className="text-sm text-center text-white font-poppins opacity-90"
         >
-          copyrights © Hotelbuuk Technologies all rights reserved.
+          {t("copyr")}
         </Typography>
       </div>
 

@@ -14,6 +14,7 @@ import {
 import { BgIcon } from "@/src/components/bg-icon";
 import Link from "next/link";
 import { paths } from "@/src/contants";
+import { useTranslation } from "react-i18next";
 
 export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
@@ -41,7 +42,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   }, [pathname]);
 
   const isActive = (path) => pathname === path;
-
+  const { t } = useTranslation();
   return (
     <Drawer
       isDrawerOpen={isOpen}
@@ -65,7 +66,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       </div>
 
       <div className="flex flex-col h-full justify-center sm:justify-start items-center overflow-y-scroll hide-scrollbar sm:items-start gap-5 mt-10 w-full mb-10 pb-12">
-        {MenuLinks(UserId)?.map((item) => (
+        {MenuLinks(UserId, t)?.map((item) => (
           <div key={item.id} className="w-full">
             <Link
               href={item?.path || "#"}
@@ -131,7 +132,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
 
         {authenticated && (
           <Button className="mb-12" onClick={handleLogout}>
-            Logout
+            {t("links.lo")}
           </Button>
         )}
       </div>
@@ -145,58 +146,62 @@ export const MenuLinks = (UserId) => {
   return [
     {
       id: 1,
-      label: "Home",
+      label: t("links.h"),
       path: paths.hotelDashboard.root,
     },
     {
       id: 2,
-      label: "Notifications",
+      label: t("links.nt"),
       path: paths.hotelDashboard.notifications,
     },
     {
       id: 3,
-      label: "Bookings",
+      label: t("links.bk"),
       path: paths.hotelDashboard.bookings.root,
     },
     {
       id: 4,
-      label: "Events",
+      label: t("links.ev"),
       path: paths.hotelDashboard.events.root,
     },
     {
       id: 6,
-      label: "Nomads",
+      label: t("links.nd"),
 
       children: [
-        { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
+        {
+          id: 1,
+          title: t("links.alnd"),
+          path: paths.hotelDashboard.nomads.root,
+        },
         {
           id: 2,
-          title: "Internal Nomads",
+          title: t("links.ind"),
           path: paths.hotelDashboard.nomads.internalNomads,
         },
       ],
     },
     {
       id: 8,
-      label: "Rooms",
+      label: t("links.rm"),
       path: paths.hotelDashboard.rooms,
     },
     {
       id: 9,
-      label: "Messages",
+      label: t("links.msg"),
       path: paths.chats.root,
     },
     {
       id: 10,
-      label: "Settings",
+      label: t("links.st"),
       children: [
         {
           id: 1,
-          title: "Profile",
+          title: t("links.pr"),
           path: `/hotel-info/${UserId}`,
         },
-        { id: 2, title: "Terms", path: "" },
-        { id: 3, title: "Privacy", path: "" },
+        { id: 2, title: t("links.tc"), path: "" },
+        { id: 3, title: t("links.pp"), path: "" },
       ],
     },
   ];

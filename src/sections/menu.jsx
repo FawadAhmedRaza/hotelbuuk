@@ -6,11 +6,12 @@ import { useAuthContext } from "../providers/auth/context/auth-context";
 import { AnchorTag, Button, Drawer, Typography } from "../components";
 import { AuthLinks, MenuLinks } from "../_mock/_menu";
 import { BgIcon } from "../components/bg-icon";
+import { useTranslation } from "react-i18next";
 
 export const Menu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
   const { authenticated, logout, user } = useAuthContext();
-
+  const {t} = useTranslation()
   const handleLogout = async () => {
     await logout();
     router.refresh();
@@ -34,7 +35,7 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
         />
       </div>
       <div className="flex flex-col h-96 justify-center sm:justify-start items-center sm:items-start gap-5 mt-10">
-        {MenuLinks(user)?.map((item) => {
+        {MenuLinks(user,t)?.map((item) => {
           return (
             <AnchorTag
               key={item?.id}
@@ -51,9 +52,11 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
           );
         })}
         {authenticated ? (
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button onClick={handleLogout}>
+            {t('links.lo')}
+          </Button>
         ) : (
-          AuthLinks?.map((item) => {
+          AuthLinks(t)?.map((item) => {
             return (
               <AnchorTag
                 key={item?.id}

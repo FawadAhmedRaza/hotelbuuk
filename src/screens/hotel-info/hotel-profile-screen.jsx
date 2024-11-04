@@ -22,6 +22,7 @@ import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { enqueueSnackbar } from "notistack";
 import { useBoolean } from "@/src/hooks";
 import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
+import { useTranslation } from "react-i18next";
 
 const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   const [activeTabs, setActiveTabs] = useState("hotel-info");
@@ -48,7 +49,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const {t} = useTranslation()
   const methods = useForm({
     resolver: yupResolver(HotelSchema),
     defaultValues: isEdit && defaultValues,
@@ -145,12 +146,12 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
   const TABS = [
     {
-      label: "Hotel Info",
+      label: t("common.hti"),
       value: "hotel-info",
       component: <HotelProfile />,
     },
     {
-      label: "Hotel Images",
+      label: t("common.htimg"),
       value: "hotel-images",
       component: <HotelImages />,
     },
@@ -186,10 +187,10 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
               className="!bg-red-600"
               onClick={() => setIsOpen(!isOpen)}
             >
-              Delete profile
+              {t("common.delp")}
             </Button>
             <Button loading={isSubmitting} type="submit">
-              {isEdit ? "Save" : "Submit"}
+              {isEdit ? t("common.save") : t("common.submit")}
             </Button>
           </div>
         )}
@@ -203,8 +204,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
           handleDelete={handleDelete}
         >
           <Typography variant="p">
-            Are you sure you want to delete your profile ? this action will
-            delete all of your data?
+            {t("common.delConf")}
           </Typography>
         </DeleteModal>
       )}

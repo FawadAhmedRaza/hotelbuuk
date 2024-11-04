@@ -13,53 +13,53 @@ import {
   Typography,
 } from "@/src/components";
 import { BgIcon } from "@/src/components/bg-icon";
-import { AuthLinks } from "@/src/_mock/_menu";
 import Link from "next/link";
 import { paths } from "@/src/contants";
+import { useTranslation } from "react-i18next";
 
 export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   const router = useRouter();
   const { authenticated, logout, user } = useAuthContext();
   const pathname = usePathname();
-
+  const {t}= useTranslation()
   const MenuLinks = [
     {
       id: 1,
-      label: "Home",
+      label: t("link.h"),
       path: "/nomad-dashboard",
     },
     {
       id: 2,
-      label: "Notifications",
+      label: t("link.nt"),
       path: paths.nomadDashboard.notifications,
     },
     {
       id: 3,
-      label: "Bookings",
+      label: t("link.bk"),
       path: paths.nomadDashboard.bookings.root,
     },
     {
       id: 4,
-      label: "Events",
+      label: t("link.ev"),
       path: paths.nomadDashboard.events.root,
     },
     {
       id: 6,
-      label: "Hotels",
+      label: t("link.ht"),
       path: "/nomad-dashboard/hotels-list",
     },
     {
       id: 7,
-      label: "Messages",
+      label: t("link.msg"),
       path: paths.chats.root,
     },
     {
       id: 8,
-      label: "Settings",
+      label: t("link.st"),
       children: [
-        { id: 4, title: "Profile", path: `/nomad/profile/${user?.id}` },
-        { id: 5, title: "Terms", path: "" },
-        { id: 5, title: "Privacy", path: "" },
+        { id: 4, title: t("link.pr"), path: `/nomad/profile/${user?.id}` },
+        { id: 5, title: t("link.tc"), path: "" },
+        { id: 5, title: t("link.pp"), path: "" },
       ],
     },
   ];
@@ -103,7 +103,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       </div>
 
       <div className="flex flex-col h-full justify-center sm:justify-start  overflow-y-scroll hide-scrollbar items-center sm:items-start gap-5 mt-10 w-full pb-12">
-        {MenuLinks?.map((item) => (
+        {MenuLinks(t)?.map((item) => (
           <div key={item.id} className=" w-full">
             <Link
               href={item?.path || "#"}
@@ -169,7 +169,7 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
 
         {authenticated && (
           <Button className="mb-12" onClick={handleLogout}>
-            Logout
+            {t("links.lo")}
           </Button>
         )}
       </div>
@@ -177,43 +177,43 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
   );
 };
 
-export const MenuLinks = [
+export const MenuLinks = (t)=> [
   {
     id: 1,
-    label: "Home",
+    label: t("link.h"),
     path: "/nomad-dashboard",
   },
   {
     id: 2,
-    label: "Notifications",
+    label: t("link.nt"),
     path: "",
   },
   {
     id: 3,
-    label: "Bookings",
+    label:t("link.bk"),
     path: "",
   },
   {
     id: 6,
-    label: "Hotels",
+    label: t("link.ht"),
     path: "",
     children: [
-      { id: 1, title: "Hotels List", path: paths.nomadDashboard.hotels },
+      { id: 1, title: t("link.htl"), path: paths.nomadDashboard.hotels },
     ],
   },
   {
     id: 7,
-    label: "Messages",
+    label: t("link.msg"),
     path: "",
   },
   {
     id: 8,
-    label: "Settings",
+    label: t("link.st"),
     path: "",
     children: [
-      { id: 4, title: "Profile", path: "" },
-      { id: 5, title: "Terms", path: "" },
-      { id: 5, title: "Privacy", path: "" },
+      { id: 4, title: t("link.pr"), path: "" },
+      { id: 5, title: t("link.tc"), path: "" },
+      { id: 5, title:t("link.pp"), path: "" },
     ],
   },
 ];

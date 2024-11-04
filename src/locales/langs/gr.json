@@ -1,18 +1,101 @@
 {
   "common": {
-    "checkin": "Einchecken",
-    "checkout": "Auschecken",
-    "search": "Suche"
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "search": "Suche",
+    "showmore": "Mehr anzeigen",
+    "signup": "Jetzt registrieren",
+    "daysperguest": "Tage pro Gast",
+    "ask": "Fragen",
+    "exploreMoreBussinessFacts": "Weitere Geschäftsfakten erkunden",
+    "showless": "Weniger anzeigen",
+    "social": "Sozial",
+    "tech": "Technologien"
   },
   "home": {
     "hero": {
       "stay": "Aufenthalt",
       "heading": "Für Geschäftseinblicke",
-      "description": "Unsere Partnerhotels bieten Geschäftstouren und Markteinblicke für Unternehmensführer",
+      "description": "Unsere Partnerhotels bieten Geschäftstouren und Markteinblicke für Führungskräfte",
       "filter": {
         "destination": "Ziele",
         "destinationPlaceholder": "Moxy Dortmund City"
       }
+    },
+    "hotelPreview": {
+      "title": "Aufenthalt für Geschäftstreffen",
+      "shortDes": "Finden Sie Business-Hotels mit lokalen Markteinblicken.",
+      "actionDes": "Weitere Business-Hotels finden"
+    },
+    "banner": {
+      "title": "Führen Sie Ihr Unternehmen ins Ausland",
+      "title2": "oder eröffnen Sie eine neue Niederlassung?",
+      "shortDes": "Finden Sie Hotels mit hauseigenen Beratern, die Ihnen zur Seite stehen."
+    },
+    "facts": {
+      "title": "Geschäftsfakten",
+      "shortDes": "Unsere Reise in Zahlen und Highlights."
+    },
+    "bookingStep": {
+      "title": "Was Sie erwartet",
+      "shortExp": "Wir übertreffen Ihre hohen Erwartungen",
+      "steps": [
+        {
+          "id": 3,
+          "title": "Nahtloses Buchungserlebnis",
+          "description": "Gäste erhalten kuratierte Optionen für Geschäftstouren, die für ihre Branche relevant sind, mit detaillierten Einblicken in lokale Branchen, Tourprogramme und Networking-Möglichkeiten.",
+          "image": "/assets/images/imgthree.jpg",
+          "reverse": false
+        },
+        {
+          "id": 2,
+          "title": "Personalisierte Reiseroute und Tour-Informationen",
+          "description": "Während der Touren erhalten Gäste eine personalisierte Reiseroute und detaillierte Einblicke in wichtige Branchentrends, Verbraucherverhalten und die relevanten lokalen Märkte.",
+          "descriptionTwo": "Gäste können auf Marktübersichten und Branchenanalysen zugreifen, um sich auf wertvolle Kontakte vorzubereiten.",
+          "image": "/assets/images/imgtwo.jpg",
+          "reverse": true
+        },
+        {
+          "id": 1,
+          "title": "Müheloses Einchecken und Tourenunterstützung",
+          "description": "Beim Check-in stehen unsere Berater bereit, um Ihnen beim Einleben zu helfen, relevante Ressourcen und Kontaktinformationen zur Verfügung zu stellen, um das Networking und das Verständnis der Märkte zu vertiefen und so das Geschäftspotenzial jeder Erfahrung zu maximieren.",
+          "image": "/assets/images/imgone.jpg",
+          "reverse": false
+        }
+      ]
+    },
+    "meetOurPartner": {
+      "title": "Unsere Partner kennenlernen",
+      "shortDes": "Lernen Sie die Partner kennen, die Ihren Aufenthalt bereichern"
     }
-  }
+  },
+  "footer": {
+    "description": "Die Druck- und Setzindustrie. Lorem Ipsum war die Druck- und Setzindustrie. Lorem Ipsum war die Druck- und Setzindustrie. Lorem Ipsum war die Druck- und Setzindustrie. Lorem Ipsum war die Druck- und Setzindustrie. Lorem Ipsum war die Druck- und Setzindustrie."
+  },
+  "links": {
+    "h": "Startseite",
+    "su": "Registrieren",
+    "log": "Anmelden",
+    "d": "Dashboard",
+    "about": "Über uns",
+    "impressum": "Impressum",
+    "tc": "Allgemeine Geschäftsbedingungen",
+    "pp": "Datenschutzrichtlinie",
+    "cont": "Kontakt",
+    "leg": "Rechtliches",
+    "lo": "Abmelden",
+    "nt": "Benachrichtigungen",
+    "bk": "Buchungen",
+    "ev": "Veranstaltungen",
+    "ht": "Hotels",
+    "htl": "Hotellisten",
+    "rm": "Zimmer",
+    "msg": "Nachrichten",
+    "st": "Einstellungen",
+    "pr": "Profil",
+    "nd": "Nomaden",
+    "alnd": "Alle Nomaden",
+    "ind": "Interne Nomaden"
+  },
+  "copyr": "Urheberrechte © Hotelbuuk Technologies, alle Rechte vorbehalten."
 }

@@ -10,6 +10,7 @@ import { enqueueSnackbar } from "notistack";
 import axiosInstance from "../utils/axios";
 import { calculateDaysBetweenDates } from "../libs/helper";
 import BusinessFactsSkeleton from "../components/Skeleton/business-facts-skeleton";
+import { useTranslation } from "react-i18next";
 
 export const BusinessFacts = React.memo(({ className }) => {
   const [visibleFacts, setVisibleFacts] = React.useState(4);
@@ -17,6 +18,7 @@ export const BusinessFacts = React.memo(({ className }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [businessFacts, setBusinessFacts] = useState([]);
+  const { t } = useTranslation();
 
   const fetchBusinssFacts = async () => {
     try {
@@ -60,13 +62,13 @@ export const BusinessFacts = React.memo(({ className }) => {
               variant="h2"
               className="font-semibold text-start !text-black"
             >
-              Business Facts
+              {t("home.facts.title")}
             </Typography>
             <Typography
               variant="h6"
               className="font-normal text-start  text-neutral-400"
             >
-              Our journey in numbers and highlights.
+              {t("home.facts.shortDes")}
             </Typography>
           </div>
           <CustomCollapsible isOpen={isOpen}>
@@ -114,10 +116,10 @@ export const BusinessFacts = React.memo(({ className }) => {
                         item?.start_date,
                         item?.end_date
                       )}{" "}
-                      days per guest
+                      {t("common.daysperguest")}
                     </Typography>
                     <Button className="py-1.5 px-4 mx-auto min-450:mx-0">
-                      Ask John
+                    {t("common.ask")} John
                     </Button>
                   </div>
                 </div>
@@ -126,12 +128,12 @@ export const BusinessFacts = React.memo(({ className }) => {
           </CustomCollapsible>
           <div className="flex flex-col justify-center items-center gap-5">
             <Typography variant="h4" className="font-semibold text-center mt-2">
-              Explore More Business Facts
+            {t("common.exploreMoreBussinessFacts")}
             </Typography>
             <Button onClick={handleVisibleFacts}>
               {visibleFacts === businessFacts?.length
-                ? "Show less "
-                : "Show More"}
+                ? t("common.showless")
+                : t("common.showmore")}
             </Button>
           </div>
         </>
