@@ -17,8 +17,6 @@ export const HotelCard = React.memo(({ event, className }) => {
       className={cn("relative w-full !text-black", className)}
     >
       <div className="w-full h-full relative">
-        {/* <img src={hotel.imageUrl} alt={hotel.title} className="w-full h-auto" /> */}
-
         <div className="h-80 relative overflow-hidden rounded-3xl">
           <div className="absolute rounded-3xl w-full h-full inset-0 bg-black   opacity-45" />
           <ImageRender
@@ -35,18 +33,14 @@ export const HotelCard = React.memo(({ event, className }) => {
             className="h-full w-full object-cover rounded-3xl  !event-card-shadow"
           />
         </div>
-        {/* <img
-          src="/assets/images/hotel-shadow.png"
-          alt={hotel.title}
-          className="w-[96%] sm:w-[96%]  h-full absolute top-0 left-2"
-        /> */}
+      
         <div className="absolute top-0 w-full  h-full flex flex-col gap-1.5 justify-center hotels-center">
           <Typography
             variant="h3"
             className="!text-2xl md:!text-[25px] !font-medium text-white uppercase text-center font-lemonMilk"
           >
             {event?.title?.length > 30
-              ? `${event.title.slice(0, 40)}...`
+              ? `${event?.title.slice(0, 40)}...`
               : event?.title}
           </Typography>
 
