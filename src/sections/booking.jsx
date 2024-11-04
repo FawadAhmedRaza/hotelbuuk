@@ -172,7 +172,7 @@ export const Booking = React.memo(() => {
   ]);
 
   const bookingSchema = Yup.object().shape({
-    destination: Yup.string().optional(""),
+    destination: Yup.string().required("Destination is required."),
     startDate: Yup.date().optional("Check-in date is optional"),
     endDate: Yup.date().nullable().optional("Check-out date is required"),
   });
@@ -206,10 +206,10 @@ export const Booking = React.memo(() => {
     <RHFFormProvider
       methods={methods}
       onSubmit={methods.handleSubmit(handleSubmit)}
-      className=""
+      className=" w-full "
     >
-      <div className="flex items-center !w-fit pl-0 pr-3 py-0 m-0 bg-white md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm mx-auto">
-        <div className="flex md:flex-row flex-col w-full gap-3 md:items-center">
+      <div className="flex md:items-center !w-fit pl-0 pr-3 py-0 m-0  bg-white    md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm md:mx-auto">
+        <div className="flex md:flex-row flex-col gap-3 md:items-center w-full ">
           {/* Destination Input */}
           <div className="py-2 pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10 md:hover:bg-gray-100 md:rounded-full">
             <div className="flex gap-3 items-center">
@@ -233,10 +233,12 @@ export const Booking = React.memo(() => {
           <span className="hidden md:flex h-16 w-[2px] bg-primary" />
 
           {/* Calendar Input */}
-          <div className=" ">
+          <div className=" w-full  ">
             <Popover>
               <PopoverTrigger>
                 <BookingCalender
+                  InputBoxClass=" w-full "
+                  startEndBox=" !flex w-full  !flex-row"
                   nameStart="startDate"
                   nameEnd="endDate"
                   labelStart="Check-in"

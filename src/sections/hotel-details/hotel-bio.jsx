@@ -90,9 +90,7 @@ export const HotelBio = ({ type, id }) => {
         enqueueSnackbar("Your booking request has been sent successfully", {
           variant: "success",
         });
-        router.push(`http://localhost:3000/hotels/${id}?type=${type}`);
-        // router.push(`https://hotelbuuk.vercel.app/hotels/${id}?type=${type}`);
-        
+        router.push(`/hotels/${id}?type=${type}`);
       }
     } catch (error) {
       console.log(error);
@@ -129,7 +127,7 @@ export const HotelBio = ({ type, id }) => {
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "error" });
-    } 
+    }
   };
 
   const paypalButtons = (
@@ -272,20 +270,27 @@ export const HotelBio = ({ type, id }) => {
       <div className="w-full lg:w-[30%]  py-4   flex flex-col justify-between border-neutral-400">
         <Card className="flex  flex-col gap-1 w-full">
           <div className="w-full">
-            <Typography variant="h6" className=" font-semibold">
+            <Typography variant="p" className=" font-medium text-gray-500">
               ${event?.price} Per / Night
             </Typography>
-            <Typography variant="h6" className="font-semibold text-start ">
+            <Typography
+              variant="p"
+              className="font-semibold text-center my-3  "
+            >
               {event?.title}
             </Typography>
-            <Typography variant="h5" className="font-semibold text-center mt-2">
-              {hotelData.marketTour}
+            <Typography variant="h6" className="font-semibold   mt-2">
+              {event_type === "NOMAD"
+                ? event?.accomodation_type === "bnb"
+                  ? `${event?.address} ${event?.city} ${event?.country}`
+                  : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`
+                : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`}
             </Typography>
           </div>
 
           {/* Dates and Guests */}
-          <div className="grid grid-cols-3 bg-neutral-100 w-full rounded-xl shadow-lg  items-center mt-2 divide-x divide-neutral-400 ">
-            <div className="flex flex-col justify-center  items-center sm:items-start  sm:p-5 lg:px-3">
+          <div className=" flex justify-between bg-neutral-100 w-full rounded-full px-5 ju py-2 shadow-sm  items-center mt-2 divide-x divide-neutral-200 ">
+            <div className="flex flex-col justify-center  items-center sm:items-start  ">
               <Typography
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
@@ -296,18 +301,21 @@ export const HotelBio = ({ type, id }) => {
                 {event?.start_date?.toString().slice(0, 10)}
               </Typography>
             </div>
-            <div className="flex flex-col justify-center  items-center sm:items-start sm:p-5 lg:px-2">
+
+            <div className=" h-full w-[2px] bg-gray-400"></div>
+            <div className="flex flex-col justify-center  items-center sm:items-start ">
               <Typography
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
               >
-                Checkout
+                Check-out
               </Typography>
               <Typography variant="p" className="!text-xs sm:text-sm">
                 {event?.end_date?.toString().slice(0, 10)}
               </Typography>
             </div>
-            <div className="flex justify-between  p-5 lg:px-2">
+            <div className=" h-full w-[2px] bg-gray-400"></div>
+            <div className="flex justify-between  ">
               <Typography
                 variant="p"
                 className="!text-xs sm:text-sm font-medium"
@@ -327,13 +335,16 @@ export const HotelBio = ({ type, id }) => {
               </Typography>
               <input
                 type="number"
-                className="!outline-none !border-none !text-[16px]"
+                className="!outline-none !border-none !text-[16px]  w-10"
                 placeholder="5"
                 onChange={(e) => handleCalculation(e.target.value)}
                 value={guestCount}
               />
             </div>
-            <Typography variant="p" className="text-secondary text-center">
+            <Typography
+              variant="p"
+              className="text-secondary text-sm text-center"
+            >
               price includes business room & meetings
             </Typography>
             <div className=" flex flex-col gap-2 ">
@@ -373,14 +384,20 @@ export const HotelBio = ({ type, id }) => {
                 </Typography>
               </span>
               {user?.user_type !== "GUEST" ? (
-                <div className="flex bg-gray-50  p-2 rounded-md justify-between items-center mt-2 mb-3">
-                  <Typography variant="h6" className="font-semibold text-center">
-                    You should be signin as a guest for reservation
+                <div className="flex bg-gray-100   p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography
+                    variant="p"
+                    className="font-medium text-sm text-center text-gray-500"
+                  >
+                    You should be sign in as a guest for reservation
                   </Typography>
                 </div>
               ) : data?.id ? (
                 <div className="flex bg-gray-50 p-2 rounded-md justify-between items-center mt-2 mb-3">
-                  <Typography variant="h6" className="font-semibold text-center">
+                  <Typography
+                    variant="h6"
+                    className="font-semibold text-center"
+                  >
                     You already part of this event
                   </Typography>
                 </div>

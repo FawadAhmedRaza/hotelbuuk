@@ -87,18 +87,21 @@ const ChatSidebar = () => {
               className="px-5 py-4 flex items-center cursor-pointer border-l-4 border-l-transparent hover:bg-slate-100"
             >
               <ProfileAvatar
+                iconSize=" !h-12 !w-12 border border-black"
                 type="server"
                 src={otherUser?.profile_img}
                 alt={userName}
                 effect="blur"
-                className="h-12 w-12 border-2 border-white rounded-full"
+                className="h-12 w-12 border border-white rounded-full"
               />
               <div className="ml-4">
-                <p className="text-md font-semibold text-slate-600 m-0 p-0">
+                <p className="text-md font-medium text-black m-0 p-0">
                   {userName}
                 </p>
-                <p className="text-xs text-slate-400 font-semibold">
-                  {latestMessage}
+                <p className="text-xs text-gray-500 font-medium">
+                  {latestMessage.length > 25
+                    ? `${latestMessage.slice(0, 25)}...`
+                    : latestMessage}
                 </p>
               </div>
             </div>

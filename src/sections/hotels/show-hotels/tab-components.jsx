@@ -1,35 +1,59 @@
-import { Button, Card } from "@/src/components";
+import { Button, Card, Iconify } from "@/src/components";
 import React from "react";
+import MobileFilter from "./mob-filter";
+import { Menu } from "../../menu";
+import { useBoolean } from "@/src/hooks";
 
-const Tabs = ({ TABS, activeTab, setActiveTab, className }) => {
+const Tabs = ({ TABS, activeTab, setActiveTab, className, setFilters }) => {
+  console.log(setFilters, "setFilters");
+  const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
+
   return (
     <div className=" flex flex-col gap-5 md:gap-0 w-full">
-      <Card className=" p-2 w-fit bg-[#fcfcfc] shadow-md rounded-lg">
-        <div className="relative flex items-center flex-wrap gap-2 ">
-          {TABS?.map((tab) => (
-            <div
-              className={`z-30 flex items-center p-1 justify-center grow px-0 py-2 mb-0  transition-all ease-in-out rounded-lg cursor-pointer !text-primary  ${
-                activeTab === tab.value
-                  ? "bg-white border border-gray-300 "
-                  : "hover:bg-white"
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab(tab?.value);
-              }}
-              role="tab"
-              aria-controls={tab?.value}
-              aria-selected={activeTab === tab?.value}
-            >
-              <Button
-                className={`!bg-transparent !py-0 px-16 text-sm !text-primary outline-none font-medium${className}`}
+      <div className=" flex justify-between items-center">
+        <Card className=" p-2 w-fit bg-[#fcfcfc] shadow-md rounded-lg">
+          <div className="relative flex items-center flex-wrap gap-2 ">
+            {TABS?.map((tab) => (
+              <div
+                className={`z-30 flex items-center p-1 justify-center grow px-0 py-2 mb-0  transition-all ease-in-out rounded-lg cursor-pointer !text-primary  ${
+                  activeTab === tab.value
+                    ? "bg-white border border-gray-300 "
+                    : "hover:bg-white"
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab(tab?.value);
+                }}
+                role="tab"
+                aria-controls={tab?.value}
+                aria-selected={activeTab === tab?.value}
               >
-                {tab?.label}
-              </Button>
-            </div>
-          ))}
+                <Button
+                  className={`!bg-transparent !py-0 px-5 md:px-16 text-sm !text-primary outline-none font-medium${className}`}
+                >
+                  {tab?.label}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {isOpen && (
+          <MobileFilter
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            onClick={toggleDrawer}
+            setFilters={setFilters}
+          />
+        )}
+        <div
+          onClick={toggleDrawer}
+          className=" py-3 px-3 gap-3 items-center border md:hidden flex shadow-md  bg-[#fcfcfc] rounded-md"
+        >
+          Filter
+          <Iconify className=" text-black" iconName={"mage:filter"} />
         </div>
-      </Card>
+      </div>
 
       <div className="w-full mt-10">
         {TABS?.find((tab) => tab?.value === activeTab)?.component ?? (

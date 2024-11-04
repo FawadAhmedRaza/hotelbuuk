@@ -119,6 +119,61 @@ export function eventsFilter(events, filters) {
   return filteredResults;
 }
 
+// // FILTER WITH DATES
+// export function filterEventsByDateAndDestination(
+//   events,
+//   checkIn,
+//   checkOut,
+//   destination
+// ) {
+//   // Convert checkIn and checkOut strings to Date objects
+//   const checkInDate = new Date(checkIn);
+//   const checkOutDate = new Date(checkOut);
+
+//   // Filter events based on date range and destination
+//   return events.filter((event) => {
+//     // Convert event start and end dates to Date objects
+//     const eventStartDate = new Date(event.start_date);
+//     const eventEndDate = new Date(event.end_date);
+
+//     // Date range filter: Check if the event's date range overlaps with the checkIn and checkOut dates
+//     const dateRangeValid =
+//       eventStartDate <= checkOutDate && eventEndDate >= checkInDate;
+
+//     // Destination filter: First, try to match with the event's own city or country
+//     let destinationMatches = false;
+//     if (destination) {
+//       if (event.city) {
+//         destinationMatches =
+//           event.city.toLowerCase() === destination.toLowerCase();
+//       }
+//       if (!destinationMatches && event.country) {
+//         destinationMatches =
+//           event.country.toLowerCase() === destination.toLowerCase();
+//       }
+
+//       // If the event doesn't have its own city or country, try matching with the hotel's city or country
+//       if (!destinationMatches && event.hotel) {
+//         if (event.hotel.city) {
+//           destinationMatches =
+//             event.hotel.city.toLowerCase() === destination.toLowerCase();
+//         }
+//         if (!destinationMatches && event.hotel.country) {
+//           destinationMatches =
+//             event.hotel.country.toLowerCase() === destination.toLowerCase();
+//         }
+//       }
+//     } else {
+//       // If no destination is provided, all events pass this filter
+//       destinationMatches = true;
+//     }
+
+//     // Return true if both date range and destination filters are valid
+//     return dateRangeValid && destinationMatches;
+//   });
+// }
+
+
 // FILTER WITH DATES
 export function filterEventsByDateAndDestination(
   events,
@@ -126,22 +181,34 @@ export function filterEventsByDateAndDestination(
   checkOut,
   destination
 ) {
-  // Convert checkIn and checkOut strings to Date objects
-  const checkInDate = new Date(checkIn);
-  const checkOutDate = new Date(checkOut);
+  // Convert checkIn and checkOut strings to Date objects if they are provided
+  const checkInDate = checkIn ? new Date(checkIn) : null;
+  const checkOutDate = checkOut ? new Date(checkOut) : null;
 
-  // Filter events based on date range and destination
+  // Filter events based on the provided conditions
   return events.filter((event) => {
     // Convert event start and end dates to Date objects
     const eventStartDate = new Date(event.start_date);
     const eventEndDate = new Date(event.end_date);
 
-    // Date range filter: Check if the event's date range overlaps with the checkIn and checkOut dates
-    const dateRangeValid =
-      eventStartDate <= checkOutDate && eventEndDate >= checkInDate;
-
-    // Destination filter: First, try to match with the event's own city or country
+    // Initialize filters
+    let dateRangeValid = true;
     let destinationMatches = false;
+
+    // Date range filter
+    if (checkInDate && checkOutDate) {
+      // Both dates provided: check if event's date range overlaps with the check-in and check-out dates
+      dateRangeValid =
+        eventStartDate <= checkOutDate && eventEndDate >= checkInDate;
+    } else if (checkInDate) {
+      // Only check-in provided: check if the event starts after or on check-in date
+      dateRangeValid = eventStartDate >= checkInDate;
+    } else if (checkOutDate) {
+      // Only check-out provided: check if the event ends before or on check-out date
+      dateRangeValid = eventEndDate <= checkOutDate;
+    }
+
+    // Destination filter: Check if a destination is provided
     if (destination) {
       if (event.city) {
         destinationMatches =
@@ -168,7 +235,9 @@ export function filterEventsByDateAndDestination(
       destinationMatches = true;
     }
 
-    // Return true if both date range and destination filters are valid
-    return dateRangeValid && destinationMatches;
+    // Return true if either:
+    // - both dates are provided and valid, and destination matches
+    // - or, one date is provided (check-in or check-out) and valid, and destination matches
+    return (dateRangeValid && destinationMatches);
   });
 }
