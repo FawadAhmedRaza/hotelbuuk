@@ -1,4 +1,4 @@
-import { DM_Sans, Montserrat , Poppins} from "next/font/google";
+import { DM_Sans, Montserrat, Poppins } from "next/font/google";
 import LocalFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/src/auth";
@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { AuthProvider } from "../providers/auth/context";
 import ReduxProvider from "../providers/redux/redux-provider";
+import Script from "next/script";
 
 export const metadata = {
   title: "Hotel Buuk",
@@ -85,7 +86,14 @@ export default async function RootLayout({ children }) {
           className={`${DMSans.variable} ${montserrat.variable} ${lemonMilk.variable} ${helvatica.variable} ${poppins.variable}`}
         >
           <body className="font-dmSans overflow-x-hidden">
+            <Script src="/assets/lang-config.js" strategy="beforeInteractive" />
+            <Script src="/assets/translation.js" strategy="beforeInteractive" />
+            <Script
+              src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
+              strategy="afterInteractive"
+            />
             <AuthProvider>
+            <div id="google_translate_element"></div>
               <Toaster position="top-right" reverseOrder={false} />
               {children}
             </AuthProvider>
