@@ -18,10 +18,12 @@ import {
 } from "../components/ui/popover";
 import { BookingCalender } from "../components/booking-calendar";
 import { formatDate } from "../utils/formate-date";
+import { useTranslation } from "react-i18next";
 // import { RHFCalendarInput } from "../components/RHFCalendarInput";
 
 export const Booking = React.memo(() => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const {t} = useTranslation()
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -73,12 +75,12 @@ export const Booking = React.memo(() => {
                 className="text-primary mt-1"
               />
               <Typography variant="p" className="font-normal !text-sm">
-                Destinations
+              {t("home.hero.filter.destination")}
               </Typography>
             </div>
             <RHFInput
               type="text"
-              placeholder="Moxy Dortmunt City"
+              placeholder={t("home.hero.filter.destinationPlaceholder")}
               name="destination"
               inputClass="outline-none border-none text-base font-normal !p-0 bg-transparent"
               className="outline-none border-none !p-0 h-8 ml-1"
@@ -96,8 +98,8 @@ export const Booking = React.memo(() => {
                   startEndBox=" !flex w-full  !flex-row"
                   nameStart="startDate"
                   nameEnd="endDate"
-                  labelStart="Check-in"
-                  labelEnd="Check-out"
+                  labelStart={t('common.checkin')}
+                  labelEnd={t('common.checkout')}
                   startIcon="uil:calendar-alt"
                   endIcon="uil:calendar-alt"
                   onOpenPopover={togglePopover}
@@ -121,7 +123,7 @@ export const Booking = React.memo(() => {
 
           {/* Search Button */}
           <Button type="submit" className=" sm:w-fit md:mt-0 mt-5">
-            Search
+            {t('common.search')}
           </Button>
         </div>
       </div>

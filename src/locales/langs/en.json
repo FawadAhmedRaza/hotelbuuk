@@ -1,0 +1,18 @@
+{
+  "common":{
+    "checkin":"Check-in",
+    "checkout":"Check-out",
+    "search":"Search"
+  },
+  "home": {
+    "hero": {
+      "stay": "Stay",
+      "heading": "For Business Insights",
+      "description":"Our partner hotels offer business tours and market insights to business leaders",
+      "filter":{
+        "destination":"Destinations",
+        "destinationPlaceholder":"Moxy Dortmunt City"
+      }
+    }
+  }
+}
