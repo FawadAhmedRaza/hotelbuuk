@@ -48,7 +48,7 @@ const Tabs = ({ TABS, activeTab, setActiveTab, className, setFilters }) => {
         )}
         <div
           onClick={toggleDrawer}
-          className=" py-3 px-3 gap-3 items-center border md:hidden flex shadow-md  bg-[#fcfcfc] rounded-md"
+          className=" py-3 px-3 gap-3 cursor-pointer items-center border md:hidden flex shadow-md  bg-[#fcfcfc] rounded-md"
         >
           Filter
           <Iconify className=" text-black" iconName={"mage:filter"} />

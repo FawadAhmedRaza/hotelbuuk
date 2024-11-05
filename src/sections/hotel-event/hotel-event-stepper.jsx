@@ -157,6 +157,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       value: "guest",
       component: <GuestLearn />,
     },
+    // {
+    //   label: "Itinerary Locations",
+    //   icon: "lineicons:route-1",
+    //   value: "itinerary",
+    //   component: <Itinerary />,
+    // },
     {
       label: "Things to know",
       icon: "octicon:person-16",

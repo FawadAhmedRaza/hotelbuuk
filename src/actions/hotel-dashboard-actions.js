@@ -15,10 +15,19 @@ export async function getTotalNomads() {
   return await prisma.nomad.findMany();
 }
 
-export async function getTotalRooms(hotel_id) {
+export async function getTotalRooms(user_id) {
+  const hotel = await prisma.hotel_info.findFirst({
+    where: {
+      user_id,
+    },
+    select: {
+      id: true,
+    },
+  });
+
   return await prisma.hotel_rooms.findMany({
     where: {
-      hotel_id: hotel_id,
+      hotel_id: hotel?.id,
     },
   });
 }

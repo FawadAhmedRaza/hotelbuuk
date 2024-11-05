@@ -101,7 +101,7 @@ const GuestBookingList = () => {
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
-                      {user?.first_name + "" + user?.last_name ||
+                      {user?.first_name + " " + user?.last_name ||
                         user?.hotel_name}
                     </Typography>
                     <Typography

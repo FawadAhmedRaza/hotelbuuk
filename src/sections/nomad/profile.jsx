@@ -100,6 +100,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
+  console.log("Default nomad", defaultValues);
+  console.log("Default Start Date", defaultValues.start_date);
+  console.log("Default End Date", defaultValues.end_date);
+  console.log(date);
+
   const methods = useForm({
     resolver: yupResolver(nomadProfileSchema),
     defaultValues: isEdit && defaultValues,
@@ -123,13 +128,13 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   useEffect(() => {
     setDate([
       {
-        startDate: defaultValues.start_date,
-        endDate: defaultValues.end_date,
+        startDate: defaultValues.start_date || new Date(),
+        endDate: defaultValues.end_date || addDays(new Date(), 1),
         key: "selection",
       },
     ]);
   }, []);
-
+  
   const fetchCountries = async () => {
     try {
       const allCountries = await getCountries();

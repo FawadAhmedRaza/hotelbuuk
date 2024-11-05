@@ -80,6 +80,11 @@ export async function GET() {
             business_amenities: true,
           },
         },
+        user:{
+          include:{
+            nomad:true
+          }
+        }
       },
     });
 

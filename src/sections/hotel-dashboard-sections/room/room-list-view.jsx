@@ -133,7 +133,9 @@ const RoomsListView = React.memo(() => {
                     </td>
                     <td className="px-6 py-4">
                       <Typography variant="p" className="!text-nowrap max-w-56">
-                        {row.description}
+                        {row.description?.length > 30
+                          ? `${row?.description?.slice(0, 30)}...`
+                          : row?.description}
                       </Typography>
                     </td>
                     <td className="px-6 py-4">
@@ -175,7 +177,7 @@ const RoomsListView = React.memo(() => {
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {row.price}
+                        ${row.price}
                       </Typography>
                     </td>
                     <td className=" px-6 py-4">
