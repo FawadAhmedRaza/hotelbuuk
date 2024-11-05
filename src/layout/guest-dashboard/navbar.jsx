@@ -18,7 +18,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
-  console.log("guest User", user);
+  console.log("guest User", user?.first_name);
 
   return (
     <div
@@ -62,7 +62,7 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
             className="size-5 sm:size-8"
           />
           <span className="flex items-center gap-1">
-            {user?.hotel_name && (
+            {user?.first_name && (
               <Typography
                 variant="p"
                 className="hidden md:block font-medium !text-xs text-white text-nowrap"
