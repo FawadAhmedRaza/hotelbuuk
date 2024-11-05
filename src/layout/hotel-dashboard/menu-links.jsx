@@ -195,8 +195,8 @@ export const MenuLinks = (UserId) => {
           title: "Profile",
           path: `/hotel-info/${UserId}`,
         },
-        { id: 2, title: "Terms", path: "" },
-        { id: 3, title: "Privacy", path: "" },
+        { id: 2, title: "Terms", path: paths.terms },
+        { id: 3, title: "Privacy", path: paths.privacyPolicy },
       ],
     },
   ];
