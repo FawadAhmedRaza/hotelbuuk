@@ -25,6 +25,22 @@ export async function POST(req) {
     const profileImage = await generateSignedUrl(hotel?.hotel_image);
 
     if (nomad_type === "registered") {
+      const isDuplicate = await prisma.hotel_internal_nomads.findFirst({
+        where: {
+          hotel_id,
+          nomad_id: nomad?.id,
+        },
+      });
+
+      if (isDuplicate) {
+        return NextResponse.json(
+          {
+            message: "Selected nomad is arleady a part of Internal nomads",
+          },
+          { status: 400 }
+        );
+      }
+
       let nomadUser = await prisma.nomad.findUnique({
         where: {
           id: nomad?.id,
@@ -60,7 +76,7 @@ export async function POST(req) {
     } else {
       let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`; // accept
       let invitationRejected = `accept-invitation?email=${email}&status=DIRECT_EMAIL&hotel=${hotel?.hotel_name}`; // reject
-      
+
       await sendMail(
         "Hotel Invitation",
         email,

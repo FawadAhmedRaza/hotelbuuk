@@ -220,6 +220,7 @@ export async function GET(req) {
             amenities: true,
           },
         },
+        hotel: true,
         event_images: true,
         event_topics: true,
       },

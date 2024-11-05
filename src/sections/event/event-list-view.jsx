@@ -187,22 +187,22 @@ const NomadEventsView = React.memo(() => {
                         <span className="flex gap-1">
                           <Typography
                             variant="p"
-                            className="  !text-nowrap max-w-56"
+                            className="!text-nowrap max-w-full"
                           >
-                            {row?.city},{" "}
+                            {row?.city || row?.hotel?.city},{" "}
                           </Typography>
                           <Typography
                             variant="p"
-                            className="  !text-nowrap max-w-56"
+                            className="!text-nowrap max-w-full"
                           >
-                            {row?.country}
+                            {row?.country || row?.hotel?.country}
                           </Typography>
                         </span>
                         <Typography
                           variant="p"
-                          className="  !text-nowrap max-w-56"
+                          className="!text-nowrap max-w-full"
                         >
-                          {row?.address}
+                          {row?.address || row?.hotel?.address}
                         </Typography>
                       </span>
                     </td>
