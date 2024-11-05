@@ -208,8 +208,6 @@ export const BussinessMeeting = () => {
                     placeholder="Select your City"
                     label="City"
                     options={cities}
-                    // value={city || ""}
-                    // onChange={(e) => setValue("city", e.target.value)}
                   />
                 </div>
               </div>
