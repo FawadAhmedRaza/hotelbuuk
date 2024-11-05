@@ -90,9 +90,9 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       );
       reset();
       onClose();
-      enqueueSnackbar("Invitation email send", { variant: "success" });
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(error?.message, { variant: "warning" });
     }
   });
 
