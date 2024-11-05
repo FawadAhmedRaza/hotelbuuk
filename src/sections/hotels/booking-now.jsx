@@ -67,6 +67,7 @@ export const BookNow = React.memo(() => {
   const {
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = methods;
 
@@ -91,6 +92,16 @@ export const BookNow = React.memo(() => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setDate([
+      {
+        startDate: checkIn ? new Date(checkIn) : new Date(),
+        endDate: checkOut ? new Date(checkOut) : addDays(new Date(), 1),
+        key: "selection",
+      },
+    ]);
+  }, []);
 
   return (
     <Pannel>
@@ -121,7 +132,7 @@ export const BookNow = React.memo(() => {
               <RHFInput
                 type="text"
                 placeholder="Moxy Dortmunt City"
-                isBookingSearch 
+                isBookingSearch
                 name="destination"
                 inputClass="outline-none border-none text-base font-normal !p-0"
                 className="outline-none border-none !p-0 h-8 ml-1"
@@ -149,6 +160,7 @@ export const BookNow = React.memo(() => {
                   <RHFDatePicker
                     name="availability"
                     onChange={(item) => {
+                      console.log("Item from calendar", item);
                       setDate([item.selection]);
                       methods.setValue("startDate", item.selection.startDate);
                       methods.setValue("endDate", item.selection.endDate);

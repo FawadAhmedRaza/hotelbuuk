@@ -7,42 +7,47 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFFormProvider } from "@/src/components/hook-form";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { createContact } from "@/src/redux/contact/thunk";
 
 const ContactScreen = () => {
-  const contactSchema = Yup.object({
-    hotel_image: Yup.mixed().optional(),
-    hotel_name: Yup.string().required("hotel name is required"),
-    description: Yup.string().optional(),
-    contact_email: Yup.string().required("contact email is required"),
-    hotel_contact_no: Yup.number().required("contact number is required"),
-    address: Yup.string().required("address is required"),
-    country: Yup.string().required("country is required"),
-    city: Yup.string().required("city is required"),
-    stars: Yup.mixed().optional().default(4),
-    facilites: Yup.array().optional(),
-    images: Yup.array(),
-  });
+  const dispatch = useDispatch();
 
-  const defaultValues = {};
+  const contactSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().required("Email is required"),
+    phone: Yup.string().required("Phone name is required"),
+    message: Yup.string().required("Message is required"),
+  });
 
   const methods = useForm({
     resolver: yupResolver(contactSchema),
-    defaultValues: defaultValues,
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    },
   });
 
   const {
     handleSubmit,
     trigger,
+    reset,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
     try {
-      console.log(data);
+      await dispatch(createContact(data)).unwrap();
     } catch (error) {
       console.log(error);
+    } finally {
+      reset();
     }
   });
+
   return (
     <Layout>
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
@@ -87,7 +92,9 @@ const ContactScreen = () => {
             </div>
 
             <div className=" flex justify-end pt-5">
-              <Button>Submit</Button>
+              <Button loading={isSubmitting} type="submit">
+                Submit
+              </Button>
             </div>
           </div>
         </div>

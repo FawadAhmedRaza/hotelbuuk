@@ -68,7 +68,8 @@ model User {
   UserB Chat[] @relation("UserB")
 
   Message            Message[]
-  from_notifications notifications[] @relation("FromUserNotifications")
+  from_notifications notifications[]  @relation("FromUserNotifications")
+  business_facts     business_facts[]
 }
 
 model facilities {
@@ -451,6 +452,9 @@ model business_facts {
   price       Int
   cover_img   String
 
+  user_id String @db.ObjectId
+  user    User   @relation(fields: [user_id], references: [id])
+
   business_facts_amenities business_facts_amenities[]
   createdAt                DateTime                   @default(now())
   updatedAt                DateTime                   @updatedAt
@@ -581,4 +585,16 @@ model StaticContent {
   type        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Contact {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name    String?
+  email   String?
+  phone   String?
+  message String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

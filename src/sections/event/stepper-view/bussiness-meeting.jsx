@@ -219,6 +219,12 @@ export const BussinessMeeting = () => {
                 placeholder="Address of your B&B"
               />
 
+              {/* <RHFLocationSelect
+                name="business_meeting.address"
+                label="Street Address"
+                placeholder="Address of your B&B"
+              /> */}
+
               <RHFTextArea
                 label="About bnb"
                 placeholder="Enter short details about bnb"
