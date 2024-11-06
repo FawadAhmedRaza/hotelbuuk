@@ -75,8 +75,35 @@ export async function GET(req) {
         user_id,
       },
       include: {
-        nomad_event: true,
-        hotel_event: true,
+        nomad_event: {
+          include: {
+            nomad: true,
+            event_images: true,
+            hotel: {
+              include: {
+                hotelImages: true,
+              },
+            },
+          },
+        },
+        hotel_event: {
+          include: {
+            nomad: {
+              include: {
+                nomad_event: {
+                  include: {
+                    event_images: true,
+                  },
+                },
+              },
+            },
+            hotel: {
+              include: {
+                hotelImages: true,
+              },
+            },
+          },
+        },
       },
     });
 

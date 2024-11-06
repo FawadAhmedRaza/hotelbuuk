@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createWishList, deleteWishList, getWishById, getWishList } from "./thunk";
+import {
+  createWishList,
+  deleteWishList,
+  getWishById,
+  getWishList,
+} from "./thunk";
 
 const initialState = {
   isLoading: false,
@@ -44,7 +49,8 @@ const wishList = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getWishList.fulfilled, (state, action) => {
-      state.amenities = action.payload;
+      console.log("Wish List payload", action.payload);
+      state.wishList = action.payload;
       state.isLoading = false;
     });
     builder.addCase(getWishList.rejected, (state, action) => {
