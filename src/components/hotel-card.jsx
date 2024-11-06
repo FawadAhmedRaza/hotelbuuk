@@ -17,8 +17,8 @@ export const HotelCard = React.memo(({ event, className }) => {
       className={cn("relative w-full !text-black", className)}
     >
       <div className="w-full h-full relative">
-        <div className="h-80 relative overflow-hidden rounded-3xl">
-          <div className="absolute rounded-3xl w-full h-full inset-0 bg-black   opacity-45" />
+        <div className="h-80 relative overflow-hidden rounded-3xl shadow-[0px_4px_10px_2px_rgba(0,_0,_0,_0.3)]">
+          <div className="absolute rounded-3xl w-full h-full inset-0 bg-black opacity-45 " />
           <ImageRender
             src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
             type={"server"}
@@ -30,10 +30,10 @@ export const HotelCard = React.memo(({ event, className }) => {
             wrapperProps={{
               style: { transitionDelay: "0.5s" }, // Adjust fade delay
             }}
-            className="h-full w-full object-cover rounded-3xl  !event-card-shadow"
+            className="h-full w-full object-cover rounded-3xl  !event-card-shadow "
           />
         </div>
-      
+
         <div className="absolute top-0 w-full  h-full flex flex-col gap-1.5 justify-center hotels-center">
           <Typography
             variant="h3"
@@ -48,13 +48,13 @@ export const HotelCard = React.memo(({ event, className }) => {
             variant="h3"
             className="!text-[18px]  font-normal text-white uppercase font-lemonMilk text-center"
           >
-            {event?.city}
+            {event?.city || event?.hotel?.city}
           </Typography>
           <Typography
             variant="h4"
             className="font-normal !text-[15px] text-white -mt-5 text-center"
           >
-            {event?.country}
+            {event?.country || event?.hotel?.country}
           </Typography>
         </div>
         <div className="absolute bottom-2 left-5 w-full h-full flex flex-col justify-end hotels-start pb-3">
