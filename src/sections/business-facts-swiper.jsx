@@ -125,7 +125,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
               ))
             : businessFacts.map((item) => (
                 <SwiperSlide key={item.id} className="max-w-[700px]">
-                  <div className="flex flex-col gap-4 p-5 rounded-2xl drop-shadow-xl bg-white border">
+                  <div className="flex flex-col gap-4 p-5 rounded-2xl drop-shadow-xl bg-white border mx-5">
                     <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-start">
                       <div className="w-full h-full md:w-[30%] md:h-36">
                         <ProfileAvatar
@@ -133,7 +133,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
                           type="server"
                           effect="blur"
                           alt={item?.title}
-                          className="w-full md:w-52 h-full rounded"
+                          className="w-full md:w-52 h-48 md:h-full rounded"
                         />
                       </div>
                       <div className="flex w-full md:w-[70%] flex-col gap-1">
