@@ -17,7 +17,7 @@ import { BusinessFactsSwiper } from "../sections/business-facts-swiper";
 
 const HotelDetailScreen = React.memo(({ type, id }) => {
   const [isMobile, setIsMobile] = useState(false);
-  const { isLoading, event } = useSelector((state) => state.allEvents.getById);
+  const { event } = useSelector((state) => state.allEvents.getById);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -75,7 +75,7 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
             clearDateRange={clearDateRange} // Pass clearDateRange as prop
           />
           <PopularAmenities />
-          <Itinerary />
+          {event?.itinerary && <Itinerary />}
           <ThingsKnow />
           <GuestReviews />
         </div>

@@ -314,9 +314,10 @@ model nomad_event {
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
   WishList  WishList[]
+  itinerary itinerary[]
 }
 
 model hotel_event {
@@ -356,9 +357,10 @@ model hotel_event {
   event_associated_safeties        event_associated_safeties[]
   event_associated_cancel_policies event_associated_cancel_policies[]
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
   WishList  WishList[]
+  itinerary itinerary[]
 }
 
 model event_topics {
@@ -612,4 +614,24 @@ model WishList {
   hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+}
+
+model itinerary {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title String
+  stop  String
+
+  location_id  String
+  location     String
+  location_lng String
+  location_ltd String
+
+  hotel_event_id String?      @db.ObjectId
+  hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
+  nomad_event_id String?      @db.ObjectId
+  nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

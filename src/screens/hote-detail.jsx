@@ -34,7 +34,7 @@ const HotelDetail = () => {
   useEffect(() => {
     (async () => {
       try {
-        await dispatch(getUserBooking({ eventId: id, userId: user?.guest?.[0].id, type }));
+        await dispatch(getUserBooking({ eventId: id, userId: user?.guest?.[0].id, type })).unwrap();
       } catch (err) {
         console.log(err);
       }
