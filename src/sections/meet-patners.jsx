@@ -14,7 +14,7 @@ import { ShadcnCard } from "../components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "../redux/hotel-info/thunk";
 import ImageRender from "../components/ImageRenderer";
-import MeetPartnerSkeleton from "../components/Skeleton/meet-partner";
+import MeetPartnerSkeleton from "../components/Skeleton/meet-partner-skeleton";
 
 export const MeetOurPatners = () => {
   const dispatch = useDispatch();

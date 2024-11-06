@@ -69,7 +69,7 @@ export const BusinessFacts = React.memo(({ className }) => {
               Our journey in numbers and highlights.
             </Typography>
           </div>
-          <CustomCollapsible isOpen={isOpen}>
+          {/* <CustomCollapsible isOpen={isOpen}> */}
             <div className=" grid grid-cols-1 lg:grid-cols-2 gap-5">
               {businessFacts?.slice(0, visibleFacts)?.map((item, index) => (
                 <div
@@ -123,7 +123,7 @@ export const BusinessFacts = React.memo(({ className }) => {
                 </div>
               ))}
             </div>
-          </CustomCollapsible>
+          {/* </CustomCollapsible> */}
           <div className="flex flex-col justify-center items-center gap-5">
             <Typography variant="h4" className="font-semibold text-center mt-2">
               Explore More Business Facts
