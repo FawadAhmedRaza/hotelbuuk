@@ -21,6 +21,7 @@ import { ShadcnCard } from "../components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { getHotelInfo } from "../redux/hotel-info/thunk";
 import ImageRender from "../components/ImageRenderer";
+import MeetPartnerSkeleton from "../components/Skeleton/meet-partner-skeleton";
 
 export const MeetOurPatners = React.memo(() => {
   const dispatch = useDispatch();
@@ -30,8 +31,6 @@ export const MeetOurPatners = React.memo(() => {
   const [isHotelLoading, setIsHotelLoading] = useState(true);
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-
-  console.log(hotels);
 
   const updateNavigation = () => {
     if (swiperRef.current) {
@@ -76,56 +75,54 @@ export const MeetOurPatners = React.memo(() => {
       </div>
 
       <div className="w-full">
-        <Carousel className="px-5">
-          <CarouselContent className="-ml-1">
-            {hotels.map((hotel) => (
-              <CarouselItem
-                key={hotel.id}
-                className="pl-1 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-              >
-                <div className="px-2">
-                  <ShadcnCard className="p-0 overflow-hidden rounded-3xl">
-                    {/* <CardContent className="flex items-center justify-center h-52"> */}
-                    <span className="relative w-full">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
-                      {/* <img
-                        src={card.img}
-                        alt={card.hotelName}
-                        className=" w-full"
-                      /> */}
-                      <BgIcon
-                        iconName="skill-icons:instagram"
-                        className="absolute top-4 right-4 z-20"
-                      />
-                      <ImageRender
-                        src={hotel?.hotel_image}
-                        type={"server"}
-                        alt={`Uploaded Image `}
-                        ratio="4/3"
-                        delayTime={300}
-                        threshold={200}
-                        effect="opacity"
-                        wrapperProps={{
-                          style: { transitionDelay: "0.5s" },
-                        }}
-                        className="h-72 w-full object-cover rounded-3xl  !event-card-shadow"
-                      />
-                      <Typography
-                        variant="h5"
-                        className="absolute bottom-4 w-full z-30 text-center text-white font-semibold mt-2"
-                      >
-                        {hotel.hotel_name}
-                      </Typography>
-                    </span>
-                    {/* </CardContent> */}
-                  </ShadcnCard>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        {!isLoading && hotels?.length > 0 ? (
+          <Carousel className="px-5">
+            <CarouselContent className="-ml-1">
+              {hotels.map((hotel) => (
+                <CarouselItem
+                  key={hotel.id}
+                  className="pl-1 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                >
+                  <div className="px-2">
+                    <ShadcnCard className="p-0 overflow-hidden rounded-3xl">
+                      {/* <CardContent className="flex items-center justify-center h-52"> */}
+                      <span className="relative w-full">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
+                        <BgIcon
+                          iconName="skill-icons:instagram"
+                          className="absolute top-4 right-4 z-20"
+                        />
+                        <ImageRender
+                          src={hotel?.hotel_image}
+                          type={"server"}
+                          alt={`Uploaded Image `}
+                          ratio="4/3"
+                          delayTime={300}
+                          threshold={200}
+                          effect="opacity"
+                          wrapperProps={{
+                            style: { transitionDelay: "0.5s" },
+                          }}
+                          className="h-72 w-full object-cover rounded-3xl  !event-card-shadow"
+                        />
+                        <Typography
+                          variant="h5"
+                          className="absolute bottom-4 w-full z-30 text-center text-white font-semibold mt-2"
+                        >
+                          {hotel.hotel_name}
+                        </Typography>
+                      </span>
+                    </ShadcnCard>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        ) : (
+          <MeetPartnerSkeleton />
+        )}
       </div>
     </Pannel>
   );
