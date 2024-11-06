@@ -3,13 +3,6 @@
 @tailwind utilities;
 
 /* Hide swiper buttons */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 0px;
-  opacity: 0;
-  visibility: hidden;
-  display: none;
-}
 
 /* Hide scrollbars completely */
 .hide-scrollbar::-webkit-scrollbar {
@@ -148,32 +141,39 @@ input::-webkit-inner-spin-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 30px !important;
+  height: 30px !important;
   background-color: #852169;
-  color: #ffffff; /* Text/icon color */
-  border-radius: 50%;
+  color: #ffffff !important; /* Text/icon color */
+  border-radius: 50%; 
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  z-index: 30;
+  z-index: 9999;
 }
 
-.swiper-button-prev {
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 13px !important;
+  color: white !important;
+
+}
+
+/* .swiper-button-prev {
   left: -10px;
 }
 
 .swiper-button-next {
   right: -10px;
-}
+} */
 
-.swiper-button-prev .iconify,
+/* .swiper-button-prev .iconify,
 .swiper-button-next .iconify {
   width: 20px;
   height: 20px;
-}
+} */
 
 /* DateRangeStyles.css */
 @keyframes slide-down {
@@ -281,4 +281,19 @@ input::-webkit-inner-spin-button {
 }
 body {
   top: 0px !important;
+}
+
+/* .swiper-3d .swiper-slide-shadow-left
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none;
+
+} */
+
+
+.swiper-3d .swiper-slide-shadow-left{
+  background-image: none !important;
+}
+
+.swiper-3d .swiper-slide-shadow-right{
+  background-image: none !important;
 }

@@ -4,15 +4,16 @@ import React, { useEffect, useState } from "react";
 
 import "react-calendar/dist/Calendar.css";
 import {
-  GuestReviews,
+  
   HotelOverview,
   PopularAmenities,
   ThingsKnow,
   HotelDetail,
 } from "../hotel-details";
-import Itinerary from "../hotel-details/Itinerary";
-import { BusinessFacts } from "../business-facts";
+
+
 import AvailabilityCalendar from "../hotel-details/availability-calender";
+import { BusinessFactsSwiper } from "../business-facts-swiper";
 
 const EventDetailScreen = React.memo(({ type }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,7 +55,7 @@ const EventDetailScreen = React.memo(({ type }) => {
       <div className="md:px-4">
         <HotelOverview type={type} />
         <HotelDetail />
-        <BusinessFacts className="bg-white" />
+        <BusinessFactsSwiper className="bg-white" />
         <AvailabilityCalendar
           dateRange={dateRange}
           handleDateChange={handleDateChange}

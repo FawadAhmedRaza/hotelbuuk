@@ -90,6 +90,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       );
       reset();
       onClose();
+      enqueueSnackbar("Invitation sended successfully", { variant: "success" });
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error?.message, { variant: "warning" });
