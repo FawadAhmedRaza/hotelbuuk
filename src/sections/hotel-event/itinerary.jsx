@@ -108,7 +108,7 @@ export const Itinerary = () => {
 
         {/* Location */}
         <div className={"relative flex flex-col gap-1 w-full"}>
-          <Typography
+          {/* <Typography
             variant="p"
             className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
           >
@@ -125,16 +125,16 @@ export const Itinerary = () => {
               value={singleLocation.location}
               onChange={(e) => handleChange(e)}
               placeholder="Finding the best Chinese Suppliers"
-              className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
+              className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent`}
             />
-          </div>
+          </div> */}
+          <RHFLocationSelect
+            name="itinerary.location"
+            label="Street Address"
+            placeholder="Address of your B&B"
+            className={"w-full"}
+          />
         </div>
-
-        {/* <RHFLocationSelect
-          name="business_meeting.address"
-          label="Street Address"
-          placeholder="Address of your B&B"
-        /> */}
 
         <div className="flex justify-end items-end">
           <Button

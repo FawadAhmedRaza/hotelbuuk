@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {  Pannel, Typography } from "../components";
+import { Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 
 import {
@@ -20,15 +20,6 @@ export const MeetOurPatners = () => {
   const dispatch = useDispatch();
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-
-  const updateNavigation = () => {
-    if (swiperRef.current) {
-      const { isBeginning, isEnd } = swiperRef.current.swiper;
-
-      setIsPrevDisabled(isBeginning); // Disable left button if at the beginning
-      setIsNextDisabled(isEnd); // Disable right button if at the end
-    }
-  };
   const [isHotelLoading, setIsHotelLoading] = useState(true);
 
   useEffect(() => {
@@ -49,7 +40,6 @@ export const MeetOurPatners = () => {
 
   return (
     <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
-
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
@@ -62,8 +52,21 @@ export const MeetOurPatners = () => {
         </Typography>
       </div>
 
-      <div className="w-full">
-        {!isLoading && hotels?.length > 0 ? (
+      {isLoading ? (
+        <Carousel className="px-3">
+          <CarouselContent>
+            {[...Array(7)].map((_, index) => (
+              <CarouselItem
+                key={index}
+                className=" pl-5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+              >
+                <MeetPartnerSkeleton />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      ) : (
+        <div className="w-full">
           <Carousel className="px-5">
             <CarouselContent className="-ml-1">
               {hotels.map((hotel) => (
@@ -73,9 +76,9 @@ export const MeetOurPatners = () => {
                 >
                   <div className="px-2">
                     <ShadcnCard className="p-0 overflow-hidden rounded-3xl">
-                      {/* <CardContent className="flex items-center justify-center h-52"> */}
-                      <span className="relative w-full">
+                      <div className="relative w-full">
                         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
+
                         <BgIcon
                           iconName="skill-icons:instagram"
                           className="absolute top-4 right-4 z-20"
@@ -99,7 +102,7 @@ export const MeetOurPatners = () => {
                         >
                           {hotel.hotel_name}
                         </Typography>
-                      </span>
+                      </div>
                     </ShadcnCard>
                   </div>
                 </CarouselItem>
@@ -108,10 +111,8 @@ export const MeetOurPatners = () => {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-        ) : (
-          <MeetPartnerSkeleton />
-        )}
-      </div>
+        </div>
+      )}
     </Pannel>
   );
 };
