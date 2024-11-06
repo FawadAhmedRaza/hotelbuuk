@@ -1,9 +1,10 @@
 "use client";
-import { Button, Typography } from "@/src/components";
+import React, { useState } from "react";
+
 import { useFormContext } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 
-import React, { useEffect, useState } from "react";
+import { Button, Typography } from "@/src/components";
 import { Accordion } from "@/src/components";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
@@ -11,7 +12,6 @@ export const Itinerary = () => {
   const initialState = { title: "", stop: "", location: "" };
 
   const [singleLocation, setSingleLocation] = useState(initialState);
-  const [allLocations, setAllLocations] = useState([]);
 
   const { watch, setValue, getValues } = useFormContext();
 
@@ -19,13 +19,9 @@ export const Itinerary = () => {
 
   const handleAdd = () => {
     const prevItinerary = watch("itinerary") || [];
-
-    setAllLocations((prev) => [...prev, singleLocation]);
-
     setValue("itinerary", [...prevItinerary, singleLocation], {
       shouldValidate: true,
     });
-
     setSingleLocation(initialState);
   };
 
@@ -99,7 +95,7 @@ export const Itinerary = () => {
                 type="text"
                 value={singleLocation.stop}
                 onChange={(e) => handleChange(e)}
-                placeholder="Enter stop time eg:10 minutes"
+                placeholder="Enter stop time eg: 10 minutes"
                 className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
               />
             </div>
@@ -118,7 +114,7 @@ export const Itinerary = () => {
               label="Street Address"
               value={singleLocation.location}
               placeholder="Search Stop location..."
-              className={"w-full"}
+              className={"w-full placeholder:text-neutral-300"}
               onChange={(details) => {
                 handleChange(details);
               }}

@@ -20,6 +20,7 @@ export async function POST(req) {
       rules: event_rules,
       safeties,
       cancelPolicies,
+      itinerary,
     } = data || {};
 
     const {
@@ -167,6 +168,24 @@ export async function POST(req) {
       });
 
       await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
+      });
+    }
+
+    if (itinerary?.length > 0) {
+      const formatedArr = itinerary?.map((item) => {
+        return {
+          stop: item?.stop,
+          title: item?.title,
+          location_id: item?.location?.place_id,
+          location: item?.location?.formatted_address,
+          location_lng: String(item?.location?.geometry?.location?.lng),
+          location_ltd: String(item?.location?.geometry?.location?.lat),
+          nomad_event_id: event?.id,
+        };
+      });
+
+      await prisma.itinerary.createMany({
         data: formatedArr,
       });
     }

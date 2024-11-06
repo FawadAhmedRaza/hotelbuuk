@@ -4,18 +4,20 @@ import React, { useEffect, useState } from "react";
 
 import "react-calendar/dist/Calendar.css";
 import {
-  GuestReviews,
   HotelOverview,
   PopularAmenities,
   ThingsKnow,
   HotelDetail,
 } from "../hotel-details";
-import Itinerary from "../hotel-details/Itinerary";
 import { BusinessFacts } from "../business-facts";
 import AvailabilityCalendar from "../hotel-details/availability-calender";
+import Itinerary from "../hotel-details/Itinerary";
+import { useSelector } from "react-redux";
 
 const EventDetailScreen = React.memo(({ type }) => {
   const [isMobile, setIsMobile] = useState(false);
+
+  const { event } = useSelector((state) => state.allEvents.getById);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -62,6 +64,7 @@ const EventDetailScreen = React.memo(({ type }) => {
           clearDateRange={clearDateRange} // Pass clearDateRange as prop
         />
         <PopularAmenities />
+        {event?.itinerary && <Itinerary />}
         <ThingsKnow />
       </div>
     </div>

@@ -13,11 +13,10 @@ import {
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 import { useSelector } from "react-redux";
-// import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
 const HotelDetailScreen = React.memo(({ type, id }) => {
   const [isMobile, setIsMobile] = useState(false);
-  const { isLoading, event } = useSelector((state) => state.allEvents.getById);
+  const { event } = useSelector((state) => state.allEvents.getById);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -75,7 +74,7 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
             clearDateRange={clearDateRange} // Pass clearDateRange as prop
           />
           <PopularAmenities />
-          <Itinerary />
+          {event?.itinerary && <Itinerary />}
           <ThingsKnow />
           <GuestReviews />
         </div>
