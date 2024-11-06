@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {  Pannel, Typography } from "../components";
+import { Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 
 import {
@@ -40,7 +40,6 @@ export const MeetOurPatners = () => {
 
   return (
     <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
-
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
@@ -114,7 +113,6 @@ export const MeetOurPatners = () => {
           </Carousel>
         </div>
       )}
-      
     </Pannel>
   );
 };

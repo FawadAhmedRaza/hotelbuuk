@@ -18,7 +18,6 @@ export const PreviewHotels = () => {
 
   const [isEventLoading, setIsEventLoading] = useState(true);
 
-
   useEffect(() => {
     const fetchEvents = async () => {
       setIsEventLoading(true);
@@ -52,12 +51,12 @@ export const PreviewHotels = () => {
       ) : (
         <Carousel className="px-3">
           <CarouselContent>
-            {events?.map((event, index) => (
+            {events?.map((event) => (
               <CarouselItem
-                key={index}
+                key={event?.id}
                 className="pl-5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <div className="p-0">
+                <div className="p-0 ">
                   <HotelCard event={event} />
                 </div>
               </CarouselItem>

@@ -1,4 +1,3 @@
-"use client";
 import { NomadProfileScreen } from "../../../../screens/nomad";
 
 const Page = () => {

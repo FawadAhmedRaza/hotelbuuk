@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { useBoolean } from "@/src/hooks";
 import { useModal } from "@/src/hooks/use-modal";
 import CreateEditAmenities from "./modals/create-edit-amenities";
+import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
 export const BussinessMeeting = () => {
   const { watch, setValue } = useFormContext();
@@ -44,11 +45,13 @@ export const BussinessMeeting = () => {
 
   const country = watch("business_meeting.country");
   const city = watch("business_meeting.city");
+  const address = watch("business_meeting.address");
 
   // const hotelId = watch("business_meeting.hotel_id");
 
   console.log("city form edit:", city);
   console.log("Country form edit:", country);
+  console.log("address from event:", address);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
@@ -205,16 +208,21 @@ export const BussinessMeeting = () => {
                     placeholder="Select your City"
                     label="City"
                     options={cities}
-                    // value={city || ""}
-                    // onChange={(e) => setValue("city", e.target.value)}
                   />
                 </div>
               </div>
-              <RHFInput
+              {/* <RHFInput
+                name="business_meeting.address"
+                label="Street Address"
+                placeholder="Address of your B&B"
+              /> */}
+
+              <RHFLocationSelect
                 name="business_meeting.address"
                 label="Street Address"
                 placeholder="Address of your B&B"
               />
+
               <RHFTextArea
                 label="About bnb"
                 placeholder="Enter short details about bnb"

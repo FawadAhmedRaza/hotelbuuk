@@ -18,7 +18,6 @@ export const GuestLearn = () => {
   const { watch, setValue, getValues } = useFormContext();
 
   // Watch the learning info values from the form state
-  const learningInfo = watch("learning_info");
 
   const formTopics = watch("topics");
 

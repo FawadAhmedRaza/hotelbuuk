@@ -10,6 +10,7 @@ import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { Layout } from "@/src/sections";
 import AcceptInvitationScreen from "@/src/screens/accept-invitation/accept-invitation-screen";
 import Spinner from "@/src/components/ui/spinner";
+import RejectInvitationScreen from "@/src/screens/accept-invitation/reject-Invitation-screen";
 
 const page = () => {
   const params = useSearchParams();
@@ -19,9 +20,11 @@ const page = () => {
   const hotel = params.get("hotel");
   const hotelId = params.get("hotelId");
   const nomadId = params.get("nomadId");
+  const isRejected = params.get("status");
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // for request accepted
   const addInternalNomad = async () => {
     try {
       setIsLoading(true);
@@ -44,23 +47,54 @@ const page = () => {
     }
   };
 
+  // for request rejected
+  const rejectInvitationRequest = async () => {
+    setIsLoading(true);
+    try {
+      let data = {
+        nomadId,
+        hotelId,
+      };
+      const request = await axiosInstance.post(
+        endpoints.hotel.rejecteRequest,
+        data
+      );
+      if (request?.status === 200) {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    if (!isRegistered) {
+    if (!isRegistered && !isRejected) {
       redirect(
         `/sign-up?email=${email}&isRegistered=false&hotel=${hotel}&hotelId=${hotelId}`
       );
     }
-
+    // for rejection
+    if (isRejected === "REJECTED" && !isRegistered) {
+      rejectInvitationRequest();
+    }
+    // for accepted
     if (isRegistered && nomadId && hotelId) {
       addInternalNomad();
     }
-  }, [isRegistered]);
+    if (isRegistered === "DIRECT_EMAIL") {
+      setIsLoading(false);
+    }
+  }, []);
 
-  if (isLoading) return <Spinner/>;
+  if (isLoading) return <Spinner />;
 
   return (
     <Layout isNavBg={true}>
-      <AcceptInvitationScreen hotelName={hotel} />
+      {isRegistered ? (
+        <AcceptInvitationScreen hotelName={hotel} />
+      ) : (
+        <RejectInvitationScreen hotelName={hotel} />
+      )}
     </Layout>
   );
 };

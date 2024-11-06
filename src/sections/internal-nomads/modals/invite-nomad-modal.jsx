@@ -90,9 +90,10 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       );
       reset();
       onClose();
-      enqueueSnackbar("Invitation email send", { variant: "success" });
+      enqueueSnackbar("Invitation sended successfully", { variant: "success" });
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(error?.message, { variant: "warning" });
     }
   });
 
@@ -103,7 +104,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
       title="Invite Nomad"
       handleSubmit={onSubmit}
       isLoading={isSubmitting}
-      className="h-auto"
+      className="!h-auto"
     >
       <RHFFormProvider methods={methods}>
         <div className="flex flex-col gap-5">
