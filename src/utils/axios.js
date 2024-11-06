@@ -133,4 +133,12 @@ export const endpoints = {
   },
   contact: "/contact",
   notifications: (id) => `/notifications?user_id=${id}`,
+  wishlist: {
+    root: "/wishlist",
+    getAllWishList: (id) => `/wishlist?user_id=${id}`,
+    getWishById: (user_id, id) =>
+      `/wishlist/${user_id}?user_id=${user_id}&event_id=${id}`,
+    deleteWish: (user_id, id) =>
+      `/wishlist/${user_id}?user_id=${user_id}&event_id=${id}`,
+  },
 };

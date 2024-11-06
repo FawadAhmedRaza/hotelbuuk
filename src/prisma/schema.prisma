@@ -70,6 +70,7 @@ model User {
   Message            Message[]
   from_notifications notifications[]  @relation("FromUserNotifications")
   business_facts     business_facts[]
+  WishList           WishList[]
 }
 
 model facilities {
@@ -313,8 +314,9 @@ model nomad_event {
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  WishList  WishList[]
 }
 
 model hotel_event {
@@ -354,8 +356,9 @@ model hotel_event {
   event_associated_safeties        event_associated_safeties[]
   event_associated_cancel_policies event_associated_cancel_policies[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  WishList  WishList[]
 }
 
 model event_topics {
@@ -393,8 +396,8 @@ model event_associated_amenities {
   hotel_event_id String? @db.ObjectId
 
   nomad_event nomad_event? @relation(fields: [nomad_event_id], references: [id])
-  amenities   amenities    @relation(fields: [amenities_id], references: [id])
   hotel_event hotel_event? @relation(fields: [hotel_event_id], references: [id])
+  amenities   amenities    @relation(fields: [amenities_id], references: [id])
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -597,4 +600,16 @@ model Contact {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model WishList {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  user_id        String       @db.ObjectId
+  user           User         @relation(fields: [user_id], references: [id])
+  nomad_event_id String?      @db.ObjectId
+  hotel_event_id String?      @db.ObjectId
+  nomad_event    nomad_event? @relation(fields: [nomad_event_id], references: [id])
+  hotel_event    hotel_event? @relation(fields: [hotel_event_id], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
