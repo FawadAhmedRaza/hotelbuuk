@@ -34,6 +34,7 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
           ranges={value}
           direction={isMobile ? "vertical" : "horizontal"}
           rangeColors={rangeColors}
+          minDate={new Date()}
           className="w-fit z-20 bg-white"
           calendarWrapper="mb-10 "
         />

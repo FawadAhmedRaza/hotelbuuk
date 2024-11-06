@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import React, { useEffect, useState } from "react";
 import { Accordion } from "@/src/components";
+import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
 export const Itinerary = () => {
   const initialState = { title: "", stop: "", location: "" };
@@ -33,7 +34,7 @@ export const Itinerary = () => {
     setAllLocations(newLocation); // Update state
 
     // Update form topics
-    setValue("topics", newTopics, { shouldValidate: true });
+    // setValue("topics", newTopics, { shouldValidate: true });
   };
 
   const handleChange = (e) => {
@@ -45,7 +46,7 @@ export const Itinerary = () => {
   };
 
   useEffect(() => {
-    setAllLocations(formTopics);
+    // setAllLocations(formTopics);
   }, []);
 
   return (
@@ -55,51 +56,53 @@ export const Itinerary = () => {
       </Typography>
 
       <div className="flex flex-col gap-3 w-full">
-        {/* Title */}
-        <div className={"relative flex flex-col gap-1 w-full"}>
-          <Typography
-            variant="p"
-            className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
-          >
-            Title
-          </Typography>
-          <div
-            className={
-              "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral"
-            }
-          >
-            <input
-              name="title"
-              type="text"
-              value={singleLocation.title}
-              onChange={(e) => handleChange(e)}
-              placeholder="Finding the best Chinese Suppliers"
-              className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Title */}
+          <div className={"relative flex flex-col gap-1 w-full"}>
+            <Typography
+              variant="p"
+              className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
+            >
+              Title
+            </Typography>
+            <div
+              className={
+                "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral"
+              }
+            >
+              <input
+                name="title"
+                type="text"
+                value={singleLocation.title}
+                onChange={(e) => handleChange(e)}
+                placeholder="Finding the best Chinese Suppliers"
+                className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Stop */}
-        <div className={"relative flex flex-col gap-1 w-full"}>
-          <Typography
-            variant="p"
-            className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
-          >
-            Stop
-          </Typography>
-          <div
-            className={
-              "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral"
-            }
-          >
-            <input
-              name="stop"
-              type="text"
-              value={singleLocation.stop}
-              onChange={(e) => handleChange(e)}
-              placeholder="Finding the best Chinese Suppliers"
-              className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
-            />
+          {/* Stop */}
+          <div className={"relative flex flex-col gap-1 w-full"}>
+            <Typography
+              variant="p"
+              className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
+            >
+              Stop
+            </Typography>
+            <div
+              className={
+                "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral"
+              }
+            >
+              <input
+                name="stop"
+                type="text"
+                value={singleLocation.stop}
+                onChange={(e) => handleChange(e)}
+                placeholder="Finding the best Chinese Suppliers"
+                className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
+              />
+            </div>
           </div>
         </div>
 
@@ -127,6 +130,12 @@ export const Itinerary = () => {
           </div>
         </div>
 
+        {/* <RHFLocationSelect
+          name="business_meeting.address"
+          label="Street Address"
+          placeholder="Address of your B&B"
+        /> */}
+
         <div className="flex justify-end items-end">
           <Button
             disabled={
@@ -143,7 +152,7 @@ export const Itinerary = () => {
 
       {/* Conditionally render the Accordion only when visible */}
 
-      {formTopics &&
+      {/* {formTopics &&
         formTopics?.map((topic) => (
           <div key={topic.id} className="w-full">
             <Accordion
@@ -155,7 +164,7 @@ export const Itinerary = () => {
               <Typography variant="p">{topic?.description}</Typography>
             </Accordion>
           </div>
-        ))}
+        ))} */}
     </div>
   );
 };

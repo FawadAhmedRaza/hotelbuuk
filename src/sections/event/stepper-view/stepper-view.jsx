@@ -50,9 +50,17 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
 
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
-      title: Yup.string().required("Title is required"),
-      description: Yup.string().required("Description is required"),
-      official_name: Yup.string().required("Official name is required"),
+      title: Yup.string()
+        .required("Title is required")
+        .max(30, "Title must be at most 30 characters")
+        .min(3, "Title must be at least 3 characters"),
+      description: Yup.string()
+        .required("Description is required")
+        .min(3, "Description must be at least 3 characters"),
+      official_name: Yup.string()
+        .required("Official name is required")
+        .max(30, "Official name must be at most 30 characters")
+        .min(3, "Official name must be at least 3 characters"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
       amenities: Yup.array().optional(),

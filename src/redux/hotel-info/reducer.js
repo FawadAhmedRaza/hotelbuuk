@@ -8,7 +8,7 @@ import {
 } from "./thunk";
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   hotels: [],
   error: null,
   create: {

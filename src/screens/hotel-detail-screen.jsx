@@ -12,10 +12,12 @@ import {
 } from "../sections/hotel-details";
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
+import { useSelector } from "react-redux";
 // import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 
 const HotelDetailScreen = React.memo(({ type, id }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const { isLoading, event } = useSelector((state) => state.allEvents.getById);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -47,6 +49,16 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    setDateRange([
+      {
+        startDate: event?.start_date,
+        endDate: event?.end_date,
+        key: "selection",
+      },
+    ]);
   }, []);
 
   return (

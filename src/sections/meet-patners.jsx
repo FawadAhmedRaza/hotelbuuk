@@ -1,15 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// Components and Others...
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Iconify, Pannel, Typography } from "../components";
-import { SwiperCards } from "../_mock/_swiper";
+import {  Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
-import { Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/swiper-bundle.css";
-import "../app/globals.css";
+
 import {
   Carousel,
   CarouselContent,
@@ -23,12 +16,8 @@ import { getHotelInfo } from "../redux/hotel-info/thunk";
 import ImageRender from "../components/ImageRenderer";
 import MeetPartnerSkeleton from "../components/Skeleton/meet-partner-skeleton";
 
-export const MeetOurPatners = React.memo(() => {
+export const MeetOurPatners = () => {
   const dispatch = useDispatch();
-  const swiperRef = React.useRef(null);
-  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
-  const [isNextDisabled, setIsNextDisabled] = useState(false);
-  const [isHotelLoading, setIsHotelLoading] = useState(true);
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
 
@@ -40,28 +29,27 @@ export const MeetOurPatners = React.memo(() => {
       setIsNextDisabled(isEnd); // Disable right button if at the end
     }
   };
+  const [isHotelLoading, setIsHotelLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchHotels() {
+    const fetchHotels = async () => {
+      setIsHotelLoading(true);
       try {
+        setIsHotelLoading(true);
         await dispatch(getHotelInfo()).unwrap();
       } catch (error) {
         console.log(error);
       } finally {
+        setIsHotelLoading(false);
       }
-    }
+    };
 
     fetchHotels();
-  }, []);
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef?.current?.navigation?.update();
-    }
-  }, [swiperRef]);
+  }, [dispatch]);
 
   return (
     <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
+
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
@@ -126,4 +114,4 @@ export const MeetOurPatners = React.memo(() => {
       </div>
     </Pannel>
   );
-});
+};

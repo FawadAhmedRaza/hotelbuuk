@@ -11,8 +11,11 @@ const PrivacyPolicy = React.memo(() => {
     description: "",
     updatedAt: new Date(),
   });
+
   const [privacyPolicyLoading, setPrivacyPolicyLoading] = useState(true);
+
   console.log("privacyAndPolicy", privacyAndPolicy);
+
   const FetchPrivacyANdPolicy = async () => {
     try {
       setPrivacyPolicyLoading(true);

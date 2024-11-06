@@ -31,3 +31,4 @@ export const fetchPlaceDetails = async (placeId) => {
     return null;
   }
 };
+

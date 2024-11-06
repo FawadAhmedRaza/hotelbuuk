@@ -54,7 +54,7 @@ export const BookingSteps = () => {
         </Typography>
       </div>
       <div className="xl:px-24 md:space-y-2 space-y-5 w-full px-5 flex flex-col gap-16 justify-center items-center mt-5">
-        {bookingStepsData.map((step, index) => (
+        {bookingStepsData.map((step) => (
           <div
             key={step.id}
             className={`flex flex-col justify-center items-center min-900:flex-row gap-10 w-full md:w-full ${

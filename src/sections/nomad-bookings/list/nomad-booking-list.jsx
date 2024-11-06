@@ -95,7 +95,7 @@ const NomadBookingList = () => {
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
-                      {row?.guest?.first_name + "" + row?.guest?.last_name}
+                      {row?.guest?.first_name + " " + row?.guest?.last_name}
                     </Typography>
                     <Typography
                       variant="p"

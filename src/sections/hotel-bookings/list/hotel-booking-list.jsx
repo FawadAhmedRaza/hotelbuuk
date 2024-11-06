@@ -94,7 +94,7 @@ const HotelBookingList = () => {
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
-                      {row?.guest?.first_name + "" + row?.guest?.last_name}
+                      {row?.guest?.first_name + " " + row?.guest?.last_name}
                     </Typography>
                     <Typography
                       variant="p"
@@ -138,7 +138,7 @@ const HotelBookingList = () => {
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
                       {row?.hotel_event?.nomad?.first_name +
-                        "" +
+                        " " +
                         row?.hotel_event?.nomad?.last_name}
                     </Typography>
                     <Typography
