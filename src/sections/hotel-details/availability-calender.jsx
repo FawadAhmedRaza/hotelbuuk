@@ -22,7 +22,7 @@ const AvailabilityCalendar = ({
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center mt-10 md:items-start p-4 md:p-8 bg-white ">
       <div className="text-center md:text-left  w-full">
         <Typography variant="h1" className="text-black">
           Availability

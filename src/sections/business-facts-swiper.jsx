@@ -12,10 +12,16 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import { EffectCoverflow, Navigation } from "swiper/modules";
+import { useAuthContext } from "../providers/auth/context/auth-context";
+import { paths } from "../contants";
+import { useRouter } from "next/navigation";
 
 export const BusinessFactsSwiper = React.memo(({ className }) => {
+  const { user } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [businessFacts, setBusinessFacts] = useState([]);
+
+  const router = useRouter();
 
   const fetchBusinessFacts = async () => {
     try {
@@ -34,8 +40,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
     fetchBusinessFacts();
   }, []);
 
-  console.log("all business facts",businessFacts)
-
+  console.log("all business facts", businessFacts);
 
   const handleAsk = (item) => {
     if (user) {
@@ -64,7 +69,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
         </Typography>
       </div>
 
-      <div className="w-full px-5 py-10">
+      <div className="w-full   mt-10">
         <Swiper
           modules={[EffectCoverflow, Navigation]}
           initialSlide={1}
@@ -86,7 +91,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
             width: "100%",
             overflow: "hidden",
           }}
-          className="py-8 -mt-8"
+          className="!py-5 -mt-8  "
         >
           {isLoading
             ? Array.from({ length: 5 }).map((_, index) => (
