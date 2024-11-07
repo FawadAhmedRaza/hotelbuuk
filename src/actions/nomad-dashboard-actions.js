@@ -64,6 +64,7 @@ export async function getNomadTotalCheckIns(user_id) {
   const now = new Date();
   const startOfCurrentMonth = startOfMonth(now).toISOString();
   const endOfCurrentMonth = endOfMonth(now).toISOString();
+  console.log("start end",startOfCurrentMonth,endOfCurrentMonth)
 
   const bookings = await prisma.booking.count({
     where: {
