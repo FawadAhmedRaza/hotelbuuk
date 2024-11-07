@@ -32,7 +32,7 @@ export const HotelDetail = ({ type, id }) => {
                 <Card className="flex flex-col gap-3  w-full p-3 shadow-md">
                   {event?.event_topics?.map((item, index) => (
                     <Accordion
-                      key={item.id}
+                      key={item?.id}
                       title={item?.title}
                       isOpen={index === 0}
                       className="text-black font-normal text-base"

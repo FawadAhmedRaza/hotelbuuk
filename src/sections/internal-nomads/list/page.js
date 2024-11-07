@@ -42,7 +42,7 @@ const InternalNomadsListView = () => {
   const inviteModal = useModal();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
-  const router = useRouter()
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -71,7 +71,6 @@ const InternalNomadsListView = () => {
       console.log(error);
     }
   };
-  
 
   useEffect(() => {
     fetchInternalNomads();
@@ -103,24 +102,15 @@ const InternalNomadsListView = () => {
             enableSelection={false}
             renderRow={({ nomad }) => (
               <>
-              {console.log("nomad data",nomad)}
                 <td className=" px-6 py-4">
                   <div className="flex gap-2 items-center">
-                    {/* {!nomad?.profile_img ? (
-                      <Iconify
-                        iconName="carbon:user-avatar-filled"
-                        className="!size-10   rounded-full object-cover text-gray-500"
-                      />
-                    ) : ( */}
                     <ProfileAvatar
                       src={nomad?.profile_img}
                       type={"server"}
                       effect="blur"
-
                       alt={nomad?.first_name}
                       className="  h-10 w-10 rounded-full object-cover"
                     />
-                    {/* )} */}
 
                     <div className="flex gap-1">
                       <Typography
@@ -201,15 +191,14 @@ const InternalNomadsListView = () => {
                   </Typography>
                 </td>
                 <td className="px-6 py-4">
-                <div className="flex gap-1 items-center">
-                      <Iconify
-                        iconName="tabler:mail-filled"
-                        onClick={() => router.push(`/chat/${nomad?.userId}`)}
-                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
-                      />
-                    </div>
+                  <div className="flex gap-1 items-center">
+                    <Iconify
+                      iconName="tabler:mail-filled"
+                      onClick={() => router.push(`/chat/${nomad?.userId}`)}
+                      className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                    />
+                  </div>
                 </td>
-             
               </>
             )}
           />

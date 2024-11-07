@@ -1,4 +1,10 @@
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { useBoolean } from "@/src/hooks";
+import { useRouter } from "next/navigation";
+
+import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,14 +22,13 @@ import {
   Pannel,
   Typography,
 } from "@/src/components";
-import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+
+
 import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
-import { useRouter } from "next/navigation";
 import { paths } from "@/src/contants";
-import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
-import { useDispatch, useSelector } from "react-redux";
-import { useBoolean } from "@/src/hooks";
+
+// ----------------------------------------------------------
 
 const UpdateGuestProfile = ({ defaultValues }) => {
   const schema = yup.object({

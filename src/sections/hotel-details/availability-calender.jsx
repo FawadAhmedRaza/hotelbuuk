@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import { DateRange } from "react-date-range";
 import format from "date-fns/format";
 import { differenceInDays } from "date-fns"; // Import differenceInDays
 import { Card, Pannel, Typography } from "@/src/components";
+import { useSelector } from "react-redux";
 
 const AvailabilityCalendar = ({
   dateRange,
@@ -10,6 +12,8 @@ const AvailabilityCalendar = ({
   isMobile,
   clearDateRange,
 }) => {
+  const { isLoading, event } = useSelector((state) => state.allEvents.getById);
+
   const startDate = dateRange[0]?.startDate;
   const endDate = dateRange[0]?.endDate;
 
@@ -18,7 +22,7 @@ const AvailabilityCalendar = ({
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center md:items-start p-4 md:p-8 bg-white ">
+    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center mt-10 md:items-start p-4 md:p-8 bg-white ">
       <div className="text-center md:text-left  w-full">
         <Typography variant="h1" className="text-black">
           Availability
@@ -30,7 +34,7 @@ const AvailabilityCalendar = ({
                 variant="h4"
                 className="text-lg md:text-[] font-medium"
               >
-                {nights} nights in Sohna
+                {nights} nights in {event?.city || event?.hotel?.city}
               </Typography>
               <Typography
                 variant="h5"
@@ -47,13 +51,13 @@ const AvailabilityCalendar = ({
       </div>
 
       <div className=" h-full w-full flex justify-center items-center md:w-auto">
-        <Card className=" flex-col w-fit md:w-full"   >
+        <Card className=" flex-col w-fit md:w-full">
           <DateRange
             onChange={handleDateChange}
             months={isMobile ? 1 : 2}
             ranges={dateRange}
             direction={isMobile ? "vertical" : "horizontal"}
-            rangeColors={["#000000"]}
+            rangeColors={["#852169"]}
             showDateDisplay={false}
             minDate={new Date()}
             color="#000000"

@@ -34,7 +34,6 @@ export const BussinessMeeting = () => {
         value: item?.id,
       };
     });
-  console.log("recomedned", recomendedList);
   let modifiedNomadList = nomads?.map((item) => {
     return {
       hotel_name: item?.first_name + " " + item?.last_name,

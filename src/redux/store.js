@@ -14,6 +14,7 @@ import allEvents from "./all-events/reducer";
 import bookings from "./bookings/reducer";
 import eventThings from "./event-things-to-know/reducer";
 import notifications from "./notifications/reducer";
+import wishList from "./wishlist/reducer";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     bookings,
     eventThings,
     notifications,
+    wishList,
   },
 });
 

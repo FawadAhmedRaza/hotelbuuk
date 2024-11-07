@@ -3,83 +3,90 @@
 import { useEffect, useState } from "react";
 
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getTotalHotels } from "@/src/actions/nomad-dashboard-actions";
-import { getTotalNomads } from "@/src/actions/hotel-dashboard-actions";
-import { getGuestTotalBookings } from "@/src/actions/guest-dashboard-action";
+import { getGuestBookingsList } from "@/src/redux/bookings/thunk";
 
-import DashboardCard from "@/src/components/dashboard-card";
+import { enqueueSnackbar } from "notistack";
+
 import SummaryCardSkeleton from "@/src/components/Skeleton/summary-card-skeleton";
 import { paths } from "@/src/contants";
+import BookingsOverViewCards from "@/src/sections/hotel-bookings/overview-cards/bookings-over-view-cards";
 
 const GuestCards = () => {
   const { user } = useAuthContext();
 
-  const [bookingsCount, setBookingsCount] = useState(null);
-  const [hotelCount, setHotelsCount] = useState(null);
-  const [nomadsCount, setNomadsCount] = useState(null);
+  const dispatch = useDispatch();
 
-  const fetchHotels = async () => {
-    const totalHotels = await getTotalHotels();
-    setHotelsCount(totalHotels?.length || 0);
+  const { guestBookings } = useSelector((state) => state.bookings);
+
+  const fetchAllBookings = async () => {
+    try {
+      await dispatch(getGuestBookingsList(user?.id)).unwrap();
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
   };
 
-  const fetchNomads = async () => {
-    const totalNomads = await getTotalNomads();
-    setNomadsCount(totalNomads?.length || 0);
-  };
-
-  const fetchTotalBookings = async () => {
-    const total = await getGuestTotalBookings(user?.guest?.[0]?.id);
-    setBookingsCount(total?.length || 0);
-  };
-
-  useEffect(() => {
-    fetchHotels();
-    fetchNomads();
-    fetchTotalBookings();
-  }, [user?.id]);
-
-  const cardsData = [
-    {
-      id: 2,
-      icon: "ic:outline-card-membership",
-      title: "Hotel",
-      value: hotelCount ?? null,
-      btnTitle: "View Details",
-      path: paths.guestDashboard.hotels,
-    },
-    {
-      id: 2,
-      icon: "ic:outline-card-membership",
-      title: "Nomad",
-      value: nomadsCount,
-      btnTitle: "View Details",
-      path: paths.guestDashboard.nomads,
-    },
+  let cardsData = [
     {
       id: 1,
-      icon: "mdi:shop-complete",
-      title: "Booking",
-      value: bookingsCount,
-      btnTitle: "View Details",
+      icon: "tabler:sum",
+      title: "TOTAL",
+      subTitle: "",
+      value: guestBookings?.length || 0,
+      path: paths.guestDashboard.bookings,
+    },
+    {
+      id: 2,
+      icon: "carbon:pending",
+      title: "PENDING",
+      subTitle: "Pending",
+      value:
+        guestBookings?.filter((item) => item?.booking_status === "PENDING")
+          ?.length || 0,
+      path: paths.guestDashboard.bookings,
+    },
+    {
+      id: 3,
+      icon: "fluent-mdl2:completed",
+      title: "ACCEPTED",
+      subTitle: "Accepted",
+      value:
+        guestBookings?.filter((item) => item?.booking_status === "ACCEPTED")
+          ?.length || 0,
+      path: paths.guestDashboard.bookings,
+    },
+    {
+      id: 4,
+      icon: "material-symbols:cancel-outline",
+      title: "REJECTED",
+      subTitle: "Rejected",
+      value:
+        guestBookings?.filter((item) => item?.booking_status === "REJECTED")
+          ?.length || 0,
       path: paths.guestDashboard.bookings,
     },
   ];
 
+  useEffect(() => {
+    fetchAllBookings();
+  }, []);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3">
-      {cardsData.map((data) => (
-        <div key={data.id} className="">
-          {data.value === undefined || data?.value === null ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+      {cardsData.map((item) => (
+        <div key={item.id} className="">
+          {item.value === undefined || item?.value === null ? (
             <SummaryCardSkeleton />
           ) : (
-            <DashboardCard
-              IconName={data.icon}
-              title={data.title}
-              value={data.value}
-              btnTitle={data.btnTitle}
-              path={data.path}
+            <BookingsOverViewCards
+              key={item?.id}
+              IconName={item?.icon}
+              title={item?.title}
+              subTitle={item?.subTitle}
+              value={item?.value}
             />
           )}
         </div>

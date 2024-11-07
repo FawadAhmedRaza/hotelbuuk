@@ -28,6 +28,7 @@ import {
   getAllEventSafetyAndProperty,
 } from "@/src/redux/event-things-to-know/thunk";
 import { ThingsToKnowNomad } from "./things-to-know";
+import { Itinerary } from "./itinerary";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);
@@ -36,8 +37,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
 
   const dispatch = useDispatch();
   const { user } = useAuthContext();
-
-  console.log("Default values", isEdit);
 
   const checkBoxSchema = (amenities) => {
     return Yup.object().shape(
@@ -50,9 +49,17 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
 
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
-      title: Yup.string().required("Title is required"),
-      description: Yup.string().required("Description is required"),
-      official_name: Yup.string().required("Official name is required"),
+      title: Yup.string()
+        .required("Title is required")
+        .max(30, "Title must be at most 30 characters")
+        .min(3, "Title must be at least 3 characters"),
+      description: Yup.string()
+        .required("Description is required")
+        .min(3, "Description must be at least 3 characters"),
+      official_name: Yup.string()
+        .required("Official name is required")
+        .max(30, "Official name must be at most 30 characters")
+        .min(3, "Official name must be at least 3 characters"),
       business_category: Yup.string().required("Business category is required"),
       accomodation_type: Yup.string().default("bnb"),
       amenities: Yup.array().optional(),
@@ -90,7 +97,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       then: (schema) => schema.required("At least Two images are required"),
       otherwise: (schema) => schema.notRequired(),
     }),
-
     topics: Yup.array()
       .min(1, "At least one topic is required")
       .required("Files are required"),
@@ -99,10 +105,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       end_date: Yup.string().required("End date is required"),
       rules: Yup.lazy((value) => checkBoxSchema(Object.keys(value || {}))),
     }),
+    itinerary: Yup.array().optional(),
     price: Yup.string().required("Price is required"),
   });
-
-  console.log("Default Values:", defaultValues);
 
   const methods = useForm({
     resolver: yupResolver(eventSchema),
@@ -209,6 +214,12 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       component: <GuestLearn />,
     },
     {
+      label: "Itinerary Locations",
+      icon: "lineicons:route-1",
+      value: "itinerary",
+      component: <Itinerary />,
+    },
+    {
       label: "Things to know",
       icon: "octicon:person-16",
       value: "thingsToKnow",
@@ -229,8 +240,6 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
   ];
 
   const accomodationType = watch("business_meeting.accomodation_type");
-
-  console.log("ACCOMODATION:", accomodationType);
 
   useEffect(() => {
     if (accomodationType === "bnb") {
@@ -269,12 +278,11 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       fieldsToValidate.push("images");
     } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 4) {
+    } else if (activeStep === 5) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
     const isStepValid = await trigger(fieldsToValidate);
-    console.log("Step valid:", isStepValid);
 
     if (isStepValid) {
       setActiveStep((prev) => prev + 1);

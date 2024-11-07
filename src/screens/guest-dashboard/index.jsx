@@ -39,35 +39,16 @@ const GuestDashboardSection = () => {
         <GuestProfileAlert setShowAlert={setShowAlert} />
       )}
       <GuestCards />
-      <div className="my-10">
-        <div className="grid grid-cols-12 gap-4">
-          <div className="grid-cols-12 md:col-span-12">
-            {isLoading ? (
-              <RoomListSkeleton />
-            ) : (
-              <>
-                <Typography variant="h4">Upcoming Events</Typography>
-                <RecentBookingListView />
-              </>
-            )}
-          </div>
-        </div>
+      <div className="my-10 w-full">
+        {isLoading ? (
+          <RoomListSkeleton />
+        ) : (
+          <>
+            <Typography variant="h4">Upcoming Bookings</Typography>
+            <RecentBookingListView />
+          </>
+        )}
       </div>
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div>
-          <MountChart />
-        </div>
-        <div>
-          <ThisMonthBooking />
-        </div>
-        <div>
-          <CheckInChart />
-        </div>
-        <div>
-          <CheckOutChart />
-        </div>
-      </div> */}
     </Pannel>
   );
 };

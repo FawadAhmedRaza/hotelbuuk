@@ -15,44 +15,44 @@ export const Itinerary = () => {
 
   const { watch, setValue, getValues } = useFormContext();
 
-  //   const formTopics = watch("topics");
+  const itinerary = watch("itinerary");
 
   const handleAdd = () => {
-    const currentLocations = getValues("locations") || []; // Get existing topics (fallback to empty array)
+    const prevItinerary = watch("itinerary") || [];
 
     setAllLocations((prev) => [...prev, singleLocation]);
 
-    setValue("topics", [...currentLocations, singleLocation], {
+    setValue("itinerary", [...prevItinerary, singleLocation], {
       shouldValidate: true,
     });
 
-    setTopicInfo(initialState);
+    setSingleLocation(initialState);
   };
 
   const handleDelete = (id) => {
-    const newLocation = allLocations.filter((loc) => loc.id !== id); // Filter topics by id
-    setAllLocations(newLocation); // Update state
-
-    // Update form topics
-    // setValue("topics", newTopics, { shouldValidate: true });
+    const filtered = itinerary.filter((loc) => loc?.id !== id);
+    setValue("itinerary", filtered, { shouldValidate: true });
   };
 
   const handleChange = (e) => {
-    setSingleLocation((prev) => ({
-      ...prev,
-      id: uuidv4(),
-      [e.target.name]: e.target.value,
-    }));
+    if (e?.target?.name) {
+      setSingleLocation((prev) => ({
+        ...prev,
+        id: uuidv4(),
+        [e.target.name]: e.target.value,
+      }));
+    } else {
+      setSingleLocation((prev) => ({
+        ...prev,
+        location: e,
+      }));
+    }
   };
-
-  useEffect(() => {
-    // setAllLocations(formTopics);
-  }, []);
 
   return (
     <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
       <Typography variant="h4" className="font-semibold">
-        What will guests learn from you? Add 3 only
+        Add Itineraries
       </Typography>
 
       <div className="flex flex-col gap-3 w-full">
@@ -75,7 +75,7 @@ export const Itinerary = () => {
                 type="text"
                 value={singleLocation.title}
                 onChange={(e) => handleChange(e)}
-                placeholder="Finding the best Chinese Suppliers"
+                placeholder="Enter title"
                 className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
               />
             </div>
@@ -99,7 +99,7 @@ export const Itinerary = () => {
                 type="text"
                 value={singleLocation.stop}
                 onChange={(e) => handleChange(e)}
-                placeholder="Finding the best Chinese Suppliers"
+                placeholder="Enter stop time eg:10 minutes"
                 className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
               />
             </div>
@@ -108,40 +108,30 @@ export const Itinerary = () => {
 
         {/* Location */}
         <div className={"relative flex flex-col gap-1 w-full"}>
-          <Typography
-            variant="p"
-            className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
-          >
-            Location
-          </Typography>
           <div
             className={
-              "flex items-center rounded bg-white h-12 px-2 gap-2 border border-custom-neutral"
+              "flex items-center rounded bg-white h-12 gap-2 mt-3 w-full"
             }
           >
-            <input
+            <RHFLocationSelect
               name="location"
-              type="text"
+              label="Street Address"
               value={singleLocation.location}
-              onChange={(e) => handleChange(e)}
-              placeholder="Finding the best Chinese Suppliers"
-              className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent `}
+              placeholder="Search Stop location..."
+              className={"w-full"}
+              onChange={(details) => {
+                handleChange(details);
+              }}
             />
           </div>
         </div>
-
-        {/* <RHFLocationSelect
-          name="business_meeting.address"
-          label="Street Address"
-          placeholder="Address of your B&B"
-        /> */}
 
         <div className="flex justify-end items-end">
           <Button
             disabled={
               singleLocation?.title?.length < 3 ||
               singleLocation?.stop?.length < 3 ||
-              singleLocation?.location?.length < 3
+              !singleLocation?.location
             }
             onClick={handleAdd}
           >
@@ -150,21 +140,22 @@ export const Itinerary = () => {
         </div>
       </div>
 
-      {/* Conditionally render the Accordion only when visible */}
-
-      {/* {formTopics &&
-        formTopics?.map((topic) => (
+      {itinerary &&
+        itinerary?.map((topic) => (
           <div key={topic.id} className="w-full">
             <Accordion
               id={topic.id}
               title={topic?.title}
               className=""
               deleteTopic={handleDelete}
+              isOpen={true}
             >
-              <Typography variant="p">{topic?.description}</Typography>
+              <Typography variant="body1">
+                {topic?.location?.formatted_address || topic?.location}
+              </Typography>
             </Accordion>
           </div>
-        ))} */}
+        ))}
     </div>
   );
 };

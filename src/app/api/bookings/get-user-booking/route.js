@@ -8,7 +8,6 @@ export async function GET(req) {
     let event_id = searchParams.get("event_id");
     let event_type = searchParams.get("type");
 
-    console.log("Event Detail", { event_id, user_id, event_type });
 
     if (!user_id || !event_type || !event_id) {
       return NextResponse.json(
@@ -19,7 +18,6 @@ export async function GET(req) {
 
     let booking;
     if (event_type === "HOTEL") {
-      console.log("Fetching HOTEL booking...");
       booking = await prisma.booking.findFirst({
         where: {
           guest_id: user_id,
@@ -36,7 +34,6 @@ export async function GET(req) {
         },
       });
     } else {
-      console.log("Fetching NOMAD booking...");
       booking = await prisma.booking.findFirst({
         where: {
           guest_id: user_id,
@@ -55,14 +52,14 @@ export async function GET(req) {
     }
 
     if (!booking) {
-      console.log("No booking found for given criteria");
+  
       return NextResponse.json(
         { message: "No booking found" },
         { status: 404 }
       );
     }
 
-    console.log("Booking found:", booking);
+   
     return NextResponse.json(
       { message: "success", booking },
       { status: 200 }

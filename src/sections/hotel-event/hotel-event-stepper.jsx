@@ -27,6 +27,7 @@ import {
   getAllEventRules,
   getAllEventSafetyAndProperty,
 } from "@/src/redux/event-things-to-know/thunk";
+import { Itinerary } from "./itinerary";
 
 export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -52,9 +53,17 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
 
   const eventSchema = Yup.object().shape({
     business_meeting: Yup.object({
-      title: Yup.string().required("Title is required"),
-      description: Yup.string().required("Description is required"),
-      official_name: Yup.string().required("Official name is required"),
+      title: Yup.string()
+        .required("Title is required")
+        .max(30, "Title must be at most 30 characters")
+        .min(3, "Title must be at least 3 characters"),
+      description: Yup.string()
+        .required("Description is required")
+        .min(3, "Description must be at least 3 characters"),
+      official_name: Yup.string()
+        .required("Official name is required")
+        .max(30, "Official name must be at most 30 characters")
+        .min(3, "Official name must be at least 3 characters"),
       business_category: Yup.string().required("Business category is required"),
       amenities: Yup.array().optional(),
       nomad_id: Yup.string().required("Please select nomad"),
@@ -70,6 +79,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       end_date: Yup.string().required("End date is required"),
       rules: Yup.lazy((value) => checkBoxSchema(Object.keys(value || {}))),
     }),
+    itinerary: Yup.array().optional(),
     price: Yup.string().required("Price is required"),
   });
 
@@ -157,12 +167,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       value: "guest",
       component: <GuestLearn />,
     },
-    // {
-    //   label: "Itinerary Locations",
-    //   icon: "lineicons:route-1",
-    //   value: "itinerary",
-    //   component: <Itinerary />,
-    // },
+    {
+      label: "Itinerary Locations",
+      icon: "lineicons:route-1",
+      value: "itinerary",
+      component: <Itinerary />,
+    },
     {
       label: "Things to know",
       icon: "octicon:person-16",
@@ -197,7 +207,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       );
     } else if (activeStep === 1) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 
@@ -215,7 +225,6 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     };
     if (!isEdit) {
       try {
-        console.log("create data", finalData);
         await dispatch(createHotelEvent(finalData)).unwrap();
         enqueueSnackbar("hotel event created", { variant: "success" });
         router.push(paths.hotelDashboard.events.root);

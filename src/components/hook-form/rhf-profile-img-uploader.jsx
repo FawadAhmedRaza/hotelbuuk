@@ -34,7 +34,6 @@ export const RHFProfileImgUploader = ({
       name={name}
       control={control}
       render={({ field, formState: { errors } }) => {
-        console.log(field.value);
         return (
           <div
             className={cn(

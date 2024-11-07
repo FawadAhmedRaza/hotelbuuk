@@ -39,6 +39,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteNomadProfile } from "@/src/redux/nomad-profile/thunk";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { RHFWorkPermitUploader } from "@/src/components/hook-form/rhf-work-permit-uploader";
+import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
+import { RHFLocationInput } from "@/src/components/hook-form/rhf-location-input";
 
 export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
   const { user, setUser, logout } = useAuthContext();
@@ -100,10 +102,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
-  console.log("Default nomad", defaultValues);
-  console.log("Default Start Date", defaultValues.start_date);
-  console.log("Default End Date", defaultValues.end_date);
-  console.log(date);
+
 
   const methods = useForm({
     resolver: yupResolver(nomadProfileSchema),
@@ -119,6 +118,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const country = watch("country");
   const city = watch("city");
+  const address = watch("address");
 
   useEffect(() => {
     setValue("availability.date.start_date", date?.[0]?.startDate?.toString());
@@ -134,7 +134,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
       },
     ]);
   }, []);
-  
+
   const fetchCountries = async () => {
     try {
       const allCountries = await getCountries();
@@ -310,11 +310,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               value={city || ""}
               onChange={(e) => setValue("city", e.target.value)}
             />
-            <RHFInput
-              name="address"
-              label="Address"
-              placeholder="Enter full address"
-            />
+            <RHFLocationInput name="address" label="Address" className="w-full" />
             <RHFSelect
               name="experience"
               label="Experience"

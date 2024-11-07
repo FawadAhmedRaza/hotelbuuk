@@ -79,7 +79,7 @@ export function calculateDaysBetweenDates(date1, date2) {
 
   const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 
-  return diffDays;
+  return diffDays + 1;
 }
 
 // EVENTS FILTER
@@ -88,7 +88,7 @@ export function eventsFilter(events, filters) {
     const titleMatches = event.title
       .toLowerCase()
       .includes(filters.event_name.toLowerCase());
-    console.log(`Title matches (${event.title}):`, titleMatches);
+    
 
     // Price validation
     const priceValid =
@@ -119,7 +119,6 @@ export function eventsFilter(events, filters) {
   return filteredResults;
 }
 
-// FILTER WITH DATES
 export function filterEventsByDateAndDestination(
   events,
   checkIn,
@@ -155,24 +154,40 @@ export function filterEventsByDateAndDestination(
 
     // Destination filter: Check if a destination is provided
     if (destination) {
+      // Convert the destination to lowercase for case-insensitive matching
+      const destinationLower = destination.toLowerCase();
+
+      // Match destination with the event's city, country, or address
       if (event.city) {
-        destinationMatches =
-          event.city.toLowerCase() === destination.toLowerCase();
+        destinationMatches = event.city.toLowerCase() === destinationLower;
       }
+
       if (!destinationMatches && event.country) {
-        destinationMatches =
-          event.country.toLowerCase() === destination.toLowerCase();
+        destinationMatches = event.country.toLowerCase() === destinationLower;
       }
 
       // If the event doesn't have its own city or country, try matching with the hotel's city or country
       if (!destinationMatches && event.hotel) {
         if (event.hotel.city) {
           destinationMatches =
-            event.hotel.city.toLowerCase() === destination.toLowerCase();
+            event.hotel.city.toLowerCase() === destinationLower;
         }
         if (!destinationMatches && event.hotel.country) {
           destinationMatches =
-            event.hotel.country.toLowerCase() === destination.toLowerCase();
+            event.hotel.country.toLowerCase() === destinationLower;
+        }
+      }
+
+      // If event.address exists, match with event.address; if not, fall back to hotel.address
+      if (!destinationMatches) {
+        if (event.address) {
+          destinationMatches = event.address
+            .toLowerCase()
+            .includes(destinationLower);
+        } else if (event.hotel && event.hotel.address) {
+          destinationMatches = event.hotel.address
+            .toLowerCase()
+            .includes(destinationLower);
         }
       }
     } else {
@@ -180,9 +195,7 @@ export function filterEventsByDateAndDestination(
       destinationMatches = true;
     }
 
-    // Return true if either:
-    // - both dates are provided and valid, and destination matches
-    // - or, one date is provided (check-in or check-out) and valid, and destination matches
+    // Return true if both date and destination filters pass
     return dateRangeValid && destinationMatches;
   });
 }

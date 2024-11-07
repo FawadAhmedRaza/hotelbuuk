@@ -14,6 +14,7 @@ import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
 import { getCities, getCountries } from "@/src/libs/helper";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { RHFLocationInput } from "@/src/components/hook-form/rhf-location-input";
 
 const HotelProfile = () => {
   const { user } = useAuthContext();
@@ -167,11 +168,7 @@ const HotelProfile = () => {
             value={city || ""}
             onChange={(e) => setValue("city", e.target.value)}
           />
-          <RHFInput
-            name="address"
-            label="Address"
-            placeholder="Enter full address"
-          />
+          <RHFLocationInput name="address" label="Address" />
         </div>
       </div>
 

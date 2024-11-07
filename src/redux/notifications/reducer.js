@@ -24,7 +24,6 @@ const notifications = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllNotifications.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.notifications = action.payload;
       state.isLoading = false;
     });

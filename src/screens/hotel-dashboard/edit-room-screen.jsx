@@ -26,7 +26,6 @@ import { paths } from "@/src/contants";
 import { getAllRoomFacilities } from "@/src/redux/room-facilities/thunk";
 
 const EditRoomScreen = ({ isEdit, defaultValues }) => {
-  console.log("default avlues", defaultValues);
   const router = useRouter();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
@@ -100,7 +99,6 @@ const EditRoomScreen = ({ isEdit, defaultValues }) => {
 
     const formData = new FormData();
 
-    console.log("final Data", data);
     for (const key in data) {
       if (
         data[key] !== null &&

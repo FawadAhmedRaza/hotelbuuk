@@ -10,12 +10,16 @@ import {
   ThingsKnow,
   HotelDetail,
 } from "../hotel-details";
-import Itinerary from "../hotel-details/Itinerary";
-import { BusinessFacts } from "../business-facts";
+
 import AvailabilityCalendar from "../hotel-details/availability-calender";
+import { BusinessFactsSwiper } from "../business-facts-swiper";
+import Itinerary from "../hotel-details/Itinerary";
+import { useSelector } from "react-redux";
 
 const EventDetailScreen = React.memo(({ type }) => {
   const [isMobile, setIsMobile] = useState(false);
+
+  const { event } = useSelector((state) => state.allEvents.getById);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -54,7 +58,7 @@ const EventDetailScreen = React.memo(({ type }) => {
       <div className="md:px-4">
         <HotelOverview type={type} />
         <HotelDetail />
-        <BusinessFacts className="bg-white" />
+        <BusinessFactsSwiper className="bg-white" />
         <AvailabilityCalendar
           dateRange={dateRange}
           handleDateChange={handleDateChange}
@@ -62,6 +66,7 @@ const EventDetailScreen = React.memo(({ type }) => {
           clearDateRange={clearDateRange} // Pass clearDateRange as prop
         />
         <PopularAmenities />
+        {event?.itinerary && <Itinerary />}
         <ThingsKnow />
       </div>
     </div>

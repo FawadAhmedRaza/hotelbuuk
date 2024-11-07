@@ -129,7 +129,7 @@ export const getUserByGoogleId = async (googleId) => {
       where: {
         googleId,
       },
-      include:{
+      include: {
         hotels: {
           select: {
             id: true,
@@ -140,7 +140,7 @@ export const getUserByGoogleId = async (googleId) => {
             id: true,
           },
         },
-      }
+      },
     });
     return user;
   } catch (error) {
@@ -151,7 +151,6 @@ export const getUserByGoogleId = async (googleId) => {
 export const loginWithCreds = async (data) => {
   try {
     const { email, password } = data || {};
-    console.log(email, password);
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -172,7 +171,6 @@ export const loginWithCreds = async (data) => {
       };
     }
     const token = await generateToken(user);
-    console.log(token);
     // If everything is fine, return the user object
     return { data: { accessToken: token, user }, statusCode: 200 };
   } catch (err) {

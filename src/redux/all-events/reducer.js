@@ -24,7 +24,6 @@ const allEvents = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllEvents.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.events = action.payload;
       state.isLoading = false;
     });

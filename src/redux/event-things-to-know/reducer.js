@@ -102,7 +102,6 @@ const eventThings = createSlice({
       state.policy.isLoading = true;
     });
     builder.addCase(getAllCancellationPolicy.fulfilled, (state, action) => {
-      console.log('policies',action.payload);
       state.policy.policyArr = action.payload;
       state.policy.isLoading = false;
     });

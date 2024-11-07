@@ -14,7 +14,6 @@ const ChatSidebar = () => {
   const fetchChats = async () => {
     try {
       const response = await getUserRooms(user.id);
-      console.log("Response", response);
       setChats(response.data);
     } catch (err) {
       console.error("Error fetching chat rooms:", err);

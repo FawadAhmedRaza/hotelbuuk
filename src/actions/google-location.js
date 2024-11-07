@@ -10,7 +10,6 @@ export const fetchPlacesSuggestions = async (query) => {
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${GOOGLE_PLACES_API_KEY}&language=en`
     );
-    console.log("response", response);
     return response.data.predictions || [];
   } catch (error) {
     console.error("Error fetching suggestions:", error);
@@ -19,7 +18,8 @@ export const fetchPlacesSuggestions = async (query) => {
 };
 
 export const fetchPlaceDetails = async (placeId) => {
-  const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_CLOUD_MAP_API_KEY;
+  const GOOGLE_PLACES_API_KEY =
+    process.env.NEXT_PUBLIC_GOOGLE_CLOUD_MAP_API_KEY;
 
   try {
     const response = await axios.get(
@@ -31,4 +31,3 @@ export const fetchPlaceDetails = async (placeId) => {
     return null;
   }
 };
-
