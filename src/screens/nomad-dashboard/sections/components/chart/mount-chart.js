@@ -6,18 +6,36 @@ import { Typography } from "@/src/components";
 const MountChart = ({ revenue }) => {
   const chartRef = useRef(null);
 
+  const roundedRevenue = revenue?.map((value) => parseFloat(value?.toFixed(0)));
+
   useEffect(() => {
     const currentDate = new Date();
     const currentMonthIndex = currentDate.getMonth();
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-    const orderedMonthNames = [...monthNames.slice(currentMonthIndex), ...monthNames.slice(0, currentMonthIndex)];
+    const orderedMonthNames = [
+      ...monthNames.slice(currentMonthIndex),
+      ...monthNames.slice(0, currentMonthIndex),
+    ];
 
     const chartConfig = {
       series: [
         {
           name: "Sales",
-          data: revenue || [],
+          data: roundedRevenue || [], // Use the rounded revenue data here
         },
       ],
       chart: {
@@ -60,6 +78,9 @@ const MountChart = ({ revenue }) => {
       },
       yaxis: {
         labels: {
+          formatter: function (value) {
+            return Number.isFinite(value) ? value.toFixed(0) : value;
+          },
           style: {
             colors: "#852169",
             fontSize: "12px",
@@ -96,7 +117,7 @@ const MountChart = ({ revenue }) => {
     return () => {
       chart.destroy();
     };
-  }, [revenue]);
+  }, [roundedRevenue]);
 
   return (
     <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
