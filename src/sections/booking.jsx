@@ -141,11 +141,11 @@ export const Booking = React.memo(() => {
       <div className="flex md:items-center !w-fit pl-0 pr-3 py-0 m-0  bg-white    md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm md:mx-auto">
         <div className="flex md:flex-row flex-col gap-3 md:items-center w-full ">
           {/* Destination Input */}
-          <div className="py-2 pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10  md:rounded-full">
+          <div className="   pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10 pt-2   ">
             <div className="flex gap-3 items-center">
               <Iconify
                 iconName="carbon:location-filled"
-                className="text-primary mt-1"
+                className="text-primary   !size-4"
               />
               <Typography variant="p" className="font-normal !text-sm">
                 Destinations
@@ -154,10 +154,9 @@ export const Booking = React.memo(() => {
 
             <LocationInput
               placeholder="Moxy Dortmunt City"
-              customInputClass="md:w-40  w-full"
               name="destination"
-              inputClass="outline-none border-none text-base font-normal  !p-0 bg-transparent"
-              className="outline-none border-none !p-0 h-8 ml-1"
+              inputClass="outline-none border-none text-base font-normal   !p-0 bg-transparent  w-44  mt-1  placeholder:text-sm  !py-0"
+              className="outline-none border-none !p-0  ml-1"
               onChange={(details) => handleChange(details)}
             />
           </div>
@@ -165,7 +164,7 @@ export const Booking = React.memo(() => {
           <span className="hidden md:flex h-16 w-[2px] bg-primary" />
 
           {/* Calendar Input */}
-          <div className=" w-full  ">
+          <div className=" w-full   ">
             <Popover>
               <PopoverTrigger>
                 <BookingCalender

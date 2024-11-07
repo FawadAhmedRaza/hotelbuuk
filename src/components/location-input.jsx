@@ -105,8 +105,8 @@ export const LocationInput = ({
       <div className="relative w-full" ref={dropDownRef}>
         <input
           className={cn(
-            "flex items-center text-xs rounded bg-white h-12 placeholder:text-neutral-300 px-1 w-full border border-custom-neutral outline-none",
-            inputClass,
+            `flex items-center text-xs rounded bg-white placeholder:text-neutral-300 px-1 w-full border border-custom-neutral outline-none ${inputClass}`,
+
             disabled && "!bg-gray-100 cursor-not-allowed"
           )}
           placeholder={placeholder}
