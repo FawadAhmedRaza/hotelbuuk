@@ -15,6 +15,7 @@ export const RHFInput = React.memo(
     disabled = false,
     className,
     startIcon,
+    errorClass,
     startIconClass,
     inputClass,
     customInputClass,
@@ -118,7 +119,7 @@ export const RHFInput = React.memo(
             {errors && (
               <Typography
                 variant="p"
-                className="!text-xs text-red-400 transition-all duration-500"
+                className={`!text-xs text-red-400 transition-all duration-500 ${errorClass}`}
               >
                 {get(errors, name)?.message}
               </Typography>

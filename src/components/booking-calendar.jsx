@@ -13,7 +13,7 @@ export const BookingCalender = React.memo(
     labelEnd = "Check-out",
     InputBoxClass,
     startIconClass,
-
+    labelClass,
     startEndBox,
     inputClass,
     endIconClass,
@@ -46,11 +46,11 @@ export const BookingCalender = React.memo(
 
               return (
                 <div
-                  className={`flex flex-col items-start gap-1 py-2 px-0  w-full md:px-10 md:rounded-full   ${InputBoxClass}`}
+                  className={`flex flex-col items-start gap-1 py-0 px-0  w-full md:px-5    ${InputBoxClass}`}
                 >
                   <div className="flex gap-3">
                     <Iconify iconName="uil:calender" className="text-primary" />
-                    <Typography variant="p" className="text-sm">
+                    <Typography variant="p" className={`text-sm ${labelClass}`}>
                       {labelStart}
                     </Typography>
                   </div>
@@ -76,11 +76,11 @@ export const BookingCalender = React.memo(
             control={control}
             render={({ field }) => (
               <div
-                className={`flex flex-col items-start gap-1  py-2 w-full px-0 sm:px-5 md:px- xl:px-10 md:rounded-full    ${InputBoxClass}`}
+                className={`flex flex-col items-start gap-1  py-0 w-full px-0 sm:px-5 md:px-5     ${InputBoxClass}`}
               >
                 <div className="flex gap-3 items-center">
                   <Iconify iconName="uil:calender" className="text-primary" />
-                  <Typography variant="p" className="text-sm">
+                  <Typography variant="p" className={`text-sm ${labelClass}`}>
                     {labelEnd}
                   </Typography>
                 </div>

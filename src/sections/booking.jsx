@@ -82,10 +82,12 @@ export const Booking = React.memo(() => {
               </Typography>
             </div>
             <RHFInput
+              errorClass="  -mt-3  ml-1"
               type="text"
               placeholder="Moxy Dortmunt City"
+              customInputClass="md:w-40  w-full"
               name="destination"
-              inputClass="outline-none border-none text-base font-normal !p-0 bg-transparent"
+              inputClass="outline-none border-none text-base font-normal  !p-0 bg-transparent"
               className="outline-none border-none !p-0 h-8 ml-1"
             />
           </div>
@@ -97,9 +99,10 @@ export const Booking = React.memo(() => {
             <Popover>
               <PopoverTrigger>
                 <BookingCalender
-                  InputBoxClass=" w-full "
-                  startEndBox=" !flex w-full  !flex-row"
+                  InputBoxClass=" w-full   md:px-0 "
+                  startEndBox=" !flex w-full  !flex-row  px-0"
                   nameStart="startDate"
+                  labelClass=" !font-normal !text-[14px]"
                   nameEnd="endDate"
                   labelStart="Check-in"
                   labelEnd="Check-out"
