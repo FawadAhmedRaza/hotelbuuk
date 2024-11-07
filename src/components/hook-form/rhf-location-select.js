@@ -25,6 +25,8 @@ export const RHFLocationSelect = ({
   placeholder,
   disabled = false,
   className,
+  value, // Add this prop to receive external updates
+
   onChange,
 }) => {
   const { control } = useFormContext();
@@ -55,22 +57,27 @@ export const RHFLocationSelect = ({
     }
   }, 300);
 
-  // Handle input change
+  // Update query whenever external value changes
+  useEffect(() => {
+    setQuery(value?.formatted_address || ""); // Adjust as needed
+  }, [value]);
+
+  // Handle input change for manual entry
   const handleChangeQuery = (e) => {
     const value = e.target.value;
     setQuery(value);
     fetchSuggestions(value);
   };
 
+  // Handle selection from suggestions
   const handleOnClick = async (option) => {
     try {
-      const fetchPlace = await fetchPlaceDetails(option?.value);
-      console.log("place details",fetchPlace);
-      onChange(fetchPlace);
-      setQuery(option.label);
+      const fetchPlace = await fetchPlaceDetails(option.value);
+      onChange(fetchPlace); // Pass full place object to parent
+      setQuery(option.label); // Set query to display the label
       setSuggestions([]);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching place details:", error);
     }
   };
 

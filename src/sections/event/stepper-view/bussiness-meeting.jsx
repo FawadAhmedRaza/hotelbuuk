@@ -23,6 +23,7 @@ import CreateEditAmenities from "./modals/create-edit-amenities";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
 export const BussinessMeeting = () => {
+  const [location, setLocation] = useState("");
   const { watch, setValue } = useFormContext();
   const openAmenitiesModal = useModal();
 
@@ -90,6 +91,11 @@ export const BussinessMeeting = () => {
       }
     });
   }, [country]);
+
+  const handleChange = (detail) => {
+    console.log("places values", detail.formatted_address);
+    setValue("business_meeting.address", detail.formatted_address);
+  };
 
   return (
     <div className="flex flex-col gap-10">
@@ -217,15 +223,14 @@ export const BussinessMeeting = () => {
                 placeholder="Address of your B&B"
               />
               {/* <RHFLocationSelect
-                name="business_meeting.address"
+                name="address"
                 label="Street Address"
+                value={location}
                 placeholder="Address of your B&B"
-              /> */}
-
-              {/* <RHFLocationSelect
-                name="business_meeting.address"
-                label="Street Address"
-                placeholder="Address of your B&B"
+                className={"w-full"}
+                onChange={(details) => {
+                  handleChange(details);
+                }}
               /> */}
 
               <RHFTextArea

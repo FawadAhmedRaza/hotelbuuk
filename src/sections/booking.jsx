@@ -65,10 +65,10 @@ export const Booking = React.memo(() => {
 
     // Add dates to queryParams only if user has selected them
     if (isDateSelected && data.startDate) {
-      queryParams.set("check_in", data.startDate.toString().slice(0,15));
+      queryParams.set("check_in", data.startDate.toString().slice(0, 15));
     }
     if (isDateSelected && data.endDate) {
-      queryParams.set("check_out", data.endDate.toString().slice(0,15));
+      queryParams.set("check_out", data.endDate.toString().slice(0, 15));
     }
 
     // Construct the redirect URL based on query params
@@ -151,13 +151,6 @@ export const Booking = React.memo(() => {
                 Destinations
               </Typography>
             </div>
-            {/* <RHFInput
-              type="text"
-              placeholder="Moxy Dortmunt City"
-              name="destination"
-              inputClass="outline-none border-none text-base font-normal !p-0 bg-transparent"
-              className="outline-none border-none !p-0 h-8 ml-1"
-            /> */}
 
             <LocationInput
               placeholder="Moxy Dortmunt City"
