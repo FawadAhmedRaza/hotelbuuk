@@ -6,7 +6,6 @@ import ImageRender from "@/src/components/ImageRenderer";
 import DOMPurify from "dompurify";
 
 export const MissionStatement = React.memo(({ about }) => {
-  console.log(about);
 
   const sanitizedContent = DOMPurify.sanitize(about?.description);
 

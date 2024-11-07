@@ -15,7 +15,6 @@ export const createHotelEvent = createAsyncThunk(
 export const getAllHotelEvents = createAsyncThunk(
   "getAllHotelEvent",
   async (id) => {
-    console.log("id",id);
     const request = await axiosInstance.get(endpoints.hotel.event.getAll(id));
     return request?.data.hotelEvents;
   }

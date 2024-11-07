@@ -28,7 +28,6 @@ export async function createOrder(data) {
 
   try {
     const PaypalClient = await client();
-    console.log("PaypalClient", PaypalClient);
 
     //This code is lifted from https://github.com/paypal/Checkout-NodeJS-SDK
     const request = new paypal.orders.OrdersCreateRequest();
@@ -47,7 +46,6 @@ export async function createOrder(data) {
 
     const response = await PaypalClient.execute(request);
     if (response.statusCode !== 201) {
-      console.log("RES: ", response);
       return { success: false, message: "Some Error Occured at backend" };
     }
     return { success: true, data: { order } };
@@ -66,7 +64,6 @@ export async function captureOrder(data) {
   if (!response) {
     return { success: false, message: "Some Error Occured at backend" };
   }
-  console.log(response);
   return { success: true, data: response?.result };
 }
 

@@ -40,7 +40,6 @@ const page = () => {
     room_images: room?.room_images,
  
   };
-  console.log("deafdas",defaultValues);
 
   return isLoading ? (
     <Spinner />

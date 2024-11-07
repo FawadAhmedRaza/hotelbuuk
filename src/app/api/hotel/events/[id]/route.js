@@ -352,7 +352,6 @@ export async function PUT(req, { params }) {
           hotel_event_id: event?.id,
         };
       });
-      console.log("updated array of itinerarie", formatedArr);
 
       await prisma.itinerary.createMany({
         data: formatedArr,

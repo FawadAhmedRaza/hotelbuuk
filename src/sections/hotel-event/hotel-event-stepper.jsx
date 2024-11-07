@@ -225,7 +225,6 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     };
     if (!isEdit) {
       try {
-        console.log("create data", finalData);
         await dispatch(createHotelEvent(finalData)).unwrap();
         enqueueSnackbar("hotel event created", { variant: "success" });
         router.push(paths.hotelDashboard.events.root);

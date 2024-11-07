@@ -5,7 +5,6 @@ import { Menu } from "../../menu";
 import { useBoolean } from "@/src/hooks";
 
 const Tabs = ({ TABS, activeTab, setActiveTab, className, setFilters }) => {
-  console.log(setFilters, "setFilters");
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
   return (

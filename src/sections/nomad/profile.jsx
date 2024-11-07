@@ -102,10 +102,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
-  console.log("Default nomad", defaultValues);
-  console.log("Default Start Date", defaultValues.start_date);
-  console.log("Default End Date", defaultValues.end_date);
-  console.log(date);
+
 
   const methods = useForm({
     resolver: yupResolver(nomadProfileSchema),

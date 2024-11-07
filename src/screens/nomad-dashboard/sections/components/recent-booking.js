@@ -71,7 +71,6 @@ const RecentBooking = () => {
                   .slice(0, showMore ? recommended_nomad.length : 4)
                   .map((hotel) => (
                     <div key={hotel.id} className="w-full">
-                      {console.log("Hotel ", hotel)}
                       <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
                         <div className="flex gap-4 w-full">
                           <ProfileAvatar

@@ -39,8 +39,6 @@ export async function GET(req, { params }) {
       images,
     };
 
-    console.log("Final Data", finalWithImages);
-
     return NextResponse.json(
       { message: "success", hotelInfo: finalWithImages },
       { status: 200 }

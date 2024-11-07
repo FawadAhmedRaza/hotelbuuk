@@ -47,7 +47,6 @@ export const BussinessMeeting = () => {
   const country = watch("business_meeting.country");
   const city = watch("business_meeting.city");
   const address = watch("business_meeting.address");
-  console.log("address from event:", address);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
@@ -88,7 +87,6 @@ export const BussinessMeeting = () => {
   }, [country]);
 
   const handleChange = (detail) => {
-    console.log("places values", detail.formatted_address);
     setValue("business_meeting.address", detail.formatted_address);
   };
 

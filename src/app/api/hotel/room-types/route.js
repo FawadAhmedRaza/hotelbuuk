@@ -19,7 +19,6 @@ export async function POST(req) {
         user_id,
       };
     });
-    console.log("types", types);
 
     let createdTypes = await prisma.room_types.createMany({
       data: types,

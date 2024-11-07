@@ -49,7 +49,6 @@ const wishList = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getWishList.fulfilled, (state, action) => {
-      console.log("Wish List payload", action.payload);
       state.wishList = action.payload;
       state.isLoading = false;
     });

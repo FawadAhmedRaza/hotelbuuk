@@ -46,7 +46,6 @@ const nomadEvents = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllNomadEvents.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.events = action.payload;
       state.isLoading = false;
     });
@@ -60,7 +59,6 @@ const nomadEvents = createSlice({
       state.getById.isLoading = true;
     });
     builder.addCase(getEventById.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.getById.event = action.payload;
       state.getById.isLoading = false;
     });
@@ -87,7 +85,6 @@ const nomadEvents = createSlice({
       state.facts.isLoading = true;
     });
     builder.addCase(getBusinessFacts.fulfilled, (state, action) => {
-      console.log("acion",action.payload);
       state.facts.businessFacts = action.payload;
       state.facts.isLoading = false;
     });

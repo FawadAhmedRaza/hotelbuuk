@@ -14,7 +14,6 @@ const NotificationsSection = () => {
     (state) => state.notifications
   );
 
-  console.log("notifications from user", notifications);
 
   useEffect(() => {
     async function fetchNotifications() {

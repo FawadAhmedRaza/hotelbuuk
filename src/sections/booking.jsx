@@ -81,51 +81,6 @@ export const Booking = React.memo(() => {
     setIsDateSelected(false);
   };
 
-  // const handleSubmit = async (data) => {
-  //   console.log("Form data:", data); // Debugging
-
-  //   const queryParams = new URLSearchParams({
-  //     destination: data.destination || "",
-  //     check_in: data.startDate.toString().slice(0, 15) || "",
-  //     check_out: data.endDate.toString().slice(0, 15) || "",
-  //   }).toString();
-
-  //   console.log("Redirecting to:", `/hotels?${queryParams}`); // Debugging
-  //   router.push(`/hotels?${queryParams}`);
-  //   methods.reset();
-  // };
-
-  // const handleSubmit = async (data) => {
-  //   const queryParams = new URLSearchParams();
-
-  //   // Conditionally add destination if provided
-  //   if (data.destination) {
-  //     queryParams.set("destination", data.destination);
-  //   }
-
-  //   // Add check_in only if the selected date is different from initialStartDate
-  //   const startDateChanged =
-  //     data.startDate && data.startDate.getTime() !== initialStartDate.getTime();
-  //   if (startDateChanged) {
-  //     queryParams.set("check_in", data.startDate.toISOString().split("T")[0]);
-  //   }
-
-  //   // Add check_out only if the selected date is different from initialEndDate
-  //   const endDateChanged =
-  //     data.endDate && data.endDate.getTime() !== initialEndDate.getTime();
-  //   if (endDateChanged) {
-  //     queryParams.set("check_out", data.endDate.toISOString().split("T")[0]);
-  //   }
-
-  //   // Redirect only with populated query parameters
-  //   const queryString = queryParams.toString();
-  //   const redirectUrl = queryString ? `/hotels?${queryString}` : "/hotels";
-  //   router.push(redirectUrl);
-
-  //   // Reset the form after submission
-  //   methods.reset();
-  // };
-
   const togglePopover = () => setIsPopoverOpen(!isPopoverOpen);
 
   const handleChange = (details) => {
@@ -141,11 +96,11 @@ export const Booking = React.memo(() => {
       <div className="flex md:items-center !w-fit pl-0 pr-3 py-0 m-0  bg-white    md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm md:mx-auto">
         <div className="flex md:flex-row flex-col gap-3 md:items-center w-full ">
           {/* Destination Input */}
-          <div className="py-2 pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10  md:rounded-full">
+          <div className="   pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10 pt-2   ">
             <div className="flex gap-3 items-center">
               <Iconify
                 iconName="carbon:location-filled"
-                className="text-primary mt-1"
+                className="text-primary   !size-4"
               />
               <Typography variant="p" className="font-normal !text-sm">
                 Destinations
@@ -155,8 +110,8 @@ export const Booking = React.memo(() => {
             <LocationInput
               placeholder="Moxy Dortmunt City"
               name="destination"
-              inputClass="outline-none border-none text-base font-normal !p-0 bg-transparent"
-              className="outline-none border-none !p-0 h-8 ml-1"
+              inputClass="outline-none border-none text-base font-normal   !p-0 bg-transparent  w-44  mt-1  placeholder:text-sm  !py-0"
+              className="outline-none border-none !p-0  ml-1"
               onChange={(details) => handleChange(details)}
             />
           </div>
@@ -164,13 +119,14 @@ export const Booking = React.memo(() => {
           <span className="hidden md:flex h-16 w-[2px] bg-primary" />
 
           {/* Calendar Input */}
-          <div className=" w-full  ">
+          <div className=" w-full   ">
             <Popover>
               <PopoverTrigger>
                 <BookingCalender
-                  InputBoxClass=" w-full "
-                  startEndBox=" !flex w-full  !flex-row"
+                  InputBoxClass=" w-full   md:px-0 "
+                  startEndBox=" !flex w-full  !flex-row  px-0"
                   nameStart="startDate"
+                  labelClass=" !font-normal !text-[14px]"
                   nameEnd="endDate"
                   labelStart="Check-in"
                   labelEnd="Check-out"

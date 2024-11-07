@@ -81,7 +81,6 @@ export const hotelRooms = createSlice({
       state.getAllRooms.isLoading = true;
     });
     builder.addCase(getRooms.fulfilled, (state, action) => {
-      console.log("Fetched Rooms: ", action.payload); // Verify payload
       state.getAllRooms.rooms = action.payload; // Store rooms correctly
       state.getAllRooms.isLoading = false;
     });
@@ -95,7 +94,6 @@ export const hotelRooms = createSlice({
       state.getById.isLoading = true;
     });
     builder.addCase(getRoomById.fulfilled, (state, action) => {
-      console.log("Get Room: ", action.payload); // Verify payload
       state.getById.room = action.payload; // Store rooms correctly
       state.getById.isLoading = false;
     });
@@ -109,7 +107,6 @@ export const hotelRooms = createSlice({
       state.updateById.isLoading = true;
     });
     builder.addCase(updateRoom.fulfilled, (state, action) => {
-      console.log("Updated room: ", action.payload);
       state.updateById.room = action.payload;
       state.updateById.isLoading = false;
     });

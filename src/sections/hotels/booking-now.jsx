@@ -39,10 +39,7 @@ export const BookNow = React.memo(() => {
   const checkIn = searchParams.get("check_in") || "";
   const checkOut = searchParams.get("check_out") || "";
 
-  console.log("Destication", destination);
-  console.log("Checkin", checkIn);
-  console.log("checkOut", checkOut);
-
+ 
   // Date state with default values
   const [date, setDate] = useState([
     {
@@ -81,13 +78,11 @@ export const BookNow = React.memo(() => {
     formState: { errors },
   } = methods;
 
-  console.log(errors); // Display validation errors in the console
 
   const dest = watch("destination");
 
   const handleSubmit = async (data) => {
     try {
-      console.log("Submitted Data:", data); // Show submitted data in the console
 
       // Construct query parameters
       const queryParams = new URLSearchParams({
@@ -184,7 +179,6 @@ export const BookNow = React.memo(() => {
                   <RHFDatePicker
                     name="availability"
                     onChange={(item) => {
-                      console.log("Item from calendar", item);
                       setDate([item.selection]);
                       methods.setValue("startDate", item.selection.startDate);
                       methods.setValue("endDate", item.selection.endDate);

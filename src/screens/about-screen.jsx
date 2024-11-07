@@ -28,7 +28,6 @@ const AboutScreen = React.memo(() => {
     fetchAboutUs();
   }, []);
 
-  console.log("About content", aboutUsContent);
 
   return (
     <main className="relative">

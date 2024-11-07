@@ -337,3 +337,104 @@ body {
   font-weight: bold;
   color: inherit; /* Optional: you can add a different color here */
 }
+
+/* term and Conditions */
+
+.term-and-conditions > h1 {
+  font-size: 1.875rem; /* Tailwind's text-3xl */
+  font-weight: 600; /* Tailwind's font-semibold */
+  color: var(--primary-color); /* Assuming --primary-color is defined */
+}
+
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .term-and-conditions > h1 {
+    font-size: 2.25rem; /* Tailwind's text-4xl */
+  }
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h1 {
+    font-size: 3rem; /* Tailwind's text-5xl */
+  }
+}
+
+.term-and-conditions > h2 {
+  font-size: 1.875rem; /* Tailwind's text-3xl */
+  font-weight: 500; /* Tailwind's font-medium */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h2 {
+    font-size: 2.625rem; /* Custom size */
+  }
+}
+
+.term-and-conditions > h3 {
+  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-weight: 500; /* Tailwind's font-medium */
+}
+
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .term-and-conditions > h3 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+  }
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h3 {
+    font-size: 2.25rem; /* Tailwind's text-4xl */
+  }
+}
+
+.term-and-conditions > h4 {
+  font-size: 1.25rem; /* Tailwind's text-xl */
+  font-weight: 400; /* Tailwind's font-normal */
+  letter-spacing: 0; /* Tailwind's tracking-none */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h4 {
+    font-size: 1.5rem; /* Tailwind's text-2xl */
+  }
+}
+
+.term-and-conditions > h5 {
+  font-size: 1.125rem; /* Tailwind's text-lg */
+  font-weight: 400; /* Tailwind's font-normal */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h5 {
+    font-size: 1.25rem; /* Tailwind's text-xl */
+  }
+}
+
+.term-and-conditions > h6 {
+  font-size: 1rem; /* Tailwind's text-base */
+  font-weight: 400; /* Tailwind's font-normal */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h6 {
+    font-size: 1.125rem; /* Tailwind's text-lg */
+  }
+}
+
+.term-and-conditions > p {
+  font-size: 0.875rem; /* Tailwind's text-sm */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > p {
+    font-size: 1rem; /* Tailwind's text-base */
+  }
+}

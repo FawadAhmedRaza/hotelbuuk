@@ -88,7 +88,7 @@ export function eventsFilter(events, filters) {
     const titleMatches = event.title
       .toLowerCase()
       .includes(filters.event_name.toLowerCase());
-    console.log(`Title matches (${event.title}):`, titleMatches);
+    
 
     // Price validation
     const priceValid =

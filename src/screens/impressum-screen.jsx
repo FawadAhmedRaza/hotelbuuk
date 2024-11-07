@@ -13,13 +13,11 @@ const ImpressumScreen = React.memo(() => {
 
   const [impressumLoading, setImpressumLoading] = useState(true);
 
-  console.log("privacyAndPolicy", impressum);
 
   const FetchImpressum = async () => {
     try {
       setImpressumLoading(true);
       const response = await getStaticContentByType("impressum");
-      console.log(response);
       setImpressum(response?.staticContent);
     } catch (error) {
       console.log("error", error);

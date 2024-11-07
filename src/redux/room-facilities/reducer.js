@@ -49,7 +49,6 @@ export const roomFacilities = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getAllRoomFacilities.fulfilled, (state, action) => {
-      console.log("All Rooms Facilities", action.payload);
       state.roomFacilities = action.payload;
       state.isLoading = false;
     });

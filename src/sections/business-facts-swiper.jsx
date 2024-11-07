@@ -40,7 +40,6 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
     fetchBusinessFacts();
   }, []);
 
-  console.log("all business facts", businessFacts);
 
   const handleAsk = (item) => {
     if (user) {

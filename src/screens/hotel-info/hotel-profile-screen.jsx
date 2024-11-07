@@ -122,7 +122,6 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
       formData.append("imagesUrl", JSON.stringify(imageUrls));
       formData.append("deletedImages", JSON.stringify(deletedImages));
-      console.log("iamges array ", images);
       images?.forEach((file) => formData.append("files", file));
       images.forEach((file) =>
         formData.append("imagesNames", JSON.stringify(names))

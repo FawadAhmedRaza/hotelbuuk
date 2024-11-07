@@ -102,7 +102,6 @@ const InternalNomadsListView = () => {
             enableSelection={false}
             renderRow={({ nomad }) => (
               <>
-                {console.log("nomad data", nomad)}
                 <td className=" px-6 py-4">
                   <div className="flex gap-2 items-center">
                     <ProfileAvatar

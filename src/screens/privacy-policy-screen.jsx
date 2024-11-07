@@ -14,7 +14,6 @@ const PrivacyPolicy = React.memo(() => {
 
   const [privacyPolicyLoading, setPrivacyPolicyLoading] = useState(true);
 
-  console.log("privacyAndPolicy", privacyAndPolicy);
 
   const FetchPrivacyANdPolicy = async () => {
     try {

@@ -15,7 +15,6 @@ import "react-date-range/dist/theme/default.css";
 
 export const SetAvailability = () => {
   const { setValue, watch } = useFormContext();
-  console.log(watch("availibility"));
 
   const [openCalender, setOpenCalender] = useState(false);
   const startDate = watch("availibility.start_date");

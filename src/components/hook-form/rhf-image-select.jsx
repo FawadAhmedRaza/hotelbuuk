@@ -22,20 +22,16 @@ export const RHFImageSelect = ({
   const [query, setQuery] = useState("");
   const [selectedHotel, setSelectedHotel] = useState(null); // Store selected hotel info
   const dropDownRef = useRef(null);
-  console.log("selected Hotel", selectedHotel);
 
   const pathName = usePathname();
 
-  console.log(pathName.split("/")[1]);
 
   const dashboardPath = pathName.split("/")[1];
 
   const hotelId = watch("business_meeting.hotel_id");
   const nomadId = watch("business_meeting.nomad_id");
 
-  console.log("hotel id", hotelId);
-  console.log("nomad id", nomadId);
-
+ 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
     item?.hotel_name?.toLowerCase().includes(query.toLowerCase())
@@ -65,7 +61,6 @@ export const RHFImageSelect = ({
       const existingHotel = filterOptions.filter(
         (option) => option.value === hotelId
       );
-      console.log(existingHotel);
       setSelectedHotel(existingHotel[0]);
     }
   }, [hotelId]);
@@ -75,7 +70,6 @@ export const RHFImageSelect = ({
       const existingNomad = filterOptions.filter(
         (option) => option.value === nomadId
       );
-      console.log(existingNomad);
       setSelectedHotel(existingNomad[0]);
     }
   }, [nomadId]);

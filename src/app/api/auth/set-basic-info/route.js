@@ -137,7 +137,6 @@ export async function PUT(req) {
   try {
     const body = await req.formData();
     const data = convertFormData(body);
-    console.log("data", data);
 
     const { user_id, first_name, last_name, phone_number, type, profile_img } =
       data;

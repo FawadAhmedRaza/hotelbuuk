@@ -18,7 +18,6 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
-  console.log("guest User", user?.first_name);
 
   return (
     <div
