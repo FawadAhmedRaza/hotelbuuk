@@ -47,7 +47,7 @@ const RecentBookingListView = () => {
   };
 
   return (
-    <div className="border border-gray-200 rounded-xl mt-4">
+    <div className="border border-gray-200 rounded-xl mt-4 w-full">
       <CustomTable
         items={items}
         TABLE_HEADER={header}

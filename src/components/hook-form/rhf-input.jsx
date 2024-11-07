@@ -104,7 +104,6 @@ export const RHFInput = React.memo(
                 <Iconify iconName={endIcon} className={endIconClass} />
               )}
             </div>
-            {/* Display errors dynamically using lodash get */}
             {errors && (
               <Typography
                 variant="p"

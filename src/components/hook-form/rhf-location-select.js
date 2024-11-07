@@ -119,6 +119,7 @@ export const RHFLocationSelect = ({
           )}
           placeholder={placeholder}
           value={query}
+          defaultValue={value}
           onChange={handleChangeQuery}
           disabled={disabled}
         />

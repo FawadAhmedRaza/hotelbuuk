@@ -47,11 +47,6 @@ export const BussinessMeeting = () => {
   const country = watch("business_meeting.country");
   const city = watch("business_meeting.city");
   const address = watch("business_meeting.address");
-
-  // const hotelId = watch("business_meeting.hotel_id");
-
-  console.log("city form edit:", city);
-  console.log("Country form edit:", country);
   console.log("address from event:", address);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
@@ -217,22 +212,17 @@ export const BussinessMeeting = () => {
                   />
                 </div>
               </div>
-              <RHFInput
-                name="business_meeting.address"
+              <RHFLocationSelect
                 label="Street Address"
                 placeholder="Address of your B&B"
+                onChange={(details) =>
+                  setValue(
+                    "business_meeting.address",
+                    details?.formatted_address
+                  )
+                }
               />
-              {/* <RHFLocationSelect
-                name="address"
-                label="Street Address"
-                value={location}
-                placeholder="Address of your B&B"
-                className={"w-full"}
-                onChange={(details) => {
-                  handleChange(details);
-                }}
-              /> */}
-
+              
               <RHFTextArea
                 label="About bnb"
                 placeholder="Enter short details about bnb"
