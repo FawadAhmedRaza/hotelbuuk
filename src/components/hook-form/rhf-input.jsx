@@ -80,8 +80,8 @@ export const RHFInput = React.memo(
                 readOnly={readOnly}
                 autoComplete="off"
                 onChange={(e) => {
-                  field.onChange(e); // Call react-hook-form's onChange
-                  onChange?.(e); // Optionally call the custom onChange if provided
+                  field.onChange(e);
+                  onChange?.(e); 
                 }}
                 placeholder={placeholder}
                 className={`w-full text-sm rounded-md outline-none px-2 placeholder:text-neutral-300 text-secondary bg-transparent ${customInputClass} ${className} ${
@@ -105,7 +105,6 @@ export const RHFInput = React.memo(
                 <Iconify iconName={endIcon} className={endIconClass} />
               )}
             </div>
-            {/* Display errors dynamically using lodash get */}
             {errors && (
               <Typography
                 variant="p"
