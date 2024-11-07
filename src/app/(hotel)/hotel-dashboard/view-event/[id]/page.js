@@ -5,7 +5,6 @@ export const metadata = {
   description: "",
 };
 const page = () => {
-    console.log("triffred")
   return <ViewEvents />;
 };
 

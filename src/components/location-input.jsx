@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
-import get from "lodash/get";
 import {
   fetchPlaceDetails,
   fetchPlacesSuggestions,
 } from "@/src/actions/google-location";
+import { Typography } from ".";
 
 // Debounce function to limit API calls
 const debounce = (func, delay) => {
@@ -19,18 +17,17 @@ const debounce = (func, delay) => {
   };
 };
 
-export const RHFLocationSelect = ({
+export const LocationInput = ({
   label,
-  name,
   placeholder,
   disabled = false,
   className,
-  value, // Add this prop to receive external updates
-
+  inputClass,
   onChange,
+  value: initialValue = "",
+  queryParams,
 }) => {
-  const { control } = useFormContext();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialValue);
   const [isLoading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const dropDownRef = useRef(null);
@@ -46,7 +43,6 @@ export const RHFLocationSelect = ({
             value: suggestion.place_id,
           }))
         );
-        console.log(results);
       } catch (error) {
         console.error("Error fetching places suggestions:", error);
       } finally {
@@ -57,31 +53,26 @@ export const RHFLocationSelect = ({
     }
   }, 300);
 
-  // Update query whenever external value changes
-  useEffect(() => {
-    setQuery(value?.formatted_address || ""); // Adjust as needed
-  }, [value]);
-
-  // Handle input change for manual entry
+  // Handle input change
   const handleChangeQuery = (e) => {
     const value = e.target.value;
     setQuery(value);
     fetchSuggestions(value);
   };
 
-  // Handle selection from suggestions
   const handleOnClick = async (option) => {
     try {
-      const fetchPlace = await fetchPlaceDetails(option.value);
-      onChange(fetchPlace); // Pass full place object to parent
-      setQuery(option.label); // Set query to display the label
+      const fetchPlace = await fetchPlaceDetails(option?.value);
+      onChange?.(fetchPlace);
+      setQuery(option.label);
       setSuggestions([]);
     } catch (error) {
-      console.error("Error fetching place details:", error);
+      console.error(error);
     }
   };
 
   useEffect(() => {
+    setQuery(queryParams);
     const outsideClickHandler = (e) => {
       if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
         setSuggestions([]);
@@ -114,8 +105,9 @@ export const RHFLocationSelect = ({
       <div className="relative w-full" ref={dropDownRef}>
         <input
           className={cn(
-            "flex items-center text-sm rounded bg-white h-12 placeholder:text-neutral-300 px-3 w-full border border-custom-neutral outline-none",
-            disabled ? "!bg-gray-100 cursor-not-allowed" : ""
+            "flex items-center text-xs rounded bg-white h-12 placeholder:text-neutral-300 px-1 w-full border border-custom-neutral outline-none",
+            inputClass,
+            disabled && "!bg-gray-100 cursor-not-allowed"
           )}
           placeholder={placeholder}
           value={query}
@@ -123,12 +115,12 @@ export const RHFLocationSelect = ({
           disabled={disabled}
         />
         {suggestions.length > 0 && (
-          <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-auto">
+          <div className="rounded-md absolute bg-white top-[40px] hide-scrollbar custom-scrollbar w-full md:w-60 border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-auto">
             {suggestions.map((option, index) => (
               <Typography
                 variant="p"
                 key={index}
-                className="!text-sm w-full py-2 px-3 hover:bg-tertiary cursor-pointer !text-custom-black"
+                className="!text-xs w-full py-2 px-3 hover:bg-tertiary cursor-pointer !text-custom-black"
                 onClick={() => handleOnClick(option)}
               >
                 {option.label}

@@ -44,10 +44,9 @@ export async function GET(_, { params }) {
             hotelImages: true,
           },
         },
+        itinerary: true,
       },
     });
-
-    console.log("Event Of Hotel", hotelEvent);
 
     if (!hotelEvent) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });
@@ -92,6 +91,7 @@ export async function GET(_, { params }) {
         },
       },
       price: hotelEvent?.price,
+      itinerary: hotelEvent?.itinerary,
       user_id: hotelEvent?.user_id,
     };
 
@@ -177,6 +177,7 @@ export async function PUT(req, { params }) {
       rules: event_rules,
       safeties,
       cancelPolicies,
+      itinerary,
     } = data || {};
 
     const {
@@ -327,6 +328,33 @@ export async function PUT(req, { params }) {
       });
 
       await prisma.event_associated_cancel_policies.createMany({
+        data: formatedArr,
+      });
+    }
+
+    if (itinerary?.length > 0) {
+      await prisma.itinerary.deleteMany({
+        where: { hotel_event_id: event?.id },
+      });
+
+      const formatedArr = itinerary?.map((item) => {
+        return {
+          stop: item?.stop,
+          title: item?.title,
+          location_id: item?.location?.place_id || item?.location_id,
+          location: item?.location?.formatted_address || item?.location,
+          location_lng:
+            String(item?.location?.geometry?.location?.lng) ||
+            item?.location_lng,
+          location_ltd:
+            String(item?.location?.geometry?.location?.lat) ||
+            item?.location_ltd,
+          hotel_event_id: event?.id,
+        };
+      });
+      console.log("updated array of itinerarie", formatedArr);
+
+      await prisma.itinerary.createMany({
         data: formatedArr,
       });
     }

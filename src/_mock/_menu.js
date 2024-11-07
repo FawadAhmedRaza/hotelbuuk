@@ -5,6 +5,7 @@ const allLinks = [];
 export const MenuLinks = (user) => {
   const isUserCompleted = user?.is_user_type_completed;
   const userType = user?.user_type;
+  
   if (isUserCompleted) {
     return [
       {

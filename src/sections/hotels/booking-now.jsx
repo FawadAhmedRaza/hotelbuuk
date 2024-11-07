@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Button, Iconify, Pannel, Typography } from "../../components";
+import {
+  Button,
+  Iconify,
+  LocationInput,
+  Pannel,
+  Typography,
+} from "../../components";
 import * as Yup from "yup";
 import {
   RHFDatePicker,
@@ -32,6 +38,10 @@ export const BookNow = React.memo(() => {
   const destination = searchParams.get("destination") || "";
   const checkIn = searchParams.get("check_in") || "";
   const checkOut = searchParams.get("check_out") || "";
+
+  console.log("Destication", destination);
+  console.log("Checkin", checkIn);
+  console.log("checkOut", checkOut);
 
   // Date state with default values
   const [date, setDate] = useState([
@@ -73,6 +83,8 @@ export const BookNow = React.memo(() => {
 
   console.log(errors); // Display validation errors in the console
 
+  const dest = watch("destination");
+
   const handleSubmit = async (data) => {
     try {
       console.log("Submitted Data:", data); // Show submitted data in the console
@@ -103,6 +115,10 @@ export const BookNow = React.memo(() => {
     ]);
   }, []);
 
+  const handleChange = (details) => {
+    methods.setValue("destination", details.formatted_address);
+  };
+
   return (
     <Pannel>
       <RHFFormProvider
@@ -129,13 +145,21 @@ export const BookNow = React.memo(() => {
                   Destination
                 </Typography>
               </span>
-              <RHFInput
+              {/* <RHFInput
                 type="text"
                 placeholder="Moxy Dortmunt City"
-                isBookingSearch
                 name="destination"
                 inputClass="outline-none border-none text-base font-normal !p-0"
                 className="outline-none border-none !p-0 h-8 ml-1"
+              /> */}
+
+              <LocationInput
+                placeholder="Moxy Dortmunt City"
+                name="destination"
+                queryParams={destination}
+                inputClass="outline-none border-none text-base font-normal !p-0"
+                className="outline-none border-none !p-0 h-8 ml-1 w-full"
+                onChange={(details) => handleChange(details)}
               />
             </div>
 

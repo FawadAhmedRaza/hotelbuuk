@@ -170,7 +170,6 @@ export const HotelBio = ({ type, id }) => {
             });
           }}
           onApprove={async (data, actions) => {
-            console.log("Data in approve", data);
             let response = await paypalCaptureOrder(data.orderID);
             if (response) {
               await createReservation();
@@ -193,9 +192,6 @@ export const HotelBio = ({ type, id }) => {
       }
     }
   }, [payment_intent, redirect_status]);
-
-  console.log("Event User", data);
-  console.log("User", user);
 
   return (
     <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
@@ -409,14 +405,6 @@ export const HotelBio = ({ type, id }) => {
             </div>
           </div>
         </Card>
-
-        {/* Reserve Button */}
-        {/* <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
-          <Iconify iconName="mynaui:flag-solid" className="text-black" />
-          <Typography variant="p" className=" font-medium">
-            Report This Listing
-          </Typography>
-        </span> */}
       </div>
     </div>
   );
