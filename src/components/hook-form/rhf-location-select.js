@@ -28,6 +28,7 @@ export const RHFLocationSelect = ({
   value, // Add this prop to receive external updates
 
   onChange,
+  value,
 }) => {
   const { control } = useFormContext();
   const [query, setQuery] = useState("");
@@ -119,6 +120,7 @@ export const RHFLocationSelect = ({
           )}
           placeholder={placeholder}
           value={query}
+          defaultValue={value}
           onChange={handleChangeQuery}
           disabled={disabled}
         />

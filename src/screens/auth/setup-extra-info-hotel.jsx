@@ -23,6 +23,7 @@ import {
 import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
 import { useEffect, useState } from "react";
 import { getCities, getCountries } from "@/src/libs/helper";
+import { RHFLocationInput } from "@/src/components/hook-form/rhf-location-input";
 
 const SetupExtraInfoHotel = () => {
   const schema = yup.object({
@@ -87,7 +88,7 @@ const SetupExtraInfoHotel = () => {
           className="hidden lg:block w-[600px] xl:w-[500px] h-full"
         />
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full mt-2 xl:mt-0">
-        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <img
               src="/assets/images/transperent-logo/transperent/PINK.png"
               alt="log"
@@ -131,7 +132,7 @@ const SetupExtraInfoHotel = () => {
               placeholder="Select your City"
               options={cities}
             />
-            <RHFInput
+            <RHFLocationInput
               name="address"
               label="Address"
               placeholder="Enter full Address"
