@@ -26,6 +26,7 @@ export const RHFLocationSelect = ({
   disabled = false,
   className,
   onChange,
+  value,
 }) => {
   const { control } = useFormContext();
   const [query, setQuery] = useState("");
@@ -65,7 +66,7 @@ export const RHFLocationSelect = ({
   const handleOnClick = async (option) => {
     try {
       const fetchPlace = await fetchPlaceDetails(option?.value);
-      console.log("place details",fetchPlace);
+      console.log("place details", fetchPlace);
       onChange(fetchPlace);
       setQuery(option.label);
       setSuggestions([]);
@@ -112,6 +113,7 @@ export const RHFLocationSelect = ({
           )}
           placeholder={placeholder}
           value={query}
+          defaultValue={value}
           onChange={handleChangeQuery}
           disabled={disabled}
         />
