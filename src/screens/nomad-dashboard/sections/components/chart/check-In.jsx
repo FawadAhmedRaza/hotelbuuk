@@ -39,6 +39,7 @@ export const CheckInChart = ({ totalCheckIns }) => {
   const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
   
   const chartData = [{ month: currentMonthName, desktop: totalCheckIns, mobile: 0 }];
+  console.log("toatal chcekins",totalCheckIns);
 
   return (
     <ShadcnCard className="">
