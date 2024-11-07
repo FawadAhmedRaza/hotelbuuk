@@ -1,31 +1,61 @@
 import { Pannel, Typography } from "@/src/components";
-import Image from "next/image";
 import React from "react";
 
-import bedroom from "@/public/assets/images/bedroom-2.png";
-import towel from "@/public/assets/images/towel.png";
+import ImageRender from "@/src/components/ImageRenderer";
+import DOMPurify from "dompurify";
 
-export const Vision = React.memo(() => {
+export const Vision = React.memo(({ about }) => {
+  const sanitizedContent = DOMPurify.sanitize(about?.description);
+
   return (
     <Pannel className="grid lg:grid-cols-2 gap-5 md:flex-row w-full items-center sm:gap-3 h-full">
+      {/* Left Side - Text Content */}
       <div className="flex flex-col justify-center gap-5">
         <Typography variant="h4" className="font-bold">
-          Vision
+          {about?.title}
         </Typography>
 
-        <Typography variant="h6" className="leading-[35px]">
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s,
-        </Typography>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
       </div>
 
-      <div className="relative flex justify-end">
-        <div className="absolute hidden md:flex justify-start items-center w-full h-full left-8 ">
-          <div>
-            <Image src={towel} className="w-auto" />
+      {/* Right Side - Main Image and Overlayed Sub Image */}
+      <div className="relative flex">
+        {/* Main Image */}
+        <div className="flex justify-end w-full">
+          <div className="h-64 md:h-96 w-full md:w-[80%] lg:w-[80%]">
+            <ImageRender
+              src={about?.main_img_url}
+              type={"server"}
+              alt="Vision Main Image"
+              ratio="4/3"
+              delayTime={300}
+              threshold={200}
+              effect="blur"
+              wrapperProps={{ style: { transitionDelay: "0.5s" } }}
+              className="h-full w-full"
+            />
           </div>
         </div>
-        <Image src={bedroom} />
+
+        {/* Sub Image (Overlayed on the Left) */}
+        <div className="absolute hidden md:flex justify-start items-center w-full h-full -mr-5">
+          <div className="hidden md:block w-60 h-48 object-cover">
+            <ImageRender
+              src={about?.sub_img_url}
+              type={"server"}
+              alt="Vision Sub Image"
+              ratio="4/3"
+              delayTime={300}
+              threshold={200}
+              effect="blur"
+              wrapperProps={{ style: { transitionDelay: "0.5s" } }}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
       </div>
     </Pannel>
   );

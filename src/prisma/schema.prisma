@@ -314,8 +314,8 @@ model nomad_event {
   user_id String @db.ObjectId
   user    User   @relation(fields: [user_id], references: [id])
 
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   WishList  WishList[]
   itinerary itinerary[]
 }
@@ -357,8 +357,8 @@ model hotel_event {
   event_associated_safeties        event_associated_safeties[]
   event_associated_cancel_policies event_associated_cancel_policies[]
 
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   WishList  WishList[]
   itinerary itinerary[]
 }
@@ -634,4 +634,14 @@ model itinerary {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AboutSections {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  main_img_url String
+  sub_img_url  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
