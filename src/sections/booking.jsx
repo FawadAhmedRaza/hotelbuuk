@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Iconify, Typography } from "../components";
+import { Button, Iconify, LocationInput, Typography } from "../components";
 import * as Yup from "yup";
 import {
   RHFFormProvider,
@@ -19,20 +19,30 @@ import {
 import { BookingCalender } from "../components/booking-calendar";
 import { formatDate } from "../utils/formate-date";
 import { useRouter } from "next/navigation";
+import { RHFLocationSelect } from "../components/hook-form/rhf-location-select";
 
 export const Booking = React.memo(() => {
   const router = useRouter();
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  // Set initial dates for the picker UI
+  const initialStartDate = new Date();
+  const initialEndDate = addDays(new Date(), 1);
+
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 1),
+      startDate: initialStartDate,
+      endDate: initialEndDate,
       key: "selection",
     },
   ]);
 
+  // Track if dates are actively selected
+  const [isDateSelected, setIsDateSelected] = useState(false);
+
   const bookingSchema = Yup.object().shape({
-    destination: Yup.string().required("Destination is required."),
+    destination: Yup.string().optional(),
     startDate: Yup.date().optional("Check-in date is optional"),
     endDate: Yup.date().nullable().optional("Check-out date is required"),
   });
@@ -41,26 +51,41 @@ export const Booking = React.memo(() => {
     resolver: yupResolver(bookingSchema),
     defaultValues: {
       destination: "",
-      startDate: date[0].startDate,
-      endDate: date[0].endDate,
+      startDate: initialStartDate,
+      endDate: initialEndDate,
     },
   });
 
   const handleSubmit = async (data) => {
-    console.log("Form data:", data); // Debugging
+    const queryParams = new URLSearchParams();
 
-    const queryParams = new URLSearchParams({
-      destination: data.destination || "",
-      check_in: data.startDate.toString().slice(0, 15) || "",
-      check_out: data.endDate.toString().slice(0, 15) || "",
-    }).toString();
+    if (data.destination) {
+      queryParams.set("destination", data.destination);
+    }
 
-    console.log("Redirecting to:", `/hotels?${queryParams}`); // Debugging
-    router.push(`/hotels?${queryParams}`);
+    // Add dates to queryParams only if user has selected them
+    if (isDateSelected && data.startDate) {
+      queryParams.set("check_in", data.startDate.toString().slice(0, 15));
+    }
+    if (isDateSelected && data.endDate) {
+      queryParams.set("check_out", data.endDate.toString().slice(0, 15));
+    }
+
+    // Construct the redirect URL based on query params
+    const queryString = queryParams.toString();
+    const redirectUrl = queryString ? `/hotels?${queryString}` : "/hotels";
+    router.push(redirectUrl);
+
+    // Reset form and selection tracking
     methods.reset();
+    setIsDateSelected(false);
   };
 
   const togglePopover = () => setIsPopoverOpen(!isPopoverOpen);
+
+  const handleChange = (details) => {
+    methods.setValue("destination", details.formatted_address);
+  };
 
   return (
     <RHFFormProvider
@@ -71,35 +96,37 @@ export const Booking = React.memo(() => {
       <div className="flex md:items-center !w-fit pl-0 pr-3 py-0 m-0  bg-white    md:rounded-full shadow-none md:shadow-xl -mt-3 backdrop-blur-sm md:mx-auto">
         <div className="flex md:flex-row flex-col gap-3 md:items-center w-full ">
           {/* Destination Input */}
-          <div className="py-2 pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10 md:hover:bg-gray-100 md:rounded-full">
+          <div className="   pl-0 md:pl-5 xl:pl-10 pr-4 ms:pr-10 pt-2   ">
             <div className="flex gap-3 items-center">
               <Iconify
                 iconName="carbon:location-filled"
-                className="text-primary mt-1"
+                className="text-primary   !size-4"
               />
               <Typography variant="p" className="font-normal !text-sm">
                 Destinations
               </Typography>
             </div>
-            <RHFInput
-              type="text"
+
+            <LocationInput
               placeholder="Moxy Dortmunt City"
               name="destination"
-              inputClass="outline-none border-none text-base font-normal !p-0 bg-transparent"
-              className="outline-none border-none !p-0 h-8 ml-1"
+              inputClass="outline-none border-none text-base font-normal   !p-0 bg-transparent  w-44  mt-1  placeholder:text-sm  !py-0"
+              className="outline-none border-none !p-0  ml-1"
+              onChange={(details) => handleChange(details)}
             />
           </div>
 
           <span className="hidden md:flex h-16 w-[2px] bg-primary" />
 
           {/* Calendar Input */}
-          <div className=" w-full  ">
+          <div className=" w-full   ">
             <Popover>
               <PopoverTrigger>
                 <BookingCalender
-                  InputBoxClass=" w-full "
-                  startEndBox=" !flex w-full  !flex-row"
+                  InputBoxClass=" w-full   md:px-0 "
+                  startEndBox=" !flex w-full  !flex-row  px-0"
                   nameStart="startDate"
+                  labelClass=" !font-normal !text-[14px]"
                   nameEnd="endDate"
                   labelStart="Check-in"
                   labelEnd="Check-out"
@@ -115,6 +142,7 @@ export const Booking = React.memo(() => {
                     setDate([item.selection]);
                     methods.setValue("startDate", item.selection.startDate);
                     methods.setValue("endDate", item.selection.endDate);
+                    setIsDateSelected(true); // Mark that a date was selected
                   }}
                   value={date}
                   rangeColors={["#852169"]}

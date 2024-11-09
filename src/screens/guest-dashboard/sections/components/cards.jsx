@@ -37,6 +37,7 @@ const GuestCards = () => {
       subTitle: "",
       value: guestBookings?.length || 0,
       path: paths.guestDashboard.bookings,
+      bgColor: "bg-[#F9FAFB]",
     },
     {
       id: 2,
@@ -47,6 +48,7 @@ const GuestCards = () => {
         guestBookings?.filter((item) => item?.booking_status === "PENDING")
           ?.length || 0,
       path: paths.guestDashboard.bookings,
+      bgColor: "bg-[#FFF5CC]",
     },
     {
       id: 3,
@@ -57,6 +59,7 @@ const GuestCards = () => {
         guestBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
       path: paths.guestDashboard.bookings,
+      bgColor: "bg-[#D3FCD2]",
     },
     {
       id: 4,
@@ -67,6 +70,7 @@ const GuestCards = () => {
         guestBookings?.filter((item) => item?.booking_status === "REJECTED")
           ?.length || 0,
       path: paths.guestDashboard.bookings,
+      bgColor: "bg-[#FFE9D5]",
     },
   ];
 
@@ -87,6 +91,7 @@ const GuestCards = () => {
               title={item?.title}
               subTitle={item?.subTitle}
               value={item?.value}
+              bgColor={item.bgColor}
             />
           )}
         </div>

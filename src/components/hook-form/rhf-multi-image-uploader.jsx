@@ -15,7 +15,6 @@ export const RHFMultipleImageUploader = React.memo(({ name }) => {
 
   const fieldImages = watch(name) || [];
 
-  console.log(fieldImages);
 
   useEffect(() => {
     setUploadedImages(fieldImages);

@@ -16,8 +16,6 @@ const page = () => {
     (state) => state.nomadEvents.getById
   );
 
-  console.log("full event",event);
-
   const fetchEvent = async () => {
     try {
       await dispatch(getEventById(id)).unwrap;

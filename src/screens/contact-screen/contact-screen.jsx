@@ -38,7 +38,6 @@ const ContactScreen = () => {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
     try {
       await dispatch(createContact(data)).unwrap();
     } catch (error) {

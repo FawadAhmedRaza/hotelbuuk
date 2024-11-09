@@ -37,7 +37,6 @@ const HotelsListSection = React.memo(() => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const { hotels, isLoading } = useSelector((state) => state.hotelInfo);
-  console.log("hotel list", hotels);
 
   const totalPages = React.useMemo(() => {
     return Math.ceil(hotels?.length / rowsPerPage);
@@ -77,7 +76,6 @@ const HotelsListSection = React.memo(() => {
               enableSelection={false}
               renderRow={(row) => (
                 <>
-                {console.log('row',row)}
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
                       {/* {!row?.hotel_image ? (

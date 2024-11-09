@@ -50,7 +50,6 @@ export const nomadProfile = createSlice({
       state.create.isLoading = true;
     });
     builder.addCase(createNomadProfile.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       //   state.hotels = action.payload;
       //   state.create.accessToken = action.payload.accessToken;
       //   state.create.user = action.payload.user;
@@ -66,7 +65,6 @@ export const nomadProfile = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getNomadsProfile.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.nomads = action.payload.nomads;
       state.isLoading = false;
     });

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 
-import { BusinessFacts, Layout } from "../sections";
+import { Layout } from "../sections";
 import {
   GuestReviews,
   HotelOverview,
@@ -13,6 +13,7 @@ import {
 import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 import { useSelector } from "react-redux";
+import { BusinessFactsSwiper } from "../sections/business-facts-swiper";
 
 const HotelDetailScreen = React.memo(({ type, id }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -66,7 +67,8 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
         <div className=" md:px-4">
           <HotelOverview type={type} />
           <HotelDetail type={type} id={id} />
-          <BusinessFacts className="bg-white" />
+          {event?.itinerary && <Itinerary />}
+          <BusinessFactsSwiper className="bg-white" />
           <AvailabilityCalendar
             dateRange={dateRange}
             handleDateChange={handleDateChange}
@@ -74,7 +76,6 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
             clearDateRange={clearDateRange} // Pass clearDateRange as prop
           />
           <PopularAmenities />
-          {event?.itinerary && <Itinerary />}
           <ThingsKnow />
           <GuestReviews />
         </div>

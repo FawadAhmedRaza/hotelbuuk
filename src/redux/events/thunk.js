@@ -28,7 +28,6 @@ export const getBusinessFacts = createAsyncThunk(
   "getBusinessFacts",
   async () => {
     const request = await axiosInstance.get("/business-facts");
-    console.log("request",request?.data);
     return request?.data?.list;
   }
 );

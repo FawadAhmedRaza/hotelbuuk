@@ -29,14 +29,12 @@ export const HotelOverview = ({ type }) => {
 
   const { event, isLoading } = useSelector((state) => state.allEvents.getById);
 
-  console.log("Single evetn", event);
 
   const eventImages =
     Array.isArray(event?.event_images) && event?.event_images.length > 0
       ? event.event_images
       : event?.hotel?.hotelImages;
 
-  console.log("Hotel Images", event?.hotel?.hotelImages);
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">

@@ -5,6 +5,7 @@ const allLinks = [];
 export const MenuLinks = (user) => {
   const isUserCompleted = user?.is_user_type_completed;
   const userType = user?.user_type;
+  
   if (isUserCompleted) {
     return [
       {
@@ -35,16 +36,21 @@ export const MenuLinks = (user) => {
       },
       {
         id: 6,
+        label: "Wishlist ",
+        path: "/wishlist",
+      },
+      {
+        id: 7,
         label: "Terms and Conditions",
         path: "/terms",
       },
       {
-        id: 7,
+        id: 8,
         label: "Impressum",
         path: "/impressum",
       },
       {
-        id: 8,
+        id: 9,
         label: "Privacy Policy",
         path: "/privacy-policy",
       },

@@ -78,4 +78,7 @@ export const paths = {
     hotels: "/guest-dashboard/hotels",
     notifications: "/guest-dashboard/notifications",
   },
+  wishlist: {
+    root: "/wishlist",
+  },
 };

@@ -3,13 +3,6 @@
 @tailwind utilities;
 
 /* Hide swiper buttons */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 0px;
-  opacity: 0;
-  visibility: hidden;
-  display: none;
-}
 
 /* Hide scrollbars completely */
 .hide-scrollbar::-webkit-scrollbar {
@@ -148,32 +141,38 @@ input::-webkit-inner-spin-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 30px !important;
+  height: 30px !important;
   background-color: #852169;
-  color: #ffffff; /* Text/icon color */
+  color: #ffffff !important; /* Text/icon color */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  z-index: 30;
+  z-index: 9999;
 }
 
-.swiper-button-prev {
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 13px !important;
+  color: white !important;
+}
+
+/* .swiper-button-prev {
   left: -10px;
 }
 
 .swiper-button-next {
   right: -10px;
-}
+} */
 
-.swiper-button-prev .iconify,
+/* .swiper-button-prev .iconify,
 .swiper-button-next .iconify {
   width: 20px;
   height: 20px;
-}
+} */
 
 /* DateRangeStyles.css */
 @keyframes slide-down {
@@ -281,4 +280,161 @@ input::-webkit-inner-spin-button {
 }
 body {
   top: 0px !important;
+}
+
+/* .swiper-3d .swiper-slide-shadow-left
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none;
+
+} */
+
+.swiper-3d .swiper-slide-shadow-left {
+  background-image: none !important;
+}
+
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none !important;
+}
+
+/* Match the styles of Typography variants */
+
+.content h1 {
+  font-size: 3xl;
+  @apply text-3xl sm:text-4xl md:text-5xl font-semibold text-primary;
+}
+
+.content h2 {
+  font-size: 3xl;
+  @apply text-3xl md:text-42fs font-medium;
+}
+
+.content h3 {
+  font-size: 2xl;
+  @apply text-2xl sm:text-3xl md:text-4xl font-medium;
+}
+
+.content h4 {
+  font-size: xl;
+  @apply text-xl md:text-2xl font-normal;
+}
+
+.content h5 {
+  font-size: lg;
+  @apply text-lg md:text-xl font-normal;
+}
+
+.content h6 {
+  font-size: base;
+  @apply text-base md:text-lg font-normal;
+}
+
+.content p {
+  font-size: sm;
+  @apply text-sm md:text-base;
+}
+
+.content strong {
+  font-weight: bold;
+  color: inherit; /* Optional: you can add a different color here */
+}
+
+/* term and Conditions */
+
+.term-and-conditions > h1 {
+  font-size: 1.875rem; /* Tailwind's text-3xl */
+  font-weight: 600; /* Tailwind's font-semibold */
+  color: var(--primary-color); /* Assuming --primary-color is defined */
+}
+
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .term-and-conditions > h1 {
+    font-size: 2.25rem; /* Tailwind's text-4xl */
+  }
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h1 {
+    font-size: 3rem; /* Tailwind's text-5xl */
+  }
+}
+
+.term-and-conditions > h2 {
+  font-size: 1.875rem; /* Tailwind's text-3xl */
+  font-weight: 500; /* Tailwind's font-medium */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h2 {
+    font-size: 2.625rem; /* Custom size */
+  }
+}
+
+.term-and-conditions > h3 {
+  font-size: 1.5rem; /* Tailwind's text-2xl */
+  font-weight: 500; /* Tailwind's font-medium */
+}
+
+@media (min-width: 640px) {
+  /* sm breakpoint */
+  .term-and-conditions > h3 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+  }
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h3 {
+    font-size: 2.25rem; /* Tailwind's text-4xl */
+  }
+}
+
+.term-and-conditions > h4 {
+  font-size: 1.25rem; /* Tailwind's text-xl */
+  font-weight: 400; /* Tailwind's font-normal */
+  letter-spacing: 0; /* Tailwind's tracking-none */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h4 {
+    font-size: 1.5rem; /* Tailwind's text-2xl */
+  }
+}
+
+.term-and-conditions > h5 {
+  font-size: 1.125rem; /* Tailwind's text-lg */
+  font-weight: 400; /* Tailwind's font-normal */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h5 {
+    font-size: 1.25rem; /* Tailwind's text-xl */
+  }
+}
+
+.term-and-conditions > h6 {
+  font-size: 1rem; /* Tailwind's text-base */
+  font-weight: 400; /* Tailwind's font-normal */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > h6 {
+    font-size: 1.125rem; /* Tailwind's text-lg */
+  }
+}
+
+.term-and-conditions > p {
+  font-size: 0.875rem; /* Tailwind's text-sm */
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .term-and-conditions > p {
+    font-size: 1rem; /* Tailwind's text-base */
+  }
 }

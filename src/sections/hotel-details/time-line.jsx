@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const TimeLine = () => {
   const { event } = useSelector((state) => state.allEvents.getById);
-  console.log("event", event);
 
   const itineraries = event?.itinerary;
 
@@ -18,33 +17,6 @@ const TimeLine = () => {
           <div className="flex flex-col  divide-y divide-primary ">
             <div className="w-full  ">
               <div className="">
-                <div className="relative pl-10 sm:pl-28 py-6 group ">
-                  <div className="flex flex-col sm:flex-row items-start mb-1 group-last:before:hidden before:absolute before:left-2 sm:before:left-0 before:h-full before:w-px before:bg-primary sm:before:ml-[4rem] before:self-start before:-translate-x-1/2 before:translate-y-3">
-                    <div className="absolute left-2 sm:left-0 transform -translate-x-1/2 translate-y-1.5 sm:ml-[4rem]">
-                      <div className="p-2.5 bg-primary text-white rounded-full shadow-lg">
-                        <Iconify
-                          iconName="basil:location-outline"
-                          className="text-lg size-6"
-                        />
-                      </div>
-                    </div>
-
-                    <Typography
-                      variant="h6"
-                      className="text-xl font-bold !leading-none text-slate-900 mt-3"
-                    >
-                      You'll get picked up
-                    </Typography>
-                  </div>
-
-                  {/* <Link
-                    href={"#"}
-                    className="text-zinc-500 !text-sm  underline"
-                  >
-                    See departure details
-                  </Link> */}
-                </div>
-
                 {itineraries.map((item, index) => (
                   <div
                     key={item.id}
@@ -66,12 +38,16 @@ const TimeLine = () => {
                         variant="h6"
                         className="text-xl !text-nowrap whitespace-nowrap font-bold !leading-none text-slate-900"
                       >
-                        {item?.location}
+                        {item?.title}
                       </Typography>
                     </div>
 
                     <Typography className="text-zinc-500 !text-sm !my-0.5">
                       Stop: {item?.stop}
+                    </Typography>
+
+                    <Typography className="text-zinc-500 !text-sm !my-0.5">
+                      {item?.location}
                     </Typography>
                     {/* <Link
                       href={item.detailLink}

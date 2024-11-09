@@ -24,3 +24,4 @@ export { Notification } from "./notification";
 
 export { HotelCard } from "./hotel-card";
 export { BgIcon } from "./bg-icon";
+export { LocationInput } from "./location-input";

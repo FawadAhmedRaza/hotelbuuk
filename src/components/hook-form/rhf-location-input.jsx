@@ -44,7 +44,6 @@ export const RHFLocationInput = ({
             value: suggestion.place_id,
           }))
         );
-        console.log(results);
       } catch (error) {
         console.error("Error fetching places suggestions:", error);
       } finally {

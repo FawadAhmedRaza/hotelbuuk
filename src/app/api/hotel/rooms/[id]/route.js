@@ -147,7 +147,6 @@ export async function PUT(req, { params }) {
       }
 
       // upload new images
-      console.log("triggred");
       await prisma.room_images.createMany({
         data: newImagesWithUrls,
       });
@@ -168,7 +167,6 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(_, { params }) {
   try {
-    console.log(params.id);
 
     await prisma.$transaction([
       prisma.room_associated_facilities.deleteMany({

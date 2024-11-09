@@ -112,6 +112,5 @@ export async function getNomadTotalCheckOuts(user_id) {
     return false;
   });
 
-  console.log("Total check-ins:", bookings.length);
   return bookings.length;
 }

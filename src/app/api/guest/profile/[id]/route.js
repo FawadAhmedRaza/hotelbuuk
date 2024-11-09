@@ -17,7 +17,6 @@ export async function GET(_, { params }) {
         userId: id,
       },
     });
-    console.log("is GUest ",isGuestExist);
 
     if (!isGuestExist) {
       return NextResponse.json({ message: "Guest not found" }, { status: 404 });

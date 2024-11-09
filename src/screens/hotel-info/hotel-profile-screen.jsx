@@ -38,7 +38,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     stars: Yup.mixed().optional().default(4),
     facilities: Yup.array().optional(),
     images: Yup.array()
-      .min(2, "At least Two images are required")
+      .min(8, "At least Eight images are required")
       .required("Files are required"),
   });
 
@@ -122,7 +122,6 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
 
       formData.append("imagesUrl", JSON.stringify(imageUrls));
       formData.append("deletedImages", JSON.stringify(deletedImages));
-      console.log("iamges array ", images);
       images?.forEach((file) => formData.append("files", file));
       images.forEach((file) =>
         formData.append("imagesNames", JSON.stringify(names))

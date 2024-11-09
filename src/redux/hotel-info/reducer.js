@@ -44,7 +44,6 @@ export const hotelInfo = createSlice({
       state.create.isLoading = true;
     });
     builder.addCase(createHotelInfo.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.hotels = action.payload;
       state.create.accessToken = action.payload.accessToken;
       state.create.user = action.payload.user;
@@ -60,7 +59,6 @@ export const hotelInfo = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getHotelInfo.fulfilled, (state, action) => {
-      console.log("paylod", action.payload);
       state.hotels = action.payload.hotelList;
       state.isLoading = false;
     });

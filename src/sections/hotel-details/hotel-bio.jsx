@@ -269,18 +269,15 @@ export const HotelBio = ({ type, id }) => {
             <Typography variant="p" className=" font-medium text-gray-500">
               ${event?.price} Per / Night
             </Typography>
-            <Typography
-              variant="p"
-              className="font-semibold text-center my-3  "
-            >
+            <Typography variant="p" className="font-semibold text-start my-3  ">
               {event?.title}
             </Typography>
             <Typography variant="h6" className="font-semibold   mt-2">
               {event_type === "NOMAD"
                 ? event?.accomodation_type === "bnb"
-                  ? `${event?.address} ${event?.city} ${event?.country}`
-                  : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`
-                : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`}
+                  ? `${event?.city} ${event?.country}`
+                  : `${event?.hotel?.city}, ${event?.hotel?.country}`
+                : `${event?.hotel?.city}, ${event?.hotel?.country}`}
             </Typography>
           </div>
 

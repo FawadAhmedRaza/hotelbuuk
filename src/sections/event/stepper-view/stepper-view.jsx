@@ -94,7 +94,11 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     cancelPolicies: Yup.array().optional(),
     images: Yup.array().when("accomodation_type", {
       is: "hotel",
-      then: (schema) => schema.required("At least Two images are required"),
+      then: (schema) =>
+        schema
+          .required("At least two images are required")
+          .min(8, "A minimum of 8 images is required for a Event.")
+          .max(20, "A maximum of 20 images is allowed"),
       otherwise: (schema) => schema.notRequired(),
     }),
     topics: Yup.array()

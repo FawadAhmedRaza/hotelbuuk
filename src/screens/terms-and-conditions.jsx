@@ -11,7 +11,6 @@ const TermsAndConditions = React.memo(() => {
     updatedAt: new Date(),
   });
   const [termsConditionLoading, setTermsConditionLoading] = useState(true);
-  console.log("termsConditionDescription", termsConditionDescription);
   const FetchTermsAndCondition = async () => {
     try {
       setTermsConditionLoading(true);

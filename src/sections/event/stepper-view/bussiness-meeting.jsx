@@ -23,6 +23,7 @@ import CreateEditAmenities from "./modals/create-edit-amenities";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
 
 export const BussinessMeeting = () => {
+  const [location, setLocation] = useState("");
   const { watch, setValue } = useFormContext();
   const openAmenitiesModal = useModal();
 
@@ -46,7 +47,6 @@ export const BussinessMeeting = () => {
   const country = watch("business_meeting.country");
   const city = watch("business_meeting.city");
   const address = watch("business_meeting.address");
-  console.log("address from event:", address);
 
   const selectedAmenities = watch("business_meeting.amenities") || [];
   const [type, setType] = useState(accomodationType);
@@ -85,6 +85,10 @@ export const BussinessMeeting = () => {
       }
     });
   }, [country]);
+
+  const handleChange = (detail) => {
+    setValue("business_meeting.address", detail.formatted_address);
+  };
 
   return (
     <div className="flex flex-col gap-10">

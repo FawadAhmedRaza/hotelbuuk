@@ -46,7 +46,6 @@ const HotelShowSection = () => {
     fetchEvents();
   }, []);
 
-  console.log("Search params:", events);
 
   useEffect(() => {
     if (!isLoading && events.length > 0) {

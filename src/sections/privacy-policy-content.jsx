@@ -9,7 +9,7 @@ export const QAContent = React.memo(({ description, privacyPolicyLoading }) => {
     ) : (
         <Pannel>
         <div
-          className="custom-html"
+          className="custom-html term-and-conditions space-y-6"
           dangerouslySetInnerHTML={{ __html: description }}
           />
           </Pannel>

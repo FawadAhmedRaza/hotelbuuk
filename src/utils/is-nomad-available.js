@@ -6,8 +6,7 @@ export async function checkNomadAvailability(
   end_date_hotel
 ) {
   try {
-    // console.log("Start Date (Hotel):", start_date_hotel);
-    // console.log("End Date (Hotel):", end_date_hotel);
+   
 
     const nomad = await prisma.nomad?.findFirst({
       where: {
@@ -30,7 +29,6 @@ export async function checkNomadAvailability(
         end_date: true,
       },
     });
-    // console.log("nomad events", nomadEvents);
 
     for (const event of nomadEvents) {
       const nomadStartDate = new Date(event.start_date);

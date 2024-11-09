@@ -6,15 +6,14 @@ import PrivacyAndTermsSkeleton from "../components/StaticContentSkeletons/Privac
 
 export const ConditionsContent = React.memo(
   ({ description, termsConditionLoading }) => {
-    console.log("description in main component", description);
     return (
       <>
         {termsConditionLoading ? (
           <PrivacyAndTermsSkeleton />
         ) : (
-          <Pannel className="capitalize ">
+          <Pannel className="capitalize  space-y-6 ">
             <div
-              className="custom-html min-h-20"
+              className="custom-html min-h-20  space-y-7 term-and-conditions"
               dangerouslySetInnerHTML={{ __html: description }} // Renders the HTML content
             />
           </Pannel>

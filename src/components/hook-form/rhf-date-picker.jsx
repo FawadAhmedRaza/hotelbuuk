@@ -9,7 +9,6 @@ export const RHFDatePicker = ({ name, onChange, value, rangeColors }) => {
   const { control } = useFormContext();
   const [isMobile, setIsMobile] = useState(false);
 
-  console.log(value);
 
   useEffect(() => {
     const handleResize = () => {

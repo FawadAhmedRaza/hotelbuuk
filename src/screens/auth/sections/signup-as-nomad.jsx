@@ -67,7 +67,6 @@ const SignUpAsNomad = () => {
     formState: { errors },
   } = methods;
 
-  console.log(errors);
 
   const handleSubmit = async (data) => {
     try {
