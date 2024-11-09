@@ -143,13 +143,13 @@ export const HotelCard = React.memo(({ event, className }) => {
             variant="p"
             className="!text-base font-medium text-white font-dmSans"
           >
-            ${event?.price} / Per Night
+            ${event?.price} / Night
           </Typography>
           <Typography
             variant="p"
             className="!text-base font-medium text-white font-dmSans"
           >
-            {event?.business_category}
+            Per Guest
           </Typography>
         </div>
       </div>
@@ -177,8 +177,10 @@ export const HotelCard = React.memo(({ event, className }) => {
 
       <BgIcon
         iconName={eventId ? "solar:heart-bold" : "solar:heart-outline"}
-        iconClass="!text-white"
-        className="bg-primary absolute top-4 right-6"
+        iconClass={`!text-white ${eventId ? "!text-red-700" : ""} `}
+        className={`bg-primary absolute top-4 right-6 ${
+          eventId ? "bg-white" : ""
+        }`}
         onClick={handleHeartIconClick}
       />
     </AnchorTag>

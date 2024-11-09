@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { HotelsThings } from "@/src/_mock/_hotels-things";
-import { AnchorTag, Pannel, Typography } from "@/src/components";
+
 import { useSelector } from "react-redux";
 
+import { AnchorTag, Pannel, Typography } from "@/src/components";
+
 export const ThingsKnow = () => {
-  const { rules, safety, cancellationPolicy } = HotelsThings[0];
   const { event } = useSelector((state) => state.allEvents.getById);
 
-  // State for toggling each section
   const [showFullRules, setShowFullRules] = useState(false);
   const [showFullSafety, setShowFullSafety] = useState(false);
   const [showFullCancellation, setShowFullCancellation] = useState(false);
 
-  // Helper function to render truncated content
   const renderTruncatedList = (list, limit, showFull) => {
     if (!list) return null;
     return showFull ? list : list.slice(0, limit);
@@ -53,7 +51,7 @@ export const ThingsKnow = () => {
         </div>
 
         {/* Safety & Property */}
-        <div className="flex flex-col justify-center items-start gap-2 h-full">
+        {/* <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
             Safety & Property
           </Typography>
@@ -75,7 +73,7 @@ export const ThingsKnow = () => {
               {showFullSafety ? "Show less" : "Show more"}
             </AnchorTag>
           )}
-        </div>
+        </div> */}
 
         {/* Cancellation Policy */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">

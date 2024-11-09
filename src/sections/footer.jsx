@@ -2,19 +2,23 @@ import React from "react";
 import { AnchorTag, Iconify, Pannel, Typography } from "../components";
 import { BgIcon } from "../components/bg-icon";
 import Image from "next/image";
+import Link from "next/link";
+import { paths } from "../contants";
 
 export const Footer = () => {
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="relative flex lg:flex-row flex-col xl:gap-[70px] lg:gap-x-8 md:gap-x-8 gap-y-6 bg-footer bg-cover bg-no-repeat z-10 py-10 md:py-16 items-start px-5 sm:px-8 lg:px-14 xl:px-10 ">
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-black  opacity-55 -z-20" />
-
-        <div className="h-full">
-          <img
-            src={"/assets/images/hotelbuuk-logo/hotelbuuk-white/hotelbuuk.png"}
-            className=" w-28 lg:w-fit"
-          />
-        </div>
+      <div className="relative flex lg:flex-row flex-col xl:gap-[70px] lg:gap-x-8 md:gap-x-8 gap-y-6 bg-black bg-cover bg-no-repeat z-10 py-10 md:py-16 items-start px-5 sm:px-8 lg:px-14 xl:px-10 ">
+        <Link href={paths.root}>
+          <div className="h-full">
+            <img
+              src={
+                "/assets/images/hotelbuuk-logo/hotelbuuk-white/hotelbuuk.png"
+              }
+              className=" w-28 lg:w-fit"
+            />
+          </div>
+        </Link>
 
         <div className="flex items-start md:items-center">
           <Typography

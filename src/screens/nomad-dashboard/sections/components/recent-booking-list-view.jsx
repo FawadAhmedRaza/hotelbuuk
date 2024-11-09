@@ -62,6 +62,7 @@ export const RecentBookingListView = React.memo(() => {
                     type={"server"}
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -105,6 +106,7 @@ export const RecentBookingListView = React.memo(() => {
                     type={"server"}
                     alt={user?.first_name || user?.hotel_name}
                     className="h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -156,6 +158,8 @@ export const RecentBookingListView = React.memo(() => {
                         ? "!bg-green-800"
                         : row?.booking_status === "REJECTED"
                         ? "!bg-red-700"
+                        : row?.booking_status === "PAID"
+                        ? "!bg-green-800"
                         : "!bg-yellow-500"
                     }`}
                   >
@@ -163,6 +167,8 @@ export const RecentBookingListView = React.memo(() => {
                       ? "Accepted"
                       : row?.booking_status === "PENDING"
                       ? "Pending"
+                      : row?.booking_status === "PAID"
+                      ? "Paid"
                       : "Rejected"}
                   </Button>
                 </div>

@@ -59,13 +59,6 @@ export const NavBar = React.memo(({ className }) => {
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
       <div className="flex gap-2 sm:gap-5">
-        {/* Language */}
-        <LangaugeTranslator
-          mainClass={
-            " !text-gray-600 !border-gray-600   hover:!bg-gray-100 hover:!bg-opacity-100"
-          }
-          iconClass={"text-gray-600"}
-        />
         {/* Login */}
         <div
           onClick={toggleDrawer}
@@ -75,22 +68,32 @@ export const NavBar = React.memo(({ className }) => {
             iconName="mynaui:menu"
             className="size-5 sm:size-8 text-gray-600"
           />
-          <span className="flex items-center gap-1">
-            <ProfileAvatar
-              src={user?.profile_img}
-              type={"server"}
-              effect="blur"
-              alt={user?.hotel_name}
-              className="!w-5 !h-5 md:!w-8 md:!h-8 object-cover rounded-full"
-            />
-            <Typography
-              variant="p"
-              className="font-medium !text-xs text-gray-600 text-nowrap"
-            >
-              {user ? user?.first_name : ""}
-            </Typography>
-          </span>
+          {user && (
+            <span className="flex items-center gap-1">
+              <ProfileAvatar
+                src={user?.profile_img}
+                type={"server"}
+                effect="blur"
+                alt={user?.hotel_name}
+                className="!w-5 !h-5 md:!w-8 md:!h-8 object-cover rounded-full"
+              />
+              <Typography
+                variant="p"
+                className="font-medium !text-xs text-gray-600 text-nowrap"
+              >
+                {user ? user?.first_name : ""}
+              </Typography>
+            </span>
+          )}
         </div>
+
+        {/* Language */}
+        <LangaugeTranslator
+          mainClass={
+            " !text-gray-600 !border-gray-600   hover:!bg-gray-100 hover:!bg-opacity-100"
+          }
+          iconClass={"text-gray-600"}
+        />
       </div>
     </div>
   );

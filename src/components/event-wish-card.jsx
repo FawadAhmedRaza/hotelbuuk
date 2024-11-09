@@ -107,8 +107,8 @@ export const EventWishCard = React.memo(({ event, className, onRemove }) => {
 
         <BgIcon
           iconName={eventId ? "solar:heart-bold" : "solar:heart-outline"}
-          iconClass="!text-white"
-          className="bg-primary absolute top-4 right-6"
+          iconClass="!text-red-700"
+          className="bg-white absolute top-4 right-6"
           onClick={handleHeartIconClick}
         />
       </AnchorTag>

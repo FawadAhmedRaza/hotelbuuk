@@ -110,6 +110,7 @@ const InternalNomadsListView = () => {
                       effect="blur"
                       alt={nomad?.first_name}
                       className="  h-10 w-10 rounded-full object-cover"
+                      iconSize="!size-10 !border-none"
                     />
 
                     <div className="flex gap-1">

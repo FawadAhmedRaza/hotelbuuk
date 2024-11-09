@@ -1,5 +1,5 @@
 import React from "react";
-import { AnchorTag, Button, Pannel, Typography } from "../components";
+import { AnchorTag, Button, Iconify, Pannel, Typography } from "../components";
 import { paths } from "../contants";
 
 export const Banner = React.memo(() => {
@@ -16,8 +16,9 @@ export const Banner = React.memo(() => {
         <Typography variant="h6" className=" text-center sm:text-start">
           Find hotels with in-house consultants to walk you through.
         </Typography>
-        <AnchorTag href={paths.auth.signUp}>
-          <Button>Signup Now</Button>
+        <AnchorTag href={"#"}>
+          {/* <Button>Signup Now</Button> */}
+          <Iconify iconName="logos:whatsapp-icon" className="!size-10" />
         </AnchorTag>
       </div>
       <div className=" overflow-hidden h-full sm:h-60  w-full  rounded-md sm:w-[650px] relative z-10">

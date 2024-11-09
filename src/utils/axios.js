@@ -124,6 +124,7 @@ export const endpoints = {
   },
   booking: {
     book_event: "/bookings",
+    update_booking_paid_status: (id) => `/bookings/${id}`,
     get_all_bookings: (id, type) => `/bookings?user_id=${id}&type=${type}`,
     get_recent_bookings: (id, type) =>
       `/bookings/recent-bookings?user_id=${id}&type=${type}`,

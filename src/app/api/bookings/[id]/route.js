@@ -63,8 +63,8 @@ export async function POST(req, { params }) {
 
     if (status === "ACCEPTED") {
       // send notification
-      let message = `Congratulations ! ${organizerName} has succussfully accepted your booking request for the ${eventTitle} event.
-       check your email for confirmation`;
+      let message = `Congratulations ! ${organizerName} has succussfully accepted your booking reservation for the ${eventTitle} event.
+       check your email for confirmation and complete the payment`;
       await createNotification(
         guestName,
         "Event booking Accepted",
@@ -86,7 +86,7 @@ export async function POST(req, { params }) {
       );
     } else {
       // send notification
-      let message = `we are sad to announce that ${organizerName} has rejected your booking request for the ${eventTitle} event.
+      let message = `we are sad to announce that ${organizerName} has rejected your booking reservation request for the ${eventTitle} event.
        check your email for confirmation`;
       await createNotification(
         guestName,
@@ -148,6 +148,47 @@ export async function POST(req, { params }) {
       { message: "Booking updated", bookings: updatedBookings },
       { status: 201 }
     );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(_, { params }) {
+  try {
+    if (!params?.id) {
+      return NextResponse.json(
+        { message: "Booking id is required" },
+        { status: 400 }
+      );
+    }
+
+    const isBookingExist = await prisma.booking.findUnique({
+      where: {
+        id: params?.id,
+      },
+    });
+
+    if (!isBookingExist) {
+      return NextResponse.json(
+        { message: "Booking not found" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.booking.update({
+      where: {
+        id: params?.id,
+      },
+      data: {
+        booking_status: "PAID",
+      },
+    });
+
+    return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

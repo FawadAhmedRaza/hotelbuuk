@@ -71,15 +71,15 @@ const RecentBooking = () => {
                   .slice(0, showMore ? recommended_nomad.length : 4)
                   .map((hotel) => (
                     <div key={hotel.id} className="w-full">
-                      <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-primary !rounded-md !w-full">
+                      <Card className="!shadow-custom-shadow-xs   !p-1.5 md:!p-3 border-l-4 border-slate-900 !rounded-md !w-full">
                         <div className="flex gap-4 w-full">
                           <ProfileAvatar
                             src={hotel?.hotel_image}
                             type={"server"}
                             effect="blur"
-                            iconSize="!size-16"
+                            iconSize="!size-16 !border-slate-900"
                             alt={hotel?.hotel_name}
-                            className="border-primary border-2 h-16 w-16 rounded-full object-cover"
+                            className="border-slate-900 border-2 h-16 w-16 rounded-full object-cover"
                           />
                           {/* )} */}
                           <div className="flex flex-1 flex-col grow">
@@ -110,7 +110,7 @@ const RecentBooking = () => {
                                 />
                                 <Button
                                   className={
-                                    "rounded-md  px-3 text-[10px]  mb-1  py-[6px]"
+                                    "rounded-md  px-3 text-[10px]  mb-1  py-[6px] border-slate-900 bg-slate-900"
                                   }
                                 >
                                   Create List
@@ -125,7 +125,10 @@ const RecentBooking = () => {
               </div>
 
               <div className="mt-1 border-dashed border-t flex justify-center items-center border-primary w-full pt-[20px]">
-                <Button className="text-sm" onClick={toggleShowMore}>
+                <Button
+                  className="text-sm bg-slate-900"
+                  onClick={toggleShowMore}
+                >
                   {showMore ? "Show Less" : "Show More"}
                 </Button>
               </div>

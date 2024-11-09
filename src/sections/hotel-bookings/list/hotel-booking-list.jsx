@@ -91,6 +91,7 @@ const HotelBookingList = () => {
                     effect="blur"
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -134,6 +135,7 @@ const HotelBookingList = () => {
                     type={"server"}
                     alt={row?.hotel_event?.nomad?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -200,6 +202,10 @@ const HotelBookingList = () => {
                   ) : row?.booking_status === "ACCEPTED" ? (
                     <Button className="!px-4 !py-1.5 !text-sm !bg-green-700">
                       Accepted
+                    </Button>
+                  ) : row?.booking_status === "PAID" ? (
+                    <Button className="!px-4 !py-1.5 !text-sm !bg-green-700">
+                      Paid
                     </Button>
                   ) : (
                     <Button className="!px-4 !py-1.5 !text-sm !bg-red-700">

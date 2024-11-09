@@ -19,35 +19,6 @@ import {
 import { paypalCaptureOrder } from "@/src/actions/payment.action";
 import StripePayment from "../stripe-payment";
 
-const hotelData = {
-  time: "10am - 4pm",
-  flexible: true,
-  image: "/assets/images/hotel-bio.png",
-  bio: "Booking A Day Use Room Grants You The Use Of Amenities Of The Property",
-  amenities: [
-    { id: 1, name: "Indoor pool", icon: "fas fa-swimming-pool" },
-    { id: 2, name: "Fitness center", icon: "fas fa-dumbbell" },
-    { id: 3, name: "Spa and wellness center", icon: "fas fa-spa" },
-    { id: 4, name: "Bar/Lounge", icon: "fas fa-glass-martini-alt" },
-    { id: 5, name: "Restaurant", icon: "fas fa-utensils" },
-    { id: 6, name: "Free Wi-Fi", icon: "fas fa-wifi" },
-    { id: 7, name: "Room service", icon: "fas fa-concierge-bell" },
-    { id: 8, name: "Tea/coffee machine", icon: "fas fa-coffee" },
-  ],
-  pricePerNight: 80,
-  tourName: "Business Tour | Manufacturing",
-  marketTour: "London Market Tour",
-  checkInDate: "10/8/2024",
-  checkOutDate: "15/8/2024",
-  nights: 5,
-  guests: 1,
-  priceDetails: [
-    { description: "$20 x 4 Nights", amount: 80 },
-    { description: "Hotelbuuk Service Fee", amount: 20 },
-  ],
-  total: 100,
-};
-
 export const HotelBio = ({ type, id }) => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [guestCount, setGuestCount] = useState(1);
@@ -62,6 +33,7 @@ export const HotelBio = ({ type, id }) => {
 
   const { event } = useSelector((state) => state.allEvents.getById);
   const { data } = useSelector((state) => state.bookings.userBooking);
+  console.log("booking", data);
 
   const { user } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
@@ -80,28 +52,6 @@ export const HotelBio = ({ type, id }) => {
     setLoading(true);
 
     try {
-      const data = localStorage.getItem("orderData");
-      const request = await axiosInstance.post(
-        endpoints.booking.book_event,
-        data
-      );
-      if (request?.status === 201) {
-        localStorage.removeItem("orderData");
-        enqueueSnackbar("Your booking request has been sent successfully", {
-          variant: "success",
-        });
-        router.push(`/hotels/${id}?type=${type}`);
-      }
-    } catch (error) {
-      console.log(error);
-      enqueueSnackbar(error?.message, { variant: "error" });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEventReserve = async () => {
-    try {
       if (user?.user_type === "GUEST") {
         let data = {
           no_of_guests: guestCount,
@@ -117,7 +67,50 @@ export const HotelBio = ({ type, id }) => {
         } else {
           data.hotel_event_id = event?.id;
         }
-        localStorage.setItem("orderData", JSON.stringify(data));
+        const request = await axiosInstance.post(
+          endpoints.booking.book_event,
+          data
+        );
+        if (request?.status === 201) {
+          localStorage.removeItem("orderData");
+          enqueueSnackbar("Your booking request has been sent successfully", {
+            variant: "success",
+          });
+          router.push(`/guest-dashboard`);
+        }
+      } else {
+        enqueueSnackbar("Only guest users can book this event", {
+          variant: "warning",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateReservation = async () => {
+    try {
+      let bookingId = JSON.parse(localStorage.getItem("bookingId"));
+      const request = await axiosInstance.put(
+        endpoints.booking.update_booking_paid_status(bookingId)
+      );
+      if (request?.status === 200) {
+        enqueueSnackbar("Payment successfull", { variant: "success" });
+        router.push("/guest-dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error?.message, { variant: "error" });
+    }
+  };
+
+  const handleEventReserve = async () => {
+    try {
+      if (user?.user_type === "GUEST") {
+        localStorage.setItem("bookingId", JSON.stringify(data?.id));
         onTrue();
       } else {
         enqueueSnackbar("Only guest users can book this event", {
@@ -183,13 +176,10 @@ export const HotelBio = ({ type, id }) => {
 
   // Create An order after stripe payment succeeded
   useEffect(() => {
-    if (redirect_status == "succeeded" && payment_intent && !loading) {
-      const orderData = localStorage.getItem("orderData");
-      if (orderData) {
-        (async () => {
-          createReservation();
-        })();
-      }
+    if (redirect_status == "succeeded" && payment_intent) {
+      (async () => {
+        updateReservation();
+      })();
     }
   }, [payment_intent, redirect_status]);
 
@@ -207,7 +197,7 @@ export const HotelBio = ({ type, id }) => {
               <Built>{event?.nomad?.projector}</Built>
             </div>
           </div>
-          <div className=" ">
+          <div className="">
             <Typography variant="h4" className=" font-semibold text-primary">
               Competence
             </Typography>
@@ -269,18 +259,15 @@ export const HotelBio = ({ type, id }) => {
             <Typography variant="p" className=" font-medium text-gray-500">
               ${event?.price} Per / Night
             </Typography>
-            <Typography
-              variant="p"
-              className="font-semibold text-center my-3  "
-            >
+            <Typography variant="p" className="font-semibold text-start my-3  ">
               {event?.title}
             </Typography>
             <Typography variant="h6" className="font-semibold   mt-2">
               {event_type === "NOMAD"
                 ? event?.accomodation_type === "bnb"
-                  ? `${event?.address} ${event?.city} ${event?.country}`
-                  : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`
-                : `${event?.hotel?.address}, ${event?.hotel?.city}, ${event?.hotel?.country}`}
+                  ? `${event?.city} ${event?.country}`
+                  : `${event?.hotel?.city}, ${event?.hotel?.country}`
+                : `${event?.hotel?.city}, ${event?.hotel?.country}`}
             </Typography>
           </div>
 
@@ -331,10 +318,11 @@ export const HotelBio = ({ type, id }) => {
               </Typography>
               <input
                 type="number"
+                disabled={data}
                 className="!outline-none !border-none !text-[16px]  w-10"
                 placeholder="5"
                 onChange={(e) => handleCalculation(e.target.value)}
-                value={guestCount}
+                value={data ? data?.no_of_guests : guestCount}
               />
             </div>
             <Typography
@@ -363,7 +351,6 @@ export const HotelBio = ({ type, id }) => {
                       ((event?.price * stayNights * guestCount) / 100) *
                       20
                     ).toFixed(2)}
-                    {/* {((event?.price * stayNights * guestCount) / 100) * 20} */}
                   </Typography>
                 </span>
               </div>
@@ -373,10 +360,12 @@ export const HotelBio = ({ type, id }) => {
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
-                  {(
-                    event?.price * stayNights * guestCount +
-                    ((event?.price * stayNights * guestCount) / 100) * 20
-                  ).toFixed(2)}
+                  {data
+                    ? data?.total_price
+                    : (
+                        event?.price * stayNights * guestCount +
+                        ((event?.price * stayNights * guestCount) / 100) * 20
+                      ).toFixed(2)}
                 </Typography>
               </span>
               {user?.user_type !== "GUEST" ? (
@@ -388,17 +377,26 @@ export const HotelBio = ({ type, id }) => {
                     You should be sign in as a guest for reservation
                   </Typography>
                 </div>
-              ) : data?.id ? (
-                <div className="flex bg-gray-50 p-2 rounded-md justify-between items-center mt-2 mb-3">
-                  <Typography
-                    variant="h6"
-                    className="font-semibold text-center"
-                  >
-                    You already part of this event
-                  </Typography>
-                </div>
+              ) : data?.booking_status === "PENDING" ? (
+                <Button className="w-full mt-2">Request Pending</Button>
+              ) : data?.booking_status === "ACCEPTED" ? (
+                <Button
+                  loading={loading}
+                  className="w-full mt-2"
+                  onClick={handleEventReserve}
+                >
+                  Pay now
+                </Button>
+              ) : data?.booking_status === "REJECTED" ? (
+                <Button className="w-full mt-2">Request Rejected</Button>
+              ) : data?.booking_status === "PAID" ? (
+                <Button className="w-full mt-2">Event booked</Button>
               ) : (
-                <Button className="w-full mt-2" onClick={handleEventReserve}>
+                <Button
+                  loading={loading}
+                  className="w-full mt-2"
+                  onClick={createReservation}
+                >
                   Reserve
                 </Button>
               )}
