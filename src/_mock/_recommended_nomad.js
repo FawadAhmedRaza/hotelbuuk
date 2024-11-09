@@ -28,28 +28,28 @@ export const recommended_nomad = [
       "Sarah is a talented software engineer who excels in solving complex technical",
   },
   {
-    id: 2,
+    id: 5,
     name: "Harry",
     imageSrc: "/assets/images/man17.png",
     description:
       "Harry specializes in frontend development and has been a key player in delivering",
   },
   {
-    id: 1,
+    id: 6,
     name: "James",
     imageSrc: "/assets/images/man11.jpeg",
     description:
       "James is a passionate designer with over 10 years of experience in the industry. He loves creating stunning visual effects.",
   },
   {
-    id: 2,
+    id: 7,
     name: "Harry",
     imageSrc: "/assets/images/man17.png",
     description:
       "Harry specializes in frontend development and has been a key player in delivering top-notch user experiences for various projects.",
   },
   {
-    id: 3,
+    id: 8,
     name: "Noah",
     imageSrc: "/assets/images/man11.jpeg",
     description:
