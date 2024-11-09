@@ -201,6 +201,10 @@ const HotelBookingList = () => {
                     <Button className="!px-4 !py-1.5 !text-sm !bg-green-700">
                       Accepted
                     </Button>
+                  ) : row?.booking_status === "PAID" ? (
+                    <Button className="!px-4 !py-1.5 !text-sm !bg-green-700">
+                      Paid
+                    </Button>
                   ) : (
                     <Button className="!px-4 !py-1.5 !text-sm !bg-red-700">
                       Rejected

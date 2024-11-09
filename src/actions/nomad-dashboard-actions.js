@@ -18,7 +18,7 @@ export async function getTotalNomadRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
-      booking_status: "ACCEPTED", // include so the revenue will be calculated
+      booking_status: "PAID",
     },
   });
 
@@ -40,6 +40,7 @@ export async function getNomadMonthlyRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
+      booking_status:"PAID",
       createdAt: {
         gte: new Date(currentYear, currentMonth, 1),
         lt: new Date(currentYear, currentMonth + 1, 1),
@@ -64,12 +65,11 @@ export async function getNomadTotalCheckIns(user_id) {
   const now = new Date();
   const startOfCurrentMonth = startOfMonth(now).toISOString();
   const endOfCurrentMonth = endOfMonth(now).toISOString();
-  console.log("start end",startOfCurrentMonth,endOfCurrentMonth)
 
   const bookings = await prisma.booking.count({
     where: {
       user_id,
-      booking_status: "ACCEPTED",
+      booking_status: "PAID",
       nomad_event: {
         start_date: {
           gte: startOfCurrentMonth,
@@ -89,7 +89,7 @@ export async function getNomadTotalCheckOuts(user_id) {
   const checkins = await prisma.booking.findMany({
     where: {
       user_id: user_id,
-      booking_status: "ACCEPTED",
+      booking_status: "PAID",
     },
     include: {
       nomad_event: {

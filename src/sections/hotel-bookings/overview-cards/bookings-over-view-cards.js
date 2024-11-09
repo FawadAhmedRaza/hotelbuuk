@@ -28,7 +28,7 @@ const BookingsOverViewCards = ({
                 variant="p"
                 className="!text-[14px] text-primary  leading-none !font-medium"
               >
-                Total {subTitle} Bookings
+                Total {subTitle}
               </p>
             </div>
             <Typography

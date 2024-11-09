@@ -22,6 +22,7 @@ enum BookingStatus {
   PENDING
   ACCEPTED
   REJECTED
+  PAID
 }
 
 model User {
@@ -412,6 +413,7 @@ model booking {
   event_type     String
   total_price    Int
   booking_status BookingStatus @default(PENDING)
+
 
   guest_id String @db.ObjectId
   guest    guest  @relation(fields: [guest_id], references: [id])

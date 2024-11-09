@@ -56,6 +56,15 @@ const NomadBookingsListOverview = () => {
     },
     {
       id: 1,
+      icon: "material-symbols:paid-outline",
+      title: "PAID",
+      subTitle: "Paid",
+      value:
+        allBookings?.filter((item) => item?.booking_status === "PAID")
+          ?.length || 0,
+    },
+    {
+      id: 1,
       icon: "material-symbols:cancel-outline",
       title: "REJECTED",
       subTitle: "Rejected",

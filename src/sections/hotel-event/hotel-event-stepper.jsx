@@ -55,7 +55,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     business_meeting: Yup.object({
       title: Yup.string()
         .required("Title is required")
-        .max(30, "Title must be at most 30 characters")
+        .max(50, "Title must be at most 30 characters")
         .min(3, "Title must be at least 3 characters"),
       description: Yup.string()
         .required("Description is required")

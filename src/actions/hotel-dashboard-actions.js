@@ -36,7 +36,7 @@ export async function getTotalHotelRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
-      booking_status: "ACCEPTED",
+      booking_status: "PAID",
     },
   });
 
@@ -58,6 +58,7 @@ export async function getHotelMonthlyRevenue(user_id) {
   const totalBookings = await prisma.booking.findMany({
     where: {
       user_id,
+      booking_status: "PAID",
       createdAt: {
         gte: new Date(currentYear, currentMonth, 1),
         lt: new Date(currentYear, currentMonth + 1, 1),
@@ -86,7 +87,7 @@ export async function getHotelTotalCheckIns(user_id) {
   const bookings = await prisma.booking.count({
     where: {
       user_id,
-      booking_status: "ACCEPTED",
+      booking_status: "PAID",
       hotel_event: {
         start_date: {
           gte: startOfCurrentMonth,
@@ -107,7 +108,7 @@ export async function getHotelTotalCheckOuts(user_id) {
   const bookings = await prisma.booking.count({
     where: {
       user_id,
-      booking_status: "ACCEPTED",
+      booking_status: "PAID",
       hotel_event: {
         end_date: {
           gte: startOfCurrentMonth,
