@@ -56,6 +56,15 @@ const HotelBookingsListOverview = () => {
     },
     {
       id: 1,
+      icon: "material-symbols:paid-outline",
+      title: "PAID",
+      subTitle: "Paid",
+      value:
+        allBookings?.filter((item) => item?.booking_status === "PAID")
+          ?.length || 0,
+    },
+    {
+      id: 1,
       icon: "material-symbols:cancel-outline",
       title: "REJECTED",
       subTitle: "Rejected",
@@ -77,7 +86,7 @@ const HotelBookingsListOverview = () => {
         <>
           <Breadcrumb title="Bookings" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
             {overViewData?.map((item) => (
               <BookingsOverViewCards
                 key={item?.id}
