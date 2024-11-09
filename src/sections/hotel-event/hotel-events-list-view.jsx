@@ -22,6 +22,7 @@ import {
   getAllHotelEvents,
 } from "@/src/redux/hotel-event/thunk";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const header = [
   { id: 1, label: "Title" },
@@ -97,9 +98,9 @@ const HotelEventsView = React.memo(() => {
         <Breadcrumb
           title="Hotel Events"
           action={
-            <AnchorTag href={paths.hotelDashboard.events.create}>
-              <Button>Create Event</Button>
-            </AnchorTag>
+            <Link href={paths.hotelDashboard.events.create}>
+              <Button className="bg-slate-900">Create Event</Button>
+            </Link>
           }
         />
         <div className="border border-gray-200 rounded-xl">

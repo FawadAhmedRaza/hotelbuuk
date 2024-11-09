@@ -4,6 +4,7 @@ import { BgIcon } from "../components/bg-icon";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "../contants";
+import { twitter_link } from "../_mock/_footer-content";
 
 export const Footer = () => {
   return (
@@ -77,12 +78,14 @@ export const Footer = () => {
                 className="text-black !text-2xl"
               />
             </div>
-            <div className="p-2 bg-white rounded-full w-min h-min text-2xl">
-              <Iconify
-                iconName="pajamas:twitter"
-                className="text-black !text-2xl"
-              />
-            </div>
+            <Link href={twitter_link} target="_blank" rel="noopener noreferrer">
+              <div className="p-2 bg-white rounded-full w-min h-min text-2xl">
+                <Iconify
+                  iconName="pajamas:twitter"
+                  className="text-black !text-2xl"
+                />
+              </div>
+            </Link>
           </div>
         </div>
 

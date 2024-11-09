@@ -177,8 +177,8 @@ export const HotelCard = React.memo(({ event, className }) => {
 
       <BgIcon
         iconName={eventId ? "solar:heart-bold" : "solar:heart-outline"}
-        iconClass={`!text-white ${eventId ? "!text-red-700" : ""} `}
-        className={`bg-primary absolute top-4 right-6 ${
+        iconClass={`!text-black ${eventId ? "!text-red-700" : ""} `}
+        className={`bg-white absolute top-4 right-6 ${
           eventId ? "bg-white" : ""
         }`}
         onClick={handleHeartIconClick}
