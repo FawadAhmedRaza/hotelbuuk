@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { HotelsThings } from "@/src/_mock/_hotels-things";
-import { AnchorTag, Pannel, Typography } from "@/src/components";
+
 import { useSelector } from "react-redux";
 
+import { AnchorTag, Pannel, Typography } from "@/src/components";
+
 export const ThingsKnow = () => {
-  const { rules, safety, cancellationPolicy } = HotelsThings[0];
   const { event } = useSelector((state) => state.allEvents.getById);
 
-  // State for toggling each section
   const [showFullRules, setShowFullRules] = useState(false);
   const [showFullSafety, setShowFullSafety] = useState(false);
   const [showFullCancellation, setShowFullCancellation] = useState(false);
 
-  // Helper function to render truncated content
   const renderTruncatedList = (list, limit, showFull) => {
     if (!list) return null;
     return showFull ? list : list.slice(0, limit);
