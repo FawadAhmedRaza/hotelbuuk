@@ -84,13 +84,12 @@ export async function GET(req, { params }) {
           (item) => item?.event_rules
         ),
         event_associated_cancel_policies:
-          nomadEvent?.event_associated_safeties?.map(
-            (item) => item?.event_safeties
-          ),
-        event_associated_safeties:
           nomadEvent?.event_associated_cancel_policies?.map(
             (item) => item?.event_cancel_policy
           ),
+        event_associated_safeties: nomadEvent?.event_associated_safeties?.map(
+          (item) => item?.event_safeties
+        ),
       };
     } else {
       const isHotelEventExist = await prisma.hotel_event.findUnique({
