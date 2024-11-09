@@ -12,7 +12,8 @@ import {
 } from "../components/ui/carousel";
 import { getAllEvents } from "../redux/all-events/thunk";
 
-export const PreviewHotels = () => {
+export const 
+PreviewHotels = () => {
   const dispatch = useDispatch();
   const { events, isLoading } = useSelector((state) => state.allEvents);
 

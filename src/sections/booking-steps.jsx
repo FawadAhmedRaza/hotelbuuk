@@ -57,7 +57,7 @@ export const BookingSteps = () => {
         {bookingStepsData.map((step) => (
           <div
             key={step.id}
-            className={`flex flex-col justify-center items-center min-900:flex-row gap-10 w-full md:w-full ${
+            className={`flex flex-col justify-center items-center min-900:flex-row gap-10 lg:gap-60 w-full md:w-full ${
               step.reverse ? "min-900:flex-row-reverse" : ""
             }`}
           >
@@ -84,7 +84,7 @@ export const BookingSteps = () => {
 
             <div>
               <Typography
-                variant="h2"
+                variant="h3"
                 className="  leading-tight font-semibold"
               >
                 {step.title}

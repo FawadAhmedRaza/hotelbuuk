@@ -38,7 +38,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     stars: Yup.mixed().optional().default(4),
     facilities: Yup.array().optional(),
     images: Yup.array()
-      .min(2, "At least Two images are required")
+      .min(8, "At least Eight images are required")
       .required("Files are required"),
   });
 

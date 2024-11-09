@@ -40,7 +40,6 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
     fetchBusinessFacts();
   }, []);
 
-
   const handleAsk = (item) => {
     if (user) {
       router.push(paths?.chats?.chatsById(item?.user?.id));
@@ -58,7 +57,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
           variant="h2"
           className="font-semibold text-start !text-black"
         >
-          Business Facts
+          Business Connect
         </Typography>
         <Typography
           variant="h6"
@@ -168,9 +167,10 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
                       </Typography>
                       <Button
                         onClick={() => handleAsk(item)}
-                        className="py-1.5 px-4 mx-auto min-450:mx-0"
+                        className="!bg-black py-1.5 px-4 mx-auto min-450:mx-0"
                       >
-                        Ask {item?.user?.nomad[0].first_name}
+                        {/* Ask {item?.user?.nomad[0].first_name} */}
+                        Connect
                       </Button>
                     </div>
                   </div>

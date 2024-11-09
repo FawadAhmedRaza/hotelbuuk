@@ -15,9 +15,7 @@ const Tabs = ({ TABS, activeTab, setActiveTab, className, setFilters }) => {
             {TABS?.map((tab) => (
               <div
                 className={`z-30 flex items-center p-1 justify-center grow px-0 py-2 mb-0  transition-all ease-in-out rounded-lg cursor-pointer !text-primary  ${
-                  activeTab === tab.value
-                    ? "bg-white border border-gray-300 "
-                    : "hover:bg-white"
+                  activeTab === tab.value ? "bg-primary" : "hover:bg-white"
                 }`}
                 onClick={(e) => {
                   e.preventDefault();
@@ -28,7 +26,9 @@ const Tabs = ({ TABS, activeTab, setActiveTab, className, setFilters }) => {
                 aria-selected={activeTab === tab?.value}
               >
                 <Button
-                  className={`!bg-transparent !py-0 px-5 md:px-16 text-sm !text-primary outline-none font-medium${className}`}
+                  className={`!bg-transparent !py-0 px-5 md:px-16 text-sm ${
+                    activeTab === tab.value ? "!text-white" : "!text-primary"
+                  }  outline-none font-medium${className}`}
                 >
                   {tab?.label}
                 </Button>

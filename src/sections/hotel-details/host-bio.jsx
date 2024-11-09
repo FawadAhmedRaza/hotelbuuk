@@ -28,10 +28,7 @@ export const HostBio = React.memo(() => {
       <div className="flex flex-col mt-3  bg-gray-100   rounded-xl  shadow-md  ">
         <div className="flex flex-col  gap-5 bg-white  w-full p-5 ">
           <div className="flex items-center  justify-between lg:justify-start w-full  gap-2 xl:gap-10 ">
-            {/* <Avatar
-              src="/assets/images/host.png"
-              className=" size-24 lg:!size-32"
-            /> */}
+          
             <ProfileAvatar
               src={event?.nomad?.profile_img}
               type={"server"}

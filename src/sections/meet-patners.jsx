@@ -79,10 +79,6 @@ export const MeetOurPatners = () => {
                       <div className="relative w-full">
                         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/15 opacity-75" />
 
-                        <BgIcon
-                          iconName="skill-icons:instagram"
-                          className="absolute top-4 right-4 z-20"
-                        />
                         <ImageRender
                           src={hotel?.hotel_image}
                           type={"server"}
