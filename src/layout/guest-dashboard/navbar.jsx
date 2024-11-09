@@ -18,11 +18,10 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
-
   return (
     <div
       className={cn(
-        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-50 px-2 sm:px-8 lg:px-14 xl:px-10 ",
+        "w-full flex justify-between items-center gap-1 py-5 absolute top-0 z-50 px-2 sm:px-8 lg:px-14 xl:px-10 !bg-black",
         className
       )}
     >
@@ -50,8 +49,6 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
       )}
 
       <div className="flex gap-2 sm:gap-5">
-        <LangaugeTranslator />
-
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-3 sm:gap-3 lg:gap-5 border border-white rounded-full px-3 md:px-2 py-1 sm:px-7 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
@@ -85,6 +82,8 @@ export const GuestDashboardNavBar = React.memo(({ className }) => {
             )}
           </span>
         </div>
+
+        <LangaugeTranslator />
       </div>
     </div>
   );

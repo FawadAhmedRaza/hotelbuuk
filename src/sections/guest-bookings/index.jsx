@@ -36,6 +36,7 @@ const GuestBookingListOverview = () => {
       title: "TOTAL",
       subTitle: "",
       value: guestBookings?.length || 0,
+      bgColor: "bg-[#F9FAFB]",
     },
     {
       id: 2,
@@ -45,6 +46,7 @@ const GuestBookingListOverview = () => {
       value:
         guestBookings?.filter((item) => item?.booking_status === "PENDING")
           ?.length || 0,
+      bgColor: "bg-[#FFF5CC]",
     },
     {
       id: 1,
@@ -54,6 +56,7 @@ const GuestBookingListOverview = () => {
       value:
         guestBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
+      bgColor: "bg-[#D3FCD2]",
     },
     {
       id: 1,
@@ -63,6 +66,7 @@ const GuestBookingListOverview = () => {
       value:
         guestBookings?.filter((item) => item?.booking_status === "REJECTED")
           ?.length || 0,
+      bgColor: "bg-[#FFE9D5]",
     },
   ];
 
@@ -86,6 +90,7 @@ const GuestBookingListOverview = () => {
                 title={item?.title}
                 subTitle={item?.subTitle}
                 value={item?.value}
+                bgColor={item.bgColor}
               />
             ))}
           </div>

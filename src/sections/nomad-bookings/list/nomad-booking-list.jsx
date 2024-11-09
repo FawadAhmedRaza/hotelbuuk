@@ -92,6 +92,7 @@ const NomadBookingList = () => {
                     type={"server"}
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -135,6 +136,7 @@ const NomadBookingList = () => {
                     type={"server"}
                     alt={user?.first_name || user?.hotel_name}
                     className="h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">

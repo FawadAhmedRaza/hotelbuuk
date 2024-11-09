@@ -49,7 +49,7 @@ const GuestDashboardSection = () => {
           </>
         )}
       </div>
-    </Pannel>
+    </Pannel> 
   );
 };
 

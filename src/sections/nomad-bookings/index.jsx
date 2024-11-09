@@ -35,6 +35,7 @@ const NomadBookingsListOverview = () => {
       title: "TOTAL",
       subTitle: "",
       value: allBookings?.length || 0,
+      bgColor: "bg-[#F9FAFB]",
     },
     {
       id: 2,
@@ -44,6 +45,7 @@ const NomadBookingsListOverview = () => {
       value:
         allBookings?.filter((item) => item?.booking_status === "PENDING")
           ?.length || 0,
+      bgColor: "bg-[#FFF5CC]",
     },
     {
       id: 1,
@@ -53,6 +55,7 @@ const NomadBookingsListOverview = () => {
       value:
         allBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
+      bgColor: "bg-[#D3FCD2]",
     },
     {
       id: 1,
@@ -71,6 +74,7 @@ const NomadBookingsListOverview = () => {
       value:
         allBookings?.filter((item) => item?.booking_status === "REJECTED")
           ?.length || 0,
+      bgColor: "bg-[#FFE9D5]",
     },
   ];
 
@@ -94,6 +98,7 @@ const NomadBookingsListOverview = () => {
                 title={item?.title}
                 subTitle={item?.subTitle}
                 value={item?.value}
+                bgColor={item?.bgColor}
               />
             ))}
           </div>

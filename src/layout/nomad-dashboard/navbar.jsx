@@ -64,8 +64,6 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
       )}
 
       <div className="flex gap-2 sm:gap-5">
-        <LangaugeTranslator />
-
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-1 sm:gap-3 border border-white rounded-full px-3 py-1 sm:px-2 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
@@ -101,6 +99,8 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
             )}
           </div>
         </div>
+
+        <LangaugeTranslator />
       </div>
     </div>
   );

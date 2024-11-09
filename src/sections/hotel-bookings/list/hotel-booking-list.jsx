@@ -91,6 +91,7 @@ const HotelBookingList = () => {
                     effect="blur"
                     alt={row?.guest?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
@@ -134,6 +135,7 @@ const HotelBookingList = () => {
                     type={"server"}
                     alt={row?.hotel_event?.nomad?.first_name}
                     className="  h-10 w-10 rounded-full object-cover"
+                    iconSize="!size-10 !border-none"
                   />
                   <div className="">
                     <Typography variant="p" className="!text-nowrap max-w-56">
