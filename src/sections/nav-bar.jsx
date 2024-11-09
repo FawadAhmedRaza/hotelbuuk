@@ -59,13 +59,6 @@ export const NavBar = React.memo(({ className }) => {
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
       <div className="flex gap-2 sm:gap-5">
-        {/* Language */}
-        <LangaugeTranslator
-          mainClass={
-            " !text-gray-600 !border-gray-600   hover:!bg-gray-100 hover:!bg-opacity-100"
-          }
-          iconClass={"text-gray-600"}
-        />
         {/* Login */}
         <div
           onClick={toggleDrawer}
@@ -91,6 +84,14 @@ export const NavBar = React.memo(({ className }) => {
             </Typography>
           </span>
         </div>
+
+        {/* Language */}
+        <LangaugeTranslator
+          mainClass={
+            " !text-gray-600 !border-gray-600   hover:!bg-gray-100 hover:!bg-opacity-100"
+          }
+          iconClass={"text-gray-600"}
+        />
       </div>
     </div>
   );

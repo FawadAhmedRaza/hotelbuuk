@@ -18,7 +18,6 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
   const { isOpen, toggleDrawer, setIsOpen } = useBoolean();
 
-
   return (
     <div
       className={cn(
@@ -50,8 +49,6 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
       )}
 
       <div className="flex gap-2 sm:gap-5">
-        <LangaugeTranslator />
-
         <div
           onClick={toggleDrawer}
           className="flex items-center gap-1 sm:gap-3 lg:gap-2 border border-white rounded-full px-3 md:px-2 py-1 sm:px-7 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
@@ -85,6 +82,8 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
             )}
           </span>
         </div>
+
+        <LangaugeTranslator />
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ const header = [
 ];
 const HotelsListSection = React.memo(() => {
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -78,20 +78,15 @@ const HotelsListSection = React.memo(() => {
                 <>
                   <td className=" px-6 py-4">
                     <div className="flex gap-2 items-center">
-                      {/* {!row?.hotel_image ? (
-                        <Iconify
-                          iconName="carbon:user-avatar-filled"
-                          className="!size-10  rounded-full object-cover text-gray-500"
-                        />
-                      ) : ( */}
                       <ProfileAvatar
                         src={row?.hotel_image}
                         type={"server"}
                         effect="blur"
                         alt={row?.hotel_name}
                         className="  h-10 w-10 rounded-full object-cover"
+                        iconSize="!size-10 !border-none"
                       />
-                      {/* )} */}
+
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"
@@ -169,11 +164,11 @@ const HotelsListSection = React.memo(() => {
 
                   <td className="px-6 py-4">
                     <div className="flex gap-1 items-center">
-                        <Iconify
-                          iconName="tabler:mail-filled"
-                          onClick={()=>router.push(`/chat/${row.user_id}`)}
-                          className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
-                        />
+                      <Iconify
+                        iconName="tabler:mail-filled"
+                        onClick={() => router.push(`/chat/${row.user_id}`)}
+                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                      />
                     </div>
                   </td>
                 </>

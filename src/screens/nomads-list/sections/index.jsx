@@ -94,6 +94,7 @@ const NomadsListSection = React.memo(() => {
                         effect="blur"
                         alt={row?.first_name}
                         className="  h-10 w-10 rounded-full object-cover"
+                        iconSize="!size-10 !border-none"
                       />
                       {/* )} */}
 

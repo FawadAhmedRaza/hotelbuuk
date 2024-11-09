@@ -39,7 +39,7 @@ export const PopularAmenities = React.memo(() => {
 
       {/* Show/Hide button */}
       <Button onClick={handleToggleShow} className="mt-4">
-        {showAll ? "Show Less" : `Show All (${mockAmenities.length})`}
+        {showAll ? "Show Less" : `Show All `}
       </Button>
     </Pannel>
   );

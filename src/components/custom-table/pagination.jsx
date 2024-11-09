@@ -93,7 +93,7 @@ export const Pagination = React.memo(
 
         <div
           ref={dropdownRef}
-          className="relative bg-primary rounded-lg shadow-custom-shadow cursor-pointer w-16 h-8 flex justify-start items-center text-white text-sm px-2.5  !z-10 font-normal"
+          className="relative bg-black rounded-lg shadow-custom-shadow cursor-pointer w-16 h-8 flex justify-start items-center text-white text-sm px-2.5  !z-10 font-normal"
           onClick={() => setIsOpen(!isOpen)}
         >
           {rowsPerPage}

@@ -51,7 +51,7 @@ export const ThingsKnow = () => {
         </div>
 
         {/* Safety & Property */}
-        <div className="flex flex-col justify-center items-start gap-2 h-full">
+        {/* <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
             Safety & Property
           </Typography>
@@ -73,7 +73,7 @@ export const ThingsKnow = () => {
               {showFullSafety ? "Show less" : "Show more"}
             </AnchorTag>
           )}
-        </div>
+        </div> */}
 
         {/* Cancellation Policy */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">
