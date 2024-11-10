@@ -18,7 +18,7 @@ export const Banner = React.memo(() => {
           Find hotels with in-house consultants to walk you through.
         </Typography>
         <Link href={"#"}>
-          <Button className="bg-[#25D366] px-5">
+          <Button className="bg-[#25D366] px-5 !font-semibold">
             {" "}
             <Iconify
               iconName="ic:baseline-whatsapp"
