@@ -114,6 +114,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
               name="nomad_type"
               value="registered"
               label="Registered"
+              className=""
             />
             <RHFRadio
               id="non_registered"

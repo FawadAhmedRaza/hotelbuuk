@@ -39,8 +39,8 @@ export const RoomStepperView = () => {
       end_date: Yup.string().required("end date is required"),
     }),
     room_images: Yup.array()
-      .min(2, "At least Two images are required")
-      .required("Files are required"),
+      .min(8, "At least 8 images are required")
+      .required("Images are required"),
   });
 
   const methods = useForm({

@@ -4,7 +4,7 @@ import { Button, Card } from ".";
 const Tabs = ({ TABS, activeTab, setActiveTab, className }) => {
   return (
     <div className=" flex flex-col gap-5 md:gap-0 w-full">
-      <Card className=" p-2 w-full bg-tertiary shadow-md rounded-lg">
+      <Card className=" p-2 w-full bg-[#F2F2F2] shadow-md rounded-lg">
         <div className="relative flex items-center flex-wrap gap-2 w-full">
           {TABS?.map((tab) => (
             <div
@@ -20,7 +20,7 @@ const Tabs = ({ TABS, activeTab, setActiveTab, className }) => {
               aria-selected={activeTab === tab?.value}
             >
               <Button
-                className={`!bg-transparent !py-0 text-sm !text-primary font-medium${className}`}
+                className={`!bg-transparent !py-0 text-sm !text-black font-medium${className}`}
               >
                 {tab?.label}
               </Button>

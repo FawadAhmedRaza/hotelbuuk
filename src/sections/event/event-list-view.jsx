@@ -237,7 +237,7 @@ const NomadEventsView = React.memo(() => {
                       <span className="flex gap-2">
                         {row?.amenities?.slice(0, 4)?.map((amenity) => (
                           <span
-                            className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap"
+                            className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap"
                             key={amenity?.id}
                           >
                             {amenity?.name}
@@ -245,7 +245,7 @@ const NomadEventsView = React.memo(() => {
                         ))}
 
                         {row?.amenities?.length > 4 && (
-                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                          <span className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap">
                             +{row?.amenities?.length - 4} more
                           </span>
                         )}
@@ -255,7 +255,7 @@ const NomadEventsView = React.memo(() => {
                       <span className="flex gap-2">
                         {trueRules?.slice(0, 4)?.map((rule, index) => (
                           <span
-                            className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap"
+                            className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap"
                             key={index}
                           >
                             {rule[0]}
@@ -263,7 +263,7 @@ const NomadEventsView = React.memo(() => {
                         ))}
 
                         {trueRules?.length > 4 && (
-                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                          <span className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap">
                             +{trueRules?.length - 4} more
                           </span>
                         )}

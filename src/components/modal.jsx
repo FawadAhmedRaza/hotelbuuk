@@ -64,14 +64,14 @@ const Modal = ({
         {!disableActions && (
           <div className="sticky bottom-0 w-full p-4 bg-white flex justify-end gap-2 border-t">
             <Button
-              className="text-tertiary !px-4 !py-2"
+              className="text-tertiary !px-4 !py-2 !bg-slate-900"
               type="button"
               onClick={onClose}
             >
               Cancel
             </Button>
             <Button
-              className="text-tertiary !px-4 !py-2"
+              className="text-tertiary !px-4 !py-2 !bg-slate-900"
               type="button"
               onClick={handleSubmit}
               loading={isLoading}
