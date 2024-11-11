@@ -50,7 +50,7 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
 
   return (
     <Pannel
-      className={cn("w-full   px-0 sm:px-3 lg:px-9 xl:px-5 !py-0  ", className)}
+      className={cn("w-full px-0 sm:px-3 lg:px-9 xl:px-5 !py-0  ", className)}
       id="network"
     >
       <div className="flex flex-col gap-2 px-3 ">

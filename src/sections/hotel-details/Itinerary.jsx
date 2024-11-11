@@ -7,7 +7,7 @@ const Itinerary = () => {
   return (
     <div>
       <div className=" py-8">
-        <Typography variant="h2" className="px-12 font-semibold">
+        <Typography variant="h2" className=" font-semibold">
           Itinerary
         </Typography>
         <div className="grid grid-cols-12 gap-5 items-start mt-3">

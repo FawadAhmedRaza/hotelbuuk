@@ -104,10 +104,12 @@ export const MeetOurPatners = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute right-0 top-0  border w-fit">
+            <div className="hidden sm:block absolute right-0 top-0  border w-fit">
               <CarouselPrevious className="-top-10 !right-0  -translate-x-24" />
               <CarouselNext className="-top-10 right-10" />
             </div>
+            <CarouselPrevious className=" sm:hidden" />
+            <CarouselNext className=" sm:hidden" />
           </Carousel>
         </div>
       )}
