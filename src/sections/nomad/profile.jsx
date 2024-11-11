@@ -102,8 +102,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
 
   const toggleDateCalender = () => setIsDateOpen(!isDateOpen);
 
-
-
   const methods = useForm({
     resolver: yupResolver(nomadProfileSchema),
     defaultValues: isEdit && defaultValues,
@@ -310,7 +308,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               value={city || ""}
               onChange={(e) => setValue("city", e.target.value)}
             />
-            <RHFLocationInput name="address" label="Address" className="w-full" />
+            <RHFLocationInput
+              name="address"
+              label="Address"
+              className="w-full"
+            />
             <RHFSelect
               name="experience"
               label="Experience"
@@ -345,7 +347,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                 <RHFWorkPermitUploader
                   label="Front image"
                   name={"work_permit_front_img"}
-                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md"
+                  className="md:w-[180px] md:h-[150px] w-[125px] h-[125px] !mx-0 !rounded-md "
                 />
                 <RHFWorkPermitUploader
                   label="Back image"
@@ -477,7 +479,7 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
           >
             Delete profile
           </Button>
-          <Button type="submit" loading={isSubmitting}>
+          <Button className="bg-slate-900" type="submit" loading={isSubmitting}>
             {isEdit ? "Save" : "Submit"}
           </Button>
         </div>

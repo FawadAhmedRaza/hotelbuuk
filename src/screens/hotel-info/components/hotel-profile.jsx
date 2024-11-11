@@ -128,7 +128,7 @@ const HotelProfile = () => {
                         onChange={(e) =>
                           handleCheckboxChange(facility, e.target.checked)
                         }
-                        className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                        className="h-4 w-4 rounded-xl border border-black accent-black transition-colors duration-200"
                       />
                       <label
                         className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"

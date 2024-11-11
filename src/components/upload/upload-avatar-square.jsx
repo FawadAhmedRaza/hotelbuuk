@@ -69,7 +69,7 @@ export default function UploadAvatarSquar({
         )}
       </div>
       {isEdit || preview ? (
-        <div className="flex justify-center items-center z-20 absolute p-2 bottom-0 right-3 rounded-full bg-primary">
+        <div className="flex justify-center items-center z-20 absolute p-2 bottom-0 right-0 rounded-full bg-black">
           <Iconify iconName="mage:edit" className="  size-5  text-white" />
         </div>
       ) : (

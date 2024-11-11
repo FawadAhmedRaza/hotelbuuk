@@ -38,7 +38,7 @@ export const RHFRadio = React.memo(
                   disabled={disabled}
                   checked={field.value === value} // Ensure correct selection
                   onChange={() => field.onChange(value)} // Pass the correct value on change
-                  className="size-5 border border-secondary accent-primary transition-colors duration-200 cursor-pointer"
+                  className="size-5 border border-secondary accent-black transition-colors duration-200 cursor-pointer"
                 />
                 <label
                   className="text-15fs text-custom-black cursor-pointer select-none font-montserrat font-medium"
