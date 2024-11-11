@@ -57,6 +57,7 @@ const HotelCards = () => {
       value: bookingsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.bookings.root,
+      // bgColor: "#EDF0FF",
     },
     {
       id: 2,
@@ -97,6 +98,7 @@ const HotelCards = () => {
               value={data.value}
               btnTitle={data.btnTitle}
               path={data.path}
+              bgColor={data?.bgColor}
             />
           )}
         </div>

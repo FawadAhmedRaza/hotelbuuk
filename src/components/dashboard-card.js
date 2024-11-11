@@ -3,13 +3,17 @@
 import React from "react";
 import { AnchorTag, Card, Iconify, Typography } from ".";
 
-const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
+const DashboardCard = ({ title, value, IconName, btnTitle, path, bgColor }) => {
+  console.log("bgColor", bgColor);
   return (
     <div>
-      <Card className="md:col-span-3 col-span-12 flex-col flex gap-1 py-5 px-4 ">
-        <div className="flex gap-4 items-center w-full flex-auto md:flex-initial ">
-          <div className="rounded-full border-2 w-min h-min p-1.5 border-primary ">
-            <Iconify iconName={IconName} className="!text-primary size-5" />
+      <Card
+        className={`md:col-span-3 col-span-12 flex-col flex gap-1 py-5 px-4 !bg-[${bgColor}]`}
+        style={{ backgroundColor: bgColor }}
+      >
+        <div className="flex gap-4 items-center w-full flex-auto md:flex-initial">
+          <div className="rounded-full border-2 w-min h-min p-1.5 border-black ">
+            <Iconify iconName={IconName} className="!text-black size-5" />
           </div>
           <div className=" flex  gap-7 items-center">
             <div>
@@ -18,7 +22,7 @@ const DashboardCard = ({ title, value, IconName, btnTitle, path }) => {
               </h2>
               <p
                 variant="p"
-                className="!text-[12px] text-primary  leading-none !font-medium"
+                className="!text-[12px] text-black  leading-none !font-medium"
               >
                 {title === "Hotel" ? "Registered" : "Total"}
               </p>
