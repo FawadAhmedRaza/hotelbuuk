@@ -39,7 +39,7 @@ export const MeetOurPatners = () => {
   }, [dispatch]);
 
   return (
-    <Pannel className="flex flex-col gap-10   bg-white p-10 w-full">
+    <Pannel className=" relative flex flex-col gap-10   bg-white p-10 w-full">
       <div>
         <Typography variant="h2" className="text-start font-semibold w-full">
           Meet Our Partners
@@ -104,8 +104,10 @@ export const MeetOurPatners = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* <CarouselPrevious />
-            <CarouselNext /> */}
+            <div className="absolute right-0 top-0  border w-fit">
+              <CarouselPrevious className="-top-10 !right-0  -translate-x-24" />
+              <CarouselNext className="-top-10 right-10" />
+            </div>
           </Carousel>
         </div>
       )}

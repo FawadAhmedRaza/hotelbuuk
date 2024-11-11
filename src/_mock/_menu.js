@@ -5,7 +5,7 @@ const allLinks = [];
 export const MenuLinks = (user) => {
   const isUserCompleted = user?.is_user_type_completed;
   const userType = user?.user_type;
-  
+
   if (isUserCompleted) {
     return [
       {
@@ -25,6 +25,11 @@ export const MenuLinks = (user) => {
       },
       {
         id: 3,
+        label: "Find a Network",
+        path: "#network",
+      },
+      {
+        id: 4,
         label: "About Us",
         path: "/about",
       },

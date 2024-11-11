@@ -17,10 +17,16 @@ export const HeroSection = React.memo(() => {
 
         <div className="flex flex-col  justify-center lg:justify-start gap-5 z-10 w-full h-full  ">
           <div className=" text-[2.5rem] sm:!text-[3rem] md:!text-[3.3rem] text-white font-bold uppercase text-wrap break-words  !custom-line  font-poppins  ">
-            <span className=" bg-[#bd2c94bb] text-opacity-80 text-[#ffffffea] px-3 rounded-md  ">
+            {/* <span className=" bg-[#bd2c94bb] text-opacity-80 text-[#ffffffea] px-3 rounded-md  ">
+              Stay
+            </span> */}
+            <span className="bg-[rgba(255,255,255,0.56)] text-black px-3 rounded-md">
               Stay
             </span>
-            <br /> For Business Insights
+            <br /> For Business{" "}
+            <span className="bg-[rgba(255,255,255,0.56)] text-black px-3 rounded-md">
+              Networking
+            </span>
           </div>
           <Typography
             variant="h6"
