@@ -60,7 +60,7 @@ export const NavBar = React.memo(({ className }) => {
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
       <div className="hidden md:block">
-        <AnchorTag href="#network">
+        <AnchorTag href="/#network">
           <Typography variant="h6">Find a Network</Typography>
         </AnchorTag>
       </div>

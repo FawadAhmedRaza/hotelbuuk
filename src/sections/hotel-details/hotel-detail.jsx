@@ -71,7 +71,7 @@ export const HotelDetail = ({ type, id }) => {
           <HostBio />
         </div>
       </div>
-      <HotelBio type={type} id={id} />
+      {/* <HotelBio type={type} id={id} /> */}
     </div>
   );
 };

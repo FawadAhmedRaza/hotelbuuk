@@ -14,7 +14,7 @@ export const PopularAmenities = React.memo(() => {
   };
 
   return (
-    <Pannel className="flex flex-col gap-10 justify-start items-start bg-white !px-10  sm:p-6">
+    <Pannel className="flex flex-col gap-10 justify-start items-start bg-white !px-10  sm:p-6 lg:!pl-0">
       {/* Header */}
       <Typography variant="h3" className="font-medium">
         Most popular Amenities

@@ -22,8 +22,8 @@ const AvailabilityCalendar = ({
     startDate && endDate ? differenceInDays(endDate, startDate) : 0;
 
   return (
-    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-between items-center mt-10 md:items-start p-4 md:p-8 bg-white ">
-      <div className="text-center md:text-left  w-full">
+    <Pannel className="flex flex-col lg:flex-row gap-5 md:gap-5 justify-start items-center mt-10 md:items-start p-4 md:p-8 bg-white lg:pl-0">
+      {/* <div className="text-center md:text-left  w-full">
         <Typography variant="h1" className="text-black">
           Availability
         </Typography>
@@ -48,9 +48,9 @@ const AvailabilityCalendar = ({
             <span>No dates selected</span>
           )}
         </div>
-      </div>
+      </div> */}
 
-      <div className=" h-full w-full flex justify-center items-center md:w-auto">
+      <div className=" h-full w-full  md:w-auto">
         <Card className=" flex-col w-fit md:w-full">
           <DateRange
             onChange={handleDateChange}

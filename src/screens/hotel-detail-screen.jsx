@@ -14,6 +14,8 @@ import Itinerary from "../sections/hotel-details/Itinerary";
 import AvailabilityCalendar from "../sections/hotel-details/availability-calender";
 import { useSelector } from "react-redux";
 import { BusinessFactsSwiper } from "../sections/business-facts-swiper";
+import { CostCard } from "../components/cost-card";
+import { Pannel } from "../components";
 
 const HotelDetailScreen = React.memo(({ type, id }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -64,19 +66,30 @@ const HotelDetailScreen = React.memo(({ type, id }) => {
   return (
     <div className="w-full h-full">
       <Layout isNavBg={true}>
-        <div className=" md:px-4">
+        <div className=" md:px-4 w-full">
           <HotelOverview type={type} />
           <HotelDetail type={type} id={id} />
-          {event?.itinerary && <Itinerary />}
-          <BusinessFactsSwiper className="bg-white" />
-          <AvailabilityCalendar
-            dateRange={dateRange}
-            handleDateChange={handleDateChange}
-            isMobile={isMobile}
-            clearDateRange={clearDateRange} // Pass clearDateRange as prop
-          />
-          <PopularAmenities />
-          <ThingsKnow />
+
+          <Pannel className="flex flex-col-reverse lg:flex-row gap-5 w-full">
+            <div className=" h-full w-full lg:w-[70%]">
+              {event?.itinerary && <Itinerary />}
+              <BusinessFactsSwiper className="bg-white lg:!pl-0" />
+              <AvailabilityCalendar
+                dateRange={dateRange}
+                handleDateChange={handleDateChange}
+                isMobile={isMobile}
+                clearDateRange={clearDateRange} // Pass clearDateRange as prop
+              />
+              <PopularAmenities />
+              <ThingsKnow />
+            </div>
+
+            {/* Sticky only on larger screens */}
+            <div className="lg:sticky lg:top-5 ">
+              <CostCard />
+            </div>
+          </Pannel>
+
           <GuestReviews />
         </div>
       </Layout>

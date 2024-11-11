@@ -17,7 +17,7 @@ export const ThingsKnow = () => {
   };
 
   return (
-    <Pannel className="flex flex-col flex-wrap gap-5 md:gap-8 p-5">
+    <Pannel className="flex flex-col flex-wrap gap-5 md:gap-8 p-5 lg:!pl-0">
       {/* Header */}
       <Typography variant="h3" className="font-semibold">
         Things to Know

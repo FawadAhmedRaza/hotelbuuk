@@ -17,10 +17,11 @@ import {
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
 import { paypalCaptureOrder } from "@/src/actions/payment.action";
-import StripePayment from "../stripe-payment";
-import ReportListingModal from "./modal/report-listing-modal";
+import StripePayment from "../sections/stripe-payment";
+import ReportListingModal from "../sections/hotel-details/modal/report-listing-modal";
+import { paths } from "../contants";
 
-export const HotelBio = ({ type, id }) => {
+export const CostCard = ({ type, id }) => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [guestCount, setGuestCount] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -47,6 +48,14 @@ export const HotelBio = ({ type, id }) => {
 
   const handleCalculation = (number) => {
     setGuestCount(number);
+  };
+
+  const handleReport = () => {
+    if (user) {
+      reportModal.onTrue();
+    } else {
+      router.push(paths.auth.login);
+    }
   };
 
   const createReservation = async () => {
@@ -185,30 +194,10 @@ export const HotelBio = ({ type, id }) => {
   }, [payment_intent, redirect_status]);
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white  gap-5 mt-10 ">
-      <div className="  w-full  lg:w-[70%] ">
-        <div className=" flex flex-col mt-5 gap-10 justify-start  items-start w-full  ">
-          <div className="">
-            <Typography variant="h4" className=" font-semibold text-primary">
-              Teaching Tool
-            </Typography>
-            <div className=" mt-3">
-              <Built>{event?.nomad?.video}</Built>
-              <Built>{event?.nomad?.sample}</Built>
-              <Built>{event?.nomad?.projector}</Built>
-            </div>
-          </div>
-          <div className="">
-            <Typography variant="h4" className=" font-semibold text-primary">
-              Competence
-            </Typography>
-            <div className=" mt-3">
-              <Built>Market Research</Built>
-              <Built>Negotiation</Built>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div
+      className="flex flex-col lg:flex-row bg-white gap-5  w-full "
+      style={{ position: "sticky", top: "70px" }}
+    >
       {/* Right Panel - Hotel Details and Booking Information */}
       <Modal
         title="Payment Method"
@@ -255,8 +244,8 @@ export const HotelBio = ({ type, id }) => {
       </Modal>
 
       {/* Cost Card */}
-      <div className="w-full lg:w-[30%]  py-4   flex flex-col justify-between border-neutral-400" style={{ position: "sticky", top: "20px" }}>
-        <Card className="flex  flex-col gap-1 w-full">
+      <div className="w-auto py-2 flex flex-col justify-between border-neutral-400 ">
+        <Card className="flex flex-col gap-1 w-auto py-4">
           <div className="w-full">
             <Typography variant="p" className=" font-medium text-gray-500">
               ${event?.price} Per / Night
@@ -264,7 +253,7 @@ export const HotelBio = ({ type, id }) => {
             <Typography variant="p" className="font-semibold text-start my-3  ">
               {event?.title}
             </Typography>
-            <Typography variant="h6" className="font-semibold   mt-2">
+            <Typography variant="p" className="font-semibold   mt-2">
               {event_type === "NOMAD"
                 ? event?.accomodation_type === "bnb"
                   ? `${event?.city} ${event?.country}`
@@ -274,7 +263,7 @@ export const HotelBio = ({ type, id }) => {
           </div>
 
           {/* Dates and Guests */}
-          <div className=" flex justify-between bg-neutral-100 w-full rounded-full px-5 ju py-2 shadow-sm  items-center mt-2 divide-x divide-neutral-200 ">
+          <div className=" flex justify-between bg-neutral-100 w-full rounded-full px-5  py-2 shadow-sm  items-center mt-2 divide-x divide-neutral-200 ">
             <div className="flex flex-col justify-center  items-center sm:items-start  ">
               <Typography
                 variant="p"
@@ -310,7 +299,7 @@ export const HotelBio = ({ type, id }) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-5 w-full pt-5">
+          <div className="flex flex-col gap-3 w-full pt-5">
             <div className=" flex gap-2  justify-between border-b w-full pb-2 border-neutral-500 ">
               <Typography
                 variant="p"
@@ -357,7 +346,7 @@ export const HotelBio = ({ type, id }) => {
                   </Typography>
                 </span>
               </div>
-              <span className="flex justify-between items-center mt-2 mb-3">
+              <span className="flex justify-between items-center  mb-3">
                 <Typography variant="h6" className="font-semibold">
                   Total
                 </Typography>
@@ -379,7 +368,14 @@ export const HotelBio = ({ type, id }) => {
                   </Typography>
                 </div>
               ) : data?.booking_status === "PENDING" ? (
-                <Button className="w-full mt-2">Request Pending</Button>
+                <div className="flex bg-amber-100  p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography
+                    variant="p"
+                    className="font-medium text-sm text-center text-amber-900"
+                  >
+                    Your request has not yet been fulfilled.
+                  </Typography>
+                </div>
               ) : data?.booking_status === "ACCEPTED" ? (
                 <Button
                   loading={loading}
@@ -389,9 +385,23 @@ export const HotelBio = ({ type, id }) => {
                   Pay now
                 </Button>
               ) : data?.booking_status === "REJECTED" ? (
-                <Button className="w-full mt-2">Request Rejected</Button>
+                <div className="flex bg-red-100  p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography
+                    variant="p"
+                    className="font-medium text-sm text-center text-red-900"
+                  >
+                    Your request has been rejected.{" "}
+                  </Typography>
+                </div>
               ) : data?.booking_status === "PAID" ? (
-                <Button className="w-full mt-2">Event booked</Button>
+                <div className="flex bg-green-100  p-2 rounded-md justify-between items-center mt-2 mb-3">
+                  <Typography
+                    variant="p"
+                    className="font-medium text-sm text-center text-green-900 w-full"
+                  >
+                    You are part of this event.{" "}
+                  </Typography>
+                </div>
               ) : (
                 <Button
                   loading={loading}
@@ -404,7 +414,7 @@ export const HotelBio = ({ type, id }) => {
             </div>
           </div>
         </Card>
-        <p className="cursor-pointer" onClick={reportModal.onTrue}>
+        <p className="cursor-pointer" onClick={handleReport}>
           <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
             <Iconify iconName="mynaui:flag-solid" className="text-black" />
             <Typography variant="p" className=" font-medium">
