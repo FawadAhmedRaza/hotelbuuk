@@ -147,7 +147,7 @@ const HotelsListSection = React.memo(() => {
                     <div className="flex gap-2">
                       {row?.hotelFacilites?.slice(0, 4)?.map((fac) => (
                         <span
-                          className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap"
+                          className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap"
                           key={fac?.id}
                         >
                           {fac?.name}
@@ -155,7 +155,7 @@ const HotelsListSection = React.memo(() => {
                       ))}
 
                       {row?.room_facilities?.length > 4 && (
-                        <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                        <span className="p-2 rounded-lg text-xs text-black bg-[#F2F2F2] text-nowrap">
                           +{row?.hotelFacilites?.length - 4} more
                         </span>
                       )}
