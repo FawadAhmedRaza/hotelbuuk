@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Iconify, Typography, Card } from "@/src/components";
+import { Button, Iconify, Typography, Card, AnchorTag } from "@/src/components";
 import Built from "@/src/components/built";
 import { useSelector } from "react-redux";
 import { calculateDaysBetweenDates } from "@/src/libs/helper";
@@ -403,12 +403,14 @@ export const HotelBio = ({ type, id }) => {
             </div>
           </div>
         </Card>
-        <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
-          <Iconify iconName="mynaui:flag-solid" className="text-black" />
-          <Typography variant="p" className=" font-medium">
-            Report This Listing
-          </Typography>
-        </span>
+        <AnchorTag href={"#"}>
+          <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
+            <Iconify iconName="mynaui:flag-solid" className="text-black" />
+            <Typography variant="p" className=" font-medium">
+              Report This Listing
+            </Typography>
+          </span>
+        </AnchorTag>
       </div>
     </div>
   );
