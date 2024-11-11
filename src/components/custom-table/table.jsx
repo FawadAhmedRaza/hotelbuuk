@@ -83,19 +83,9 @@ export const CustomTable = React.memo(
                     className={`h-16 ${
                       selectedItems.includes(row.id)
                         ? "text-primary bg-custom-grey"
-                        : "odd:bg-white even:bg-tertiary"
+                        : "odd:bg-white"
                     }`}
                   >
-                    {/* {enableSelection && (
-                    <td className="px-6 py-4">
-                      <CustomCheckbox
-                        checked={selectedItems.includes(row?.id)}
-                        onChange={() => {
-                          handleSelectItem(row?.id, row);
-                        }}
-                      />
-                    </td>
-                  )} */}
                     {renderRow(
                       row,
                       handleSelectItem,

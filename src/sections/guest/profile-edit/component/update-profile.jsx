@@ -23,7 +23,6 @@ import {
   Typography,
 } from "@/src/components";
 
-
 import { enqueueSnackbar } from "notistack";
 import axiosInstance, { endpoints } from "@/src/utils/axios";
 import { paths } from "@/src/contants";
@@ -150,7 +149,7 @@ const UpdateGuestProfile = ({ defaultValues }) => {
           >
             Delete profile
           </Button>
-          <Button type="submit" loading={isSubmitting}>
+          <Button type="submit" className={"!bg-black"} loading={isSubmitting}>
             Save
           </Button>
         </div>

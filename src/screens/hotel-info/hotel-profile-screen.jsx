@@ -187,7 +187,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
             >
               Delete profile
             </Button>
-            <Button loading={isSubmitting} type="submit">
+            <Button className="!bg-black" loading={isSubmitting} type="submit">
               {isEdit ? "Save" : "Submit"}
             </Button>
           </div>

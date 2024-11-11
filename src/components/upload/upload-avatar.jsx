@@ -45,7 +45,7 @@ export default function UploadAvatar({
     <div
       {...getRootProps()}
       className={`relative p-1 mx-auto  w-[150px] h-[150px] cursor-pointer rounded-full border border-dashed transition-opacity ${
-        hasError ? "border-red-500" : "border-[#852169]"
+        hasError ? "border-red-500" : "border-[#9d9c9c]"
       } ${disabled ? "opacity-50 pointer-events-none" : ""}`}
     >
       <input {...getInputProps()} />
@@ -70,8 +70,8 @@ export default function UploadAvatar({
         )}
       </div>
       {isEdit || preview ? (
-        <div className="flex justify-center items-center z-20 absolute p-2 bottom-0 right-3 rounded-full bg-primary">
-          <Iconify iconName="mage:edit" className="  size-5  text-white" />
+        <div className="flex justify-center items-center z-20 absolute p-2 bottom-0 right-3 rounded-full bg-black">
+          <Iconify iconName="mage:edit" className="size-5 text-white" />
         </div>
       ) : (
         ""
