@@ -86,7 +86,7 @@ export const SetAvailability = () => {
 
       <div className="relative">
         <div
-          className=" flex border border-primary py-2 px-2 sm:px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
+          className=" flex border border-gray-700 py-2 px-2 sm:px-5 rounded-lg hover:bg-primay-300 cursor-pointer w-fit"
           onClick={toggleCalender}
         >
           <span className="flex items-start gap-2 sm:gap-4  text-sm sm:text-base text-nowrap">
@@ -107,14 +107,14 @@ export const SetAvailability = () => {
               name="availibility"
               onChange={(item) => setDate([item.selection])}
               value={date}
-              rangeColors={["#852169"]}
+              rangeColors={["#8C8C8C"]}
             />
 
-            <div className="flex justify-end py-5 gap-5">
-              <Button onClick={cancelCalender} className="py-2 px-5">
+            <div className="flex justify-end py-5 gap-2">
+              <Button onClick={cancelCalender} className="py-2 px-5 !bg-[#8C8C8C]">
                 Cancel
               </Button>
-              <Button onClick={AddCalender} className="py-2 px-5">
+              <Button onClick={AddCalender} className="py-2 px-5 !bg-black">
                 Add
               </Button>
             </div>

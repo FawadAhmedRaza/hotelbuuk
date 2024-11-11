@@ -134,6 +134,7 @@ export const Itinerary = () => {
               !singleLocation?.location
             }
             onClick={handleAdd}
+            className="!bg-black"
           >
             Add
           </Button>
