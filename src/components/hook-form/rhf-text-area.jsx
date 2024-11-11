@@ -2,6 +2,7 @@ import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Typography } from "../typography";
 import { cn } from "@/src/libs/cn";
+import { get } from "lodash";
 
 export const RHFTextArea = ({
   label,
@@ -42,10 +43,10 @@ export const RHFTextArea = ({
           />
           {errors && (
             <Typography
-              variant={"p"}
-              className="!text-xs text-red-400 transition-all duration-500"
+              variant="p"
+              className={`!text-xs text-red-400 transition-all duration-500`}
             >
-              {errors?.[name.split(".")[0]]?.[name.split(".")[1]]?.message}
+              {get(errors, name)?.message}
             </Typography>
           )}
         </div>
