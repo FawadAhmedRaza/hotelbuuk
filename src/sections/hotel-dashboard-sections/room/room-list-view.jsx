@@ -111,7 +111,7 @@ const RoomsListView = React.memo(() => {
             title="Rooms List"
             action={
               <AnchorTag href={paths.createRooms.root}>
-                <Button>Create Room</Button>
+                <Button className="bg-slate-900">Create Room</Button>
               </AnchorTag>
             }
           />

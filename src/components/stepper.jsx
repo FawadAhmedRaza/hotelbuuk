@@ -8,7 +8,7 @@ export const Stepper = ({
   handleNext,
   handleBack,
   isLastStep,
-  loading
+  loading,
 }) => {
   return (
     <div className="w-full px-4 md:px-8 py-4">
@@ -59,13 +59,21 @@ export const Stepper = ({
       {/* Navigation buttons */}
       <div className="flex justify-end gap-2 my-5">
         {activeStep !== 0 && (
-          <Button disabled={activeStep === 0} onClick={handleBack}>
+          <Button
+            className="bg-slate-900"
+            disabled={activeStep === 0}
+            onClick={handleBack}
+          >
             Back
           </Button>
         )}
-        {!isLastStep && <Button onClick={handleNext}>Next</Button>}
+        {!isLastStep && (
+          <Button className="bg-slate-900" onClick={handleNext}>
+            Next
+          </Button>
+        )}
         {isLastStep && (
-          <Button type="submit" loading={loading}>
+          <Button className="bg-slate-900" type="submit" loading={loading}>
             Submit
           </Button>
         )}
