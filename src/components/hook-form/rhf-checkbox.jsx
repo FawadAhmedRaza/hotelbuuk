@@ -48,7 +48,7 @@ export const RHFCheckbox = React.memo(
                   value={field.value}
                   checked={field.value} // Use field.value directly
                   onChange={(e) => field.onChange(e.target.checked)}
-                  className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                  className="h-4 w-4 rounded-xl border border-black accent-black transition-colors duration-200"
                 />
                 <span className="text-sm text-gray-700 font-montserrat font-medium">
                   {label}

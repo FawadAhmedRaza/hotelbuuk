@@ -77,7 +77,7 @@ export const BussinessMeeting = () => {
               </Typography>
               <Typography
                 variant="h5"
-                className="font-semibold !text-primary cursor-pointer"
+                className="font-semibold !text-gray-500 cursor-pointer"
                 onClick={openAmenitiesModal.onTrue}
               >
                 Add more

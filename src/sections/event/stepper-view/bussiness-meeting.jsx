@@ -118,7 +118,7 @@ export const BussinessMeeting = () => {
               </Typography>
               <Typography
                 variant="h5"
-                className="font-semibold !text-primary cursor-pointer"
+                className="font-semibold !text-gray-500 cursor-pointer"
                 onClick={openAmenitiesModal.onTrue}
               >
                 Add more
@@ -136,7 +136,7 @@ export const BussinessMeeting = () => {
                     onChange={(e) =>
                       handleCheckboxChange(amenity, e.target.checked)
                     }
-                    className="h-4 w-4 rounded-xl border border-black accent-primary transition-colors duration-200"
+                    className="h-4 w-4 rounded-xl border border-black accent-black transition-colors duration-200"
                   />
                   <label
                     className="text-sm text-gray-700 cursor-pointer select-none font-montserrat font-medium"
@@ -220,7 +220,7 @@ export const BussinessMeeting = () => {
                   )
                 }
               />
-              
+
               <RHFTextArea
                 label="About bnb"
                 placeholder="Enter short details about bnb"

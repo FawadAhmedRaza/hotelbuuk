@@ -107,6 +107,7 @@ export const GuestLearn = () => {
               topicInfo?.title?.length < 3 || topicInfo?.description?.length < 3
             }
             onClick={handleAdd}
+            className="!bg-black"
           >
             Add
           </Button>

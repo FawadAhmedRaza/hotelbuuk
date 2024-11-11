@@ -129,6 +129,7 @@ export const Itinerary = () => {
               singleLocation?.stop?.length < 3 ||
               !singleLocation?.location
             }
+            className="!bg-black"
             onClick={handleAdd}
           >
             Add
