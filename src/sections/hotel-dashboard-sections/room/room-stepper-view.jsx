@@ -122,7 +122,6 @@ export const RoomStepperView = () => {
     data.hotel_id = user?.hotels?.[0]?.id;
     const formData = new FormData();
 
-
     for (const key in data) {
       if (
         data[key] !== null &&

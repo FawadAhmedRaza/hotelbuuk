@@ -81,7 +81,11 @@ const InternalNomadsListView = () => {
       <Breadcrumb
         title="Internal Nomads"
         action={
-          <Button type="button" onClick={inviteModal.onTrue}>
+          <Button
+            className="bg-slate-900"
+            type="button"
+            onClick={inviteModal.onTrue}
+          >
             Invite Nomad
           </Button>
         }

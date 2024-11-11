@@ -65,7 +65,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
               >
                 {`Hi, ${user?.hotel_name}`}
               </Typography>
-            )}
+            )} 
             {user?.profile_img ? (
               <ProfileAvatar
                 src={user?.profile_img}

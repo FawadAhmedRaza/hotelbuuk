@@ -10,7 +10,7 @@ export const guestReviewsData = [
             "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.",
     },
     {
-        id: 1,
+        id: 2,
         name: "Brittany",
         location: "Moorpark, California",
         user:"/assets/images/review.png",
@@ -20,7 +20,7 @@ export const guestReviewsData = [
             "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.",
     },
     {
-        id: 1,
+        id: 3,
         name: "Brittany",
         location: "Moorpark, California",
         user:"/assets/images/review.png",
@@ -30,7 +30,7 @@ export const guestReviewsData = [
             "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.",
     },
     {
-        id: 1,
+        id: 4,
         name: "Brittany",
         location: "Moorpark, California",
         user:"/assets/images/review.png",
@@ -40,7 +40,7 @@ export const guestReviewsData = [
             "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.",
     },
     {
-        id: 1,
+        id: 5,
         name: "Brittany",
         location: "Moorpark, California",
         user:"/assets/images/review.png",
@@ -50,7 +50,7 @@ export const guestReviewsData = [
             "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.",
     },
     {
-        id: 1,
+        id: 6,
         name: "Brittany",
         location: "Moorpark, California",
         user:"/assets/images/review.png",

@@ -4,6 +4,7 @@ import { BgIcon } from "../components/bg-icon";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "../contants";
+import { twitter_link } from "../_mock/_footer-content";
 
 export const Footer = () => {
   return (
@@ -20,16 +21,21 @@ export const Footer = () => {
           </div>
         </Link>
 
-        <div className="flex items-start md:items-center">
+        <div className="flex flex-col gap-5 items-start md:items-center">
+          <Typography
+            variant="h5"
+            className="w-full text-white text-wrap text-justify font-semibold"
+          >
+            Welcome to Hotelbuuk, where luxury meets productivity.
+          </Typography>
           <Typography
             variant="p"
-            className="text-sm w-full text-white text-wrap text-justify"
+            className="w-full text-white text-wrap text-justify"
           >
-            The printing and typesetting industry. Lorem Ipsum has been The
-            printing and typesetting industry. Lorem Ipsum has been The printing
-            and typesetting industry. Lorem Ipsum has been The printing and
-            typesetting industry. Lorem Ipsum has been The printing and
-            typesetting industry. Lorem Ipsum has been
+            Elevate your business experience with our tailored tours and factory
+            visitations designed for business owners seeking networking
+            opportunities, business expansion, and seamless, high-end
+            accommodations.
           </Typography>
         </div>
 
@@ -77,12 +83,14 @@ export const Footer = () => {
                 className="text-black !text-2xl"
               />
             </div>
-            <div className="p-2 bg-white rounded-full w-min h-min text-2xl">
-              <Iconify
-                iconName="pajamas:twitter"
-                className="text-black !text-2xl"
-              />
-            </div>
+            <Link href={twitter_link} target="_blank" rel="noopener noreferrer">
+              <div className="p-2 bg-white rounded-full w-min h-min text-2xl">
+                <Iconify
+                  iconName="pajamas:twitter"
+                  className="text-black !text-2xl"
+                />
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -94,9 +102,9 @@ export const Footer = () => {
             <BgIcon iconName="ic:baseline-email" iconClass="!text-black" />
             <AnchorTag
               className="text-white font-poppins font-normal text-base"
-              href="#"
+              href="mailto:buuk@hotelbuuk.com"
             >
-              lorumispum@lorum.com
+              buuk@hotelbuuk.com
             </AnchorTag>
           </div>
         </div>

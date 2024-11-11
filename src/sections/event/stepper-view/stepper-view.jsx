@@ -96,10 +96,13 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       is: "hotel",
       then: (schema) =>
         schema
-          .required("At least two images are required")
-          .min(8, "A minimum of 8 images is required for a Event.")
+          .required("At least two images are required for hotels")
+          .min(2, "At least two images are required for hotels")
           .max(20, "A maximum of 20 images is allowed"),
-      otherwise: (schema) => schema.notRequired(),
+      otherwise: (schema) =>
+        schema
+          .min(8, "A minimum of 8 images is required for an Event.")
+          .max(20, "A maximum of 20 images is allowed"),
     }),
     topics: Yup.array()
       .min(1, "At least one topic is required")

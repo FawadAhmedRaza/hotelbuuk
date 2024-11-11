@@ -1,6 +1,7 @@
 import React from "react";
 import { AnchorTag, Button, Iconify, Pannel, Typography } from "../components";
 import { paths } from "../contants";
+import Link from "next/link";
 
 export const Banner = React.memo(() => {
   return (
@@ -16,10 +17,16 @@ export const Banner = React.memo(() => {
         <Typography variant="h6" className=" text-center sm:text-start">
           Find hotels with in-house consultants to walk you through.
         </Typography>
-        <AnchorTag href={"#"}>
-          {/* <Button>Signup Now</Button> */}
-          <Iconify iconName="logos:whatsapp-icon" className="!size-10" />
-        </AnchorTag>
+        <Link href={"#"}>
+          <Button className="bg-[#25D366] px-5 !font-semibold">
+            {" "}
+            <Iconify
+              iconName="ic:baseline-whatsapp"
+              className="!text-white !size-8"
+            />{" "}
+            Chat with us
+          </Button>
+        </Link>
       </div>
       <div className=" overflow-hidden h-full sm:h-60  w-full  rounded-md sm:w-[650px] relative z-10">
         <img

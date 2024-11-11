@@ -20,6 +20,7 @@ import {
 import { paths } from "@/src/contants";
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
+import Link from "next/link";
 
 const header = [
   { id: 1, label: "Title" },
@@ -111,9 +112,9 @@ const NomadEventsView = React.memo(() => {
           <Breadcrumb
             title="Nomads Events"
             action={
-              <AnchorTag href={paths.nomadDashboard.events.create}>
-                <Button>Create Event</Button>
-              </AnchorTag>
+              <Link href={paths.nomadDashboard.events.create}>
+                <Button className="bg-slate-900">Create Event</Button>
+              </Link>
             }
           />
           <div className="border border-gray-200 rounded-xl">
