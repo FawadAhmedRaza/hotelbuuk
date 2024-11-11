@@ -2,18 +2,12 @@ import React from "react";
 import { AnchorTag, Button, Iconify, Pannel, Typography } from "../components";
 import { paths } from "../contants";
 import Link from "next/link";
+import { whatsapp_link } from "../_mock/_footer-content";
 
 export const Banner = React.memo(() => {
   return (
     <Pannel className="flex flex-col md:flex-row w-full items-center gap-10 md:gap-3 h-full ">
       <div className="flex flex-col justify-center items-center md:items-start gap-3 lg:gap-6 h-full w-full grow">
-        {/* <Typography
-          variant="h3"
-          className="font-semibold  md:!leading-50ld text-center sm:text-start"
-        >
-          Are you taking your business abroad{" "}
-          <br className=" hidden md:block" /> or opening a new branch?
-        </Typography> */}
         <Typography
           variant="h2"
           className="font-semibold  !capitalize md:!leading-50ld text-center sm:text-start"
@@ -23,7 +17,7 @@ export const Banner = React.memo(() => {
         <Typography variant="h6" className=" text-center sm:text-start">
           Find hotels with in-house consultants to walk you through.
         </Typography>
-        <Link href={"#"}>
+        <Link href={whatsapp_link} target="_blank" rel="noopener noreferrer">
           <Button className="bg-[#25D366] px-5 !font-semibold">
             {" "}
             <Iconify
