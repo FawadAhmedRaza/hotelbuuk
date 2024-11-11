@@ -18,6 +18,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { paypalCaptureOrder } from "@/src/actions/payment.action";
 import StripePayment from "../stripe-payment";
+import ReportListingModal from "./modal/report-listing-modal";
 
 export const HotelBio = ({ type, id }) => {
   const [paymentMethod, setPaymentMethod] = useState("card");
@@ -25,6 +26,7 @@ export const HotelBio = ({ type, id }) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const reportModal = useModal();
 
   const params = useSearchParams();
   const payment_intent = params.get("payment_intent");
@@ -33,7 +35,6 @@ export const HotelBio = ({ type, id }) => {
 
   const { event } = useSelector((state) => state.allEvents.getById);
   const { data } = useSelector((state) => state.bookings.userBooking);
-  console.log("booking", data);
 
   const { user } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
@@ -322,7 +323,7 @@ export const HotelBio = ({ type, id }) => {
                 className="!outline-none !border-none !text-[16px]  w-10"
                 placeholder="5"
                 onChange={(e) => handleCalculation(e.target.value)}
-                value={data ? data?.no_of_guests : guestCount}
+                value={guestCount}
               />
             </div>
             <Typography
@@ -360,12 +361,10 @@ export const HotelBio = ({ type, id }) => {
                 </Typography>
                 <Typography variant="h6" className="font-semibold">
                   $
-                  {data
-                    ? data?.total_price
-                    : (
-                        event?.price * stayNights * guestCount +
-                        ((event?.price * stayNights * guestCount) / 100) * 20
-                      ).toFixed(2)}
+                  {(
+                    event?.price * stayNights * guestCount +
+                    ((event?.price * stayNights * guestCount) / 100) * 20
+                  ).toFixed(2)}
                 </Typography>
               </span>
               {user?.user_type !== "GUEST" ? (
@@ -403,15 +402,22 @@ export const HotelBio = ({ type, id }) => {
             </div>
           </div>
         </Card>
-        <AnchorTag href={"#"}>
+        <p className="cursor-pointer" onClick={reportModal.onTrue}>
           <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
             <Iconify iconName="mynaui:flag-solid" className="text-black" />
             <Typography variant="p" className=" font-medium">
               Report This Listing
             </Typography>
           </span>
-        </AnchorTag>
+        </p>
       </div>
+
+      {reportModal.onTrue && (
+        <ReportListingModal
+          isOpen={reportModal.value}
+          onClose={reportModal.onFalse}
+        />
+      )}
     </div>
   );
 };
