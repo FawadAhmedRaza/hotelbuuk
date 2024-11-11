@@ -35,6 +35,7 @@ const HotelBookingsListOverview = () => {
       title: "TOTAL",
       subTitle: "",
       value: allBookings?.length || 0,
+      bgColor: "bg-[#F9FAFB]",
     },
     {
       id: 2,
@@ -44,33 +45,37 @@ const HotelBookingsListOverview = () => {
       value:
         allBookings?.filter((item) => item?.booking_status === "PENDING")
           ?.length || 0,
+      bgColor: "bg-[#FFF5CC]",
     },
     {
-      id: 1,
+      id: 3,
       icon: "fluent-mdl2:completed",
       title: "ACCEPTED",
       subTitle: "Accepted",
       value:
         allBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
+      bgColor: "bg-[#EDF0FF]",
     },
     {
-      id: 1,
+      id: 4,
       icon: "material-symbols:paid-outline",
       title: "PAID",
       subTitle: "Paid",
       value:
         allBookings?.filter((item) => item?.booking_status === "PAID")
           ?.length || 0,
+      bgColor: "bg-[#CAFDF5]",
     },
     {
-      id: 1,
+      id: 5,
       icon: "material-symbols:cancel-outline",
       title: "REJECTED",
       subTitle: "Rejected",
       value:
         allBookings?.filter((item) => item?.booking_status === "REJECTED")
           ?.length || 0,
+      bgColor: "bg-[#FFE9D5]",
     },
   ];
 
@@ -94,6 +99,8 @@ const HotelBookingsListOverview = () => {
                 title={item?.title}
                 subTitle={item?.subTitle}
                 value={item?.value}
+                bgColor={item?.bgColor}
+                textColor={item?.textColor}
               />
             ))}
           </div>

@@ -63,6 +63,17 @@ const GuestCards = () => {
     },
     {
       id: 4,
+      icon: "material-symbols:paid-outline",
+      title: "PAID",
+      subTitle: "Paid",
+      value:
+        guestBookings?.filter((item) => item?.booking_status === "PAID")
+          ?.length || 0,
+      bgColor: "bg-[#CAFDF5]",
+    },
+
+    {
+      id: 5,
       icon: "material-symbols:cancel-outline",
       title: "REJECTED",
       subTitle: "Rejected",
@@ -79,7 +90,7 @@ const GuestCards = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
       {cardsData.map((item) => (
         <div key={item.id} className="">
           {item.value === undefined || item?.value === null ? (

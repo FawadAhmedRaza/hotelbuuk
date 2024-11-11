@@ -48,26 +48,27 @@ const NomadBookingsListOverview = () => {
       bgColor: "bg-[#FFF5CC]",
     },
     {
-      id: 1,
+      id: 3,
       icon: "fluent-mdl2:completed",
       title: "ACCEPTED",
       subTitle: "Accepted",
       value:
         allBookings?.filter((item) => item?.booking_status === "ACCEPTED")
           ?.length || 0,
-      bgColor: "bg-[#D3FCD2]",
+      bgColor: "bg-[#EDF0FF]",
     },
     {
-      id: 1,
+      id: 4,
       icon: "material-symbols:paid-outline",
       title: "PAID",
       subTitle: "Paid",
       value:
         allBookings?.filter((item) => item?.booking_status === "PAID")
           ?.length || 0,
+      bgColor: "bg-[#CAFDF5]",
     },
     {
-      id: 1,
+      id: 5,
       icon: "material-symbols:cancel-outline",
       title: "REJECTED",
       subTitle: "Rejected",
@@ -90,7 +91,7 @@ const NomadBookingsListOverview = () => {
         <>
           <Breadcrumb title="Bookings List" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {overViewData?.map((item) => (
               <BookingsOverViewCards
                 key={item?.id}

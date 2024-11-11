@@ -24,6 +24,7 @@ import {
   Pannel,
   Typography,
 } from "@/src/components";
+import Link from "next/link";
 
 const LoginScreen = () => {
   const { login } = useAuthContext();
@@ -58,16 +59,18 @@ const LoginScreen = () => {
       <div
         className={`flex flex-col justify-center lg:justify-start items-center lg:items-start gap-5 w-11/12 md:w-9/12 lg:w-full h-full`}
       >
-        <div className="flex items-center gap-2">
-          <img
-            src="/assets/images/transperent-logo/transperent/PINK.png"
-            alt="log"
-            className=" w-16"
-          />
-          <Typography variant="h3" className="font-bold text-primary">
-            Hotelbuuk
-          </Typography>
-        </div>
+        <Link href={paths.root}>
+          <div className="flex items-center gap-2">
+            <img
+              src="/assets/images/transperent-logo/transperent/PINK.png"
+              alt="log"
+              className=" w-16"
+            />
+            <Typography variant="h3" className="font-bold text-primary">
+              Hotelbuuk
+            </Typography>
+          </div>
+        </Link>
         <div className="flex flex-col justify-center  items-center lg:items-start lg:justify-start gap-3 mb-5 w-full">
           <Typography variant="h2" className="font-semibold">
             Login

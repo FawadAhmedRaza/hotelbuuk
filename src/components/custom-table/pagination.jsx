@@ -69,9 +69,9 @@ export const Pagination = React.memo(
                 onClick={(e) => {
                   handlePageChange(pageNumber), e.preventDefault();
                 }}
-                className={`rounded-lg cursor-pointer w-8 h-8 outline-none text-primary   ${
+                className={`rounded-lg cursor-pointer w-8 h-8 outline-none text-black   ${
                   pageNumber === currentPage
-                    ? "bg-quaternary shadow-md border-2 border-white"
+                    ? "bg-gray-100 shadow-md border-2 border-white"
                     : "bg-none"
                 }`}
               >
@@ -93,7 +93,7 @@ export const Pagination = React.memo(
 
         <div
           ref={dropdownRef}
-          className="relative bg-black rounded-lg shadow-custom-shadow cursor-pointer w-16 h-8 flex justify-start items-center text-white text-sm px-2.5  !z-10 font-normal"
+          className="relative bg-gray-color rounded-lg shadow-custom-shadow cursor-pointer w-16 h-8 flex justify-start items-center text-white text-sm px-2.5  !z-10 font-normal"
           onClick={() => setIsOpen(!isOpen)}
         >
           {rowsPerPage}
