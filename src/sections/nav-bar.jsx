@@ -8,6 +8,7 @@ import { useBoolean } from "../hooks/use-boolean";
 import { Menu } from "./menu";
 import { cn } from "../libs/cn";
 import { useAuthContext } from "../providers/auth/context/auth-context";
+import Link from "next/link";
 
 export const NavBar = React.memo(({ className }) => {
   const { user } = useAuthContext();
@@ -58,6 +59,11 @@ export const NavBar = React.memo(({ className }) => {
       {isOpen && (
         <Menu isOpen={isOpen} setIsOpen={setIsOpen} onClick={toggleDrawer} />
       )}
+      <div className="hidden md:block">
+        <AnchorTag href="#network">
+          <Typography variant="h6">Find a Network</Typography>
+        </AnchorTag>
+      </div>
       <div className="flex gap-2 sm:gap-5">
         {/* Login */}
         <div
