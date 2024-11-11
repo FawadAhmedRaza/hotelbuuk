@@ -51,7 +51,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       <div className="flex justify-between items-center">
         <Typography
           variant="h3"
-          className="!text-3xl md:!text-4xl font-bold text-primary text-start"
+          className="!text-3xl md:!text-4xl font-bold text-black text-start"
         >
           Hotelbuuk
         </Typography>
@@ -59,7 +59,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
         <BgIcon
           iconName="charm:cross"
           onClick={onClick}
-          className="bg-primary !text-white"
+          className="bg-black !text-white"
           iconClass="!text-white size-8"
         />
       </div>
@@ -77,19 +77,19 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
               }}
               className={`flex justify-between items-center ${
                 isActive(item?.path)
-                  ? "bg-tertiary hover:bg-tertiary "
-                  : "hover:bg-tertiary"
+                  ? "bg-[#F2F2F2] hover:bg-[#F2F2F2] "
+                  : "hover:bg-[#F2F2F2]"
               } rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                 isActive(item?.path)
-                  ? "bg-tertiary shadow-custom-shadow"
-                  : "hover:bg-tertiary"
+                  ? "bg-[#F2F2F2] shadow-custom-shadow"
+                  : "hover:bg-[#F2F2F2]"
               }`}
             >
               <span className="text-lg">{item?.label}</span>
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
-                  className={`transition-all duration-300 text-primary size-7 ${
+                  className={`transition-all duration-300 text-black size-7 ${
                     isDropdownOpen === item.label ? "rotate-90" : ""
                   }`}
                 />
@@ -114,10 +114,10 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                       key={child.id}
                       href={child.path}
                       onClick={onClick}
-                      className={`flex justify-between items-center hover:bg-[#fef5fc] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
+                      className={`flex justify-between items-center hover:bg-[#F2F2F2] rounded-md !w-[100%] cursor-pointer rounded-10rd h-10 px-4 leading-none ${
                         isActive(child?.path)
-                          ? "bg-[#feccf4]-2 shadow-custom-shadow"
-                          : "hover:bg-[#feccf4]-2"
+                          ? "bg-[#F2F2F2] shadow-custom-shadow"
+                          : "hover:bg-[#F2F2F2]"
                       }`}
                     >
                       <span className="text-lg pl-4">{child.title}</span>
@@ -130,7 +130,7 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
         ))}
 
         {authenticated && (
-          <Button className="mb-12" onClick={handleLogout}>
+          <Button className="mb-12 !bg-black" onClick={handleLogout}>
             Logout
           </Button>
         )}
