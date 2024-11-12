@@ -93,16 +93,12 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     safeties: Yup.array().optional(),
     cancelPolicies: Yup.array().optional(),
     images: Yup.array().when("accomodation_type", {
-      is: "hotel",
+      is: "bnb",
       then: (schema) =>
         schema
-          .required("At least two images are required for hotels")
-          .min(2, "At least two images are required for hotels")
+          .min(8, "At least 8 images are required for the event")
           .max(20, "A maximum of 20 images is allowed"),
-      otherwise: (schema) =>
-        schema
-          .min(8, "A minimum of 8 images is required for an Event.")
-          .max(20, "A maximum of 20 images is allowed"),
+      otherwise: (schema) => schema.notRequired(),
     }),
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -333,8 +329,8 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         );
         if (request?.status === 201) {
           enqueueSnackbar("Event created", { variant: "success" });
-          router.push(paths.nomadDashboard.events.root);
         }
+        router.push(paths.nomadDashboard.events.root);
       } catch (error) {
         console.log(error);
         enqueueSnackbar(error?.message, { variant: "error" });
@@ -388,7 +384,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         }
       } catch (error) {
         console.log(error);
-        enqueueSnackbar(error?.message || "An error occurred", { variant: "error" });
+        enqueueSnackbar(error?.message || "An error occurred", {
+          variant: "error",
+        });
       }
     }
   });
