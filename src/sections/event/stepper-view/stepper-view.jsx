@@ -384,11 +384,11 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         );
         if (request?.status === 201) {
           enqueueSnackbar("Event updated", { variant: "success" });
+          router.push(paths.nomadDashboard.events.root);
         }
-        router.push(paths.nomadDashboard.events.root);
       } catch (error) {
         console.log(error);
-        enqueueSnackbar(error?.message, { variant: "error" });
+        enqueueSnackbar(error?.message || "An error occurred", { variant: "error" });
       }
     }
   });
