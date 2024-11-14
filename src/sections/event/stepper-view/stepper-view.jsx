@@ -332,7 +332,9 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           enqueueSnackbar("Event created", { variant: "success" });
           router.push(paths.nomadDashboard.events.root);
         }
+
       } catch (error) {
+
         console.log(error);
         enqueueSnackbar(error?.message || "An error occurred", {
           variant: "error",

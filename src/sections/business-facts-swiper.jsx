@@ -41,12 +41,15 @@ export const BusinessFactsSwiper = React.memo(({ className }) => {
   }, []);
 
   const handleAsk = (item) => {
+    console.log(item?.user?.id);
     if (user) {
       router.push(paths?.chats?.chatsById(item?.user?.id));
     } else {
       router.push(paths?.auth?.login);
     }
   };
+
+  console.log(businessFacts);
 
   return (
     <Pannel

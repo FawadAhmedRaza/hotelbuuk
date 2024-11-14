@@ -16,6 +16,12 @@ const NotificationsSection = () => {
     (state) => state.notifications
   );
 
+  const sortedNots = [...notifications]?.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  console.log("Sorted Nots", sortedNots);
+
   useEffect(() => {
     setIsNoteLoading(true);
     async function fetchNotifications() {
@@ -34,16 +40,14 @@ const NotificationsSection = () => {
             <NotificationSkeleton />
             <NotificationSkeleton />
           </>
-        ) : !notifications || notifications.length === 0 ? (
+        ) : !sortedNots || sortedNots?.length === 0 ? (
           <div className="flex flex-col justify-center items-center gap-4 p-4 border border-gray-200 rounded-md shadow-sm">
             <Typography variant="h3" className="text-gray-500 text-sm">
               No notifications available.
             </Typography>
           </div>
         ) : (
-          notifications.map((note) => (
-            <Notification key={note.id} note={note} />
-          ))
+          sortedNots?.map((note) => <Notification key={note.id} note={note} />)
         )}
       </div>
     </Pannel>

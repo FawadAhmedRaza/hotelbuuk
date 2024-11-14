@@ -30,7 +30,7 @@ const HotelDashboardSections = () => {
 
   const dispatch = useDispatch();
 
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  // const [monthlyRevenue, setMonthlyRevenue] = useState([]);
   const [totalBookings, setTotalBookings] = useState([]);
   const [totalCheckIns, setTotalCheckIns] = useState([]);
   const [totalCheckOuts, setTotalCheckOuts] = useState([]);
@@ -46,32 +46,32 @@ const HotelDashboardSections = () => {
     }
   };
 
-  const fetchMonthlyRevenue = async () => {
-    const revenue = await getHotelMonthlyRevenue(user?.id);
-    setMonthlyRevenue(revenue);
-  };
+  // const fetchMonthlyRevenue = async () => {
+  //   const revenue = await getHotelMonthlyRevenue(user?.id);
+  //   setMonthlyRevenue(revenue);
+  // };
 
-  const fetchTotalBookings = async () => {
-    const totalBookings = await getTotalBookings(user?.id);
-    setTotalBookings(totalBookings || []);
-  };
+  // const fetchTotalBookings = async () => {
+  //   const totalBookings = await getTotalBookings(user?.id);
+  //   setTotalBookings(totalBookings || []);
+  // };
 
-  const fetchTotalCheckIns = async () => {
-    let total = await getHotelTotalCheckIns(user?.id);
-    setTotalCheckIns(total);
-  };
+  // const fetchTotalCheckIns = async () => {
+  //   let total = await getHotelTotalCheckIns(user?.id);
+  //   setTotalCheckIns(total);
+  // };
 
-  const fetchTotalCheckOuts = async () => {
-    let total = await getHotelTotalCheckOuts(user?.id);
-    setTotalCheckOuts(total);
-  };
+  // const fetchTotalCheckOuts = async () => {
+  //   let total = await getHotelTotalCheckOuts(user?.id);
+  //   setTotalCheckOuts(total);
+  // };
 
   useEffect(() => {
     fetchRecentBookings();
-    fetchMonthlyRevenue();
-    fetchTotalBookings();
-    fetchTotalCheckIns();
-    fetchTotalCheckOuts();
+    // fetchMonthlyRevenue();
+    // fetchTotalBookings();
+    // fetchTotalCheckIns();
+    // fetchTotalCheckOuts();
   }, []);
 
   return (
@@ -83,16 +83,18 @@ const HotelDashboardSections = () => {
       <RecentBooking />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <MountChart revenue={monthlyRevenue} />
+          {/* <MountChart revenue={monthlyRevenue} /> */}
+          <MountChart userId={user?.id} />
         </div>
         <div>
-          <ThisMonthBooking bookingsArr={totalBookings} />
+          {/* <ThisMonthBooking bookingsArr={totalBookings} /> */}
+          <ThisMonthBooking userId={user?.id} />
         </div>
         <div>
-          <CheckInChart totalCheckIns={totalCheckIns} />
+          <CheckInChart userId={user?.id} />
         </div>
         <div>
-          <CheckOutChart totalCheckOuts={totalCheckOuts} />
+          <CheckOutChart userId={user?.id} />
         </div>
       </div>
     </Pannel>

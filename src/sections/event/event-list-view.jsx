@@ -110,7 +110,7 @@ const NomadEventsView = React.memo(() => {
       {!isLoading ? (
         <Pannel className="flex flex-col gap-10">
           <Breadcrumb
-            title="Nomads Events"
+            title="My Listings"
             action={
               <Link href={paths.nomadDashboard.events.create}>
                 <Button className="bg-slate-900">Create Event</Button>

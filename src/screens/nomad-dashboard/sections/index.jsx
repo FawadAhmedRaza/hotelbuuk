@@ -22,6 +22,7 @@ import ThisMonthBooking from "./components/chart/this-mount-bookin";
 import { CheckInChart } from "./components/chart/check-In";
 import { CheckOutChart } from "./components/chart/check-out";
 import ProfileAlert from "./components/profile-alert";
+import { mockData } from "@/src/_mock/_charts-data";
 
 const NomadDashboardSections = () => {
   const { user } = useAuthContext();
@@ -30,10 +31,10 @@ const NomadDashboardSections = () => {
 
   const [showAlert, setShowAlert] = useState(true);
 
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
-  const [totalBookings, setTotalBookings] = useState([]);
-  const [totalCheckIns, setTotalCheckIns] = useState([]);
-  const [totalCheckOuts, setTotalCheckOuts] = useState([]);
+  // const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  // const [totalBookings, setTotalBookings] = useState([]);
+  // const [totalCheckIns, setTotalCheckIns] = useState([]);
+  // const [totalCheckOuts, setTotalCheckOuts] = useState([]);
 
   const fetchRecentBookings = async () => {
     try {
@@ -46,32 +47,32 @@ const NomadDashboardSections = () => {
     }
   };
 
-  const fetchMonthlyRevenue = async () => {
-    const revenue = await getNomadMonthlyRevenue(user?.id);
-    setMonthlyRevenue(revenue);
-  };
+  // const fetchMonthlyRevenue = async () => {
+  //   const revenue = await getNomadMonthlyRevenue(user?.id);
+  //   setMonthlyRevenue(revenue);
+  // };
 
-  const fetchTotalBookings = async () => {
-    const totalBookings = await getTotalBookingsNomad(user?.id);
-    setTotalBookings(totalBookings || []);
-  };
+  // const fetchTotalBookings = async () => {
+  //   const totalBookings = await getTotalBookingsNomad(user?.id);
+  //   setTotalBookings(totalBookings || []);
+  // };
 
-  const fetchTotalCheckIns = async () => {
-    let total = await getNomadTotalCheckIns(user?.id);
-    setTotalCheckIns(total);
-  };
+  // const fetchTotalCheckIns = async () => {
+  //   let total = await getNomadTotalCheckIns(user?.id);
+  //   setTotalCheckIns(total);
+  // };
 
-  const fetchTotalCheckOuts = async () => {
-    let total = await getNomadTotalCheckOuts(user?.id);
-    setTotalCheckOuts(total);
-  };
+  // const fetchTotalCheckOuts = async () => {
+  //   let total = await getNomadTotalCheckOuts(user?.id);
+  //   setTotalCheckOuts(total);
+  // };
 
   useEffect(() => {
     fetchRecentBookings();
-    fetchMonthlyRevenue();
-    fetchTotalBookings();
-    fetchTotalCheckIns();
-    fetchTotalCheckOuts();
+    // fetchMonthlyRevenue();
+    // fetchTotalBookings();
+    // fetchTotalCheckIns();
+    // fetchTotalCheckOuts();
   }, []);
 
   return (
@@ -83,16 +84,24 @@ const NomadDashboardSections = () => {
       <RecentBooking />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <MountChart revenue={monthlyRevenue} />
+          {/* <MountChart revenue={monthlyRevenue} /> */}
+
+          <MountChart userId={user?.id} />
         </div>
         <div>
-          <ThisMonthBooking bookingsArr={totalBookings} />
+          {/* <ThisMonthBooking bookingsArr={totalBookings} /> */}
+
+          <ThisMonthBooking userId={user?.id} />
         </div>
         <div>
-          <CheckInChart totalCheckIns={totalCheckIns} />
-        </div>
+          {/* <CheckInChart totalCheckIns={totalCheckIns} /> */}
+
+          <CheckInChart userId={user?.id} />
+        </div>  
         <div>
-          <CheckOutChart totalCheckOuts={totalCheckOuts} />
+          {/* <CheckOutChart totalCheckOuts={totalCheckOuts} /> */}
+
+          <CheckOutChart userId={user?.id} />
         </div>
       </div>
     </Pannel>

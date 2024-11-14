@@ -73,7 +73,7 @@ export const BussinessMeeting = () => {
           <div className="flex flex-col gap-5 ">
             <div className="flex gap-3 justify-start items-center">
               <Typography variant="h4" className="font-semibold">
-                Available Amenities in your B&B
+                Available Amenities
               </Typography>
               <Typography
                 variant="h5"

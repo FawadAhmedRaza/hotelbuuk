@@ -127,6 +127,13 @@ model nomad {
   projector               String?
   video                   String?
   sample                  String?
+  board                   String?
+  audio_system            String?
+  personal_competence     String?
+  pedagogic_competence    String?
+  professional_competence String?
+  social_competence       String?
+  assessment_competence   String?
   end_date                String?
   start_date              String?
   linkedin                String?

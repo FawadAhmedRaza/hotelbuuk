@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   CartesianGrid,
   LabelList,
@@ -16,38 +17,97 @@ import {
   ChartTooltipContent,
 } from "../../../../../components/ui/chart";
 import { Typography } from "@/src/components";
+import { getHotelTotalCheckIns } from "@/src/actions/hotel-dashboard-actions";
 
-export const description = "A line chart with a label";
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const chartConfig = {
   desktop: {
     label: "CheckIn",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
 };
 
-export const CheckInChart = ({ totalCheckIns }) => {
+export const CheckInChart = ({ userId }) => {
   const now = new Date();
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-  const currentMonthName = monthNames[now.getMonth()]; // Get the current month's name
-  
-  const chartData = [{ month: currentMonthName, desktop: totalCheckIns, mobile: 0 }];
+  const [selectedMonth, setSelectedMonth] = useState(now.getMonth());
+  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
+  const [dailyCheckIns, setDailyCheckIns] = useState([]);
+
+  const yearOptions = Array.from(
+    { length: 11 },
+    (_, i) => now.getFullYear() - 5 + i
+  );
+
+  // Fetch check-ins by day based on selected month and year
+  const fetchDailyCheckIns = async (month, year) => {
+    try {
+      const checkIns = await getHotelTotalCheckIns(userId, month, year);
+      console.log("Hotel CheckIns", checkIns);
+      setDailyCheckIns(checkIns);
+    } catch (error) {
+      console.log("Error fetching check-ins:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDailyCheckIns(selectedMonth, selectedYear);
+  }, [selectedMonth, selectedYear, userId]);
+
+  // Prepare the chart data with daily data for the selected month
+  const chartData = dailyCheckIns.map(({ day, count }) => ({
+    day: day.toString(),
+    desktop: count,
+  }));
 
   return (
-    <ShadcnCard className="">
+    <ShadcnCard className="bg-[#fcf3cf]">
       <CardHeader>
         <Typography variant="h4" className="font-semibold mb-3">
-          Check-In
+          Daily Check-In
         </Typography>
       </CardHeader>
-      <ChartContainer config={chartConfig}>
+      <ChartContainer className="mb-5" config={chartConfig}>
+        {/* Month and Year Selectors */}
+        <div className="flex gap-4 mt-4 px-3">
+          <select
+            className="p-2 border rounded bg-white"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(Number(e.target.value))}
+          >
+            {monthNames.map((month, index) => (
+              <option key={index} value={index}>
+                {month}
+              </option>
+            ))}
+          </select>
+          <select
+            className="p-2 border rounded bg-white"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+          >
+            {yearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Line Chart */}
         <LineChart
           data={chartData}
           margin={{
@@ -58,12 +118,11 @@ export const CheckInChart = ({ totalCheckIns }) => {
         >
           <CartesianGrid strokeDasharray="5 5" />
           <XAxis
-            dataKey="month"
+            dataKey="day"
             tickLine={false}
             axisLine={false}
             tickMargin={8}
             tick={{ fill: "#852169" }}
-            tickFormatter={(value) => value.slice(0, 3)}
           />
           <YAxis
             tick={{ fill: "#852169" }}

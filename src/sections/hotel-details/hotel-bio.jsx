@@ -414,12 +414,12 @@ export const HotelBio = ({ type, id }) => {
         </p>
       </div>
 
-      {reportModal.onTrue && (
+      {/* {reportModal.onTrue && (
         <ReportListingModal
           isOpen={reportModal.value}
           onClose={reportModal.onFalse}
         />
-      )}
+      )} */}
     </div>
   );
 };

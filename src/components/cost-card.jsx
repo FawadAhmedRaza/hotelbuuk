@@ -371,9 +371,9 @@ export const CostCard = ({ type, id }) => {
                 <div className="flex bg-amber-100  p-2 rounded-md justify-between items-center mt-2 mb-3">
                   <Typography
                     variant="p"
-                    className="font-medium text-sm text-center text-amber-900"
+                    className="font-medium text-sm text-center text-amber-900 w-full"
                   >
-                    Your request has not yet been fulfilled.
+                    Your Reservation is Pending
                   </Typography>
                 </div>
               ) : data?.booking_status === "ACCEPTED" ? (
@@ -399,7 +399,7 @@ export const CostCard = ({ type, id }) => {
                     variant="p"
                     className="font-medium text-sm text-center text-green-900 w-full"
                   >
-                    You are part of this event.{" "}
+                    Approved
                   </Typography>
                 </div>
               ) : (

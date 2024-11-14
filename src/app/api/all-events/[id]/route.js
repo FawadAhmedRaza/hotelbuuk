@@ -150,13 +150,12 @@ export async function GET(req, { params }) {
           (item) => item?.event_rules
         ),
         event_associated_cancel_policies:
-          hotelEvent?.event_associated_safeties?.map(
-            (item) => item?.event_safeties
-          ),
-        event_associated_safeties:
           hotelEvent?.event_associated_cancel_policies?.map(
             (item) => item?.event_cancel_policy
           ),
+        event_associated_safeties: hotelEvent?.event_associated_safeties?.map(
+          (item) => item?.event_safeties
+        ),
       };
     }
 
