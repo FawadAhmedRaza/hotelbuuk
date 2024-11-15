@@ -96,7 +96,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       is: "bnb",
       then: (schema) =>
         schema
-          .required("Images are required")
+          // .required("Images are required")
           .min(8, "At least 8 images are required for the event")
           .max(20, "A maximum of 20 images is allowed"),
       otherwise: (schema) => schema.notRequired(),

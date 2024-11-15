@@ -74,6 +74,7 @@ const HotelBookingList = () => {
     }
   };
 
+
   return (
     <div className="border border-gray-200 rounded-xl">
       <CustomTable

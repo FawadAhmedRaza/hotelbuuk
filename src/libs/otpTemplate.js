@@ -1,14 +1,14 @@
-export function otpTemplate(name, otp) { }
+export function otpTemplate(name, otp) {}
 
 export function forgotPasswordTemplate(
-    name,
-    otp,
-    purpose = "resetting your password",
-    expiryTime = "10 minutes"
-) { }
+  name,
+  otp,
+  purpose = "resetting your password",
+  expiryTime = "10 minutes"
+) {}
 
 const generateRegistrationOtpTemplate = (userName, otp) => {
-    return `
+  return `
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -101,7 +101,7 @@ const generateRegistrationOtpTemplate = (userName, otp) => {
 };
 
 const generateResetPasswordOtpTemplate = (userName, otp) => {
-    return `
+  return `
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,13 +195,13 @@ const generateResetPasswordOtpTemplate = (userName, otp) => {
 };
 
 const generateBookingRequestTemplate = (
-    organizerName,
-    eventName,
-    guestName,
-    guestEmail,
-    guestPhone
+  organizerName,
+  eventName,
+  guestName,
+  guestEmail,
+  guestPhone
 ) => {
-    return `
+  return `
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -321,13 +321,13 @@ const generateBookingRequestTemplate = (
 };
 
 const generateBookingRequestAcceptedTemplate = (
-    guestName,
-    eventName,
-    organizerName,
-    organizerEmail,
-    organizerPhone
+  guestName,
+  eventName,
+  organizerName,
+  organizerEmail,
+  organizerPhone
 ) => {
-    return `
+  return `
       <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -399,7 +399,7 @@ const generateBookingRequestAcceptedTemplate = (
           .btns {
               display: inline-block;
               padding: 10px 20px;
-              background-color: #852169;
+              background-color: black;
               color: white;
               text-decoration: none;
               border-radius: 100px;
@@ -423,7 +423,7 @@ const generateBookingRequestAcceptedTemplate = (
           </div>
           <div class="email-body">
               <p>Hello <strong>${guestName}</strong>,</p>
-                <p>Congratulations! Your booking for the event, <strong>${eventName}</strong>, has been accepted by <strong>${organizerName}</strong>.</p>
+                <p>Congratulations! Your Reservation for <strong>${eventName}</strong>, has been accepted. </p>
                 <p>We're thrilled that you're one step closer to attending this exciting event. Here are the details of your booking:</p>
                 <ul>
                     <li><strong>Event Name:</strong> ${eventName}</li>
@@ -448,13 +448,13 @@ const generateBookingRequestAcceptedTemplate = (
 };
 
 const generateBookingRequestRejectedTemplate = (
-    guestName,
-    eventName,
-    organizerName,
-    organizerEmail,
-    organizerPhone
+  guestName,
+  eventName,
+  organizerName,
+  organizerEmail,
+  organizerPhone
 ) => {
-    return `
+  return `
         <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -550,7 +550,7 @@ const generateBookingRequestRejectedTemplate = (
             </div>
             <div class="email-body">
                 <p>Hello <strong>${guestName}</strong>,</p>
-                    <p>Thank you for your interest in the event, <strong>${eventName}</strong>. We regret to inform you that your booking request has not been accepted by <strong>${organizerName}</strong> at this time.</p>
+                    <p>Sorry! Your reservation for <strong>${eventName}</strong> was declined, possibly due to fully booked rooms.Check again <a href="https://hotelbuuk.vercel.app/">Hotelbuuk.com</a> </p>
                     <p>We understand this may be disappointing, and we apologize for any inconvenience. Here are the details of your inquiry:</p>
                     <ul>
                         <li><strong>Event Name:</strong> ${eventName}</li>
@@ -574,9 +574,9 @@ const generateBookingRequestRejectedTemplate = (
 };
 
 export {
-    generateRegistrationOtpTemplate,
-    generateResetPasswordOtpTemplate,
-    generateBookingRequestTemplate,
-    generateBookingRequestAcceptedTemplate,
-    generateBookingRequestRejectedTemplate,
+  generateRegistrationOtpTemplate,
+  generateResetPasswordOtpTemplate,
+  generateBookingRequestTemplate,
+  generateBookingRequestAcceptedTemplate,
+  generateBookingRequestRejectedTemplate,
 };

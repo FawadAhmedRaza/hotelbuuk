@@ -1,41 +1,73 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import ApexCharts from "apexcharts";
 import { Typography } from "@/src/components";
+import { getNomadMonthlyRevenue } from "@/src/actions/nomad-dashboard-actions";
 
-const MountChart = ({ revenue }) => {
+const MountChart = ({ userId }) => {
   const chartRef = useRef(null);
+  const [revenue, setRevenue] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
 
-  const roundedRevenue = revenue?.map((value) => parseFloat(value?.toFixed(0)));
+  // Function to fetch monthly revenue data
+  const fetchMonthlyRevenue = async (month, year) => {
+    // Default to current month and year if values are undefined
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    // Use current month and year as fallback if undefined
+    month = month !== undefined ? month : currentMonth;
+    year = year !== undefined ? year : currentYear;
+
+    console.log("Fetching revenue for:", month, year); // Debug log
+
+    // Ensure the month and year are valid before making the request
+    if (
+      typeof month === "number" &&
+      typeof year === "number" &&
+      month >= 0 &&
+      month <= 11 &&
+      year > 0
+    ) {
+      try {
+        const revenueData = await getNomadMonthlyRevenue(userId, month, year);
+        setRevenue(revenueData);
+      } catch (error) {
+        console.error("Error fetching revenue:", error);
+      }
+    } else {
+      console.error("Invalid month or year values:", month, year);
+    }
+  };
 
   useEffect(() => {
-    const currentDate = new Date();
-    const currentMonthIndex = currentDate.getMonth();
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+    fetchMonthlyRevenue(selectedMonth, selectedYear);
+  }, [selectedMonth, selectedYear]);
 
-    const orderedMonthNames = [
-      ...monthNames.slice(currentMonthIndex),
-      ...monthNames.slice(0, currentMonthIndex),
-    ];
+  useEffect(() => {
+    // Round the revenue data for chart display
+    const roundedRevenue = revenue.map((value) =>
+      parseFloat(value?.toFixed(0))
+    );
+
+    const getDayLabels = () => {
+      const daysInMonth = new Date(
+        selectedYear,
+        selectedMonth + 1,
+        0
+      ).getDate();
+      return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+    };
+
+    const dayLabels = getDayLabels();
 
     const chartConfig = {
       series: [
         {
-          name: "Sales",
-          data: roundedRevenue || [], // Use the rounded revenue data here
+          name: "Revenue",
+          data: roundedRevenue || [],
         },
       ],
       chart: {
@@ -45,44 +77,28 @@ const MountChart = ({ revenue }) => {
           show: false,
         },
       },
-      title: {
-        show: false,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      colors: ["#852169"],
+      colors: ["#1F4B47"],
       stroke: {
         lineCap: "round",
         curve: "smooth",
       },
-      markers: {
-        size: 0,
-      },
       xaxis: {
-        axisTicks: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
+        categories: dayLabels,
         labels: {
           style: {
-            colors: "#852169",
+            colors: "#1F4B47",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
           },
         },
-        categories: orderedMonthNames, // Use reordered month names
       },
       yaxis: {
         labels: {
-          formatter: function (value) {
-            return Number.isFinite(value) ? value.toFixed(0) : value;
-          },
+          formatter: (value) =>
+            Number.isFinite(value) ? value.toFixed(0) : value,
           style: {
-            colors: "#852169",
+            colors: "#1F4B47",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -90,21 +106,8 @@ const MountChart = ({ revenue }) => {
         },
       },
       grid: {
-        show: true,
-        borderColor: "#79747E",
+        borderColor: "#1F4B47",
         strokeDashArray: 5,
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-        padding: {
-          top: 5,
-          right: 20,
-        },
-      },
-      fill: {
-        opacity: 0.8,
       },
       tooltip: {
         theme: "light",
@@ -117,17 +120,48 @@ const MountChart = ({ revenue }) => {
     return () => {
       chart.destroy();
     };
-  }, [roundedRevenue]);
+  }, [revenue, selectedMonth, selectedYear]);
+
+  const years = Array.from(
+    { length: new Date().getFullYear() - 2000 + 1 },
+    (_, i) => 2000 + i
+  );
 
   return (
-    <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
+    <div className="relative flex flex-col rounded-xl bg-[#E7FDF1] text-[#1F4B47] shadow-md">
       <div className="pt-6 px-2 pb-0">
         <div className="px-3">
           <Typography variant="h4" className="font-semibold">
-            This Month Revenue
+            Daily Revenue Chart
           </Typography>
         </div>
-        <div id="line-chart" ref={chartRef}></div>
+        <div className="flex gap-4 mt-4 px-">
+          <select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(Number(e.target.value))}
+            className="border p-2 rounded bg-white"
+          >
+            {Array.from({ length: 12 }).map((_, index) => (
+              <option key={index} value={index}>
+                {new Date(0, index).toLocaleString("default", {
+                  month: "long",
+                })}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+            className="border p-2 rounded bg-white"
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div ref={chartRef}></div>
       </div>
     </div>
   );

@@ -106,22 +106,16 @@ const HotelsListSection = React.memo(() => {
                     </Typography>
                   </td>
 
-                  <td className="px-6 py-4">
-                    <div className="flex gap-1">
-                      <Typography
-                        variant="p"
-                        className="  !text-nowrap max-w-56"
-                      >
+                  <td className="px-6 py-4 !w-96">
+                    <div className="flex gap-1 !w-96">
+                      <Typography variant="p" className="  !text-nowrap ">
                         {row.country},
                       </Typography>
-                      <Typography
-                        variant="p"
-                        className="  !text-nowrap max-w-56"
-                      >
+                      <Typography variant="p" className="  !text-nowrap ">
                         {row.city}
                       </Typography>
                     </div>
-                    <span className="text-xs text-gray-500 text-nowrap">
+                    <span className="text-xs text-gray-500 text-wrap !w-full">
                       {row.address}
                     </span>
                   </td>

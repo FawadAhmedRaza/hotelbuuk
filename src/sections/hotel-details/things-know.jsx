@@ -24,7 +24,7 @@ export const ThingsKnow = () => {
       </Typography>
 
       {/* Main content */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-5 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center  gap-5 w-full">
         {/* House Rules */}
         <div className="flex flex-col justify-center items-start gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
@@ -76,7 +76,7 @@ export const ThingsKnow = () => {
         </div> */}
 
         {/* Cancellation Policy */}
-        <div className="flex flex-col justify-center items-start gap-2 h-full">
+        <div className="flex flex-col  gap-2 h-full">
           <Typography variant="h5" className="font-semibold">
             Cancellation Policy
           </Typography>

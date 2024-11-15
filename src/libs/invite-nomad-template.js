@@ -1,4 +1,10 @@
-export const invitationEmailTemplate = (name, imageUrl, query, rejectQuery) => {
+export const invitationEmailTemplate = (
+  name,
+  imageUrl,
+  query,
+  rejectQuery,
+  userId
+) => {
   const image =
     imageUrl ||
     "https://images.unsplash.com/photo-1579625224451-b0ab6ed101f5?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -68,7 +74,7 @@ export const invitationEmailTemplate = (name, imageUrl, query, rejectQuery) => {
       .btns {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #852169;
+        background-color: black;
         color: white;
         text-decoration: none;
         border-radius: 100px;
@@ -90,7 +96,7 @@ export const invitationEmailTemplate = (name, imageUrl, query, rejectQuery) => {
             style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; border: 5px solid #852169;"
           />
         <p><strong>${name}</strong></p>
-        <p>You are invited to become our internal Nomad.</p>
+        <p>You have been invited as our internal business consultant. We're happy to work with you.</p>
         <div>
           <a 
             class="btns" 
@@ -103,6 +109,13 @@ export const invitationEmailTemplate = (name, imageUrl, query, rejectQuery) => {
             style="color:white;"
             >Accept</a>
         </div>
+        <div style="margin-top: 15px;">
+          <a 
+            href="${process.env.ACCEPT_INVITATION_LINK}/chat/${userId}"
+            class="btns"
+            style="color: white;"
+          >Chat with Us</a>
+        </div>
       </div>
       <div class="email-footer">
         <p>
@@ -113,8 +126,7 @@ export const invitationEmailTemplate = (name, imageUrl, query, rejectQuery) => {
     </div>
   </body>
 </html>
-
-        `;
+  `;
 };
 
 export const invitationRejectedEmailTemplate = (name, imageUrl, nomadName) => {

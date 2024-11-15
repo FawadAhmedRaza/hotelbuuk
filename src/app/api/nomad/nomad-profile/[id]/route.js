@@ -9,7 +9,6 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-
 export async function GET(req, { params }) {
   try {
     const { id } = params;
@@ -55,6 +54,13 @@ export async function PUT(req, { params }) {
       address,
       industry,
       bio,
+      board,
+      audio_system,
+      personal_competence,
+      pedagogic_competence,
+      professional_competence,
+      social_competence,
+      assessment_competence,
       availability,
       work_permit_front_img,
       work_permit_back_img,
@@ -112,6 +118,13 @@ export async function PUT(req, { params }) {
         projector,
         video,
         sample,
+        board,
+        audio_system,
+        personal_competence,
+        pedagogic_competence,
+        professional_competence,
+        social_competence,
+        assessment_competence,
         start_date: availability?.date?.start_date,
         end_date: availability?.date?.end_date,
         start_time: availability?.time?.start_time,

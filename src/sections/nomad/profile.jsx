@@ -79,18 +79,39 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
     city: Yup.string().required("city is required"),
     country: Yup.string().required("country is required"),
     address: Yup.string().required("address is required"),
+
     work_permit_front_img: Yup.mixed().required("front image is required"),
     work_permit_back_img: Yup.mixed().required("back image is required"),
     work_permit_expiry_date: Yup.string().required("expiry date is required"),
+
     experience: Yup.string().required("Experience is required"),
     industry: Yup.string().required("industry is required"),
     electronics: Yup.string().required("Electronics field is required"),
     manufacturing: Yup.string().required("Manufacturing field is required"),
     fundraising: Yup.string().required("Fundraising field is required"),
     retails: Yup.string().required("Retails field is required"),
+
     projector: Yup.string().required("Projector field is required"),
     video: Yup.string().required("Video field is required"),
     sample: Yup.string().required("Sample field is required"),
+    board: Yup.string().required("Retails field is required"),
+    audio_system: Yup.string().required("Audio System field is required"),
+
+    personal_competence: Yup.string().required(
+      "Personal Competence field is required"
+    ),
+    pedagogic_competence: Yup.string().required(
+      "Pedagogic Competence field is required"
+    ),
+    professional_competence: Yup.string().required(
+      "Professional Competence field is required"
+    ),
+    social_competence: Yup.string().required(
+      "Social Competence field is required"
+    ),
+    assessment_competence: Yup.string().required(
+      "Assessment Competence field is required"
+    ),
 
     availability: Yup.object().shape({
       date: Yup.object().shape({
@@ -409,18 +430,19 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               />
             </div>
           </div>
+
           {/* Teaching Tool  */}
 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <Typography variant="h5" className="font-semibold">
-                Teaching Tools
+                Instructional Material
               </Typography>
               <Typography
                 variant="p"
                 className="font-medium !text-sm text-secondary"
               >
-                What are you Teaching Tool
+                What kind of instructional materials do you offer?
               </Typography>
             </div>
 
@@ -431,7 +453,54 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
                 label="Projector"
               />
               <RHFInput name="video" placeholder="Video" label="Video" />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFInput name="sample" placeholder="Sample" label="Sample" />
+              <RHFInput name="board" placeholder="Board" label="Board" />
+            </div>
+            <RHFInput
+              name="audio_system"
+              placeholder="Audio System"
+              label="Audio"
+            />
+          </div>
+
+          {/* Competence  */}
+          <div className="flex flex-col gap-5">
+            <Typography variant="h5" className="font-semibold">
+              Competencies
+            </Typography>
+
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+              <RHFInput
+                name="personal_competence"
+                placeholder="Personal Competence"
+                label="Personal Competence"
+              />
+              <RHFInput
+                name="pedagogic_competence"
+                placeholder="Pedagogic Competence"
+                label="Pedagogic Competence"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+              <RHFInput
+                name="professional_competence"
+                placeholder="Professional Competence"
+                label="Professional Competence"
+              />
+              <RHFInput
+                name="social_competence"
+                placeholder="Social Competence"
+                label="Social Competence"
+              />
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full">
+              <RHFInput
+                name="assessment_competence"
+                placeholder="Assessment Competence"
+                label="Assessment Competence"
+              />
             </div>
           </div>
 

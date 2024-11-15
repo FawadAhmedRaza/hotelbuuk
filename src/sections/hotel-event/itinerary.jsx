@@ -87,7 +87,7 @@ export const Itinerary = () => {
               variant="p"
               className={`text-custom-black !text-sm bg-white absolute -top-2.5 left-3 `}
             >
-              Stop
+              Duration
             </Typography>
             <div
               className={

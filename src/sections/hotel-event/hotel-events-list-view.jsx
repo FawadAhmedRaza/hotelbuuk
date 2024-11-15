@@ -96,7 +96,7 @@ const HotelEventsView = React.memo(() => {
     <>
       <Pannel className="flex flex-col gap-10">
         <Breadcrumb
-          title="Hotel Events"
+          title="My Listings"
           action={
             <Link href={paths.hotelDashboard.events.create}>
               <Button className="bg-slate-900">Create Event</Button>

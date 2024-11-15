@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Accordion, Card, Typography } from "@/src/components";
 import { HotelBio } from "./hotel-bio";
 import { HostBio } from "./host-bio";
+import Built from "@/src/components/built";
 
 export const HotelDetail = ({ type, id }) => {
   const { event } = useSelector((state) => state.allEvents.getById);
@@ -62,6 +63,61 @@ export const HotelDetail = ({ type, id }) => {
                       : event?.hotel?.description}
                   </Typography>
                 </div>
+
+                <div className="  w-full  lg:w-[70%] ">
+                  <div className=" flex flex-col md:flex-row mt-5 gap-10 md:gap-20 justify-start  items-start w-full  ">
+                    <div className="">
+                      <Typography
+                        variant="h4"
+                        className=" font-semibold text-primary"
+                      >
+                        Instructional Materials
+                      </Typography>
+                      <div className=" mt-3">
+                        {event?.nomad?.video && (
+                          <Built>{event?.nomad?.video}</Built>
+                        )}
+                        {event?.nomad?.sample && (
+                          <Built>{event?.nomad?.sample}</Built>
+                        )}
+                        {event?.nomad?.projector && (
+                          <Built>{event?.nomad?.projector}</Built>
+                        )}
+                        {event?.nomad?.board && (
+                          <Built>{event?.nomad?.board}</Built>
+                        )}
+                        {event?.nomad?.audio_system && (
+                          <Built>{event?.nomad?.audio_system}</Built>
+                        )}
+                      </div>
+                    </div>
+                    <div className="">
+                      <Typography
+                        variant="h4"
+                        className=" font-semibold text-primary"
+                      >
+                        Competence
+                      </Typography>
+                      <div className=" mt-3">
+                        {event?.nomad?.personal_competence && (
+                          <Built>{event?.nomad?.personal_competence}</Built>
+                        )}
+                        {event?.nomad?.pedagogic_competence && (
+                          <Built>{event?.nomad?.pedagogic_competence}</Built>
+                        )}
+                        {event?.nomad?.professional_competence && (
+                          <Built>{event?.nomad?.professional_competence}</Built>
+                        )}
+                        {event?.nomad?.social_competence && (
+                          <Built>{event?.nomad?.social_competence}</Built>
+                        )}
+                        {event?.nomad?.assessment_competence && (
+                          <Built>{event?.nomad?.assessment_competence}</Built>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -71,6 +127,7 @@ export const HotelDetail = ({ type, id }) => {
           <HostBio />
         </div>
       </div>
+
       {/* <HotelBio type={type} id={id} /> */}
     </div>
   );

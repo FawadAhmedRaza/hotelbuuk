@@ -108,7 +108,7 @@ const RoomsListView = React.memo(() => {
       {!isLoading ? (
         <Pannel className="flex flex-col gap-10">
           <Breadcrumb
-            title="Rooms List"
+            title="My Listings"
             action={
               <AnchorTag href={paths.createRooms.root}>
                 <Button className="bg-slate-900">Create Room</Button>

@@ -70,7 +70,8 @@ export async function POST(req) {
           hotel?.hotel_name,
           profileImage,
           queryParams,
-          invitationRejected
+          invitationRejected,
+          hotel?.user?.id
         )
       );
     } else {
@@ -84,7 +85,8 @@ export async function POST(req) {
           hotel?.hotel_name,
           profileImage,
           queryParams,
-          invitationRejected
+          invitationRejected,
+          hotel?.user?.id
         )
       );
     }
