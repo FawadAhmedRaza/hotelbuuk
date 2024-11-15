@@ -263,7 +263,7 @@ export const CostCard = ({ type, id }) => {
           </div>
 
           {/* Dates and Guests */}
-          <div className=" flex justify-between bg-neutral-100 w-full rounded-full px-5  py-2 shadow-sm  items-center mt-2 divide-x divide-neutral-200 ">
+          <div className=" flex justify-between bg-neutral-100 w-full rounded-lg px-5  py-2 shadow-sm  items-center mt-2 divide-x divide-neutral-200 ">
             <div className="flex flex-col justify-center  items-center sm:items-start  ">
               <Typography
                 variant="p"
@@ -309,7 +309,7 @@ export const CostCard = ({ type, id }) => {
               </Typography>
               <input
                 type="number"
-                disabled={data}
+                disabled={data || user?.user_type !== "GUEST"}
                 min={1}
                 className="!outline-none !border-none !text-[16px]  w-10"
                 placeholder="5"
@@ -321,7 +321,7 @@ export const CostCard = ({ type, id }) => {
               variant="p"
               className="text-secondary text-sm text-center"
             >
-              price includes business room & meetings
+              Price includes Lodging and Business Tours
             </Typography>
             <div className=" flex flex-col gap-2 ">
               <div className=" flex flex-col gap-2 border-b w-full pb-2 border-neutral-500">

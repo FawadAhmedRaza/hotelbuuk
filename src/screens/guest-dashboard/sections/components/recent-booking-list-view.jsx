@@ -73,7 +73,7 @@ const RecentBookingListView = () => {
                 </Typography>
               </td>
               <td className="px-6 py-4">
-                <Typography variant="p" className="!text-nowrap max-w-full">
+                <Typography variant="p" className="!text-wrap !w-96">
                   {row?.hotel_event
                     ? `${row?.hotel_event?.hotel?.address}, ${row?.hotel_event?.hotel?.city}, ${row?.hotel_event?.hotel?.country}`
                     : row?.nomad_event?.accomodation_type !== "bnb"

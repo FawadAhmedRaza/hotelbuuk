@@ -134,31 +134,32 @@ export async function getHotelTotalCheckIns(user_id, month, year) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const dailyCheckIns = new Array(daysInMonth).fill(0);
 
-  const startOfMonth = new Date(year, month, 1);
-  const endOfMonth = new Date(year, month + 1, 0);
+  const startOfMonthDate = new Date(year, month, 1);
+  const endOfMonthDate = new Date(year, month + 1, 0);
 
-  startOfMonth.setHours(0, 0, 0, 0);
-  endOfMonth.setHours(23, 59, 59, 999);
+  startOfMonthDate.setHours(0, 0, 0, 0);
+  endOfMonthDate.setHours(23, 59, 59, 999);
 
   const bookings = await prisma.booking.findMany({
     where: {
-      user_id,
+      user_id: user_id,
       booking_status: "PAID",
+    },
+    include: {
       hotel_event: {
-        start_date: {
-          gte: startOfMonth.toISOString(),
-          lte: endOfMonth.toISOString(),
+        select: {
+          start_date: true,
         },
       },
     },
   });
 
   bookings.forEach((booking) => {
-    if (booking?.hotel_event?.start_date) {
+    if (booking.hotel_event?.start_date) {
       const startDate = new Date(booking.hotel_event.start_date);
       startDate.setHours(0, 0, 0, 0);
 
-      if (startDate >= startOfMonth && startDate <= endOfMonth) {
+      if (startDate >= startOfMonthDate && startDate <= endOfMonthDate) {
         const day = startDate.getDate();
         dailyCheckIns[day - 1]++;
       }

@@ -97,7 +97,7 @@ const ThisMonthBooking = ({ userId }) => {
       dataLabels: {
         enabled: false,
       },
-      colors: ["#852169"],
+      colors: ["#203071"],
       plotOptions: {
         bar: {
           columnWidth: "40%",
@@ -108,7 +108,7 @@ const ThisMonthBooking = ({ userId }) => {
         categories: dayLabels, // Use days as x-axis labels
         labels: {
           style: {
-            colors: "#852169",
+            colors: "#203071",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -116,11 +116,11 @@ const ThisMonthBooking = ({ userId }) => {
         },
         axisBorder: {
           show: true,
-          color: "#79747E",
+          color: "#203071",
         },
         axisTicks: {
           show: true,
-          color: "#79747E",
+          color: "#203071",
         },
       },
       yaxis: {
@@ -128,7 +128,7 @@ const ThisMonthBooking = ({ userId }) => {
         max: Math.max(...dailyBookings) > 0 ? Math.max(...dailyBookings) : 5, // Prevent empty space on the y-axis
         labels: {
           style: {
-            colors: "#852169",
+            colors: "#203071",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -136,16 +136,16 @@ const ThisMonthBooking = ({ userId }) => {
         },
         axisBorder: {
           show: true,
-          color: "#79747E",
+          color: "#203071",
         },
         axisTicks: {
           show: true,
-          color: "#79747E",
+          color: "#203071",
         },
       },
       grid: {
         show: true,
-        borderColor: "#79747E",
+        borderColor: "#203071",
         strokeDashArray: 5,
       },
       tooltip: {
@@ -163,7 +163,7 @@ const ThisMonthBooking = ({ userId }) => {
   }, [bookingsArr, selectedMonth, selectedYear]);
 
   return (
-    <div className="relative flex flex-col rounded-xl bg-white bg-clip-border text-primary shadow-md">
+    <div className="relative flex flex-col rounded-xl bg-[#F6F8FF] text-[#203071] shadow-md ">
       <div className="pt-6 px-2 pb-0">
         <div className="px-3">
           <Typography variant="h4" className="font-semibold">
@@ -174,7 +174,7 @@ const ThisMonthBooking = ({ userId }) => {
         {/* Month and Year Selectors */}
         <div className="flex gap-4 mt-4 px-3">
           <select
-            className="p-2 border rounded"
+            className="p-2 border rounded bg-white"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
           >
@@ -185,7 +185,7 @@ const ThisMonthBooking = ({ userId }) => {
             ))}
           </select>
           <select
-            className="p-2 border rounded"
+            className="p-2 border rounded bg-white"
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
           >
@@ -204,6 +204,3 @@ const ThisMonthBooking = ({ userId }) => {
 };
 
 export default ThisMonthBooking;
-
-
-

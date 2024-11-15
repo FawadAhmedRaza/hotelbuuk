@@ -113,45 +113,50 @@ export async function getNomadMonthlyRevenue(user_id, month, year) {
 }
 
 export async function getNomadTotalCheckIns(user_id, month, year) {
-  const startOfSelectedMonth = new Date(year, month, 1).toISOString();
-  const endOfSelectedMonth = new Date(year, month + 1, 0).toISOString();
+  const startOfMonthDate = new Date(year, month, 1);
+  const endOfMonthDate = new Date(year, month + 1, 0);
 
-  // Fetch all bookings within the date range
-  const bookings = await prisma.booking.findMany({
+  // Normalize dates to avoid time discrepancies
+  startOfMonthDate.setHours(0, 0, 0, 0);
+  endOfMonthDate.setHours(23, 59, 59, 999);
+
+  const checkins = await prisma.booking.findMany({
     where: {
-      user_id,
+      user_id: user_id,
       booking_status: "PAID",
-      nomad_event: {
-        start_date: {
-          gte: startOfSelectedMonth, // Use ISO string
-          lte: endOfSelectedMonth, // Use ISO string
-        },
-      },
     },
-    select: {
+    include: {
       nomad_event: {
         select: {
-          start_date: true, // Select the start date from the associated `nomad_event`
+          start_date: true,
         },
       },
     },
   });
 
-  // Aggregate bookings by day
-  const dailyCheckIns = bookings.reduce((acc, booking) => {
-    const day = new Date(booking.nomad_event.start_date).getDate(); // Extract day from start_date
-    acc[day] = (acc[day] || 0) + 1; // Increment the count for that day
-    return acc;
-  }, {});
-
-  // Transform the aggregated data into an array of { day, count }
-  return Array.from(
-    { length: new Date(year, month + 1, 0).getDate() },
-    (_, i) => ({
-      day: i + 1,
-      count: dailyCheckIns[i + 1] || 0, // Fill in 0 for days with no check-ins
-    })
+  // Create an array to hold daily check-in counts
+  const dailyCheckIns = Array.from(
+    { length: endOfMonthDate.getDate() },
+    () => 0
   );
+
+  // Aggregate check-ins by day
+  checkins.forEach((checkin) => {
+    if (checkin.nomad_event?.start_date) {
+      const startDate = new Date(checkin.nomad_event.start_date);
+
+      if (startDate >= startOfMonthDate && startDate <= endOfMonthDate) {
+        const dayIndex = startDate.getDate() - 1; // Zero-based index for the array
+        dailyCheckIns[dayIndex]++;
+      }
+    }
+  });
+
+  // Transform the array of daily counts into the desired format
+  return dailyCheckIns.map((count, index) => ({
+    day: index + 1, // Convert index back to 1-based day
+    count: count,
+  }));
 }
 
 export async function getNomadTotalCheckOuts(user_id, month, year) {

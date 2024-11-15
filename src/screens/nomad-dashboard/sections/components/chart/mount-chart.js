@@ -77,7 +77,7 @@ const MountChart = ({ userId }) => {
           show: false,
         },
       },
-      colors: ["#852169"],
+      colors: ["#1F4B47"],
       stroke: {
         lineCap: "round",
         curve: "smooth",
@@ -86,7 +86,7 @@ const MountChart = ({ userId }) => {
         categories: dayLabels,
         labels: {
           style: {
-            colors: "#852169",
+            colors: "#1F4B47",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -98,7 +98,7 @@ const MountChart = ({ userId }) => {
           formatter: (value) =>
             Number.isFinite(value) ? value.toFixed(0) : value,
           style: {
-            colors: "#852169",
+            colors: "#1F4B47",
             fontSize: "12px",
             fontFamily: "inherit",
             fontWeight: 400,
@@ -106,7 +106,7 @@ const MountChart = ({ userId }) => {
         },
       },
       grid: {
-        borderColor: "#79747E",
+        borderColor: "#1F4B47",
         strokeDashArray: 5,
       },
       tooltip: {
@@ -128,16 +128,18 @@ const MountChart = ({ userId }) => {
   );
 
   return (
-    <div className="relative flex flex-col rounded-xl bg-white shadow-md">
+    <div className="relative flex flex-col rounded-xl bg-[#E7FDF1] text-[#1F4B47] shadow-md">
       <div className="pt-6 px-2 pb-0">
-        <Typography variant="h4" className="font-semibold">
-          Daily Revenue Chart
-        </Typography>
-        <div className="flex gap-4 mb-4">
+        <div className="px-3">
+          <Typography variant="h4" className="font-semibold">
+            Daily Revenue Chart
+          </Typography>
+        </div>
+        <div className="flex gap-4 mt-4 px-">
           <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
           >
             {Array.from({ length: 12 }).map((_, index) => (
               <option key={index} value={index}>
@@ -150,7 +152,7 @@ const MountChart = ({ userId }) => {
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
-            className="border p-2 rounded"
+            className="border p-2 rounded bg-white"
           >
             {years.map((year) => (
               <option key={year} value={year}>

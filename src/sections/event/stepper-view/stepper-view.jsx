@@ -96,7 +96,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       is: "bnb",
       then: (schema) =>
         schema
-          .required("Images are required")
+          // .required("Images are required")
           .min(8, "At least 8 images are required for the event")
           .max(20, "A maximum of 20 images is allowed"),
       otherwise: (schema) => schema.notRequired(),
@@ -332,9 +332,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
           enqueueSnackbar("Event created", { variant: "success" });
           router.push(paths.nomadDashboard.events.root);
         }
-
       } catch (error) {
-
         console.log(error);
         enqueueSnackbar(error?.message || "An error occurred", {
           variant: "error",
