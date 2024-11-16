@@ -275,19 +275,10 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
         onSubmit={onSubmit}
         className="flex flex-col gap-10 justify-center items-center w-full"
       >
-        <div
-          className={`flex ${
-            isEdit ? "justify-between" : "justify-start"
-          } items-center w-full`}
-        >
+        <div className="flex justify-start w-full">
           <Breadcrumb title={"Nomad Profile"} />
-
-          {isEdit && (
-            <Typography variant="h5">{`Profile ID: ${user.id.slice(
-              -6
-            )}`}</Typography>
-          )}
         </div>
+
         <RHFUploadAvatar isEdit={isEdit} name="profile_img" />
         <div className="flex flex-col gap-5 w-full max-w-screen-lg">
           <Typography variant="h5" className="font-semibold">

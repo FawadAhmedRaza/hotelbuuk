@@ -165,7 +165,7 @@ export const CostCard = ({ type, id }) => {
                   amount: {
                     value: (
                       event?.price * stayNights * guestCount +
-                      ((event?.price * stayNights * guestCount) / 100) * 20
+                      ((event?.price * stayNights * guestCount) / 100) * 25
                     ).toFixed(2),
                   },
                 },
@@ -233,7 +233,7 @@ export const CostCard = ({ type, id }) => {
             <StripePayment
               amount={(
                 event?.price * stayNights * guestCount +
-                ((event?.price * stayNights * guestCount) / 100) * 20
+                ((event?.price * stayNights * guestCount) / 100) * 25
               ).toFixed(2)}
               type={type}
               id={id}
@@ -341,7 +341,7 @@ export const CostCard = ({ type, id }) => {
                     $
                     {(
                       ((event?.price * stayNights * guestCount) / 100) *
-                      20
+                      25
                     ).toFixed(2)}
                   </Typography>
                 </span>
@@ -354,7 +354,7 @@ export const CostCard = ({ type, id }) => {
                   $
                   {(
                     event?.price * stayNights * guestCount +
-                    ((event?.price * stayNights * guestCount) / 100) * 20
+                    ((event?.price * stayNights * guestCount) / 100) * 25
                   ).toFixed(2)}
                 </Typography>
               </span>
@@ -416,8 +416,8 @@ export const CostCard = ({ type, id }) => {
         </Card>
         <p className="cursor-pointer" onClick={handleReport}>
           <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
-            <Iconify iconName="mynaui:flag-solid" className="text-black" />
-            <Typography variant="p" className=" font-medium">
+            <Iconify iconName="mynaui:flag-solid" className="text-red-700" />
+            <Typography variant="p" className="text-red-700 font-medium">
               Report This Listing
             </Typography>
           </span>

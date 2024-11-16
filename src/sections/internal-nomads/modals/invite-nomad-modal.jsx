@@ -83,6 +83,9 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       data.hotel_id = user?.hotels?.[0]?.id;
+      data.invite_status = "PENDING";
+
+      console.log("final data for invitation", data);
 
       const request = await axiosInstance.post(
         endpoints.hotel.inviteNomads,
@@ -101,7 +104,7 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Invite Nomad"
+      title="Invite Business Consultants"
       handleSubmit={onSubmit}
       isLoading={isSubmitting}
       className="!h-auto"
@@ -127,8 +130,8 @@ const InviteNomadModal = ({ isOpen, onClose }) => {
           {nomadType === "registered" ? (
             <RHFImageSelect
               name="nomad"
-              placeholder="Select registered nomads"
-              label="Nomads"
+              placeholder="Select registered Business Consultants"
+              label="Business Consultants"
               options={modifiedNomadsList}
               className={"!mt-2"}
             />

@@ -113,7 +113,7 @@ const NomadEventsView = React.memo(() => {
             title="My Listings"
             action={
               <Link href={paths.nomadDashboard.events.create}>
-                <Button className="bg-slate-900">Create Event</Button>
+                <Button className="bg-blue-900">ADD MY TOURS</Button>
               </Link>
             }
           />

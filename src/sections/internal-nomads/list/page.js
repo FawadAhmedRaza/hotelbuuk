@@ -27,15 +27,16 @@ const header = [
   { id: 2, label: "Email" },
   { id: 3, label: "Phone" },
   { id: 4, label: "Availibility" },
-  { id: 5, label: "Experience" },
-  { id: 6, label: "Electronics" },
-  { id: 7, label: "Manufacturing" },
-  { id: 8, label: "Fundraising" },
-  { id: 9, label: "Retails" },
-  { id: 10, label: "Projector" },
-  { id: 11, label: "Video" },
-  { id: 12, label: "Sample" },
-  { id: 13, label: "Actions" },
+  { id: 5, label: "Status" },
+  { id: 6, label: "Experience" },
+  { id: 7, label: "Electronics" },
+  { id: 8, label: "Manufacturing" },
+  { id: 9, label: "Fundraising" },
+  { id: 10, label: "Retails" },
+  { id: 11, label: "Projector" },
+  { id: 12, label: "Video" },
+  { id: 13, label: "Sample" },
+  { id: 14, label: "Actions" },
 ];
 
 const InternalNomadsListView = () => {
@@ -49,7 +50,7 @@ const InternalNomadsListView = () => {
   const { internalNomads, isLoading } = useSelector(
     (state) => state.nomadProfile.allInternalNomads
   );
-
+  console.log("All Internal Nomads", internalNomads);
   const totalPages = React.useMemo(() => {
     return Math.ceil(internalNomads?.length / rowsPerPage);
   }, [internalNomads, rowsPerPage]);
@@ -79,17 +80,20 @@ const InternalNomadsListView = () => {
   return (
     <Pannel className="flex flex-col gap-10 !py-8">
       <Breadcrumb
-        title="Internal Nomads"
+        title="Internal Business Consultants"
         action={
           <Button
             className="bg-slate-900"
             type="button"
             onClick={inviteModal.onTrue}
           >
-            Invite Nomad
+            Invite Business Consultants
           </Button>
         }
       />
+      <Typography variant="p" className="-mt-8">
+        Invite Business Consultants to work with your Hotel directly
+      </Typography>
 
       {inviteModal.onTrue && (
         <InviteNomadModal
@@ -104,108 +108,132 @@ const InternalNomadsListView = () => {
             items={items}
             TABLE_HEADER={header}
             enableSelection={false}
-            renderRow={({ nomad }) => (
-              <>
-                <td className=" px-6 py-4">
-                  <div className="flex gap-2 items-center">
-                    <ProfileAvatar
-                      src={nomad?.profile_img}
-                      type={"server"}
-                      effect="blur"
-                      alt={nomad?.first_name}
-                      className="  h-10 w-10 rounded-full object-cover"
-                      iconSize="!size-10 !border-none"
-                    />
+            renderRow={(row) => {
+              const { nomad, invite_status } = row;
+              return (
+                <>
+                  <td className=" px-6 py-4">
+                    <div className="flex gap-2 items-center">
+                      <ProfileAvatar
+                        src={nomad?.profile_img}
+                        type={"server"}
+                        effect="blur"
+                        alt={nomad?.first_name}
+                        className="  h-10 w-10 rounded-full object-cover"
+                        iconSize="!size-10 !border-none"
+                      />
 
+                      <div className="flex gap-1">
+                        <Typography
+                          variant="p"
+                          className="  !text-nowrap max-w-56"
+                        >
+                          {nomad?.first_name}
+                        </Typography>
+                        <Typography
+                          variant="p"
+                          className="  !text-nowrap max-w-56"
+                        >
+                          {nomad?.last_name}
+                        </Typography>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.email}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.phone_number}
+                    </Typography>
+                  </td>
+
+                  <td className="px-6 py-4">
                     <div className="flex gap-1">
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {nomad?.first_name}
+                        {nomad?.start_date?.toString().slice(0, 10)}
                       </Typography>
+                      {nomad?.start_date && <span>-</span>}
                       <Typography
                         variant="p"
                         className="  !text-nowrap max-w-56"
                       >
-                        {nomad?.last_name}
+                        {nomad?.end_date?.toString().slice(0, 10)}
                       </Typography>
                     </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.email}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.phone_number}
-                  </Typography>
-                </td>
-
-                <td className="px-6 py-4">
-                  <div className="flex gap-1">
+                  </td>
+                  <td className="px-6 py-4">
+                    {/* <Typography variant="p" className="  !text-nowrap max-w-56"> */}
+                    <span
+                      className={`px-3 py-2 text-white rounded-full ${
+                        invite_status === "PENDING"
+                          ? "bg-amber-500"
+                          : invite_status === "ACCEPTED"
+                          ? "bg-green-700"
+                          : "bg-red-700"
+                      }`}
+                    >
+                      {invite_status}
+                    </span>
+                    {/* </Typography> */}
+                  </td>
+                  <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.start_date?.toString().slice(0, 10)}
+                      {nomad?.experience}
                     </Typography>
-                    {nomad?.start_date && <span>-</span>}
+                  </td>
+                  <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">
-                      {nomad?.end_date?.toString().slice(0, 10)}
+                      {nomad?.electronics}
                     </Typography>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.experience}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.electronics}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.manufacturing}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.fundraising}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.retails}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.projector}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.video}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <Typography variant="p" className="  !text-nowrap max-w-56">
-                    {nomad?.sample}
-                  </Typography>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-1 items-center">
-                    <Iconify
-                      iconName="tabler:mail-filled"
-                      onClick={() => router.push(`/chat/${nomad?.userId}`)}
-                      className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
-                    />
-                  </div>
-                </td>
-              </>
-            )}
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.manufacturing}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.fundraising}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.retails}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.projector}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.video}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <Typography variant="p" className="  !text-nowrap max-w-56">
+                      {nomad?.sample}
+                    </Typography>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-1 items-center">
+                      <Iconify
+                        iconName="tabler:mail-filled"
+                        onClick={() => router.push(`/chat/${nomad?.userId}`)}
+                        className="!size-7  cursor-pointer rounded-full object-cover text-blue-500"
+                      />
+                    </div>
+                  </td>
+                </>
+              );
+            }}
           />
           <Pagination
             currentPage={page}

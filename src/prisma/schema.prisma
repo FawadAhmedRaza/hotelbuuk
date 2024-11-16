@@ -275,6 +275,8 @@ model hotel_internal_nomads {
   hotel_id String @db.ObjectId
   nomad_id String @db.ObjectId
 
+  invite_status BookingStatus @default(PENDING)
+
   hotel     hotel_info @relation(fields: [hotel_id], references: [id])
   nomad     nomad      @relation(fields: [nomad_id], references: [id])
   createdAt DateTime   @default(now())

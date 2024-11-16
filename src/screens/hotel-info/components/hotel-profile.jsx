@@ -78,14 +78,14 @@ const HotelProfile = () => {
 
   return (
     <div className="gap-y-4 my-10">
-      <div className="flex justify-end w-full">
+      {/* <div className="flex justify-end w-full">
         <Typography variant="h5">{`Profile ID: ${user?.id.slice(
           -6
         )}`}</Typography>
-      </div>
+      </div> */}
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
         <RHFUploadAvatar isEdit={true} name="hotel_image" />
-        <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" />
+        {/* <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" /> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-5 w-full h-full mt-6">

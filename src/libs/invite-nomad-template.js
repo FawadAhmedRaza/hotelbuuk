@@ -223,7 +223,7 @@ export const invitationRejectedEmailTemplate = (name, imageUrl, nomadName) => {
         <p><strong>${name}</strong></p>
         <p>
           We regret to inform you that <strong>${nomadName}</strong> has declined your invitation to join your hotel as Internal Nomad. 
-          We understand that this may be disappointing news, but we encourage you to continue exploring other nomads to grow your hotel.
+          We understand that this may be disappointing news, but we encourage you to continue exploring other Business Consultants to grow your hotel.
         </p>
       </div>
       <div class="email-footer">

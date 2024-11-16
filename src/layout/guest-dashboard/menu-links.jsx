@@ -82,7 +82,13 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                   : "hover:bg-[#F2F2F2]"
               }`}
             >
-              <span className="text-lg">{item?.label}</span>
+              <div className="flex gap-3 items-center">
+                <Iconify
+                  iconName={item?.icon}
+                  className={`!size-5 text-black`}
+                />
+                <span className="text-lg">{item?.label}</span>
+              </div>
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
@@ -117,7 +123,13 @@ export const GuestDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                           : "hover:bg-[#F2F2F2]"
                       }`}
                     >
-                      <span className="text-lg pl-4">{child.title}</span>
+                      <div className="flex gap-3 items-center pl-4">
+                        <Iconify
+                          iconName={child?.icon}
+                          className={`!size-5 text-black`}
+                        />
+                        <span className="text-lg ">{child.title}</span>
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -156,44 +168,62 @@ export const MenuLinks = (UserId) => {
       id: 1,
       label: "Home",
       path: paths.guestDashboard.root,
+      icon: "material-symbols:home",
     },
     {
       id: 2,
       label: "Notifications",
       path: paths.guestDashboard.notifications,
+      icon: "mingcute:notification-fill",
     },
     {
       id: 3,
       label: "Bookings",
       path: paths.guestDashboard.bookings,
+      icon: "clarity:event-solid",
     },
     {
       id: 4,
       label: "Hotels",
       path: paths.guestDashboard.hotels,
+      icon: "mingcute:hotel-fill",
     },
     {
       id: 5,
-      label: "Nomads",
+      label: "Business Consultant",
       path: paths.guestDashboard.nomads,
+      icon: "mdi:teacher",
     },
     {
       id: 6,
       label: "Messages",
       path: paths.chats.root,
+      icon: "streamline:mail-send-email-message-solid",
     },
     {
       id: 7,
       label: "Settings",
       path: "",
+      icon: "material-symbols:settings",
       children: [
         {
           id: 1,
           title: "Profile",
           path: `/profile/${UserId}`,
+          icon: "carbon:user-profile",
         },
-        { id: 2, title: "Terms", path: paths.terms },
-        { id: 3, title: "Privacy", path: paths.privacyPolicy },
+        {
+          id: 2,
+          title: "Terms",
+          path: paths.terms,
+          icon: "fluent-mdl2:entitlement-policy",
+        },
+        {
+          id: 3,
+          title: "Privacy",
+          path: paths.privacyPolicy,
+          icon: "iconoir:privacy-policy",
+        },
       ],
     },
   ];

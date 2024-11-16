@@ -27,39 +27,62 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
       id: 1,
       label: "Home",
       path: "/nomad-dashboard",
+      icon: "material-symbols:home",
     },
     {
       id: 2,
       label: "Notifications",
       path: paths.nomadDashboard.notifications,
+      icon: "mingcute:notification-fill",
     },
     {
       id: 3,
       label: "Bookings",
       path: paths.nomadDashboard.bookings.root,
+      icon: "clarity:event-solid",
     },
     {
       id: 4,
       label: "Events",
       path: paths.nomadDashboard.events.root,
+      icon: "ic:baseline-event",
     },
     {
       id: 6,
       label: "Hotels",
       path: "/nomad-dashboard/hotels-list",
+      icon: "mingcute:hotel-fill",
     },
     {
       id: 7,
       label: "Messages",
       path: paths.chats.root,
+      icon: "streamline:mail-send-email-message-solid",
     },
     {
       id: 8,
       label: "Settings",
+      icon: "material-symbols:settings",
+
       children: [
-        { id: 4, title: "Profile", path: `/nomad/profile/${user?.id}` },
-        { id: 5, title: "Terms", path: paths.terms },
-        { id: 5, title: "Privacy", path: paths.privacyPolicy },
+        {
+          id: 4,
+          title: "Profile",
+          path: `/nomad/profile/${user?.id}`,
+          icon: "carbon:user-profile",
+        },
+        {
+          id: 5,
+          title: "Terms",
+          path: paths.terms,
+          icon: "fluent-mdl2:entitlement-policy",
+        },
+        {
+          id: 5,
+          title: "Privacy",
+          path: paths.privacyPolicy,
+          icon: "iconoir:privacy-policy",
+        },
       ],
     },
   ];
@@ -119,7 +142,13 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                   : "hover:bg-[#F2F2F2]"
               }`}
             >
-              <span className="text-lg">{item?.label}</span>
+              <div className="flex gap-3 items-center">
+                <Iconify
+                  iconName={item?.icon}
+                  className={`!size-5 text-black`}
+                />
+                <span className="text-lg">{item?.label}</span>
+              </div>{" "}
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
@@ -158,7 +187,13 @@ export const NomadDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                           : "hover:bg-[#F2F2F2]"
                       }`}
                     >
-                      <span className="text-lg pl-4">{child.title}</span>
+                      <div className="flex gap-3 items-center pl-4">
+                        <Iconify
+                          iconName={child?.icon}
+                          className={`!size-5 text-black`}
+                        />
+                        <span className="text-lg ">{child.title}</span>
+                      </div>{" "}
                     </Link>
                   ))}
                 </div>

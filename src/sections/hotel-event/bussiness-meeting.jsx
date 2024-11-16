@@ -126,7 +126,7 @@ export const BussinessMeeting = () => {
           <RHFImageSelect
             name="business_meeting.nomad_id"
             placeholder="Select Nomad"
-            label="Nomads"
+            label="Business Consultants"
             options={
               recomendedList?.length > 0 ? recomendedList : modifiedNomadList
             }
