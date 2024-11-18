@@ -101,36 +101,152 @@ import { createNotification } from "@/src/libs/create-notification";
 //   }
 // }
 
+// export async function POST(req) {
+//   try {
+//     const data = await req.json();
+//     const { hotel_id, email, nomad_type, nomad, invite_status } = data || {};
+
+//     const hotel = await prisma.hotel_info.findUnique({
+//       where: {
+//         id: hotel_id,
+//       },
+//       include: {
+//         user: true,
+//       },
+//     });
+
+//     const profileImage = await generateSignedUrl(hotel?.hotel_image);
+
+//     if (nomad_type === "registered") {
+//       // Check for duplicate
+//       const isDuplicate = await prisma.hotel_internal_nomads.findFirst({
+//         where: {
+//           hotel_id,
+//           nomad_id: nomad?.id,
+//         },
+//       });
+
+//       if (isDuplicate) {
+//         return NextResponse.json(
+//           {
+//             message: "Selected nomad is already a part of Internal nomads",
+//           },
+//           { status: 400 }
+//         );
+//       }
+
+//       // Create transaction for adding internal nomad and sending notifications/emails
+//       await prisma.$transaction(async (prisma) => {
+//         // Insert the nomad into hotel_internal_nomads
+//         await prisma.hotel_internal_nomads.create({
+//           data: {
+//             hotel_id,
+//             nomad_id: nomad?.id,
+//             invite_status: invite_status || "PENDING", // Default status
+//           },
+//         });
+
+//         // Fetch nomad user details
+//         let nomadUser = await prisma.nomad.findUnique({
+//           where: {
+//             id: nomad?.id,
+//           },
+//           include: {
+//             User: true,
+//           },
+//         });
+
+//         // Prepare notification and email links
+//         let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
+//         let invitationRejected = `accept-invitation?email=${email}&status=REJECTED&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
+
+//         let message = `${hotel?.hotel_name} has invited you to become their internal Business Consultant. Check your email.`;
+
+//         // Send notification
+//         await createNotification(
+//           hotel?.hotel_name,
+//           "Invitation for Hotel Internal Business Consultant",
+//           message,
+//           nomadUser?.User?.id,
+//           hotel?.user?.id
+//         );
+
+//         // Send email
+//         await sendMail(
+//           "Hotel Invitation",
+//           nomad?.email,
+//           invitationEmailTemplate(
+//             hotel?.hotel_name,
+//             profileImage,
+//             queryParams,
+//             invitationRejected,
+//             hotel?.user?.id
+//           )
+//         );
+//       });
+//     } else {
+//       // For unregistered users, just send the email invitation
+//       let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+//       let invitationRejected = `accept-invitation?email=${email}&status=DIRECT_EMAIL&hotel=${hotel?.hotel_name}`;
+
+//       await sendMail(
+//         "Hotel Invitation",
+//         email,
+//         invitationEmailTemplate(
+//           hotel?.hotel_name,
+//           profileImage,
+//           queryParams,
+//           invitationRejected,
+//           hotel?.user?.id
+//         )
+//       );
+//     }
+
+//     return NextResponse.json({ message: "success" }, { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json(
+//       { message: "Internal server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 export async function POST(req) {
   try {
     const data = await req.json();
     const { hotel_id, email, nomad_type, nomad, invite_status } = data || {};
 
     const hotel = await prisma.hotel_info.findUnique({
-      where: {
-        id: hotel_id,
-      },
-      include: {
-        user: true,
-      },
+      where: { id: hotel_id },
+      include: { user: true },
     });
+
+    if (!hotel) {
+      return NextResponse.json(
+        { message: "Hotel not found." },
+        { status: 404 }
+      );
+    }
 
     const profileImage = await generateSignedUrl(hotel?.hotel_image);
 
     if (nomad_type === "registered") {
-      // Check for duplicate
+      if (!nomad?.id) {
+        return NextResponse.json(
+          { message: "Nomad ID is required for registered users." },
+          { status: 400 }
+        );
+      }
+
+      // Check for duplicate entry
       const isDuplicate = await prisma.hotel_internal_nomads.findFirst({
-        where: {
-          hotel_id,
-          nomad_id: nomad?.id,
-        },
+        where: { hotel_id, nomad_id: nomad.id },
       });
 
       if (isDuplicate) {
         return NextResponse.json(
-          {
-            message: "Selected nomad is already a part of Internal nomads",
-          },
+          { message: "Selected nomad is already part of Internal Nomads." },
           { status: 400 }
         );
       }
@@ -141,26 +257,22 @@ export async function POST(req) {
         await prisma.hotel_internal_nomads.create({
           data: {
             hotel_id,
-            nomad_id: nomad?.id,
+            nomad_id: nomad.id,
             invite_status: invite_status || "PENDING", // Default status
           },
         });
 
         // Fetch nomad user details
-        let nomadUser = await prisma.nomad.findUnique({
-          where: {
-            id: nomad?.id,
-          },
-          include: {
-            User: true,
-          },
+        const nomadUser = await prisma.nomad.findUnique({
+          where: { id: nomad.id },
+          include: { User: true },
         });
 
         // Prepare notification and email links
-        let queryParams = `accept-invitation?email=${email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
-        let invitationRejected = `accept-invitation?email=${email}&status=REJECTED&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
+        const queryParams = `accept-invitation?email=${nomadUser?.User?.email}&isRegistered=true&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
+        const invitationRejected = `accept-invitation?email=${nomadUser?.User?.email}&status=REJECTED&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}&nomadId=${nomad?.id}`;
 
-        let message = `${hotel?.hotel_name} has invited you to become their internal Business Consultant. Check your email.`;
+        const message = `${hotel?.hotel_name} has invited you to become their internal Business Consultant. Check your email.`;
 
         // Send notification
         await createNotification(
@@ -174,7 +286,7 @@ export async function POST(req) {
         // Send email
         await sendMail(
           "Hotel Invitation",
-          nomad?.email,
+          nomadUser?.User?.email,
           invitationEmailTemplate(
             hotel?.hotel_name,
             profileImage,
@@ -184,10 +296,29 @@ export async function POST(req) {
           )
         );
       });
-    } else {
-      // For unregistered users, just send the email invitation
-      let queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
-      let invitationRejected = `accept-invitation?email=${email}&status=DIRECT_EMAIL&hotel=${hotel?.hotel_name}`;
+    } else if (nomad_type === "invite") {
+      // For non-registered users, check duplicate email and send invitation
+      const isDuplicate = await prisma.hotel_internal_nomads.findFirst({
+        where: { hotel_id, email },
+      });
+
+      if (isDuplicate) {
+        return NextResponse.json(
+          { message: "An invitation has already been sent to this email." },
+          { status: 400 }
+        );
+      }
+
+      await prisma.hotel_internal_nomads.create({
+        data: {
+          hotel_id,
+          email,
+          invite_status: invite_status || "PENDING",
+        },
+      });
+
+      const queryParams = `sign-up?email=${email}&isRegistered=false&hotel=${hotel?.hotel_name}&hotelId=${hotel?.id}`;
+      const invitationRejected = `accept-invitation?email=${email}&status=DIRECT_EMAIL&hotel=${hotel?.hotel_name}`;
 
       await sendMail(
         "Hotel Invitation",
@@ -202,11 +333,14 @@ export async function POST(req) {
       );
     }
 
-    return NextResponse.json({ message: "success" }, { status: 200 });
-  } catch (error) {
-    console.error(error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: "Invitation sent successfully." },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error in POST API:", error);
+    return NextResponse.json(
+      { message: "Internal server error." },
       { status: 500 }
     );
   }

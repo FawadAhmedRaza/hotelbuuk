@@ -28,6 +28,8 @@ import {
   getAllEventSafetyAndProperty,
 } from "@/src/redux/event-things-to-know/thunk";
 import { Itinerary } from "./itinerary";
+import { SelectRoom } from "./select-room";
+import { getRooms } from "@/src/redux/hotel-rooms/thunk";
 
 export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -68,18 +70,19 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       amenities: Yup.array().optional(),
       nomad_id: Yup.string().required("Please select nomad"),
     }),
+    room_id: Yup.string().required("Room is required"),
     rules: Yup.array().optional(),
     safeties: Yup.array().optional(),
     cancelPolicies: Yup.array().optional(),
-    topics: Yup.array()
-      .min(1, "At least one topic is required")
-      .required("Files are required"),
+    topics: Yup.array().min(1, "At least one topic is required").required(),
     availibility: Yup.object().shape({
       start_date: Yup.string().required("Start date is required"),
       end_date: Yup.string().required("End date is required"),
       rules: Yup.lazy((value) => checkBoxSchema(Object.keys(value || {}))),
     }),
-    itinerary: Yup.array().optional(),
+    itinerary: Yup.array()
+      .min(1, "At least one Location is required")
+      .required(),
     price: Yup.string().required("Price is required"),
   });
 
@@ -95,6 +98,8 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
             business_category: "",
             amenities: [],
           },
+          room_id: "",
+
           topics: [],
           availibility: {
             start_date: "",
@@ -145,6 +150,13 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       console.log(error);
     }
   };
+  const fetchRooms = async () => {
+    try {
+      await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
+    } catch (error) {
+      console.log("Error fetching rooms:", error);
+    }
+  };
 
   useEffect(() => {
     fetchNomads();
@@ -152,6 +164,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     fetchEventRules();
     fetchEventPolicies();
     fetchEventSafetyProperty();
+    fetchRooms();
   }, []);
 
   const steps = [
@@ -160,6 +173,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       icon: "mdi:business-outline",
       value: "bussiness",
       component: <BussinessMeeting />,
+    },
+    {
+      label: "Room",
+      icon: "cil:room",
+      value: "room",
+      component: <SelectRoom />,
     },
     {
       label: "What Guest will Learn",
@@ -206,8 +225,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
         "business_meeting.nomad_id"
       );
     } else if (activeStep === 1) {
+      fieldsToValidate.push("room_id");
+    } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 4) {
+    } else if (activeStep === 3) {
+      fieldsToValidate.push("itinerary");
+    } else if (activeStep === 5) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 

@@ -18,6 +18,7 @@ export async function POST(req) {
       safeties,
       cancelPolicies,
       itinerary,
+      room_id,
     } = data || {};
 
     const {
@@ -77,6 +78,7 @@ export async function POST(req) {
         price: String(data?.price),
         user_id: user_id,
         hotel_id: hotel?.id,
+        room_id,
       },
     });
 

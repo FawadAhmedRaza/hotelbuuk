@@ -68,6 +68,11 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
+      room_id: Yup.string().when("accomodation_type", {
+        is: "hotel",
+        then: (schema) => schema.required("room is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
       country: Yup.string().when("accomodation_type", {
         is: "bnb",
         then: (schema) => schema.required("Country is required for BnB"),
@@ -96,10 +101,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       is: "bnb",
       then: (schema) =>
         schema
-          // .required("Images are required")
+          .required("Images are required for BnB")
           .min(8, "At least 8 images are required for the event")
           .max(20, "A maximum of 20 images is allowed"),
-      otherwise: (schema) => schema.notRequired(),
+      otherwise: (schema) => schema.optional(),
     }),
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -125,6 +130,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             business_category: "",
             accomodation_type: "bnb",
             hotel_id: "",
+            room_id: "",
             country: "",
             city: "",
             address: "",

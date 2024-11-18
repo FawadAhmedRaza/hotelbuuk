@@ -195,7 +195,7 @@ export const CostCard = ({ type, id }) => {
 
   return (
     <div
-      className="flex flex-col lg:flex-row bg-white gap-5  w-full "
+      className="flex flex-col lg:flex-row bg-white gap-5  w-full z-50"
       style={{ position: "sticky", top: "70px" }}
     >
       {/* Right Panel - Hotel Details and Booking Information */}
@@ -204,6 +204,7 @@ export const CostCard = ({ type, id }) => {
         disableActions={true}
         isOpen={value}
         onClose={onFalse}
+        className="!z-50"
       >
         <div className="flex gap-5 h-12 ">
           <Card
