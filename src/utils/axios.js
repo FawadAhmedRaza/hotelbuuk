@@ -92,6 +92,7 @@ export const endpoints = {
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
+    getSingleNomad: (id) => `/nomad/${id}`,
     getProfile: (id) => `/nomad/nomad-profile/${id}`,
     updateProfile: (id) => `/nomad/nomad-profile/${id}`,
     deleteProfile: (id) => `/nomad/nomad-profile/${id}`,

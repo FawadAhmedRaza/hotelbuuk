@@ -60,6 +60,7 @@ export async function GET(_, { params }) {
           (item) => item?.amenities
         ),
         hotel_id: nomadEvent?.hotel_id || "",
+        room_id: nomadEvent?.room_id || "",
         about_bnb: nomadEvent?.about_bnb || "",
 
         country: nomadEvent?.country || "",
@@ -146,9 +147,9 @@ export async function PUT(req, { params }) {
       city,
       country,
       address,
-
       amenities,
       hotel_id,
+      room_id,
       about_bnb,
     } = business_meeting || {};
 
@@ -204,6 +205,7 @@ export async function PUT(req, { params }) {
           accomodation_type,
           start_date,
           end_date,
+          room_id: room_id,
           hotel_id: hotel_id,
           // rules
           check_in: rules?.check_in,

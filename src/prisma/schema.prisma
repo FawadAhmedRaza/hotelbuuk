@@ -213,6 +213,7 @@ model hotel_rooms {
   updatedAt                  DateTime                     @updatedAt
   room_associated_facilities room_associated_facilities[]
   hotel_event                hotel_event[]
+  nomad_event                nomad_event[]
 }
 
 model room_types {
@@ -312,6 +313,9 @@ model nomad_event {
 
   hotel_id String?     @db.ObjectId
   hotel    hotel_info? @relation(fields: [hotel_id], references: [id])
+
+  room_id String?      @db.ObjectId
+  room    hotel_rooms? @relation(fields: [room_id], references: [id])
 
   nomad_id String @db.ObjectId
   nomad    nomad  @relation(fields: [nomad_id], references: [id])

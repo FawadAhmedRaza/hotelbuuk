@@ -25,13 +25,11 @@ export const RHFImageSelect = ({
 
   const pathName = usePathname();
 
-
   const dashboardPath = pathName.split("/")[1];
 
   const hotelId = watch("business_meeting.hotel_id");
   const nomadId = watch("business_meeting.nomad_id");
 
- 
   // Filter options based on the search query
   const filterOptions = options.filter((item) =>
     item?.hotel_name?.toLowerCase().includes(query.toLowerCase())
@@ -167,7 +165,7 @@ export const RHFImageSelect = ({
             </div>
 
             {openDropdown && (
-              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-[9999] max-h-56 shadow-lg overflow-hidden">
+              <div className="rounded-md absolute bg-white top-[52px] w-full border border-custom-neutral divide-y divide-dashed divide-custom-neutral !z-50 max-h-56 shadow-lg overflow-hidden">
                 <div className="p-2">
                   <input
                     className="!border-b border-primary !py-1.5 w-full text-sm outline-none px-2 placeholder:text-neutral-300 text-secondary"
@@ -176,7 +174,7 @@ export const RHFImageSelect = ({
                     onChange={handleChangeQuery}
                   />
                 </div>
-                <div className="overflow-auto max-h-40 divide-y divide-dashed divide-secondary hide-scrollbar">
+                <div className="overflow-auto z-50 max-h-40 divide-y divide-dashed divide-secondary hide-scrollbar">
                   {filterOptions.length > 0 ? (
                     filterOptions.map((option, index) => (
                       <div

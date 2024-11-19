@@ -20,7 +20,8 @@ import {
 import { CustomTable, Pagination } from "@/src/components/custom-table";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import RoomListSkeleton from "@/src/components/Skeleton/room-list-skeleton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { paths } from "@/src/contants";
 
 const header = [
   { id: 1, label: "Name" },
@@ -40,6 +41,8 @@ const header = [
 ];
 
 const InternalNomadsListView = () => {
+  const searchParams = useSearchParams();
+
   const inviteModal = useModal();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
@@ -63,6 +66,10 @@ const InternalNomadsListView = () => {
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
+  };
+
+  const handleCreateEvent = (id) => {
+    router.push(paths.hotelDashboard.events.create(id));
   };
 
   const fetchInternalNomads = async () => {
@@ -170,7 +177,7 @@ const InternalNomadsListView = () => {
                   <td className="px-6 py-4">
                     {/* <Typography variant="p" className="  !text-nowrap max-w-56"> */}
                     <span
-                      className={`px-3 py-2 text-white rounded-full ${
+                      className={`px-3 py-2 text-white rounded-full text-sm ${
                         invite_status === "PENDING"
                           ? "bg-amber-500"
                           : invite_status === "ACCEPTED"
@@ -181,6 +188,23 @@ const InternalNomadsListView = () => {
                       {invite_status}
                     </span>
                     {/* </Typography> */}
+                  </td>
+                  <td className="px-6 py-4">
+                    <Button
+                      onClick={() => handleCreateEvent(nomad?.id)}
+                      disabled={
+                        invite_status === "PENDING" ||
+                        invite_status === "REJECTED"
+                      }
+                      className={`!text-nowrap bg-black max-w-56 ${
+                        invite_status === "PENDING" ||
+                        invite_status === "REJECTED"
+                          ? "!cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
+                    >
+                      Create Listing
+                    </Button>
                   </td>
                   <td className="px-6 py-4">
                     <Typography variant="p" className="  !text-nowrap max-w-56">

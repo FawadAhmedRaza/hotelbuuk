@@ -97,7 +97,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     rules: Yup.array().optional(),
     safeties: Yup.array().optional(),
     cancelPolicies: Yup.array().optional(),
-    images: Yup.array().when("accomodation_type", {
+    images: Yup.array().when("business_meeting.accomodation_type", {
       is: "bnb",
       then: (schema) =>
         schema
@@ -275,7 +275,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       );
 
       if (accomodationType === "hotel") {
-        fieldsToValidate.push("business_meeting.hotel_id");
+        fieldsToValidate.push(
+          "business_meeting.hotel_id",
+          "business_meeting.room_id"
+        );
       } else if (accomodationType === "bnb") {
         fieldsToValidate.push(
           "business_meeting.country",

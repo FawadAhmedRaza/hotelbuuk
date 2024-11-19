@@ -29,12 +29,14 @@ export const HotelOverview = ({ type }) => {
 
   const { event, isLoading } = useSelector((state) => state.allEvents.getById);
 
+  
 
   const eventImages =
     Array.isArray(event?.event_images) && event?.event_images.length > 0
       ? event.event_images
-      : event?.hotel?.hotelImages;
+      : event?.room?.room_images;
 
+  console.log("hotel Images", event?.room?.room_images);
 
   return (
     <Pannel className="flex flex-col gap-5 py-10 md:!py-5  px-5 sm:px-8 lg:px-14 xl:px-10 ">
@@ -120,8 +122,7 @@ export const HotelOverview = ({ type }) => {
             <ImageRender
               src={
                 event?.event_images?.[0]?.img ||
-                event?.hotel?.hotel_image ||
-                event?.hotel?.hotelImages[0]?.img
+                event?.room?.room_images[0]?.img
               }
               type={"server"}
               alt="Lazy Loaded Image"

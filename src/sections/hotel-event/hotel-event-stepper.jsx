@@ -14,12 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { enqueueSnackbar } from "notistack";
-import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
+import {
+  getNomadsProfile,
+  getSingleNomad,
+} from "@/src/redux/nomad-profile/thunk";
 import {
   createHotelEvent,
   updateHotelEventById,
 } from "@/src/redux/hotel-event/thunk";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { paths } from "@/src/contants";
 import { ThingsToKnow } from "./things-to-know";
 import {
@@ -33,10 +36,13 @@ import { getRooms } from "@/src/redux/hotel-rooms/thunk";
 
 export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
-
+  const params = useSearchParams();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
   const router = useRouter();
+  const nomadId = params.get("nomad_id") || "";
+
+  console.log("Default Data", defaultValues);
 
   const { isLoading } = useSelector((state) => state.hotelEvent.create);
   const { isLoading: updateLoading } = useSelector(
@@ -109,11 +115,21 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
         },
   });
 
-  const { trigger, handleSubmit } = methods;
+  const { trigger, handleSubmit, setValue } = methods;
 
   const fetchNomads = async () => {
     try {
       await dispatch(getNomadsProfile()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchSingleNomad = async () => {
+    try {
+      await dispatch(
+        getSingleNomad(nomadId || defaultValues?.business_meeting?.nomad_id)
+      ).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -150,6 +166,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       console.log(error);
     }
   };
+
   const fetchRooms = async () => {
     try {
       await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
@@ -159,6 +176,7 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   };
 
   useEffect(() => {
+    fetchSingleNomad();
     fetchNomads();
     fetchAmenities();
     fetchEventRules();
@@ -167,12 +185,24 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     fetchRooms();
   }, []);
 
+  useEffect(() => {
+    if (!isEdit && nomadId) {
+      setValue("business_meeting.nomad_id", nomadId);
+    }
+    if (isEdit) {
+      setValue(
+        "business_meeting.nomad_id",
+        defaultValues?.business_meeting?.nomad_id
+      );
+    }
+  }, []);
+
   const steps = [
     {
       label: "Bussiness Meeting Info",
       icon: "mdi:business-outline",
       value: "bussiness",
-      component: <BussinessMeeting />,
+      component: <BussinessMeeting isEdit={isEdit} />,
     },
     {
       label: "Room",

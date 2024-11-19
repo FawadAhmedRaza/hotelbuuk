@@ -7,6 +7,7 @@ import {
   getInternalNomad,
   getNomadProfileById,
   getNomadsProfile,
+  getSingleNomad,
   updateNomadProfile,
 } from "./thunk";
 
@@ -21,6 +22,11 @@ const initialState = {
     user: null,
   },
   getById: {
+    isLoading: false,
+    error: null,
+    nomad: {},
+  },
+  getNomad: {
     isLoading: false,
     error: null,
     nomad: {},
@@ -56,9 +62,6 @@ export const nomadProfile = createSlice({
       state.create.isLoading = true;
     });
     builder.addCase(createNomadProfile.fulfilled, (state, action) => {
-      //   state.hotels = action.payload;
-      //   state.create.accessToken = action.payload.accessToken;
-      //   state.create.user = action.payload.user;
       state.create.isLoading = false;
     });
     builder.addCase(createNomadProfile.rejected, (state, action) => {
@@ -103,6 +106,19 @@ export const nomadProfile = createSlice({
     builder.addCase(getNomadProfileById.rejected, (state, action) => {
       state.getById.error = action.error;
       state.getById.isLoading = false;
+    });
+
+    // get Single Nomad
+    builder.addCase(getSingleNomad.pending, (state, action) => {
+      state.getNomad.isLoading = true;
+    });
+    builder.addCase(getSingleNomad.fulfilled, (state, action) => {
+      state.getNomad.nomad = action.payload.nomad;
+      state.getNomad.isLoading = false;
+    });
+    builder.addCase(getSingleNomad.rejected, (state, action) => {
+      state.getNomad.error = action.error;
+      state.getNomad.isLoading = false;
     });
 
     // update

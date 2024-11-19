@@ -50,6 +50,12 @@ export async function GET(req, { params }) {
               amenities: true,
             },
           },
+          room: {
+            include: {
+              room_images: true,
+              room_associated_facilities: true,
+            },
+          },
           event_associated_cancel_policies: {
             include: {
               event_cancel_policy: true,
@@ -132,6 +138,12 @@ export async function GET(req, { params }) {
             },
           },
           nomad: true,
+          room: {
+            include: {
+              room_images: true,
+              room_associated_facilities: true,
+            },
+          },
           itinerary: true,
           hotel: {
             include: {

@@ -53,7 +53,7 @@ export const paths = {
     internalNomads: "/hotel-dashboard/internal-nomads",
     events: {
       root: "/hotel-dashboard/event",
-      create: "/hotel-dashboard/event/create",
+      create: (id) => `/hotel-dashboard/event/create?nomad_id=${id}`,
       edit: (id) => `/hotel-dashboard/event/${id}`,
     },
     bookings: {
