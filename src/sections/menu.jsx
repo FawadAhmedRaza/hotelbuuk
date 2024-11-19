@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../providers/auth/context/auth-context";
 
-import { AnchorTag, Button, Drawer, Typography } from "../components";
+import { AnchorTag, Button, Drawer, Iconify, Typography } from "../components";
 import { AuthLinks, MenuLinks } from "../_mock/_menu";
 import { BgIcon } from "../components/bg-icon";
 
@@ -46,7 +46,14 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
                   : "!text-black hover:!text-primary"
               }`}
             >
-              {item?.label}
+              <div className="flex gap-3 items-center">
+                <Iconify
+                  iconName={item?.icon}
+                  className={`!size-5 text-black`}
+                />
+                <span className="text-lg">{item?.label}</span>
+              </div>{" "}
+              {/* {item?.label} */}
             </AnchorTag>
           );
         })}
@@ -65,7 +72,14 @@ export const Menu = ({ isOpen, setIsOpen, onClick }) => {
                     : "!text-black hover:!text-primary"
                 }`}
               >
-                {item?.label}
+                <div className="flex gap-3 items-center">
+                  <Iconify
+                    iconName={item?.icon}
+                    className={`!size-5 text-black`}
+                  />
+                  <span className="text-lg">{item?.label}</span>
+                </div>{" "}
+                {/* {item?.label} */}
               </AnchorTag>
             );
           })

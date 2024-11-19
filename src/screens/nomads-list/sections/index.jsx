@@ -67,7 +67,7 @@ const NomadsListSection = React.memo(() => {
     <>
       {!isLoading ? (
         <Pannel className="flex flex-col gap-10">
-          <Breadcrumb title="Nomads List" />
+          <Breadcrumb title="Business Consultants List" />
           <div className="border border-gray-200 rounded-xl">
             <CustomTable
               items={items}

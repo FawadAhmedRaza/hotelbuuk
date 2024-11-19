@@ -14,12 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAmenities } from "@/src/redux/amenities/thunk";
 import { useAuthContext } from "@/src/providers/auth/context/auth-context";
 import { enqueueSnackbar } from "notistack";
-import { getNomadsProfile } from "@/src/redux/nomad-profile/thunk";
+import {
+  getNomadsProfile,
+  getSingleNomad,
+} from "@/src/redux/nomad-profile/thunk";
 import {
   createHotelEvent,
   updateHotelEventById,
 } from "@/src/redux/hotel-event/thunk";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { paths } from "@/src/contants";
 import { ThingsToKnow } from "./things-to-know";
 import {
@@ -28,13 +31,18 @@ import {
   getAllEventSafetyAndProperty,
 } from "@/src/redux/event-things-to-know/thunk";
 import { Itinerary } from "./itinerary";
+import { SelectRoom } from "./select-room";
+import { getRooms } from "@/src/redux/hotel-rooms/thunk";
 
 export const HotelEventStepper = ({ defaultValues, isEdit }) => {
   const [activeStep, setActiveStep] = useState(0);
-
+  const params = useSearchParams();
   const dispatch = useDispatch();
   const { user } = useAuthContext();
   const router = useRouter();
+  const nomadId = params.get("nomad_id") || "";
+
+  console.log("Default Data", defaultValues);
 
   const { isLoading } = useSelector((state) => state.hotelEvent.create);
   const { isLoading: updateLoading } = useSelector(
@@ -68,18 +76,19 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       amenities: Yup.array().optional(),
       nomad_id: Yup.string().required("Please select nomad"),
     }),
+    room_id: Yup.string().required("Room is required"),
     rules: Yup.array().optional(),
     safeties: Yup.array().optional(),
     cancelPolicies: Yup.array().optional(),
-    topics: Yup.array()
-      .min(1, "At least one topic is required")
-      .required("Files are required"),
+    topics: Yup.array().min(1, "At least one topic is required").required(),
     availibility: Yup.object().shape({
       start_date: Yup.string().required("Start date is required"),
       end_date: Yup.string().required("End date is required"),
       rules: Yup.lazy((value) => checkBoxSchema(Object.keys(value || {}))),
     }),
-    itinerary: Yup.array().optional(),
+    itinerary: Yup.array()
+      .min(1, "At least one Location is required")
+      .required(),
     price: Yup.string().required("Price is required"),
   });
 
@@ -95,6 +104,8 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
             business_category: "",
             amenities: [],
           },
+          room_id: "",
+
           topics: [],
           availibility: {
             start_date: "",
@@ -104,11 +115,21 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
         },
   });
 
-  const { trigger, handleSubmit } = methods;
+  const { trigger, handleSubmit, setValue } = methods;
 
   const fetchNomads = async () => {
     try {
       await dispatch(getNomadsProfile()).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchSingleNomad = async () => {
+    try {
+      await dispatch(
+        getSingleNomad(nomadId || defaultValues?.business_meeting?.nomad_id)
+      ).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -146,12 +167,34 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
     }
   };
 
+  const fetchRooms = async () => {
+    try {
+      await dispatch(getRooms(user?.hotels?.[0].id)).unwrap();
+    } catch (error) {
+      console.log("Error fetching rooms:", error);
+    }
+  };
+
   useEffect(() => {
+    fetchSingleNomad();
     fetchNomads();
     fetchAmenities();
     fetchEventRules();
     fetchEventPolicies();
     fetchEventSafetyProperty();
+    fetchRooms();
+  }, []);
+
+  useEffect(() => {
+    if (!isEdit && nomadId) {
+      setValue("business_meeting.nomad_id", nomadId);
+    }
+    if (isEdit) {
+      setValue(
+        "business_meeting.nomad_id",
+        defaultValues?.business_meeting?.nomad_id
+      );
+    }
   }, []);
 
   const steps = [
@@ -159,7 +202,13 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
       label: "Bussiness Meeting Info",
       icon: "mdi:business-outline",
       value: "bussiness",
-      component: <BussinessMeeting />,
+      component: <BussinessMeeting isEdit={isEdit} />,
+    },
+    {
+      label: "Room",
+      icon: "cil:room",
+      value: "room",
+      component: <SelectRoom />,
     },
     {
       label: "What Guest will Learn",
@@ -206,8 +255,12 @@ export const HotelEventStepper = ({ defaultValues, isEdit }) => {
         "business_meeting.nomad_id"
       );
     } else if (activeStep === 1) {
+      fieldsToValidate.push("room_id");
+    } else if (activeStep === 2) {
       fieldsToValidate.push("topics");
-    } else if (activeStep === 4) {
+    } else if (activeStep === 3) {
+      fieldsToValidate.push("itinerary");
+    } else if (activeStep === 5) {
       fieldsToValidate.push("availibility.start_date", "availibility.end_date");
     }
 

@@ -165,7 +165,7 @@ export const CostCard = ({ type, id }) => {
                   amount: {
                     value: (
                       event?.price * stayNights * guestCount +
-                      ((event?.price * stayNights * guestCount) / 100) * 20
+                      ((event?.price * stayNights * guestCount) / 100) * 25
                     ).toFixed(2),
                   },
                 },
@@ -195,7 +195,7 @@ export const CostCard = ({ type, id }) => {
 
   return (
     <div
-      className="flex flex-col lg:flex-row bg-white gap-5  w-full "
+      className="flex flex-col lg:flex-row bg-white gap-5  w-full z-50"
       style={{ position: "sticky", top: "70px" }}
     >
       {/* Right Panel - Hotel Details and Booking Information */}
@@ -204,6 +204,7 @@ export const CostCard = ({ type, id }) => {
         disableActions={true}
         isOpen={value}
         onClose={onFalse}
+        className="!z-50"
       >
         <div className="flex gap-5 h-12 ">
           <Card
@@ -233,7 +234,7 @@ export const CostCard = ({ type, id }) => {
             <StripePayment
               amount={(
                 event?.price * stayNights * guestCount +
-                ((event?.price * stayNights * guestCount) / 100) * 20
+                ((event?.price * stayNights * guestCount) / 100) * 25
               ).toFixed(2)}
               type={type}
               id={id}
@@ -341,7 +342,7 @@ export const CostCard = ({ type, id }) => {
                     $
                     {(
                       ((event?.price * stayNights * guestCount) / 100) *
-                      20
+                      25
                     ).toFixed(2)}
                   </Typography>
                 </span>
@@ -354,7 +355,7 @@ export const CostCard = ({ type, id }) => {
                   $
                   {(
                     event?.price * stayNights * guestCount +
-                    ((event?.price * stayNights * guestCount) / 100) * 20
+                    ((event?.price * stayNights * guestCount) / 100) * 25
                   ).toFixed(2)}
                 </Typography>
               </span>
@@ -416,8 +417,8 @@ export const CostCard = ({ type, id }) => {
         </Card>
         <p className="cursor-pointer" onClick={handleReport}>
           <span className="flex justify-center items-center gap-3 w-full mt-4 md:mt-2">
-            <Iconify iconName="mynaui:flag-solid" className="text-black" />
-            <Typography variant="p" className=" font-medium">
+            <Iconify iconName="mynaui:flag-solid" className="text-red-700" />
+            <Typography variant="p" className="text-red-700 font-medium">
               Report This Listing
             </Typography>
           </span>

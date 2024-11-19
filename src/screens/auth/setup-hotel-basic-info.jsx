@@ -62,7 +62,7 @@ const SetupBasicInfoHotel = () => {
           </div>
           <div className="flex flex-col justify-center items-center lg:justify-start lg:items-start gap-3">
             <Typography variant="h2" className="font-semibold">
-              Basic Information
+              Hotel Basic Information
             </Typography>
             <Typography
               variant="p"

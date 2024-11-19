@@ -16,6 +16,12 @@ export async function GET() {
           },
         },
         nomad: true,
+        room: {
+          include: {
+            room_images: true,
+            room_associated_facilities: true,
+          },
+        },
       },
     });
 
@@ -32,6 +38,12 @@ export async function GET() {
         hotel: {
           include: {
             hotelImages: true,
+          },
+        },
+        room: {
+          include: {
+            room_images: true,
+            room_associated_facilities: true,
           },
         },
       },

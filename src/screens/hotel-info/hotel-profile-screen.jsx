@@ -37,9 +37,9 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     city: Yup.string().required("city is required"),
     stars: Yup.mixed().optional().default(4),
     facilities: Yup.array().optional(),
-    images: Yup.array()
-      .min(8, "At least Eight images are required")
-      .required("Files are required"),
+    images: Yup.array().optional(),
+    // .min(8, "At least Eight images are required")
+    // .required("Files are required"),
   });
 
   const { user, setUser, logout } = useAuthContext();
@@ -170,15 +170,17 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
     <Pannel className="!py-8">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
         <Breadcrumb title="Update Hotel profile" />
-        <div className="w-full mt-4">
+        {/* <div className="w-full mt-4">
           <Tabs
             TABS={TABS}
             activeTab={activeTabs}
             setActiveTab={setActiveTabs}
           />
-        </div>
+        </div> */}
 
-        {activeTabs === "hotel-images" && (
+        <HotelProfile />
+
+        {/* {activeTabs === "hotel-images" && ( */}
           <div className="flex justify-end my-5 gap-3">
             <Button
               type="button"
@@ -191,7 +193,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
               {isEdit ? "Save" : "Submit"}
             </Button>
           </div>
-        )}
+        {/* )} */}
       </RHFFormProvider>
       {isOpen && (
         <DeleteModal

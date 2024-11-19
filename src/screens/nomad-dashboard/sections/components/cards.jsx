@@ -50,6 +50,7 @@ const HotelCards = () => {
       value: bookingsCount ?? null,
       btnTitle: "View Details",
       path: paths.nomadDashboard.bookings.root,
+      bgColor: "#fee2e2",
     },
     {
       id: 2,
@@ -58,6 +59,7 @@ const HotelCards = () => {
       value: hotelCount ?? null,
       btnTitle: "View Details",
       path: paths.nomadDashboard.hotels,
+      bgColor: "#dbeafe",
     },
     {
       id: 3,
@@ -66,6 +68,7 @@ const HotelCards = () => {
       value: totalRevenue ?? null,
       btnTitle: "View Details",
       path: paths.nomadDashboard.bookings.root,
+      bgColor: "#dcfce7",
     },
   ];
 
@@ -82,6 +85,7 @@ const HotelCards = () => {
               value={data.value}
               btnTitle={data.btnTitle}
               path={data.path}
+              bgColor={data.bgColor}
             />
           )}
         </div>

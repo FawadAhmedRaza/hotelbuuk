@@ -31,6 +31,7 @@ const page = () => {
       let data = {
         nomadId,
         hotelId,
+        invite_status: "ACCEPTED",
       };
       const request = await axiosInstance.put(
         endpoints.hotel.inviteNomads,
@@ -54,9 +55,14 @@ const page = () => {
       let data = {
         nomadId,
         hotelId,
+        invite_status: "REJECTED",
       };
-      const request = await axiosInstance.post(
-        endpoints.hotel.rejecteRequest,
+      // const request = await axiosInstance.post(
+      //   endpoints.hotel.rejecteRequest,
+      //   data
+      // );
+      const request = await axiosInstance.put(
+        endpoints.hotel.inviteNomads,
         data
       );
       if (request?.status === 200) {

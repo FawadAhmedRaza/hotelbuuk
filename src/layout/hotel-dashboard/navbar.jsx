@@ -25,20 +25,28 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
         className
       )}
     >
-      <AnchorTag href={"/"}>
-        <div className=" flex gap-3 items-center">
-          <img
-            src="/assets/images/transperent-logo/transperent/WHITE.png"
-            className="w-12"
+      <div className="flex items-center gap-10">
+        <div className="cursor-pointer" onClick={toggleDrawer}>
+          <Iconify
+            iconName="material-symbols:menu"
+            className="size-5 sm:size-8 md:size-10"
           />
-          <Typography
-            variant="h3"
-            className="sm:!text-xl md:flex hidden md:!text-[1.6rem] !text-[14px] font-bold text-white text-start text-nowrap"
-          >
-            Hotelbuuk Dashboard
-          </Typography>
         </div>
-      </AnchorTag>
+        <AnchorTag className="!no-underline" href={"/"}>
+          <div className=" flex gap-3 items-center">
+            <img
+              src="/assets/images/transperent-logo/transperent/WHITE.png"
+              className="w-12"
+            />
+            <Typography
+              variant="h3"
+              className="sm:!text-xl md:flex hidden md:!text-[1.6rem] !text-[14px] font-bold text-white text-start text-nowrap"
+            >
+              Hotel Dashboard
+            </Typography>
+          </div>
+        </AnchorTag>
+      </div>
 
       {isOpen && (
         <HotelDashboardMenu
@@ -49,14 +57,11 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
       )}
 
       <div className="flex gap-2 sm:gap-5">
-        <div
-          onClick={toggleDrawer}
-          className="flex items-center gap-1 sm:gap-3 lg:gap-2 border border-white rounded-full px-3 md:px-2 py-1 sm:px-7 sm:py-1 cursor-pointer hover:bg-black hover:bg-opacity-20"
-        >
-          <Iconify
+        <div className="flex items-center gap-1 sm:gap-3 lg:gap-2 border border-white rounded-full px-3 md:px-2 py-1 sm:px-7 sm:py-1 hover:bg-black hover:bg-opacity-20">
+          {/* <Iconify
             iconName="material-symbols:menu"
             className="size-5 sm:size-7"
-          />
+          /> */}
           <span className="flex items-center gap-1">
             {user?.hotel_name && (
               <Typography
@@ -65,7 +70,7 @@ export const HotelDashboardNavBar = React.memo(({ className }) => {
               >
                 {`Hi, ${user?.hotel_name}`}
               </Typography>
-            )} 
+            )}
             {user?.profile_img ? (
               <ProfileAvatar
                 src={user?.profile_img}

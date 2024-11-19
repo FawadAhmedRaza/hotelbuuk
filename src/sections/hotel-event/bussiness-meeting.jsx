@@ -8,21 +8,26 @@ import {
   RHFTextArea,
 } from "@/src/components/hook-form";
 import { useFormContext } from "react-hook-form";
-import { Typography } from "@/src/components";
+import { ProfileCard, Typography } from "@/src/components";
 
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { useSelector } from "react-redux";
 import { useModal } from "@/src/hooks/use-modal";
 import CreateEditAmenities from "./modals/create-edit-amenities";
+import BussinessMeetingSkeleton from "@/src/components/Skeleton/business-meeting-skeleton";
 
-export const BussinessMeeting = () => {
+export const BussinessMeeting = ({ isEdit }) => {
   const { watch, setValue } = useFormContext();
   const openAmenitiesModal = useModal();
 
   const { amenities } = useSelector((state) => state.eventAmenities);
   const { nomads } = useSelector((state) => state.nomadProfile);
+  const { nomad, isLoading } = useSelector(
+    (state) => state.nomadProfile.getNomad
+  );
 
   const selectedBusiness = watch("business_meeting.business_category");
+  console.log("Nomad By Id", nomad);
 
   let recomendedList = nomads
     ?.filter((item) => item?.industry === selectedBusiness)
@@ -53,6 +58,10 @@ export const BussinessMeeting = () => {
         : selectedAmenities.filter((selected) => selected.name !== amenity.name) // remove if unchecked
     );
   };
+
+  if (isLoading) {
+    return <BussinessMeetingSkeleton />;
+  }
 
   return (
     <div className="flex flex-col gap-10">
@@ -109,7 +118,7 @@ export const BussinessMeeting = () => {
           </div>
         </div>
         {/* Right  */}
-        <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
+        <div className="flex flex-col justify-between items-start gap-5 w-full h-full">
           <RHFSelect
             name="business_meeting.business_category"
             placeholder="Select Bussiness Category"
@@ -122,15 +131,18 @@ export const BussinessMeeting = () => {
             label="Official Name"
             placeholder="John Tesla Factory Tour"
           />
+          {isEdit && (
+            <RHFImageSelect
+              name="business_meeting.nomad_id"
+              placeholder="Select Nomad"
+              label="Business Consultants"
+              options={
+                recomendedList?.length > 0 ? recomendedList : modifiedNomadList
+              }
+            />
+          )}
 
-          <RHFImageSelect
-            name="business_meeting.nomad_id"
-            placeholder="Select Nomad"
-            label="Nomads"
-            options={
-              recomendedList?.length > 0 ? recomendedList : modifiedNomadList
-            }
-          />
+          {!isEdit && <ProfileCard nomad={nomad} />}
         </div>
       </div>
 

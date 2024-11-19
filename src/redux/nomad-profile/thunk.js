@@ -25,6 +25,21 @@ export const getNomadProfileById = createAsyncThunk(
   }
 );
 
+export const getSingleNomad = createAsyncThunk("getSingleNomad", async (id) => {
+  const request = await axiosInstance.get(endpoints.nomad.getSingleNomad(id));
+  return request?.data;
+});
+
+export const getAvailableNomads = createAsyncThunk(
+  "getAvailableNomads",
+  async (id) => {
+    const request = await axiosInstance.get(
+      endpoints.hotel.availableNomads(id)
+    );
+    return request?.data;
+  }
+);
+
 export const getInternalNomad = createAsyncThunk(
   "getInternalNomad",
   async (id) => {

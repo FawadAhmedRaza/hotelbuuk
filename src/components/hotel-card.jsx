@@ -103,7 +103,10 @@ export const HotelCard = React.memo(({ event, className }) => {
         <div className="h-80 relative overflow-hidden rounded-3xl shadow-[0px_4px_10px_2px_rgba(0,_0,_0,_0.3)]">
           <div className="absolute rounded-3xl w-full h-full inset-0 bg-black opacity-45 " />
           <ImageRender
-            src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image}
+            // src={event?.event_images?.[0]?.img || event?.hotel?.hotel_image }
+            src={
+              event?.event_images?.[0]?.img || event?.room?.room_images[0]?.img
+            }
             type={"server"}
             alt={`Uploaded Image`}
             ratio="4/3"

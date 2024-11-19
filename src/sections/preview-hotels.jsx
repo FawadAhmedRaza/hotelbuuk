@@ -33,6 +33,8 @@ export const PreviewHotels = () => {
     fetchEvents();
   }, [dispatch]);
 
+  console.log("All events", events);
+
   return (
     <div className="w-full relative">
       {isLoading || isEventLoading ? (

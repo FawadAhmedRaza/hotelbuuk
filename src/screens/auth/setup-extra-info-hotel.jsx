@@ -113,11 +113,11 @@ const SetupExtraInfoHotel = () => {
           <div className="flex flex-col justify-center items-center gap-x-4 gap-y-4 mt-2 w-full">
             <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
               <RHFUploadAvatar name="profile_img" />
-              <RHFStarsRating
+              {/* <RHFStarsRating
                 name="stars"
                 label="Stars Rating"
                 className="mt-3"
-              />
+              /> */}
             </div>
 
             <RHFSelect

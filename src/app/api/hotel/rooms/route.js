@@ -101,6 +101,7 @@ export async function GET(req) {
             room_facility: true,
           },
         },
+        room_images: true,
       },
     });
 

@@ -110,7 +110,10 @@ const RoomsListView = React.memo(() => {
           <Breadcrumb
             title="My Listings"
             action={
-              <AnchorTag href={paths.createRooms.root}>
+              <AnchorTag
+                className="!no-underline"
+                href={paths.createRooms.root}
+              >
                 <Button className="bg-slate-900">Create Room</Button>
               </AnchorTag>
             }
@@ -158,7 +161,7 @@ const RoomsListView = React.memo(() => {
                       <div className="flex gap-2">
                         {row?.room_facilities?.slice(0, 4)?.map((fac) => (
                           <span
-                            className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap"
+                            className="p-2 rounded-lg text-xs text-black bg-slate-200 text-nowrap"
                             key={fac?.id}
                           >
                             {fac?.name}
@@ -166,7 +169,7 @@ const RoomsListView = React.memo(() => {
                         ))}
 
                         {row?.room_facilities?.length > 4 && (
-                          <span className="p-2 rounded-lg text-xs text-primary bg-[#feccf4] text-nowrap">
+                          <span className="p-2 rounded-lg text-xs text-black bg-slate-200 text-nowrap">
                             +{row?.room_facilities?.length - 4} more
                           </span>
                         )}

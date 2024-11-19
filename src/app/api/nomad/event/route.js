@@ -34,6 +34,7 @@ export async function POST(req) {
       address,
       amenities,
       hotel_id,
+      room_id,
       about_bnb,
     } = business_meeting || {};
 
@@ -91,6 +92,7 @@ export async function POST(req) {
           start_date,
           end_date,
           hotel_id: hotel_id,
+          room_id: room_id,
           // rules
           check_in: rules?.check_in,
           check_out: rules?.check_out,

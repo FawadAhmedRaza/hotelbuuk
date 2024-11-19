@@ -7,6 +7,9 @@ import { price_includes } from "@/src/_mock/_popolar-amentities";
 import { useFormContext } from "react-hook-form";
 
 export const Pricing = () => {
+  const { watch } = useFormContext();
+  const price = watch("price");
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col  items-start gap-10 w-full  h-full">
@@ -56,7 +59,7 @@ export const Pricing = () => {
             Expected Payout:
           </Typography>
           <Typography variant="h4" className="font-semibold">
-            $2,000
+            ${(price / 100) * (price <= 50 ? 75 : 85).toFixed(2)}
           </Typography>
         </div>
         <div className="w-full">

@@ -19,6 +19,7 @@ const page = () => {
     (state) => state.hotelEvent.getById
   );
 
+  console.log("Hotel event", hotelEvent);
   const fetchHotelEvent = async () => {
     try {
       await dispatch(getHotelEventById(id)).unwrap();

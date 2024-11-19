@@ -58,7 +58,7 @@ export const ThingsToKnow = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
+      <div className="flex flex-col  justify-between items-start gap-5 lg:gap-20 w-full h-full">
         {/* left  */}
         <div className="flex flex-col gap-5 w-full">
           <div className="flex flex-col gap-5 ">
@@ -98,6 +98,7 @@ export const ThingsToKnow = () => {
           </div>
         </div>
         {/* Right  */}
+
         {/* <div className="flex flex-col justify-between items-start gap-10 w-full h-full">
           <div className="flex flex-col gap-5 ">
             <div className="flex gap-3 justify-start items-center">

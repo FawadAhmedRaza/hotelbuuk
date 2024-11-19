@@ -72,6 +72,8 @@ export const endpoints = {
     inviteNomads: "/hotel/invite-nomad",
     rejecteRequest: "/hotel/invite-nomad/reject",
     internalNomad: (id) => `/hotel/invite-nomad?hotel_id=${id}`,
+    availableNomads: (id) =>
+      `/hotel/invite-nomad/available-nomads?hotel_id=${id}`,
     event: {
       create: "/hotel/events",
       getAll: (id) => `/hotel/events?user_id=${id}`,
@@ -90,9 +92,11 @@ export const endpoints = {
   nomad: {
     root: "/nomad",
     create: "/nomad/nomad-profile",
+    getSingleNomad: (id) => `/nomad/${id}`,
     getProfile: (id) => `/nomad/nomad-profile/${id}`,
     updateProfile: (id) => `/nomad/nomad-profile/${id}`,
     deleteProfile: (id) => `/nomad/nomad-profile/${id}`,
+
     amenities: {
       create: "/nomad/event-amenities",
       getAll: (id) => `/nomad/event-amenities?userId=${id}`,

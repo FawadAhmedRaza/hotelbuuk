@@ -16,22 +16,28 @@ import { bnb_amenities } from "@/src/_mock/_popolar-amentities";
 import { businessCategories } from "@/src/_mock/_business_categories";
 import { hotels } from "@/src/_mock/_hotel-qna";
 import { getCities, getCountries } from "@/src/libs/helper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useBoolean } from "@/src/hooks";
 import { useModal } from "@/src/hooks/use-modal";
 import CreateEditAmenities from "./modals/create-edit-amenities";
 import { RHFLocationSelect } from "@/src/components/hook-form/rhf-location-select";
+import { getRooms } from "@/src/redux/hotel-rooms/thunk";
+import { RHFRoomSelect } from "@/src/components/hook-form/rhf-room-select";
 
 export const BussinessMeeting = () => {
   const [location, setLocation] = useState("");
   const { watch, setValue } = useFormContext();
+  const dispatch = useDispatch();
   const openAmenitiesModal = useModal();
+  const hotel = watch("business_meeting.hotel_id");
+  const [resetRoom, setResetRoom] = useState(false);
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
   const { hotels } = useSelector((state) => state.hotelInfo);
   const { amenities } = useSelector((state) => state.eventAmenities);
+  const { rooms, isLoading } = useSelector((state) => state.rooms.getAllRooms);
 
   let modifiedHotelList = hotels?.map((item) => {
     return {
@@ -41,6 +47,17 @@ export const BussinessMeeting = () => {
       value: item?.id,
     };
   });
+
+  let modifiedRoomsList = rooms?.map((item) => {
+    return {
+      room_name: item?.room_name,
+      image: item?.room_images[0]?.img,
+      price: item?.price,
+      value: item?.id,
+    };
+  });
+
+  console.log("Room Id:", watch("business_meeting.room_id"));
 
   const accomodationType = watch("business_meeting.accomodation_type");
 
@@ -89,6 +106,24 @@ export const BussinessMeeting = () => {
   const handleChange = (detail) => {
     setValue("business_meeting.address", detail.formatted_address);
   };
+
+  const fetchRooms = async () => {
+    try {
+      await dispatch(getRooms(hotel)).unwrap();
+    } catch (error) {
+      console.log("Error fetching rooms:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Reset room selection
+    // setValue("business_meeting.room_id", null);
+
+    // Fetch rooms for the selected hotel
+    if (hotel) {
+      fetchRooms();
+    }
+  }, [hotel]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -228,12 +263,22 @@ export const BussinessMeeting = () => {
               />
             </>
           ) : (
-            <RHFImageSelect
-              name="business_meeting.hotel_id"
-              placeholder="Select Hotels"
-              label="Hotels"
-              options={modifiedHotelList}
-            />
+            <>
+              <RHFImageSelect
+                name="business_meeting.hotel_id"
+                placeholder="Select Hotels"
+                label="Hotels"
+                className={"z-50"}
+                options={modifiedHotelList}
+              />
+
+              <RHFRoomSelect
+                name="business_meeting.room_id"
+                placeholder="Select Room"
+                label="Rooms"
+                hotelRooms={modifiedRoomsList}
+              />
+            </>
           )}
         </div>
       </div>

@@ -68,6 +68,11 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
         then: (schema) => schema.required("hotel is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
+      room_id: Yup.string().when("accomodation_type", {
+        is: "hotel",
+        then: (schema) => schema.required("room is required"),
+        otherwise: (schema) => schema.notRequired(),
+      }),
       country: Yup.string().when("accomodation_type", {
         is: "bnb",
         then: (schema) => schema.required("Country is required for BnB"),
@@ -92,14 +97,14 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
     rules: Yup.array().optional(),
     safeties: Yup.array().optional(),
     cancelPolicies: Yup.array().optional(),
-    images: Yup.array().when("accomodation_type", {
+    images: Yup.array().when("business_meeting.accomodation_type", {
       is: "bnb",
       then: (schema) =>
         schema
-          // .required("Images are required")
+          .required("Images are required for BnB")
           .min(8, "At least 8 images are required for the event")
           .max(20, "A maximum of 20 images is allowed"),
-      otherwise: (schema) => schema.notRequired(),
+      otherwise: (schema) => schema.optional(),
     }),
     topics: Yup.array()
       .min(1, "At least one topic is required")
@@ -125,6 +130,7 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
             business_category: "",
             accomodation_type: "bnb",
             hotel_id: "",
+            room_id: "",
             country: "",
             city: "",
             address: "",
@@ -269,7 +275,10 @@ export const EventStepperView = ({ defaultValues, isEdit }) => {
       );
 
       if (accomodationType === "hotel") {
-        fieldsToValidate.push("business_meeting.hotel_id");
+        fieldsToValidate.push(
+          "business_meeting.hotel_id",
+          "business_meeting.room_id"
+        );
       } else if (accomodationType === "bnb") {
         fieldsToValidate.push(
           "business_meeting.country",

@@ -93,6 +93,7 @@ export async function GET(_, { params }) {
       price: hotelEvent?.price,
       itinerary: hotelEvent?.itinerary,
       user_id: hotelEvent?.user_id,
+      room_id: hotelEvent?.room_id,
     };
 
     return NextResponse.json(
@@ -178,6 +179,7 @@ export async function PUT(req, { params }) {
       safeties,
       cancelPolicies,
       itinerary,
+      room_id,
     } = data || {};
 
     const {
@@ -233,6 +235,7 @@ export async function PUT(req, { params }) {
         payment_policy: rules?.payment_policy,
         price: String(data?.price),
         user_id: user_id,
+        room_id: room_id,
       },
     });
 

@@ -57,15 +57,16 @@ const HotelCards = () => {
       value: bookingsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.bookings.root,
-      // bgColor: "#EDF0FF",
+      bgColor: "#fee2e2",
     },
     {
       id: 2,
       icon: "ic:outline-card-membership",
-      title: "Nomad",
+      title: "Consultants",
       value: nomadsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.nomads.root,
+      bgColor: "#dbeafe",
     },
     {
       id: 3,
@@ -74,6 +75,7 @@ const HotelCards = () => {
       value: totalRevenue,
       btnTitle: "View Details",
       path: paths.hotelDashboard.bookings.root,
+      bgColor: "#dcfce7",
     },
     {
       id: 4,
@@ -82,6 +84,7 @@ const HotelCards = () => {
       value: roomsCount,
       btnTitle: "View Details",
       path: paths.hotelDashboard.rooms,
+      bgColor: "#f1f5f9",
     },
   ];
 

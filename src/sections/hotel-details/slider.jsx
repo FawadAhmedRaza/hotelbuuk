@@ -17,10 +17,10 @@ export const Slider = ({ images }) => {
       <Swiper
         pagination={{ clickable: true }}
         modules={[Pagination]}
-        className="mySwiper relative rounded-xl"
+        className="mySwiper relative rounded-xl !w-full h-80 "
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={image.id} className="relative ">
+          <SwiperSlide key={image.id} className="relative !w-full !h-full ">
             <div className="absolute bottom-5 right-4">
               <span className="py-2 px-3 rounded-lg bg-primary text-white text-normal">
                 {`${index + 1} / ${images.length}`}

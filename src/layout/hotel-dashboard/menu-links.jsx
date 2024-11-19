@@ -85,7 +85,13 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                   : "hover:bg-[#F2F2F2]"
               }`}
             >
-              <span className="text-lg">{item?.label}</span>
+              <div className="flex gap-3 items-center">
+                <Iconify
+                  iconName={item?.icon}
+                  className={`!size-5 text-black`}
+                />
+                <span className="text-lg">{item?.label}</span>
+              </div>{" "}
               {item.children && (
                 <Iconify
                   iconName="iconamoon:arrow-right-2"
@@ -120,7 +126,13 @@ export const HotelDashboardMenu = ({ isOpen, setIsOpen, onClick }) => {
                           : "hover:bg-[#F2F2F2]"
                       }`}
                     >
-                      <span className="text-lg pl-4">{child.title}</span>
+                      <div className="flex gap-3 items-center pl-4">
+                        <Iconify
+                          iconName={child?.icon}
+                          className={`!size-5 text-black`}
+                        />
+                        <span className="text-lg ">{child.title}</span>
+                      </div>{" "}
                     </Link>
                   ))}
                 </div>
@@ -147,32 +159,42 @@ export const MenuLinks = (UserId) => {
       id: 1,
       label: "Home",
       path: paths.hotelDashboard.root,
+      icon: "material-symbols:home",
     },
     {
       id: 2,
       label: "Notifications",
       path: paths.hotelDashboard.notifications,
+      icon: "mingcute:notification-fill",
     },
     {
       id: 3,
       label: "Bookings",
       path: paths.hotelDashboard.bookings.root,
+      icon: "clarity:event-solid",
     },
     {
       id: 4,
       label: "Events",
       path: paths.hotelDashboard.events.root,
+      icon: "ic:baseline-event",
     },
     {
       id: 6,
-      label: "Nomads",
-
+      label: "Business Consultants",
+      icon: "mdi:teacher",
       children: [
-        { id: 1, title: "All Nomads", path: paths.hotelDashboard.nomads.root },
+        {
+          id: 1,
+          title: "All Business Consultants",
+          path: paths.hotelDashboard.nomads.root,
+          icon: "mdi:teacher",
+        },
         {
           id: 2,
-          title: "Internal Nomads",
+          title: "Internal Consultants",
           path: paths.hotelDashboard.nomads.internalNomads,
+          icon: "mdi:teacher",
         },
       ],
     },
@@ -180,23 +202,38 @@ export const MenuLinks = (UserId) => {
       id: 8,
       label: "Rooms",
       path: paths.hotelDashboard.rooms,
+      icon: "cil:room",
     },
     {
       id: 9,
       label: "Messages",
       path: paths.chats.root,
+      icon: "streamline:mail-send-email-message-solid",
     },
     {
       id: 10,
       label: "Settings",
+      icon: "material-symbols:settings",
+
       children: [
         {
           id: 1,
           title: "Profile",
           path: `/hotel-info/${UserId}`,
+          icon: "carbon:user-profile",
         },
-        { id: 2, title: "Terms", path: paths.terms },
-        { id: 3, title: "Privacy", path: paths.privacyPolicy },
+        {
+          id: 2,
+          title: "Terms",
+          path: paths.terms,
+          icon: "fluent-mdl2:entitlement-policy",
+        },
+        {
+          id: 3,
+          title: "Privacy",
+          path: paths.privacyPolicy,
+          icon: "iconoir:privacy-policy",
+        },
       ],
     },
   ];

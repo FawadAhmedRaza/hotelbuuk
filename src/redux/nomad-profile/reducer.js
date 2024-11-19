@@ -3,9 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createNomadProfile,
   deleteNomadProfile,
+  getAvailableNomads,
   getInternalNomad,
   getNomadProfileById,
   getNomadsProfile,
+  getSingleNomad,
   updateNomadProfile,
 } from "./thunk";
 
@@ -24,6 +26,11 @@ const initialState = {
     error: null,
     nomad: {},
   },
+  getNomad: {
+    isLoading: false,
+    error: null,
+    nomad: {},
+  },
   deleteById: {
     isLoading: false,
     error: null,
@@ -36,6 +43,11 @@ const initialState = {
     isLoading: false,
     error: null,
     internalNomads: [],
+  },
+  availableNomads: {
+    isLoading: false,
+    error: null,
+    nomads: [],
   },
 };
 
@@ -50,9 +62,6 @@ export const nomadProfile = createSlice({
       state.create.isLoading = true;
     });
     builder.addCase(createNomadProfile.fulfilled, (state, action) => {
-      //   state.hotels = action.payload;
-      //   state.create.accessToken = action.payload.accessToken;
-      //   state.create.user = action.payload.user;
       state.create.isLoading = false;
     });
     builder.addCase(createNomadProfile.rejected, (state, action) => {
@@ -73,6 +82,19 @@ export const nomadProfile = createSlice({
       state.isLoading = false;
     });
 
+    // Get available Nomads
+    builder.addCase(getAvailableNomads.pending, (state, action) => {
+      state.availableNomads.isLoading = true;
+    });
+    builder.addCase(getAvailableNomads.fulfilled, (state, action) => {
+      state.availableNomads.nomads = action.payload.nomads;
+      state.availableNomads.isLoading = false;
+    });
+    builder.addCase(getAvailableNomads.rejected, (state, action) => {
+      state.availableNomads.error = action.error;
+      state.availableNomads.isLoading = false;
+    });
+
     // get nomads by Id
     builder.addCase(getNomadProfileById.pending, (state, action) => {
       state.getById.isLoading = true;
@@ -84,6 +106,19 @@ export const nomadProfile = createSlice({
     builder.addCase(getNomadProfileById.rejected, (state, action) => {
       state.getById.error = action.error;
       state.getById.isLoading = false;
+    });
+
+    // get Single Nomad
+    builder.addCase(getSingleNomad.pending, (state, action) => {
+      state.getNomad.isLoading = true;
+    });
+    builder.addCase(getSingleNomad.fulfilled, (state, action) => {
+      state.getNomad.nomad = action.payload.nomad;
+      state.getNomad.isLoading = false;
+    });
+    builder.addCase(getSingleNomad.rejected, (state, action) => {
+      state.getNomad.error = action.error;
+      state.getNomad.isLoading = false;
     });
 
     // update
