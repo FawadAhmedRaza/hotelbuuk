@@ -60,7 +60,7 @@ export const Pricing = () => {
             Expected Payout:
           </Typography>
           <Typography variant="h4" className="font-semibold">
-            ${(price / 100) * (price <= 50 ? 75 : 85).toFixed(2)}
+            ${((price / 100) * (price <= 50 ? 75 : 85)).toFixed(2)}
           </Typography>
         </div>
         <div className="w-full">
