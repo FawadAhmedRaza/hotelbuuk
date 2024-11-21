@@ -14,9 +14,12 @@ import { businessCategories } from "@/src/_mock/_business_categories";
 import { useSelector } from "react-redux";
 import { useModal } from "@/src/hooks/use-modal";
 import CreateEditAmenities from "./modals/create-edit-amenities";
-import BussinessMeetingSkeleton from "@/src/components/Skeleton/business-meeting-skeleton";
+
+import { useAuthContext } from "@/src/providers/auth/context/auth-context";
+import { BusinessMeetingSkeleton } from "@/src/components/Skeleton/business-meeting-skeleton";
 
 export const BussinessMeeting = ({ isEdit }) => {
+  const { user } = useAuthContext();
   const { watch, setValue } = useFormContext();
   const openAmenitiesModal = useModal();
 
@@ -60,19 +63,32 @@ export const BussinessMeeting = ({ isEdit }) => {
   };
 
   if (isLoading) {
-    return <BussinessMeetingSkeleton />;
+    return <BusinessMeetingSkeleton />;
   }
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-5 lg:gap-10 w-full h-full">
+      <div className="flex flex-col  justify-between items-start gap-5 lg:gap-10 w-full h-full">
         {/* left  */}
         <div className="flex flex-col gap-5 w-full">
+          {!isEdit && (
+            <div className="flex justify-center ">
+              <ProfileCard nomad={nomad} />
+            </div>
+          )}
+
           <RHFInput
             name="business_meeting.title"
             label="Title"
             placeholder="Tesla Factory Tour "
           />
+
+          <RHFInput
+            name="business_meeting.official_name"
+            label="Official Name"
+            placeholder="John Tesla Factory Tour"
+          />
+
           <RHFTextArea
             name="business_meeting.description"
             label="Description"
@@ -126,11 +142,6 @@ export const BussinessMeeting = ({ isEdit }) => {
             options={businessCategories}
           />
 
-          <RHFInput
-            name="business_meeting.official_name"
-            label="Official Name"
-            placeholder="John Tesla Factory Tour"
-          />
           {isEdit && (
             <RHFImageSelect
               name="business_meeting.nomad_id"
@@ -141,8 +152,6 @@ export const BussinessMeeting = ({ isEdit }) => {
               }
             />
           )}
-
-          {!isEdit && <ProfileCard nomad={nomad} />}
         </div>
       </div>
 

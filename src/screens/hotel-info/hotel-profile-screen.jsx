@@ -167,7 +167,7 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
   };
 
   return (
-    <Pannel className="!py-8">
+    <Pannel className="!py-8 ">
       <RHFFormProvider methods={methods} onSubmit={onSubmit}>
         <Breadcrumb title="Update Hotel profile" />
         {/* <div className="w-full mt-4">
@@ -181,18 +181,18 @@ const HotelProfileScreen = ({ defaultValues, isEdit }) => {
         <HotelProfile />
 
         {/* {activeTabs === "hotel-images" && ( */}
-          <div className="flex justify-end my-5 gap-3">
-            <Button
-              type="button"
-              className="!bg-red-600"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              Delete profile
-            </Button>
-            <Button className="!bg-black" loading={isSubmitting} type="submit">
-              {isEdit ? "Save" : "Submit"}
-            </Button>
-          </div>
+        <div className="flex justify-between my-5 md:px-10 ">
+          <Button
+            type="button"
+            className="!bg-red-600"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            Delete profile
+          </Button>
+          <Button className="!bg-black" loading={isSubmitting} type="submit">
+            {isEdit ? "Save" : "Submit"}
+          </Button>
+        </div>
         {/* )} */}
       </RHFFormProvider>
       {isOpen && (

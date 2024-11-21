@@ -15,10 +15,10 @@ export const Pricing = () => {
       <div className="flex flex-col  items-start gap-10 w-full  h-full">
         <div className="flex flex-col gap-5">
           <Typography variant="h4" className="font-semibold">
-            For B&B Accommodation Only
+            Price Per Night
           </Typography>
           <Typography variant="h4" className="font-semibold">
-            Price Per Night
+            For consultants only
           </Typography>
         </div>
 

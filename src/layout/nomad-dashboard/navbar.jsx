@@ -57,7 +57,7 @@ export const NomadDashboardNavBar = React.memo(({ className }) => {
               variant="h3"
               className="sm:!text-xl md:flex hidden md:!text-[1.6rem] !text-[14px] font-bold text-white text-start text-nowrap"
             >
-              Nomad Dashboard
+              Dashboard
             </Typography>
           </div>
         </AnchorTag>
