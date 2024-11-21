@@ -29,6 +29,7 @@ import {
 } from "@/src/redux/event-things-to-know/thunk";
 import { ThingsToKnowNomad } from "./things-to-know";
 import { Itinerary } from "./itinerary";
+import { getNomadProfileById } from "@/src/redux/nomad-profile/thunk";
 
 export const EventStepperView = ({ defaultValues, isEdit }) => {
   const [currentSteps, setCurrentSteps] = useState([]);

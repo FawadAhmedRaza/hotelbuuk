@@ -8,7 +8,7 @@ import {
 import React, { useState, useEffect } from "react";
 import AmenitiesModal from "./amenities-modal";
 import { RHFStarsRating } from "@/src/components/hook-form/rhf-stars-rating";
-import { Typography } from "@/src/components";
+import { Pannel, Typography } from "@/src/components";
 import { useFormContext } from "react-hook-form";
 import { useModal } from "@/src/hooks/use-modal";
 import { useSelector } from "react-redux";
@@ -77,18 +77,12 @@ const HotelProfile = () => {
   };
 
   return (
-    <div className="gap-y-4 my-10">
-      {/* <div className="flex justify-end w-full">
-        <Typography variant="h5">{`Profile ID: ${user?.id.slice(
-          -6
-        )}`}</Typography>
-      </div> */}
+    <Pannel className="gap-y-5 ">
       <div className="flex flex-col w-full h-full justify-center items-center content-center mt-0">
         <RHFUploadAvatar isEdit={true} name="hotel_image" />
-        {/* <RHFStarsRating name="stars" label="Stars Rating" className="mt-6" /> */}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-5 w-full h-full mt-6">
+      <div className="flex flex-col gap-8 md:gap-5 w-full h-full mt-6">
         <div className="flex flex-col gap-5">
           <RHFInput
             name="hotel_name"
@@ -101,14 +95,14 @@ const HotelProfile = () => {
             placeholder="Briefly describe your hotel"
           />
 
-          <div className="flex flex-col gap-3 w-full mt-6">
+          <div className="flex flex-col gap-3 w-full mb-5">
             <div className="flex flex-row gap-4">
               <Typography variant="h6" className="font-medium">
                 Hotel Facilities
               </Typography>
               <Typography
                 variant="h6"
-                className="font-medium text-primary hover:cursor-pointer"
+                className="font-medium text-black hover:cursor-pointer"
                 onClick={() => openModal.onTrue()} // Open modal on click
               >
                 Add more
@@ -179,7 +173,7 @@ const HotelProfile = () => {
           onClose={openModal.onFalse}
         />
       )}
-    </div>
+    </Pannel>
   );
 };
 

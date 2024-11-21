@@ -34,6 +34,11 @@ export async function POST(req) {
             id: true,
           },
         },
+        nomad: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
@@ -47,8 +52,8 @@ export async function POST(req) {
     }
 
     // if the profile was deleted
-    if(!user?.is_profile_active){
-      return NextResponse.json({message:"User not found"},{status:404});
+    if (!user?.is_profile_active) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     const isMatch = bcrypt.compareSync(password, user.password);

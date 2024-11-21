@@ -387,13 +387,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="industry"
-                label="Industry"
                 placeholder="Industry"
                 options={businessCategories}
               />
               <RHFSelect
                 name="electronics"
-                label="Electronics"
                 placeholder="Electronics"
                 options={electronics}
               />
@@ -401,13 +399,11 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="manufacturing"
-                label="Manufacturing"
                 placeholder=" Manufacturing "
                 options={manufacturing}
               />
               <RHFSelect
                 name="fundraising"
-                label="Fundraising"
                 placeholder=" Fundraising "
                 options={fundraising}
               />
@@ -415,7 +411,6 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFSelect
                 name="retails"
-                label="Retails"
                 placeholder="Retails"
                 options={retails}
               />
@@ -429,31 +424,17 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               <Typography variant="h5" className="font-semibold">
                 Instructional Material
               </Typography>
-              <Typography
-                variant="p"
-                className="font-medium !text-sm text-secondary"
-              >
-                What kind of instructional materials do you offer?
-              </Typography>
             </div>
 
             <div className="flex flex-col md:flex-row gap-5 w-full">
-              <RHFInput
-                name="projector"
-                placeholder="Projector"
-                label="Projector"
-              />
-              <RHFInput name="video" placeholder="Video" label="Video" />
+              <RHFInput name="projector" placeholder="Projector" />
+              <RHFInput name="video" placeholder="Video" />
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
-              <RHFInput name="sample" placeholder="Sample" label="Sample" />
-              <RHFInput name="board" placeholder="Board" label="Board" />
+              <RHFInput name="sample" placeholder="Sample" />
+              <RHFInput name="board" placeholder="Board" />
             </div>
-            <RHFInput
-              name="audio_system"
-              placeholder="Audio System"
-              label="Audio"
-            />
+            <RHFInput name="audio_system" placeholder="Audio System" />
           </div>
 
           {/* Competence  */}
@@ -466,31 +447,26 @@ export const NomadProfile = React.memo(({ defaultValues, isEdit }) => {
               <RHFInput
                 name="personal_competence"
                 placeholder="Personal Competence"
-                label="Personal Competence"
               />
               <RHFInput
                 name="pedagogic_competence"
                 placeholder="Pedagogic Competence"
-                label="Pedagogic Competence"
               />
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFInput
                 name="professional_competence"
                 placeholder="Professional Competence"
-                label="Professional Competence"
               />
               <RHFInput
                 name="social_competence"
                 placeholder="Social Competence"
-                label="Social Competence"
               />
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <RHFInput
                 name="assessment_competence"
                 placeholder="Assessment Competence"
-                label="Assessment Competence"
               />
             </div>
           </div>

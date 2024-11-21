@@ -27,3 +27,5 @@ export { BgIcon } from "./bg-icon";
 export { LocationInput } from "./location-input";
 export { RoomCard } from "./room-card";
 export { ProfileCard } from "./profile-card";
+export { RoomSelectCard } from "./room-select-card";
+export { HotelSelectCard } from "./hotel-select-card";

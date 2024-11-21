@@ -70,7 +70,7 @@ export const ThingsToKnowNomad = () => {
                 Add more
               </Typography>
             </div>
-            <div className="grid grid-cols-1  md:grid-cols-3 gap-3 py-5 lg:py-0">
+            <div className="flex flex-col gap-3 py-5 lg:py-0">
               {rules?.map((rule, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <input
@@ -108,7 +108,7 @@ export const ThingsToKnowNomad = () => {
                 Add more
               </Typography>
             </div>
-            <div className="grid grid-cols-1  md:grid-cols-3 gap-3 py-5 lg:py-0">
+            <div className="flex flex-col gap-3 py-5 lg:py-0">
               {policyArr?.map((rule, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <input
