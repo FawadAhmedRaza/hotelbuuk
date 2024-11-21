@@ -1,6 +1,11 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import { ProfileAvatar, Typography, Button } from "@/src/components";
+import {
+  ProfileAvatar,
+  Typography,
+  Button,
+  HotelSelectCard,
+} from "@/src/components";
 import { useFormContext } from "react-hook-form";
 
 const HotelSelector = ({ hotels }) => {
@@ -60,7 +65,7 @@ const HotelSelector = ({ hotels }) => {
           filteredHotels
             .slice(0, visibleCount) // Display only up to the visible count
             .map((hotel) => (
-              <HotelCard
+              <HotelSelectCard
                 key={hotel.id}
                 hotel={hotel}
                 isSelected={selectedHotelId === hotel.id}
@@ -82,38 +87,6 @@ const HotelSelector = ({ hotels }) => {
           </Button>
         </div>
       )}
-    </div>
-  );
-};
-
-// HotelCard Component
-const HotelCard = ({ hotel, isSelected, onSelect }) => {
-  const { id, hotel_name, hotel_image } = hotel;
-
-  return (
-    <div
-      onClick={() => onSelect(id)} // Handle selection
-      className={`p-4 rounded-lg cursor-pointer flex flex-col items-start transition-all duration-200 border ${
-        isSelected
-          ? "border-blue-500 bg-blue-50 shadow-lg"
-          : "border-gray-300 bg-white"
-      }`}
-    >
-      {/* Hotel Image */}
-      {hotel_image && (
-        <ProfileAvatar
-          src={hotel_image}
-          effect="blur"
-          iconSize="!size-28"
-          type={"server"}
-          className="h-40 w-full object-cover rounded-md mb-4"
-        />
-      )}
-
-      {/* Hotel Info */}
-      <Typography variant="h6" className="font-semibold mb-2">
-        {hotel_name}
-      </Typography>
     </div>
   );
 };

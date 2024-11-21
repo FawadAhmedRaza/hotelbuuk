@@ -1,4 +1,6 @@
-const { ProfileAvatar, Typography } = require(".");
+"use client";
+
+import { ProfileAvatar, Typography } from ".";
 
 // HotelCard Component
 export const HotelSelectCard = ({ hotel, isSelected, onSelect }) => {
